@@ -15,6 +15,7 @@ C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\Viapro
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\Viaproxima.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\Viaproxima.Web.RazorAssemblyInfo.cache
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\Viaproxima.Web.RazorAssemblyInfo.cs
+C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\Viaproxima.Web.sourcelink.json
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
@@ -23,6 +24,7 @@ C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\scoped
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\scopedcss\projectbundle\Viaproxima.Web.bundle.scp.css
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\9sgbo4e5lx-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\stsg25x5ap-{0}-61n19gt1b8-61n19gt1b8.gz
+C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\r725fv3vjj-{0}-0sbsiysf6x-0sbsiysf6x.gz
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\u0hiq58hd8-{0}-xtxxf3hu2r-xtxxf3hu2r.gz
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\wq25177bjw-{0}-bqjiyaj88i-bqjiyaj88i.gz
 C:\Users\micha\Desktop\ViaproximaProject\Viaproxima.Web\obj\Debug\net10.0\compressed\588athkorj-{0}-c2jlpeoesf-c2jlpeoesf.gz

@@ -1,0 +1,337 @@
+﻿@page
+@model Viaproxima.Web.Pages.CharacterSheetModel
+@{
+    ViewData["Title"] = "Viaproxima – Character Sheet";
+}
+
+<div class="page">
+    <div class="sheet">
+        <!-- Header -->
+        <header class="sheet-header">
+            <div>
+                <div class="label">Namn</div>
+                <div class="value">@Model.Name</div>
+            </div>
+            <div>
+                <div class="label">Ras</div>
+                <div class="value">@Model.Race</div>
+            </div>
+            <div>
+                <div class="label">Bärkraft</div>
+                <div class="value" id="barkraftValue">@Model.Barkraft</div>
+            </div>
+        </header>
+
+        <main class="sheet-main">
+            <!-- Left column – stats -->
+            <section class="sheet-column">
+                <h2>Grundegenskaper</h2>
+
+                <div class="stats-table">
+                    <!-- Styrka group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Styrka</span>
+                            <input id="strengthInput"
+                                   type="number"
+                                   min="0"
+                                   max="20"
+                                   value="@Model.Strength"
+                                   class="stat-input" />
+                        </div>
+
+                        <div class="stat-sub-row">
+                            <span>Genomslag</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row">
+                            <span>Bärförmåga</span>
+                            <input id="barformagaInput"
+                                   type="number"
+                                   min="0"
+                                   max="20"
+                                   value="@Model.Barformaga"
+                                   class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row">
+                            <span>Förflytta</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row">
+                            <span>Brottas</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                    </div>
+
+                    <!-- Skicklighet group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Skicklighet</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row"><span>Skytte</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Fingerfärdighet</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Träffsäkerhet</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Akrobatik</span><input type="number" class="stat-input" /></div>
+                    </div>
+
+                    <!-- Tålighet group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Tålighet</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row"><span>Mental</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Fysisk</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Blockera</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Uthållighet</span><input type="number" class="stat-input" /></div>
+                    </div>
+
+                    <!-- Intelligens group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Intelligens</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row"><span>Allmänbildning</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Logiskt tänkande</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Öga för detaljer</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input type="number" class="stat-input" /></div>
+                    </div>
+
+                    <!-- Klokhet group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Klokhet</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row"><span>Snabbtänkthet</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Känna av fara</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Se igenom lögner</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Magisk känsla</span><input type="number" class="stat-input" /></div>
+                    </div>
+
+                    <!-- Utstrålning group -->
+                    <div class="stat-group">
+                        <div class="stat-main-row">
+                            <span class="stat-main-label">Utstrålning</span>
+                            <input type="number" class="stat-input" />
+                        </div>
+                        <div class="stat-sub-row"><span>Ljuga</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Övertala</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Intryck</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Väcka känslor</span><input type="number" class="stat-input" /></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center column – portrait -->
+            <section class="sheet-column sheet-column--center">
+                <h2>Porträtt & Anteckningar</h2>
+                <div class="portrait-placeholder">
+                    Porträtt här
+                </div>
+                <p class="hint">
+                    Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.
+                </p>
+            </section>
+
+            <!-- Right column – skills -->
+            <section class="sheet-column">
+                <h2>Färdigheter</h2>
+                <ul>
+                    <li>Kristallsejdare (widget senare)</li>
+                    <li>Shaman (widget senare)</li>
+                    <li>Övriga generiska skills</li>
+                </ul>
+            </section>
+        </main>
+
+        <!-- Inventory section -->
+        <section class="sheet-inventory">
+            <h2>Inventarie (kopplas till Bärkraft senare)</h2>
+            <div id="inventoryGrid" class="inventory-grid">
+                <!-- slots generated by JS -->
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        body {
+            background: #e9e3d7;
+        }
+
+        .page {
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            font-family: system-ui, sans-serif;
+        }
+
+        .sheet {
+            width: 960px;
+            background: #f6f0e4;
+            border-radius: 8px;
+            border: 1px solid #c7b89d;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .sheet-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #d5c7ad;
+        }
+
+        .sheet-header .label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6b5b47;
+        }
+
+        .sheet-header .value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .sheet-main {
+            display: grid;
+            grid-template-columns: 1.2fr 1.6fr 1.2fr;
+            gap: 1rem;
+        }
+
+        .sheet-column {
+            background: #fdf8ee;
+            border-radius: 6px;
+            border: 1px solid #d5c7ad;
+            padding: 0.75rem;
+        }
+
+        .sheet-column h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .sheet-column--center .portrait-placeholder {
+            height: 180px;
+            border-radius: 6px;
+            border: 1px dashed #b9aa90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #8a7a62;
+            margin-bottom: 0.5rem;
+        }
+
+        .hint {
+            font-size: 0.8rem;
+            color: #7a6b56;
+        }
+
+        /* Stats layout */
+        .stats-table {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .stat-group {
+            border: 1px solid #d0c2aa;
+            border-radius: 4px;
+            overflow: hidden;
+            background: #f6edde;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-main-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #d9c7a7;
+            padding: 0.2rem 0.4rem;
+            font-weight: 600;
+        }
+
+        .stat-main-label {
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 0.8rem;
+        }
+
+        .stat-sub-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.15rem 0.4rem;
+            background: #fdf5e6;
+            border-top: 1px solid #e2d6c3;
+        }
+
+        .stat-sub-row:nth-child(even) {
+            background: #f8efdf;
+        }
+
+        .stat-input {
+            width: 2.5rem;
+            border-radius: 4px;
+            border: 1px solid #c7b89d;
+            padding: 0.05rem 0.2rem;
+            text-align: right;
+            font-size: 0.8rem;
+            background: #fdf8ee;
+        }
+
+        /* Inventory */
+
+        .sheet-inventory {
+            background: #fdf8ee;
+            border-radius: 6px;
+            border: 1px solid #d5c7ad;
+            padding: 0.75rem;
+        }
+
+        .sheet-inventory h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .inventory-grid {
+            display: grid;
+            /* columns will be set from JS */
+            gap: 4px;
+        }
+
+        .slot {
+            width: 64px;
+            height: 64px;
+            border-radius: 4px;
+            border: 1px dashed #b3a795;
+            background: #f9f5ea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b0a58f;
+            font-size: 1.2rem;
+        }
+
+        .no-inventory {
+            font-size: 0.85rem;
+            color: #8a7a62;
+            font-style: italic;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="~/js/characterSheet.js"></script>
+}

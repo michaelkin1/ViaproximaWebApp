@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dcebef4cb4f2bf24c0f9e9fa7d2f46f715633722")]
 [assembly: System.Reflection.AssemblyProductAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
