@@ -1,0 +1,64 @@
+@page
+@model Viaproxima.Web.Pages.CharacterListModel
+
+@{
+    ViewData["Title"] = "Character List";
+}
+
+<div class="page">
+    <div class="sheet">
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value">Character List</div>
+            </div>
+        </header>
+
+        <section class="sheet-column">
+            <h2>Sparade karaktärer</h2>
+
+            @if (Model.Characters.Count == 0)
+            {
+                <p class="hint">Inga sparade karaktärer ännu. Skapa en ny i Character Sheet och tryck Save.</p>
+            }
+            else
+            {
+                <ul style="margin:0; padding-left:0; list-style:none;">
+                    @foreach (var c in Model.Characters)
+                    {
+                        var name = string.IsNullOrWhiteSpace(c.Name) ? "Unnamed" : c.Name;
+                        var race = string.IsNullOrWhiteSpace(c.Race) ? "Unknown" : c.Race;
+
+                        <li style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem; padding:0.35rem 0; border-bottom:1px solid var(--border);">
+                            <a asp-page="/CharacterSheet"
+                               asp-route-id="@c.Id"
+                               target="_blank"
+                               rel="noopener">
+                                @($"ID: {c.Id} – {name} ({race})")
+                            </a>
+
+                            <form method="post"
+                                  asp-page-handler="Delete"
+                                  asp-route-id="@c.Id"
+                                  style="margin:0;">
+                                @Html.AntiForgeryToken()
+                                <button type="submit"
+                                        class="btn-small"
+                                        onclick="return confirm('Delete ID @c.Id – @name?');">
+                                    Delete
+                                </button>
+                            </form>
+                        </li>
+                    }
+                </ul>
+            }
+        </section>
+
+        <section class="sheet-column">
+            <h2>Ny karaktär</h2>
+            <a class="btn-small" asp-page="/CharacterSheet" target="_blank" rel="noopener">
+                Open blank sheet (new)
+            </a>
+        </section>
+    </div>
+</div>

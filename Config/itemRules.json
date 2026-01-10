@@ -1,0 +1,77 @@
+{
+  "descriptionTemplates": {
+    "weapon": "En/Ett <adjektiv> <material> <vapentyp> som gör <skadenivå>. Därtill <bonuseffekt>. Däremot <nackdel>."
+  },
+
+  "presets": {
+    "MeleeWeapons": {
+      "type": "weapon",
+      "default": {
+        "size": { "rows": 2, "cols": 1 },
+        "weight": 2,
+        "durability": null,
+        "templateKey": "weapon"
+      },
+      "fields": {
+        "durability": { "enabled": false }
+      }
+    },
+
+    "Shields": {
+      "type": "shield",
+      "default": {
+        "description": "",
+        "templateKey": null
+      },
+      "fields": {
+        "durability": {
+          "enabled": true,
+          "input": "stepper",
+          "min": 0,
+          "max": 99,
+          "step": 1
+        }
+      }
+    },
+
+    "Shields/LightShield": {
+      "default": {
+        "size": { "rows": 2, "cols": 1 },
+        "weight": 2,
+        "durability": 6,
+        "description": ""
+      }
+    },
+
+    "Shields/MediumShield": {
+      "default": {
+        "size": { "rows": 2, "cols": 2 },
+        "weight": 4,
+        "durability": 9,
+        "description": ""
+      }
+    },
+
+    "Shields/HeavyShield": {
+      "default": {
+        "size": { "rows": 3, "cols": 2 },
+        "weight": 6,
+        "durability": 12,
+        "description": ""
+      }
+    }
+  },
+
+  "behavior": {
+    "hoverShows": [
+      "primaryType",
+      "secondaryType",
+      "rarity",
+      "size",
+      "weight",
+      "durability",
+      "description"
+    ],
+    "editOn": "doubleClick"
+  }
+}

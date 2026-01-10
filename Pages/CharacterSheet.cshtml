@@ -10,18 +10,24 @@
         <header class="sheet-header">
             <div>
                 <div class="label">Namn</div>
-                <div class="value">@Model.Name</div>
+                <input id="nameInput" class="header-input" type="text" value="" />
             </div>
             <div>
                 <div class="label">Ras</div>
-                <div class="value">@Model.Race</div>
+                <input id="raceInput" class="header-input" type="text" value="" />
             </div>
             <div>
-                <div class="label">Bärkraft</div>
-                <div class="value" id="barkraftValue">@Model.Barkraft</div>
+                <div class="label">Erfarenhetspoäng</div>
+                <input id="xpInput" class="header-input" type="number" min="0" value="" />
+            </div>
+
+            <div class="header-actions">
+                <button id="saveBtn" type="button" class="btn-small">Save</button>
+                <span id="saveStatus" class="save-status"></span>
             </div>
         </header>
 
+     
         <main class="sheet-main">
             <!-- Left column – stats -->
             <section class="sheet-column">
@@ -32,34 +38,26 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Styrka</span>
-                            <input id="strengthInput"
-                                   type="number"
-                                   min="0"
-                                   max="20"
-                                   value="@Model.Strength"
-                                   class="stat-input" />
+                            <input id="strengthInput" type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
 
                         <div class="stat-sub-row">
                             <span>Genomslag</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
                         </div>
                         <div class="stat-sub-row">
                             <span>Bärförmåga</span>
-                            <input id="barformagaInput"
-                                   type="number"
-                                   min="0"
-                                   max="20"
-                                   value="@Model.Barformaga"
-                                   class="stat-input" />
+                            <input id="barformagaInput" type="number" min="0" max="20" step="1" value=""
+                                class="stat-input" />
                         </div>
                         <div class="stat-sub-row">
                             <span>Förflytta</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
                         </div>
                         <div class="stat-sub-row">
                             <span>Brottas</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
                         </div>
                     </div>
 
@@ -67,73 +65,94 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Skicklighet</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Skytte</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Fingerfärdighet</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Träffsäkerhet</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Akrobatik</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Skytte</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Fingerfärdighet</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Träffsäkerhet</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Akrobatik</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
                     </div>
 
                     <!-- Tålighet group -->
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Tålighet</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Mental</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Fysisk</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Blockera</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Uthållighet</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Mental</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Fysisk</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Blockera</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Uthållighet</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
                     </div>
 
                     <!-- Intelligens group -->
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Intelligens</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Allmänbildning</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Logiskt tänkande</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Öga för detaljer</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Allmänbildning</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Logiskt tänkande</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Öga för detaljer</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
                     </div>
 
                     <!-- Klokhet group -->
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Klokhet</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Snabbtänkthet</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Känna av fara</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Se igenom lögner</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Magisk känsla</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Snabbtänkthet</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Känna av fara</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Se igenom lögner</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Magisk känsla</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
                     </div>
 
                     <!-- Utstrålning group -->
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Utstrålning</span>
-                            <input type="number" class="stat-input" />
+                            <input type="number" min="0" max="20" step="1" value=""
+                                class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Ljuga</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Övertala</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Intryck</span><input type="number" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Väcka känslor</span><input type="number" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Ljuga</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Övertala</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Intryck</span><input type="number" min="0" max="20" step="1"
+                                value="" class="stat-input" /></div>
+                        <div class="stat-sub-row"><span>Väcka känslor</span><input type="number" min="0" max="20"
+                                step="1" value="" class="stat-input" /></div>
                     </div>
                 </div>
             </section>
 
             <!-- Center column – portrait -->
             <section class="sheet-column sheet-column--center">
-                <h2>Porträtt & Anteckningar</h2>
-                <div class="portrait-placeholder">
-                    Porträtt här
-                </div>
-                <p class="hint">
-                    Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.
-                </p>
+                <h2>Porträtt &amp; Anteckningar</h2>
+                <div class="portrait-placeholder">Porträtt här</div>
+                <p class="hint">Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.</p>
             </section>
 
             <!-- Right column – skills -->
@@ -149,189 +168,115 @@
 
         <!-- Inventory section -->
         <section class="sheet-inventory">
-            <h2>Inventarie (kopplas till Bärkraft senare)</h2>
-            <div id="inventoryGrid" class="inventory-grid">
-                <!-- slots generated by JS -->
+            <div class="inventory-header">
+                <h2 style="margin:0;">Inventarie</h2>
+
+                <div class="inventory-header-right">
+                    <div>
+                        <span class="inventory-barkraft-label">Bärkraft</span>
+                        <strong id="barkraftValue">0</strong>
+                    </div>
+
+                    <button id="addItemBtn" class="btn-small" type="button">+ Add item</button>
+                </div>
+            </div>
+
+            <div class="inventory-wrap">
+                <div id="inventorySlots" class="inventory-grid inventory-slots"></div>
+                <div id="inventoryItems" class="inventory-grid inventory-items"></div>
             </div>
         </section>
+
+
+        <!-- Add/Edit Item dialog -->
+        <dialog id="itemDialog" class="item-dialog">
+            <form method="dialog" class="item-form" id="itemForm">
+                <h3 style="margin:0 0 0.75rem;">Add/Edit item</h3>
+
+                <!-- Hidden: used when editing -->
+                <input type="hidden" id="itemIdInput" value="" />
+
+                <div class="item-form-grid">
+                    <label class="item-field">
+                        <span>Föremålstyp</span>
+                        <select id="primarySelect">
+                            <option value="">– Välj –</option>
+                            <!-- populated by JS -->
+                        </select>
+                    </label>
+
+                    <label class="item-field">
+                        <span>Subtyp</span>
+                        <select id="secondarySelect">
+                            <option value="">– Välj –</option>
+                            <!-- populated by JS -->
+                        </select>
+                    </label>
+
+                    <label class="item-field">
+                        <span>Vikt / Storlek</span>
+                        <select id="sizeSelect">
+                            <option value="1x1">1x1</option>
+                            <option value="1x2">1x2</option>
+                            <option value="2x1">2x1</option>
+                            <option value="2x2">2x2</option>
+                            <option value="3x2">3x2</option>
+                        </select>
+                    </label>
+
+                    <label class="item-field item-field--checkbox">
+                        <span>Magisk</span>
+                        <input id="magicCheck" type="checkbox" />
+                    </label>
+
+                    <div id="durabilityWrap" class="item-field">
+                        <span>Hållbarhet</span>
+                        <input id="durabilityInput" type="number" min="0" step="1" value="" />
+                        <small class="hint">Visas bara när JS väljer att aktivera den.</small>
+                    </div>
+
+                    <!-- Icon picker (visual) -->
+                    <label class="item-field item-field--wide">
+                        <span>Ikon</span>
+
+                        <!-- stores the selected filename -->
+                        <input type="hidden" id="iconFileInput" value="" />
+
+                        <!-- visual picker -->
+                        <div id="iconGrid" class="icon-grid"></div>
+
+                        <div class="hint" style="margin-top:0.35rem;">
+                            Klicka på en ikon för att välja.
+                        </div>
+
+                        <div class="icon-preview-wrap">
+                            <img id="iconPreview" alt="" class="icon-preview" style="display:none;" />
+                        </div>
+                    </label>
+
+                    <label class="item-field item-field--wide">
+                        <span>Beskrivning</span>
+                        <textarea id="descriptionInput" rows="4" placeholder="Skriv item-text här..."></textarea>
+                    </label>
+                </div>
+
+                <div class="item-actions">
+                    <button type="button" id="itemCancelBtn" class="btn-small">Cancel</button>
+                    <button type="button" id="itemDeleteBtn" class="btn-small" style="display:none;">Delete</button>
+                    <button type="button" id="itemSaveBtn" class="btn-small">Save item</button>
+                </div>
+            </form>
+        </dialog>
     </div>
 </div>
 
+
+
 @section Styles {
-    <style>
-        body {
-            background: #e9e3d7;
-        }
-
-        .page {
-            display: flex;
-            justify-content: center;
-            padding: 2rem 1rem;
-            font-family: system-ui, sans-serif;
-        }
-
-        .sheet {
-            width: 960px;
-            background: #f6f0e4;
-            border-radius: 8px;
-            border: 1px solid #c7b89d;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-        }
-
-        .sheet-header {
-            display: flex;
-            justify-content: space-between;
-            gap: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #d5c7ad;
-        }
-
-        .sheet-header .label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #6b5b47;
-        }
-
-        .sheet-header .value {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .sheet-main {
-            display: grid;
-            grid-template-columns: 1.2fr 1.6fr 1.2fr;
-            gap: 1rem;
-        }
-
-        .sheet-column {
-            background: #fdf8ee;
-            border-radius: 6px;
-            border: 1px solid #d5c7ad;
-            padding: 0.75rem;
-        }
-
-        .sheet-column h2 {
-            margin: 0 0 0.5rem;
-            font-size: 1rem;
-        }
-
-        .sheet-column--center .portrait-placeholder {
-            height: 180px;
-            border-radius: 6px;
-            border: 1px dashed #b9aa90;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            color: #8a7a62;
-            margin-bottom: 0.5rem;
-        }
-
-        .hint {
-            font-size: 0.8rem;
-            color: #7a6b56;
-        }
-
-        /* Stats layout */
-        .stats-table {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-        }
-
-        .stat-group {
-            border: 1px solid #d0c2aa;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #f6edde;
-            margin-bottom: 0.25rem;
-        }
-
-        .stat-main-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #d9c7a7;
-            padding: 0.2rem 0.4rem;
-            font-weight: 600;
-        }
-
-        .stat-main-label {
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            font-size: 0.8rem;
-        }
-
-        .stat-sub-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.15rem 0.4rem;
-            background: #fdf5e6;
-            border-top: 1px solid #e2d6c3;
-        }
-
-        .stat-sub-row:nth-child(even) {
-            background: #f8efdf;
-        }
-
-        .stat-input {
-            width: 2.5rem;
-            border-radius: 4px;
-            border: 1px solid #c7b89d;
-            padding: 0.05rem 0.2rem;
-            text-align: right;
-            font-size: 0.8rem;
-            background: #fdf8ee;
-        }
-
-        /* Inventory */
-
-        .sheet-inventory {
-            background: #fdf8ee;
-            border-radius: 6px;
-            border: 1px solid #d5c7ad;
-            padding: 0.75rem;
-        }
-
-        .sheet-inventory h2 {
-            margin: 0 0 0.5rem;
-            font-size: 1rem;
-        }
-
-        .inventory-grid {
-            display: grid;
-            /* columns will be set from JS */
-            gap: 4px;
-        }
-
-        .slot {
-            width: 64px;
-            height: 64px;
-            border-radius: 4px;
-            border: 1px dashed #b3a795;
-            background: #f9f5ea;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #b0a58f;
-            font-size: 1.2rem;
-        }
-
-        .no-inventory {
-            font-size: 0.85rem;
-            color: #8a7a62;
-            font-style: italic;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/characterSheet.css" asp-append-version="true" />
 }
 
+
 @section Scripts {
-    <script src="~/js/characterSheet.js"></script>
+    <script src="~/js/characterSheet.js" asp-append-version="true"></script>
 }

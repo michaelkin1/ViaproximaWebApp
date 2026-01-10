@@ -1,0 +1,41 @@
+{
+  "ui": {
+    "labels": {
+      "primaryType": "Föremålstyp",
+      "secondaryType": "Subtyp",
+      "rarity": "Magisk?",
+      "size": "Storlek (rutor)",
+      "weight": "Vikt",
+      "durability": "Hållbarhet",
+      "description": "Beskrivning",
+      "icon": "Ikon"
+    },
+    "rarity": {
+      "normal": "Normal",
+      "magic": "Magisk"
+    }
+  },
+
+  "primary": {
+    "MeleeWeapons": "Närstridsvapen",
+    "Shields": "Sköldar"
+  },
+
+  "secondary": {
+    "MeleeWeapons": {
+      "Axes": "Yxa",
+      "Knives": "Kniv/Dolk",
+      "Maces": "Klubba/Knölpåk",
+      "Spears": "Spjut",
+      "Staves": "Stav",
+      "Swords": "Hackvapen",
+      "Whip": "Piska",
+      "Scythe": "Lie"
+    },
+    "Shields": {
+      "LightShield": "Liten sköld",
+      "MediumShield": "Medeltung sköld",
+      "HeavyShield": "Tung sköld"
+    }
+  }
+}

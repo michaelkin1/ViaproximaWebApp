@@ -1,0 +1,416 @@
+:root {
+    --bg: #e9e3d7;
+    --paper: #f6f0e4;
+    --panel: #fdf8ee;
+    --panel-2: #f6edde;
+
+    --border: #d5c7ad;
+    --border-2: #c7b89d;
+
+    --ink: #2b241c;
+    --muted: #6b5b47;
+    --muted-2: #8a7a62;
+
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
+
+    --slot: 64px;
+
+    --font: "Libre Baskerville", "Baskerville", "Baskerville Old Face", "Garamond", serif;
+
+
+    --font-size-body: 16px;
+
+    --stat-font-sub: 0.95rem;
+    --stat-font-main: 1.05rem;
+
+    --stat-box-w-sub: 2.3rem;
+    --stat-box-h-sub: 1.6rem;
+
+    --stat-box-w-main: 2.5rem;
+    --stat-box-h-main: 1.7rem;
+
+    --stat-value-col-w: var(--stat-box-w-main);
+    /* widest box defines the column */
+
+}
+
+/* Page */
+body {
+    background: var(--bg);
+    font-family: var(--font);
+    color: var(--ink);
+    font-size: var(--font-size-body);
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+/* Sheet container */
+.sheet {
+    width: 960px;
+    background: var(--paper);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-2);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+/* Header */
+.sheet-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.sheet-header .label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+}
+
+.header-input {
+    width: 180px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-2);
+    padding: 0.2rem 0.35rem;
+    font-weight: 600;
+    background: var(--panel);
+}
+
+.header-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    min-width: 120px;
+}
+
+.btn-small {
+    border: 1px solid var(--border-2);
+    background: var(--panel-2);
+    border-radius: var(--radius-md);
+    padding: 0.35rem 0.6rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-small:hover {
+    filter: brightness(0.97);
+}
+
+.save-status {
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* Main layout columns */
+.sheet-main {
+    display: grid;
+    grid-template-columns: 1.2fr 1.6fr 1.2fr;
+    gap: 1rem;
+}
+
+.sheet-column {
+    background: var(--panel);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+}
+
+.sheet-column h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+}
+
+/* Center portrait */
+.sheet-column--center .portrait-placeholder {
+    height: 180px;
+    border-radius: var(--radius-md);
+    border: 1px dashed #b9aa90;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: var(--muted-2);
+    margin-bottom: 0.5rem;
+}
+
+.hint {
+    font-size: 0.8rem;
+    color: var(--muted-2);
+}
+
+/* Stats */
+.stats-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.stat-group {
+    border: 1px solid #d0c2aa;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--panel-2);
+}
+
+.stat-main-row {
+    display: grid;
+    grid-template-columns: 1fr var(--stat-value-col-w);
+    align-items: center;
+    column-gap: 0.6rem;
+
+    background: #d9c7a7;
+    padding: 0.2rem 0.4rem;
+    font-weight: 600;
+}
+
+.inv-item {
+    position: relative;
+    z-index: 5;
+    border: 1px dashed rgba(107, 91, 71, 0.6);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.inv-item img {
+    width: 92%;
+    height: 92%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
+.stat-main-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+}
+
+.stat-sub-row {
+    display: grid;
+    grid-template-columns: 1fr var(--stat-value-col-w);
+    align-items: center;
+    column-gap: 0.6rem;
+
+    padding: 0.15rem 0.4rem;
+    background: #fdf5e6;
+    border-top: 1px solid #e2d6c3;
+}
+
+.stat-main-row input.stat-input,
+.stat-sub-row input.stat-input {
+    justify-self: center;
+}
+
+
+.stat-sub-row:nth-child(even) {
+    background: #f8efdf;
+}
+
+
+/* Stat inputs */
+/* Sub stats default */
+.stats-table input.stat-input {
+    width: var(--stat-box-w-sub);
+    height: var(--stat-box-h-sub);
+    box-sizing: border-box;
+
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-2);
+    background: var(--panel);
+
+    text-align: center !important;
+    padding: 0 !important;
+
+    font-size: var(--stat-font-sub);
+}
+
+/* Main stats override (bigger) */
+.stats-table input.stat-input--main {
+    width: var(--stat-box-w-main);
+    height: var(--stat-box-h-main);
+    font-size: var(--stat-font-main);
+    font-weight: 700;
+}
+
+.stats-table input.stat-input::-webkit-outer-spin-button,
+.stats-table input.stat-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.stats-table input.stat-input[type="number"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+
+/* =========================
+   Inventory (stable overlay)
+   Replace EVERYTHING from:
+   "/* Inventory items rendered as grid spans */"
+   and downward with this.
+   ========================= */
+
+.sheet-inventory {
+  background: var(--panel);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+}
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.inventory-header h2 { margin: 0; }
+
+.inventory-header-right{
+  display:flex;
+  align-items:center;
+  gap:0.75rem;
+}
+
+.inventory-barkraft-label{
+  font-size:0.8rem;
+  color:var(--muted);
+  margin-right:0.35rem;
+}
+
+/* Wrapper that stacks slots and items in SAME grid cell */
+.inventory-wrap {
+  display: grid;
+  /* keeps the wrapper sized by the slots grid */
+  width: max-content;
+}
+
+/* Both layers share the same "grid position" */
+.inventory-slots,
+.inventory-items {
+  grid-area: 1 / 1;
+}
+
+/* Slots layer builds the size/layout */
+.inventory-slots {
+  z-index: 1;
+}
+
+/* Items layer sits above slots */
+.inventory-items {
+  z-index: 2;
+}
+
+/* Grid base */
+.inventory-grid {
+  display: grid;
+  gap: 4px;
+}
+
+/* Slot tiles */
+.slot {
+  width: var(--slot);
+  height: var(--slot);
+  border-radius: var(--radius-sm);
+  border: 1px dashed #b3a795;
+  background: #f9f5ea;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #b0a58f;
+  font-size: 1.2rem;
+}
+
+/* Inventory items rendered as grid spans */
+.inv-item {
+  /* IMPORTANT: keep items clickable for hover/dblclick */
+  pointer-events: auto;
+
+  border: 2px dashed rgba(107, 91, 71, 0.55);
+  border-radius: var(--radius-sm);
+
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  cursor: pointer;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Optional: makes item feel "on top" */
+.inv-item:hover {
+  filter: brightness(0.98);
+}
+
+/* Text when no inventory */
+.no-inventory {
+  font-size: 0.85rem;
+  color: var(--muted-2);
+  font-style: italic;
+}
+
+/* Icon picker UI (your dialog) */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--panel);
+  max-height: 220px;
+  overflow: auto;
+}
+
+.icon-choice {
+  border: 1px solid var(--border-2);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.icon-choice img {
+  width: 100%;
+  height: 44px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.icon-choice.selected {
+  outline: 2px solid #7a6b56;
+  box-shadow: 0 0 0 3px rgba(107, 91, 71, 0.15);
+}
+
+.icon-preview-wrap{
+  margin-top:0.35rem;
+}
+
+.icon-preview{
+  width: 64px;
+  height: 64px;
+  display:none;
+}
