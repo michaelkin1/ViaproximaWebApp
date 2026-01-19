@@ -86,14 +86,29 @@
     }
   }
 
-  function buildTooltip(it) {
-    const parts = [];
-    parts.push(`${it.primary || ""} / ${it.secondary || ""}`.trim());
-    parts.push(`Storlek: ${it.size || "1x1"}   Magisk: ${it.isMagic ? "Ja" : "Nej"}`);
-    if (it.durability != null) parts.push(`Hållbarhet: ${it.durability}`);
-    if (it.description) parts.push(it.description);
-    return parts.filter(Boolean).join("\n");
-  }
+    function buildTooltip(it) {
+        const lines = [];
+
+        // 1) NAMN överst
+        if (it.name && it.name.trim()) lines.push(it.name.trim());
+
+        // 2) Storlek + magic
+        const magic = it.isMagic ? " • Magisk" : "";
+        lines.push(`Storlek: ${it.size ?? "1x1"}${magic}`);
+
+        // 3) Hållbarhet om finns
+        if (it.durability != null) lines.push(`Hållbarhet: ${it.durability}`);
+
+        // 4) Beskrivning
+        if (it.description && it.description.trim()) {
+            lines.push("");
+            lines.push(it.description.trim());
+        }
+
+        return lines.join("\n");
+    }
+
+
 
   function itemIconUrl(it) {
     // Handles _root folders like Shields
@@ -123,11 +138,19 @@
 
       const img = document.createElement("img");
       img.src = itemIconUrl(it);
-      img.alt = it.iconFile || "item";
+      img.alt = (it.name && it.name.trim()) ? it.name.trim() : (it.iconFile || "item");
       div.appendChild(img);
 
       // dblclick = edit
-      div.addEventListener("dblclick", () => openEditItem(it.id));
+        div.addEventListener("dblclick", () => openEditItem(it.id));
+      
+        // Step 5 (valfritt): liten namnlapp på ikonen
+        if (it.name && it.name.trim()) {
+            const tag = document.createElement("div");
+            tag.className = "inv-item-name";
+            tag.textContent = it.name.trim();
+            div.appendChild(tag);
+        }
 
       itemsGrid.appendChild(div);
     }
@@ -289,6 +312,8 @@
   const itemDialog = el("itemDialog");
 
   const itemIdInput = el("itemIdInput");
+  const itemNameInput = el("itemNameInput");
+  const itemDeleteBtn = el("itemDeleteBtn");
 
   const primarySelect = el("primarySelect");
   const secondarySelect = el("secondarySelect");
@@ -306,6 +331,12 @@
 
   const itemSaveBtn = el("itemSaveBtn");
   const itemCancelBtn = el("itemCancelBtn");
+
+  itemDeleteBtn.addEventListener("click", async () => {
+  const id = itemIdInput.value ? Number(itemIdInput.value) : null;
+  if (!id) return;
+  await deleteItem(id);
+});
 
   let iconCatalog = null;
 
@@ -408,74 +439,95 @@
     }
   }
 
-  function updateDurabilityVisibility(primaryKey) {
-    const show = (primaryKey === "Armour" || primaryKey === "Shields");
-    durabilityWrap.style.display = show ? "" : "none";
-    if (!show) durabilityInput.value = "";
-  }
+    function updateDurabilityVisibility(primaryKey) {
+        const show = (primaryKey === "Armour" || primaryKey === "Shields");
 
-  function resetItemForm() {
-    itemIdInput.value = "";
-    clearSelect(primarySelect, "– Välj –");
-    clearSelect(secondarySelect, "– Välj –");
-    secondarySelect.disabled = true;
+        // Om du inte har en wrapper i HTML: krascha inte.
+        if (durabilityWrap) {
+            durabilityWrap.style.display = show ? "" : "none";
+        }
 
-    sizeSelect.value = "1x1";
-    magicCheck.checked = false;
-
-    durabilityInput.value = "";
-    descriptionInput.value = "";
-
-    iconFileInput.value = "";
-    iconPreview.style.display = "none";
-    iconPreview.src = "";
-    iconGrid.innerHTML = "";
-
-    updateDurabilityVisibility("");
-  }
-
-  function openCreateItem() {
-    resetItemForm();
-    itemDialog.showModal();
-  }
-
-  async function openEditItem(itemId) {
-    const it = itemsCache.find(x => x.id === itemId);
-    if (!it) return;
-
-    resetItemForm();
-
-    await loadIconCatalog();
-    fillPrimary();
-
-    primarySelect.value = it.iconPrimary || it.primary || "";
-    fillSecondary(primarySelect.value);
-
-    secondarySelect.value = it.iconSecondary || it.secondary || "";
-    secondarySelect.disabled = false;
-
-    sizeSelect.value = it.size || "1x1";
-    magicCheck.checked = !!it.isMagic;
-
-    updateDurabilityVisibility(primarySelect.value);
-    durabilityInput.value = it.durability ?? "";
-
-    descriptionInput.value = it.description ?? "";
-
-    // Render icons and try to preselect the current one
-    renderIconPicker(primarySelect.value, secondarySelect.value);
-
-    // Try to mark selected (by filename)
-    if (it.iconFile) {
-      iconFileInput.value = it.iconFile;
-      const url = itemIconUrl(it);
-      iconPreview.src = url;
-      iconPreview.style.display = "block";
+        // Själva input kan finnas även om wrapper saknas
+        if (!show && durabilityInput) durabilityInput.value = "";
     }
 
-    itemIdInput.value = String(it.id);
-    itemDialog.showModal();
-  }
+
+    function resetItemForm() {
+        itemIdInput.value = "";
+        if (itemNameInput) itemNameInput.value = "";
+
+        clearSelect(primarySelect, "– Välj –");
+        clearSelect(secondarySelect, "– Välj –");
+        secondarySelect.disabled = true;
+
+        sizeSelect.value = "1x1";
+        magicCheck.checked = false;
+
+        if (durabilityInput) durabilityInput.value = "";
+        if (descriptionInput) descriptionInput.value = "";
+
+        iconFileInput.value = "";
+        iconPreview.style.display = "none";
+        iconPreview.src = "";
+        iconGrid.innerHTML = "";
+
+        updateDurabilityVisibility("");
+
+        if (itemDeleteBtn) itemDeleteBtn.style.display = "none";
+    }
+
+
+    function openCreateItem() {
+        resetItemForm();
+        if (itemDeleteBtn) itemDeleteBtn.style.display = "none";
+        itemDialog.showModal();
+    }
+
+    async function openEditItem(itemId) {
+        const it = itemsCache.find(x => x.id === itemId);
+        if (!it) return;
+
+        resetItemForm();
+
+        await loadIconCatalog();
+        fillPrimary();
+
+        // Sätt dropdowns
+        primarySelect.value = it.iconPrimary || it.primary || "";
+        fillSecondary(primarySelect.value);
+
+        secondarySelect.value = it.iconSecondary || it.secondary || "";
+        secondarySelect.disabled = false;
+
+        // Övriga fält
+        sizeSelect.value = it.size || "1x1";
+        magicCheck.checked = !!it.isMagic;
+
+        updateDurabilityVisibility(primarySelect.value);
+        if (durabilityInput) durabilityInput.value = (it.durability ?? "");
+
+        if (descriptionInput) descriptionInput.value = it.description ?? "";
+        if (itemNameInput) itemNameInput.value = it.name ?? "";
+
+        // Rendera icon picker + förhandsvisning
+        renderIconPicker(primarySelect.value, secondarySelect.value);
+
+        if (it.iconFile) {
+            iconFileInput.value = it.iconFile;
+            const url = itemIconUrl(it);
+            iconPreview.src = url;
+            iconPreview.style.display = "block";
+        }
+
+        // Editing id
+        itemIdInput.value = String(it.id);
+
+        // Visa delete-knappen
+        if (itemDeleteBtn) itemDeleteBtn.style.display = "";
+
+        itemDialog.showModal();
+    }
+
 
   async function saveItem() {
     if (!characterId) return alert("Spara karaktären först (så den får ett ID).");
@@ -510,20 +562,25 @@
       }
     }
 
-    const dto = {
-      characterId: Number(characterId),
-      primary: primaryKey,
-      secondary: secondaryKey,
-      iconPrimary: primaryKey,
-      iconSecondary: secondaryKey,
-      iconFile: iconFile,
-      isMagic: isMagic,
-      size: size,
-      durability: durabilityInput.value ? Number(durabilityInput.value) : null,
-      description: descriptionInput.value || "",
-      x: placement.x,
-      y: placement.y
-    };
+      const dto = {
+          characterId: Number(characterId),
+
+          // ✅ NYTT
+          name: (itemNameInput?.value || "").trim(),
+
+          primary: primaryKey,
+          secondary: secondaryKey,
+          iconPrimary: primaryKey,
+          iconSecondary: secondaryKey,
+          iconFile: iconFile,
+          isMagic: isMagic,
+          size: size,
+          durability: durabilityInput.value ? Number(durabilityInput.value) : null,
+          description: descriptionInput.value || "",
+          x: placement.x,
+          y: placement.y
+      };
+
 
     const endpoint = editingId == null
       ? `/api/characters/${characterId}/items`
@@ -547,16 +604,28 @@
     await loadItemsForCharacter(characterId);
     renderItems(itemsCache);
   }
+    async function deleteItem(itemId) {
+        if (!itemId) return;
+
+        const ok = confirm(`Delete item #${itemId}?`);
+        if (!ok) return;
+
+        const res = await fetch(`/api/items/${itemId}`, { method: "DELETE" });
+
+        if (!res.ok) {
+            console.error("Delete item failed", res.status, await res.text());
+            alert(`Delete item failed (${res.status})`);
+            return;
+        }
+
+        itemDialog.close();
+        await loadItemsForCharacter(characterId);
+        renderItems(itemsCache);
+    }
 
   // Inventory UI wire-up
-  if (
-    addItemBtn && itemDialog &&
-    primarySelect && secondarySelect &&
-    iconGrid && iconFileInput && iconPreview &&
-    itemSaveBtn && itemCancelBtn &&
-    magicCheck && sizeSelect && descriptionInput &&
-    durabilityInput // durabilityWrap är optional (se nedan)
-  ) {
+    if (addItemBtn && itemDialog && primarySelect && secondarySelect && iconGrid && iconFileInput && iconPreview && itemSaveBtn && itemCancelBtn && itemDeleteBtn)
+ {
     addItemBtn.addEventListener("click", async () => {
       try {
         // Reset dialog UI först (så den alltid öppnar “rent”)
@@ -617,7 +686,8 @@
 
     itemCancelBtn.addEventListener("click", () => itemDialog.close());
     itemSaveBtn.addEventListener("click", saveItem);
-  } else {
+  } else 
+  {
     console.warn("[Inventory] missing dialog elements", {
       addItemBtn, itemDialog, primarySelect, secondarySelect,
       iconGrid, iconFileInput, iconPreview,
@@ -636,5 +706,7 @@
     await refreshRules();
     if (characterId) await loadCharacter(characterId);
   })();
+
+
 
 })();

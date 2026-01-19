@@ -131,6 +131,7 @@ public class Program
 
             item.Durability = dto.Durability;
             item.Description = dto.Description;
+            item.Name = dto.Name;
 
             item.X = dto.X;
             item.Y = dto.Y;
@@ -147,11 +148,12 @@ public class Program
 
             db.InventoryItems.Remove(item);
             await db.SaveChangesAsync();
-            return Results.Ok();
+            return Results.NoContent();
         });
 
+
         // =========================
-        // Icons catalog API (THE ONE your JS uses)
+        // Icons catalog API  (THE ONE your JS uses)
         // =========================
         app.MapGet("/api/icons/catalog", (IWebHostEnvironment env) =>
         {

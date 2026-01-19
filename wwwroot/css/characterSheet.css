@@ -38,6 +38,7 @@
 
 }
 
+
 /* Page */
 body {
     background: var(--bg);
@@ -45,7 +46,24 @@ body {
     color: var(--ink);
     font-size: var(--font-size-body);
 }
+/* Full-page background behind the sheet */
+body {
+    background-image: url("/Images/BeigeForestBG.png"); /* or .jpg */
+    background-size: cover; /* fill the screen */
+    background-position: center; /* center the image */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* nice “stays still” effect */
+}
 
+    /* Optional: add a soft overlay so text stays readable */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(233, 227, 215, 0.75); /* tweak opacity */
+        pointer-events: none;
+        z-index: -1;
+    }
 .page {
     display: flex;
     justify-content: center;
@@ -267,7 +285,7 @@ body {
 /* =========================
    Inventory (stable overlay)
    Replace EVERYTHING from:
-   "/* Inventory items rendered as grid spans */"
+   /* Inventory items rendered as grid spans 
    and downward with this.
    ========================= */
 
@@ -413,4 +431,25 @@ body {
   width: 64px;
   height: 64px;
   display:none;
+}
+
+.inv-item-name {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: 2px;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    text-align: center;
+    background: rgba(246,240,228,0.75);
+    border-radius: 4px;
+    padding: 1px 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+}
+
+.inv-item {
+    position: relative;
 }

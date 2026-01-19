@@ -10,6 +10,9 @@ public class InventoryItem
     public string Primary { get; set; } = "";
     public string Secondary { get; set; } = "";
 
+    //Name of Item
+    public string Name { get; set; } = "";
+
     public bool IsMagic { get; set; }
 
     // "1x1", "2x1", etc (UI-friendly)

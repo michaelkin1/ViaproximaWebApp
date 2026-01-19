@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4nTPobdtYjk=",
+  "dgSpecHash": "TdVEiW6fbLQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\micha\\Desktop\\ViaproximaProject\\Viaproxima.Web\\Viaproxima.Web.csproj",
+  "projectFilePath": "C:\\Users\\micha\\Desktop\\Viaproximawebapp\\ViaproximaWebApp\\Viaproxima.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\micha\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\micha\\.nuget\\packages\\microsoft.build\\17.7.2\\microsoft.build.17.7.2.nupkg.sha512",
