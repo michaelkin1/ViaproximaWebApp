@@ -691,3 +691,4 @@ C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compr
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\g72hchs3ae-{0}-n9zqj6dx2u-n9zqj6dx2u.gz
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\vi9fssh8dn-{0}-7stdx5fca6-7stdx5fca6.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\xsrq6dtx3n-{0}-4f7brm05vu-4f7brm05vu.gz

@@ -1,0 +1,83 @@
+﻿@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&display=swap");
+html, body {
+    height: 100%;
+}
+
+body {
+    background-image: url("/Images/BeigeForestBG.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* keeps it stable when scrolling */
+}
+
+/* Center content */
+.home-hero {
+    min-height: calc(100vh - 64px);
+    padding: 4rem 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.home-content {
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+/* Title: bigger + cleaner */
+.home-title {
+    margin: 0;
+    font-family: "Cinzel", serif;
+    font-weight: 600;
+    font-size: clamp(3.2rem, 6vw, 5.2rem);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: rgba(25, 20, 16, 0.9);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Bigger beige box */
+.home-card {
+    width: min(860px, 94%); /* bigger than before */
+    padding: 1.6rem 1.8rem;
+    background: rgba(247, 240, 226, 0.90);
+    border: 1px solid rgba(80, 60, 40, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14), 0 2px 0 rgba(255, 255, 255, 0.35) inset;
+    font-family: "Source Serif 4", serif;
+    font-size: 1.25rem; /* bigger text */
+    line-height: 1.55;
+    color: rgba(25, 20, 16, 0.92);
+}
+
+    .home-card p {
+        margin: 0 0 1rem;
+    }
+
+        .home-card p:last-child {
+            margin-bottom: 0;
+        }
+
+.home-card-small {
+    opacity: 0.9;
+    font-size: 1.12rem;
+}
+
+/* Mobile tweaks */
+@media (max-width: 520px) {
+    .home-hero {
+        padding-top: 3rem;
+    }
+
+    .home-card {
+        width: 96%;
+        padding: 1.2rem 1.2rem;
+        font-size: 1.12rem;
+    }
+}

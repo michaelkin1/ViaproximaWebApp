@@ -1,10 +1,34 @@
 ﻿@page
-@model IndexModel
+@model Viaproxima.Web.Pages.IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Viaproxima – Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-hero">
+    <div class="home-content">
+        <h1 class="home-title">Viaproxima</h1>
+
+        <div class="home-card">
+            <p>
+                Viaproxima is a hobby world I’ve been building with my friends for years.
+                It started as our tabletop RPG setting and over time it grew into something we kept expanding,
+                session after session.<br />
+                
+            </p>
+
+            <p>
+                This website is my passion project: a place to gather lore, character sheets, and game tools in one spot.
+                <br />It also gives me a fun, real project to sharpen my programming skills while building something we actually use.
+            </p>
+
+            <p class="home-card-small">
+                <br />
+                Explore the world, browse the tools — and welcome to Viaproxima.
+            </p>
+        </div>
+    </div>
 </div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Homepage.css" asp-append-version="true" />
+}

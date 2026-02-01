@@ -148,12 +148,34 @@
                 </div>
             </section>
 
-            <!-- Center column – portrait -->
+            <!-- Center/middle column – portrait -->
             <section class="sheet-column sheet-column--center">
                 <h2>Porträtt &amp; Anteckningar</h2>
+
                 <div class="portrait-placeholder">Porträtt här</div>
+
+                <!-- NYTT: HP-block -->
+                <div class="center-stats">
+                    <div class="stat-card">
+                        <div class="label">HP</div>
+                        <div class="hp-row">
+                            <input id="hpCurrentInput" class="stat-input stat-input--hp" type="number" min="0" value="0" />
+                            <span class="hp-sep">/</span>
+                            <input id="hpMaxInput" class="stat-input stat-input--hp" type="number" min="0" value="0" />
+                        </div>
+                        <small class="hint">Nuvarande / Max</small>
+                    </div>
+                </div>
+
                 <p class="hint">Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.</p>
+
+                <!-- Anteckningar (valfritt men praktiskt om du ändå har en centerkolumn) -->
+                <label class="notes-block">
+                    <div class="label">Anteckningar</div>
+                    <textarea id="notesInput" rows="10" placeholder="Skriv anteckningar..."></textarea>
+                </label>
             </section>
+
 
             <!-- Right column – skills -->
             <section class="sheet-column">
