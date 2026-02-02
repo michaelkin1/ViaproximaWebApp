@@ -676,7 +676,6 @@ C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\refin
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\Viaproxima.Web.pdb
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\Viaproxima.Web.genruntimeconfig.cache
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\ref\Viaproxima.Web.dll
-C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\lu86z8vwzx-{0}-5j64w7dx9o-5j64w7dx9o.gz
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\4yl1n1hkey-{0}-557ex1zzcb-557ex1zzcb.gz
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\r725fv3vjj-{0}-v1i1ib4exk-v1i1ib4exk.gz
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\q4la65vj50-{0}-hs3x5hutxh-hs3x5hutxh.gz
