@@ -1,0 +1,84 @@
+﻿/* Stats */
+.stats-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.stat-group {
+    border: 1px solid #d0c2aa;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--panel-2);
+}
+
+.stat-main-row {
+    display: grid;
+    grid-template-columns: 1fr var(--stat-value-col-w);
+    align-items: center;
+    column-gap: 0.6rem;
+    background: #d9c7a7;
+    padding: 0.2rem 0.4rem;
+    font-weight: 600;
+}
+
+.stat-main-label {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+}
+
+.stat-sub-row {
+    display: grid;
+    grid-template-columns: 1fr var(--stat-value-col-w);
+    align-items: center;
+    column-gap: 0.6rem;
+    padding: 0.15rem 0.4rem;
+    background: #fdf5e6;
+    border-top: 1px solid #e2d6c3;
+}
+
+    .stat-sub-row:nth-child(even) {
+        background: #f8efdf;
+    }
+
+    .stat-main-row input.stat-input,
+    .stat-sub-row input.stat-input {
+        justify-self: center;
+    }
+
+/* Stat inputs */
+/* Sub stats default */
+.stats-table input.stat-input {
+    width: var(--stat-box-w-sub);
+    height: var(--stat-box-h-sub);
+    box-sizing: border-box;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-2);
+    background: var(--panel);
+    text-align: center !important;
+    padding: 0 !important;
+    font-size: var(--stat-font-sub);
+}
+
+/* Main stats override (bigger) */
+.stats-table input.stat-input--main {
+    width: var(--stat-box-w-main);
+    height: var(--stat-box-h-main);
+    font-size: var(--stat-font-main);
+    font-weight: 700;
+}
+
+/* Remove number spinners */
+.stats-table input.stat-input::-webkit-outer-spin-button,
+.stats-table input.stat-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.stats-table input.stat-input[type="number"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}

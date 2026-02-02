@@ -691,4 +691,10 @@ C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compr
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\g72hchs3ae-{0}-n9zqj6dx2u-n9zqj6dx2u.gz
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
 C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\vi9fssh8dn-{0}-7stdx5fca6-7stdx5fca6.gz
-C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\xsrq6dtx3n-{0}-4f7brm05vu-4f7brm05vu.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\dh5ljavata-{0}-mw9u7gsbb7-mw9u7gsbb7.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\xkjb1koxkd-{0}-17ta1errkv-17ta1errkv.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\ww2r5rr44k-{0}-d57uh9twsz-d57uh9twsz.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\59lfxgfzj5-{0}-3gbzsipagd-3gbzsipagd.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\3ptuvmm99i-{0}-rj5ddvnev7-rj5ddvnev7.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\zl28kvfn0o-{0}-rn6a0iimb1-rn6a0iimb1.gz
+C:\Users\micha\Desktop\Viaproximawebapp\ViaproximaWebApp\obj\Debug\net10.0\compressed\z1ydn6jvzi-{0}-4f7brm05vu-4f7brm05vu.gz

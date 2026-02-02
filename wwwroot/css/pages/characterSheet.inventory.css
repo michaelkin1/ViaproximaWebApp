@@ -1,0 +1,128 @@
+﻿/* Inventory */
+.sheet-inventory {
+    background: var(--panel);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+}
+
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+    .inventory-header h2 {
+        margin: 0;
+    }
+
+.inventory-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.inventory-barkraft-label {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-right: 0.35rem;
+}
+
+/* Wrapper that stacks slots and items in SAME grid cell */
+.inventory-wrap {
+    display: grid;
+    width: max-content;
+}
+
+/* Both layers share the same "grid position" */
+.inventory-slots,
+.inventory-items {
+    grid-area: 1 / 1;
+}
+
+/* Slots layer builds the size/layout */
+.inventory-slots {
+    z-index: 1;
+}
+
+/* Items layer sits above slots */
+.inventory-items {
+    z-index: 2;
+}
+
+/* Grid base */
+.inventory-grid {
+    display: grid;
+    gap: 4px;
+}
+
+/* Slot tiles */
+.slot {
+    width: var(--slot);
+    height: var(--slot);
+    border-radius: var(--radius-sm);
+    border: 1px dashed #b3a795;
+    background: #f9f5ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b0a58f;
+    font-size: 1.2rem;
+}
+
+/* Inventory item tile */
+.inv-item {
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+    border: 2px dashed rgba(107, 91, 71, 0.55);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.25);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+    /* If you render <img> inside the item */
+    .inv-item img {
+        width: 92%;
+        height: 92%;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+    .inv-item:hover {
+        filter: brightness(0.98);
+    }
+
+/* Text when no inventory */
+.no-inventory {
+    font-size: 0.85rem;
+    color: var(--muted-2);
+    font-style: italic;
+}
+
+.inv-item-name {
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    bottom: 2px;
+    font-size: 0.65rem;
+    line-height: 1.1;
+    text-align: center;
+    background: rgba(246, 240, 228, 0.75);
+    border-radius: 4px;
+    padding: 1px 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    pointer-events: none;
+}

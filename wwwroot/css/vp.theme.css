@@ -1,0 +1,53 @@
+﻿:root {
+    --bg: #e9e3d7;
+    --paper: #f6f0e4;
+    --panel: #fdf8ee;
+    --panel-2: #f6edde;
+    --border: #d5c7ad;
+    --border-2: #c7b89d;
+    --ink: #2b241c;
+    --muted: #6b5b47;
+    --muted-2: #8a7a62;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --radius-lg: 8px;
+    --radius-md: 6px;
+    --radius-sm: 4px;
+    --slot: 64px;
+    --font: "Libre Baskerville", "Baskerville", "Baskerville Old Face", "Garamond", serif;
+    --font-size-body: 16px;
+    --stat-font-sub: 0.95rem;
+    --stat-font-main: 1.05rem;
+    --stat-box-w-sub: 2.3rem;
+    --stat-box-h-sub: 1.6rem;
+    --stat-box-w-main: 2.5rem;
+    --stat-box-h-main: 1.7rem;
+    --stat-value-col-w: var(--stat-box-w-main);
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    background: var(--bg);
+    font-family: var(--font);
+    color: var(--ink);
+    font-size: var(--font-size-body);
+    /* Full-page background behind the sheet */
+    background-image: url("/Images/BeigeForestBG.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+    /* Soft overlay so text stays readable */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: rgba(233, 227, 215, 0.75);
+        pointer-events: none;
+        z-index: -1;
+    }
