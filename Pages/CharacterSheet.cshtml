@@ -154,18 +154,48 @@
 
                 <div class="portrait-placeholder">Porträtt här</div>
 
-                <!-- NYTT: HP-block -->
-                <div class="center-stats">
-                    <div class="stat-card">
-                        <div class="label">HP</div>
+                <!-- HP-panel (4 rader) -->
+                <div class="hp-panel">
+                    <div class="hp-titlebar">Skada tagen/Max liv</div>
+
+                    <div class="hp-rows">
                         <div class="hp-row">
-                            <input id="hpCurrentInput" class="stat-input stat-input--hp" type="number" min="0" value="0" />
+                            <span class="hp-label">Huvud</span>
+                            <input id="hpHeadCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
                             <span class="hp-sep">/</span>
-                            <input id="hpMaxInput" class="stat-input stat-input--hp" type="number" min="0" value="0" />
+                            
+                            <span id="hpHeadMax" class="hp-max">0</span>
+
                         </div>
-                        <small class="hint">Nuvarande / Max</small>
+
+                        <div class="hp-row">
+                            <span class="hp-label">Torso</span>
+                            <input id="hpTorsoCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                            <span class="hp-sep">/</span>
+                            
+                            <span id="hpHeadMax" class="hp-max">0</span>
+                        </div>
+
+                        <div class="hp-row">
+                            <span class="hp-label">Armar</span>
+                            <input id="hpArmsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                            <span class="hp-sep">/</span>
+                          
+                            <span id="hpArmsMax" class="hp-max">0</span>
+                        </div>
+
+                        <div class="hp-row">
+                            <span class="hp-label">Ben</span>
+                            <input id="hpLegsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                            <span class="hp-sep">/</span>
+                            
+                            <span id="hpHeadMax" class="hp-max">0</span>
+                        </div>
                     </div>
+
+                    <small class="hint">Nuvarande / Max (max beräknas av stats)</small>
                 </div>
+
 
                 <p class="hint">Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.</p>
 
@@ -187,27 +217,61 @@
                 </ul>
             </section>
         </main>
-
-        <!-- Inventory section -->
+        <!-- Inventorybox at the bottom -->
         <section class="sheet-inventory">
             <div class="inventory-header">
-                <h2 style="margin:0;">Inventarie</h2>
+                <h2 class="inventory-title">Inventarie</h2>
 
                 <div class="inventory-header-right">
-                    <div>
-                        <span class="inventory-barkraft-label">Bärkraft</span>
-                        <strong id="barkraftValue">0</strong>
-                    </div>
+                    <span class="inventory-barkraft-label">Bärkraft:</span>
+                    <strong id="barkraftValue">0</strong>
 
                     <button id="addItemBtn" class="btn-small" type="button">+ Add item</button>
                 </div>
             </div>
 
-            <div class="inventory-wrap">
-                <div id="inventorySlots" class="inventory-grid inventory-slots"></div>
-                <div id="inventoryItems" class="inventory-grid inventory-items"></div>
+
+            <div class="inventory-body">
+                <!-- Vänster: grid -->
+                <div class="inventory-left">
+                    <div class="inventory-wrap">
+                        <div id="inventorySlots" class="inventory-grid inventory-slots"></div>
+                        <div id="inventoryItems" class="inventory-grid inventory-items"></div>
+                    </div>
+                </div>
+
+                <!-- Höger: valuta -->
+                <aside class="inventory-right">
+                    <div class="currency-panel">
+                        <div class="currency-titlebar">VALUTA</div>
+
+                        <div class="currency-rows">
+                            <div class="currency-row is-dark">
+                                <span class="currency-label">Cuppar</span>
+                                <input id="currencyCuppar" class="currency-input" type="number" min="0" value="0" />
+                            </div>
+
+                            <div class="currency-row is-light"></div>
+
+                            <div class="currency-row is-dark">
+                                <span class="currency-label">Ferrar</span>
+                                <input id="currencyFerrar" class="currency-input" type="number" min="0" value="0" />
+                            </div>
+
+                            <div class="currency-row is-light"></div>
+
+                            <div class="currency-row is-dark">
+                                <span class="currency-label">Aurar</span>
+                                <input id="currencyAurar" class="currency-input" type="number" min="0" value="0" />
+                            </div>
+                        </div>
+
+                    </div>
+                </aside>
             </div>
         </section>
+
+
 
 
         <!-- Add/Edit Item dialog -->
@@ -310,8 +374,10 @@
   <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/pages/characterSheet.stats.css" asp-append-version="true" />
   <link rel="stylesheet" href="~/css/pages/characterSheet.inventory.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/CharacterSheet.HP.css" asp-append-version="true" />
 
   <link rel="stylesheet" href="~/css/components/dialog.css" asp-append-version="true" />
+  
 }
 
 
@@ -333,3 +399,5 @@
     <script src="~/js/inventory/dialog.js"></script>
     <script src="~/js/pages/characterSheet.page.js"></script>
 }
+
+  
