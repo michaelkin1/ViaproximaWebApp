@@ -1,0 +1,1 @@
+ python .\Tools\sprite_prep.py .\RawArt .\wwwroot\Sprites --key FF00FF --tolerance 0

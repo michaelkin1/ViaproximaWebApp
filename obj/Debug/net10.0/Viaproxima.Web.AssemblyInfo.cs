@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+48fa3262cdda4cd487a64ed7d40bd5db6ef51836")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55f42d21fb19bd9c995b10f0bfc1605998385be2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Viaproxima.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

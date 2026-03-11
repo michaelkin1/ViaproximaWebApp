@@ -1,68 +1,44 @@
-﻿/* =========================
-   HP panel
-   ========================= */
-
-.hp-panel {
+﻿.hp-panel {
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
     background: #f6f0e4;
-    margin-top: 0.5rem; /* justera om du vill */
+    margin-bottom: 0.75rem;
 }
 
 .hp-titlebar {
     background: #d8c9aa;
-    padding: 0.45rem 0.6rem;
+    padding: 0.45rem 0.55rem;
     font-weight: 800;
-    letter-spacing: 0.04em;
     text-transform: uppercase;
-    font-size: 1rem; /* större titel */
-    text-align: center; /* centrerad */
+    text-align: center;
     border-bottom: 1px solid var(--border);
 }
 
-/* Wrapper för rader */
 .hp-rows {
     display: grid;
 }
 
-/* En rad: label | current | / | max(text) */
 .hp-row {
-    display: grid; /* VIKTIGT */
-    grid-template-columns: 1fr 44px 14px 34px; /* max trycks ut lite */
+    display: grid;
+    grid-template-columns: 1fr 42px 10px auto;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.35rem 0.6rem;
-    border-bottom: 1px solid rgba(179, 167, 149, 0.6);
+    column-gap: 0.35rem;
+    padding: 0.35rem 0.55rem;
+    background: #f3ead7;
+    border-bottom: 1px solid rgba(179,167,149,0.6);
 }
-
-    /* Alternating bakgrund (som stat-boxarna) */
-    .hp-row:nth-child(odd) {
-        background: #f3ead7;
-    }
-
-    .hp-row:nth-child(even) {
-        background: #f9f5ea;
-    }
 
 .hp-rows .hp-row:last-child {
     border-bottom: 0;
 }
 
 .hp-label {
-    font-size: 1.1rem;
-    font-weight: 700;
+    font-size: 1rem;
 }
 
-.hp-sep {
-    text-align: center;
-    color: var(--muted);
-    font-weight: 800;
-}
-
-/* Current = number input (med pilar) */
-.hp-input--current {
-    width: 44px;
+.hp-input {
+    width: 42px;
     height: 30px;
     text-align: center;
     border-radius: 6px;
@@ -70,23 +46,48 @@
     background: #fffdf7;
     font-size: 1rem;
     padding: 0;
-    
-
 }
 
-/* Max = text (ingen ruta) */
+.hp-sep {
+    text-align: center;
+    font-weight: 700;
+}
+
+.hp-max-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    justify-self: start;
+}
+
 .hp-max {
-    justify-self: end; /* håller max till höger */
-    font-weight: 900; /* mer tyngd */
-    font-size: 1.05rem;
-    min-width: 2ch;
-    text-align: right;
+    min-width: 18px;
+    font-weight: 700;
+    text-align: left;
 }
 
-/* (Valfritt) liten text under panelen */
-.hp-hint {
-    padding: 0.35rem 0.6rem;
-    font-size: 0.8rem;
-    color: var(--muted);
-    background: #f6f0e4;
+.hp-sprite {
+    width: 22px;
+    height: 22px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.15));
+}
+
+.hp-sprite--head {
+    background-image: url("/Sprites/woundtorsohead.png");
+}
+
+.hp-sprite--torso {
+    background-image: url("/Sprites/woundtorsohead.png");
+}
+
+.hp-sprite--arms {
+    background-image: url("/Sprites/Hp-legsarms.png");
+}
+
+.hp-sprite--legs {
+    background-image: url("/Sprites/Hp-legsarms.png");
 }

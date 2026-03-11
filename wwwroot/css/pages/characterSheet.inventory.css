@@ -1,76 +1,79 @@
-﻿/* =========================================================
-   Inventory (CharacterSheet.inventory.css)
-   ========================================================= */
+﻿/* =========================
+   Inventory (layout) - FIXED right sidebar
+   ========================= */
 
-/* -------------------------
-   Container
-------------------------- */
 .sheet-inventory {
     background: var(--panel);
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
     padding: 0.75rem;
+    /* Viktigt: så hela inventariepanelen fyller kolumnen,
+       annars kan allt shrink-wrappa efter gridet */
+    width: 100%;
+    box-sizing: border-box;
 }
 
-/* -------------------------
-   Header (Inventarie + Bärkraft + Add item)
-   "Bild 2"-layout: titel rad 1, controls rad 2
-------------------------- */
-.inventory-header {
+.inventory-title {
+    margin: 0 0 0.35rem 0;
+}
+
+/* Justera dessa för “känslan” */
+:root {
+    --inv-gap: 10rem; /* avstånd mellan grid och sidebar */
+    --inv-right-width: 300px; /* “låst” sidebar-bredd */
+    --inv-right-inset: 25px; /* hur långt från högra kanten */
+}
+
+/* Grid-layout: vänster får ta resten, höger är låst */
+.inventory-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) var(--inv-right-width);
+    column-gap: var(--inv-gap);
+    align-items: start;
+    /* Detta gör att sidebar ligger stabilt och inte “kramas” av innehållet */
+    width: 100%;
+    box-sizing: border-box;
+    /* Flytta sidebar lite in från kanten (finjustera här) */
+    padding-right: var(--inv-right-inset);
+}
+
+/* LEFT: controls + grid */
+.inventory-left {
+    min-width: 0; /* viktigt i CSS-grid så vänsterkolumn kan krympa utan att knuffa */
+}
+
+.inventory-controls {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.15rem;
+    align-items: center;
+    gap: 0.75rem;
     margin-bottom: 0.5rem;
 }
 
-    .inventory-title,
-    .inventory-header h2 {
-        margin: 0;
-    }
-
-.inventory-header-right {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-}
-
 .inventory-barkraft-label {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: var(--muted);
     margin-right: 0.35rem;
 }
 
-/* -------------------------
-   Body layout (Grid left + Currency right)
-------------------------- */
-.inventory-body {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-    justify-content: space-between;
-}
-
-.inventory-left {
-    flex: 0 0 auto;
-}
-
-/* Currency panel stays to the far right */
+/* RIGHT: sidebar låst i sin kolumn */
 .inventory-right {
-    margin-left: auto;
-    flex: 0 0 220px;
-    max-width: 240px;
+    width: var(--inv-right-width);
+    justify-self: end; /* låser den till höger i sin kolumn */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-end; /* <-- lägg till */
 }
 
-/* -------------------------
-   Inventory grid layers (slots + items overlay)
-------------------------- */
+/* =========================
+   Inventory grid layers
+   ========================= */
+
 .inventory-wrap {
     display: grid;
     width: max-content;
 }
 
-/* Both layers occupy same grid cell */
 .inventory-slots,
 .inventory-items {
     grid-area: 1 / 1;
@@ -84,38 +87,20 @@
     z-index: 2;
 }
 
-/* Grid base */
 .inventory-grid {
     display: grid;
     gap: 4px;
 }
 
-/* -------------------------
-   Slot tiles
-------------------------- */
 .slot {
     width: var(--slot);
     height: var(--slot);
     border-radius: var(--radius-sm);
     border: 1px dashed #b3a795;
     background: #f9f5ea;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #b0a58f;
-    font-size: 1.2rem;
 }
 
-/* Text when no inventory */
-.no-inventory {
-    font-size: 0.85rem;
-    color: var(--muted-2);
-    font-style: italic;
-}
-
-/* -------------------------
-   Inventory item tiles (overlay)
-------------------------- */
+/* Item tiles */
 .inv-item {
     position: relative;
     z-index: 5;
@@ -123,23 +108,13 @@
     border: 2px dashed rgba(107, 91, 71, 0.55);
     border-radius: var(--radius-sm);
     background: rgba(255, 255, 255, 0.25);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
     cursor: pointer;
-    min-width: 0;
-    min-height: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
 }
 
-    .inv-item:hover {
-        filter: brightness(0.98);
-    }
-
-    /* If you render <img> inside the item */
     .inv-item img {
         width: 92%;
         height: 92%;
@@ -153,7 +128,6 @@
     right: 4px;
     bottom: 2px;
     font-size: 0.65rem;
-    line-height: 1.1;
     text-align: center;
     background: rgba(246, 240, 228, 0.75);
     border-radius: 4px;
@@ -164,24 +138,28 @@
     pointer-events: none;
 }
 
-/* -------------------------
-   Currency panel (VALUTA)
-------------------------- */
+/* =========================
+   Currency panel (Valuta)
+   ========================= */
+
 .currency-panel {
+    width: 260px; /* valuta smalare */
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     overflow: hidden;
     background: #f6f0e4;
+    margin: 0;
+    max-width: 100%;
 }
 
 .currency-titlebar {
     background: #d8c9aa;
-    padding: 0.4rem 0.55rem;
+    padding: 0.45rem 0.55rem;
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+    font-size: 1rem;
     text-align: center;
-    font-size: 1.2rem;
     border-bottom: 1px solid var(--border);
 }
 
@@ -189,22 +167,15 @@
     display: grid;
 }
 
-/* Dark rows (with inputs) */
-.currency-row.is-dark {
+/* Label | sprite | input */
+.currency-row {
     display: grid;
-    grid-template-columns: 1fr 46px; /* input nära text */
+    grid-template-columns: 1fr 26px 54px;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.32rem 0.55rem;
+    gap: 0.55rem;
+    padding: 0.35rem 0.55rem;
     background: #f3ead7;
-    border-bottom: 1px solid rgba(179, 167, 149, 0.6);
-}
-
-/* Light separator rows (empty) */
-.currency-row.is-light {
-    height: 16px;
-    background: #f9f5ea;
-    border-bottom: 1px solid rgba(179, 167, 149, 0.6);
+    border-bottom: 1px solid rgba(179,167,149,0.6);
 }
 
 .currency-rows .currency-row:last-child {
@@ -216,7 +187,7 @@
 }
 
 .currency-input {
-    width: 46px;
+    width: 54px;
     height: 30px;
     text-align: center;
     border-radius: 6px;
@@ -225,3 +196,67 @@
     font-size: 1rem;
     padding: 0;
 }
+
+/* --- Currency sprites (blå cirklarna) --- */
+.currency-sprite {
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.15));
+    image-rendering: pixelated;
+    image-rendering: optimizeQuality /* fallback */
+}
+
+/* Byt filändelse om det inte är .png */
+.currency-sprite--cuppar {
+    background-image: url("/Sprites/cuppar.png");
+}
+
+.currency-sprite--ferrar {
+    background-image: url("/Sprites/ferrar.png");
+}
+
+.currency-sprite--aurar {
+    background-image: url("/Sprites/Aurar.png");
+}
+
+/* =========================
+   Pouch panel
+   ========================= */
+
+.pouch-panel {
+    width: 260px; /* pouch bredare än valuta */
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #f6f0e4;
+   
+}
+
+.pouch-titlebar {
+    background: #d8c9aa;
+    padding: 0.55rem 0.55rem;
+    font-weight: 800;
+    font-size: 1.4rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    position: relative; /* så sprite kan absolut-positioneras */
+}
+
+/* Pouch-sprite */
+.pouch-sprite {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 500px;
+    background: url("/Sprites/pouch.png") no-repeat center / contain;
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,0.15));
+    image-rendering: pixelated;
+    image-rendering: optimizeQuality /* fallback */
+}
+
+

@@ -27,38 +27,38 @@
             </div>
         </header>
 
-     
-        <main class="sheet-main">
-            <!-- Left column – stats -->
-            <section class="sheet-column">
-                <h2>Grundegenskaper</h2>
+        <div class="sheet-sections">
+                <main class="sheet-main">
+                <!-- Left column – stats -->
+                <section class="sheet-column">
+                    <h2>Grundegenskaper</h2>
 
-                <div class="stats-table">
-                    <!-- Styrka group -->
-                    <div class="stat-group">
-                        <div class="stat-main-row">
-                            <span class="stat-main-label">Styrka</span>
-                            <input id="strengthInput" type="number" min="0" max="20" step="1" value=""
-                                class="stat-input stat-input--main" />
-                        </div>
+                    <div class="stats-table">
+                        <!-- Styrka group -->
+                        <div class="stat-group">
+                            <div class="stat-main-row">
+                                <span class="stat-main-label">Styrka</span>
+                                <input id="strengthInput" type="number" min="0" max="20" step="1" value=""
+                                    class="stat-input stat-input--main" />
+                            </div>
 
-                        <div class="stat-sub-row">
-                            <span>Genomslag</span>
-                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
-                        </div>
-                        <div class="stat-sub-row">
-                            <span>Bärförmåga</span>
-                            <input id="barformagaInput" type="number" min="0" max="20" step="1" value=""
-                                class="stat-input" />
-                        </div>
-                        <div class="stat-sub-row">
-                            <span>Förflytta</span>
-                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
-                        </div>
-                        <div class="stat-sub-row">
-                            <span>Brottas</span>
-                            <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
-                        </div>
+                            <div class="stat-sub-row">
+                                <span>Genomslag</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
+                            <div class="stat-sub-row">
+                                <span>Bärförmåga</span>
+                                <input id="barformagaInput" type="number" min="0" max="20" step="1" value=""
+                                    class="stat-input" />
+                            </div>
+                            <div class="stat-sub-row">
+                                <span>Förflytta</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
+                            <div class="stat-sub-row">
+                                <span>Brottas</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
                     </div>
 
                     <!-- Skicklighet group -->
@@ -79,21 +79,35 @@
                     </div>
 
                     <!-- Tålighet group -->
-                    <div class="stat-group">
-                        <div class="stat-main-row">
-                            <span class="stat-main-label">Tålighet</span>
-                            <input type="number" min="0" max="20" step="1" value=""
-                                class="stat-input stat-input--main" />
+                        <!-- Tålighet -->
+                        <div class="stat-group">
+                            <div class="stat-main-row">
+                                <span class="stat-main-label">Tålighet</span>
+                                <input id="talighetInput" type="number" min="0" max="20" step="1" value=""
+                                       class="stat-input stat-input--main" />
+                            </div>
+
+                            <div class="stat-sub-row">
+                                <span>Mental</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
+
+                            <div class="stat-sub-row">
+                                <span>Fysisk</span>
+                                <input id="fysiskInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
+
+                            <div class="stat-sub-row">
+                                <span>Blockera</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
+
+                            <div class="stat-sub-row">
+                                <span>Uthållighet</span>
+                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                            </div>
                         </div>
-                        <div class="stat-sub-row"><span>Mental</span><input type="number" min="0" max="20" step="1"
-                                value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Fysisk</span><input type="number" min="0" max="20" step="1"
-                                value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Blockera</span><input type="number" min="0" max="20" step="1"
-                                value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Uthållighet</span><input type="number" min="0" max="20" step="1"
-                                value="" class="stat-input" /></div>
-                    </div>
+
 
                     <!-- Intelligens group -->
                     <div class="stat-group">
@@ -159,38 +173,46 @@
                     <div class="hp-titlebar">Skada tagen/Max liv</div>
 
                     <div class="hp-rows">
-                        <div class="hp-row">
-                            <span class="hp-label">Huvud</span>
-                            <input id="hpHeadCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
-                            <span class="hp-sep">/</span>
-                            
-                            <span id="hpHeadMax" class="hp-max">0</span>
+                            <div class="hp-row">
+                                <span class="hp-label">Huvud</span>
+                                <input id="hpHeadCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                <span class="hp-sep">/</span>
+                                <span class="hp-max-wrap">
+                                    <span class="hp-sprite hp-sprite--head" aria-hidden="true"></span>
+                                    <span id="hpHeadMax" class="hp-max">0</span>
+                                </span>
+                            </div>
 
-                        </div>
+                            <div class="hp-row">
+                                <span class="hp-label">Torso</span>
+                                <input id="hpTorsoCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                <span class="hp-sep">/</span>
+                                <span class="hp-max-wrap">
+                                    <span class="hp-sprite hp-sprite--torso" aria-hidden="true"></span>
+                                    <span id="hpTorsoMax" class="hp-max">0</span>
+                                </span>
+                            </div>
 
-                        <div class="hp-row">
-                            <span class="hp-label">Torso</span>
-                            <input id="hpTorsoCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
-                            <span class="hp-sep">/</span>
-                            
-                            <span id="hpHeadMax" class="hp-max">0</span>
-                        </div>
+                            <div class="hp-row">
+                                <span class="hp-label">Armar</span>
+                                <input id="hpArmsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                <span class="hp-sep">/</span>
+                                <span class="hp-max-wrap">
+                                    <span class="hp-sprite hp-sprite--arms" aria-hidden="true"></span>
+                                    <span id="hpArmsMax" class="hp-max">0</span>
+                                </span>
+                            </div>
 
-                        <div class="hp-row">
-                            <span class="hp-label">Armar</span>
-                            <input id="hpArmsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
-                            <span class="hp-sep">/</span>
-                          
-                            <span id="hpArmsMax" class="hp-max">0</span>
-                        </div>
+                            <div class="hp-row">
+                                <span class="hp-label">Ben</span>
+                                <input id="hpLegsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                <span class="hp-sep">/</span>
+                                <span class="hp-max-wrap">
+                                    <span class="hp-sprite hp-sprite--legs" aria-hidden="true"></span>
+                                    <span id="hpLegsMax" class="hp-max">0</span>
+                                </span>
+                            </div>
 
-                        <div class="hp-row">
-                            <span class="hp-label">Ben</span>
-                            <input id="hpLegsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
-                            <span class="hp-sep">/</span>
-                            
-                            <span id="hpHeadMax" class="hp-max">0</span>
-                        </div>
                     </div>
 
                     <small class="hint">Nuvarande / Max (max beräknas av stats)</small>
@@ -202,7 +224,7 @@
                 <!-- Anteckningar (valfritt men praktiskt om du ändå har en centerkolumn) -->
                 <label class="notes-block">
                     <div class="label">Anteckningar</div>
-                    <textarea id="notesInput" rows="10" placeholder="Skriv anteckningar..."></textarea>
+                        <textarea id="notesInput" class="stat-textarea" rows="10" placeholder="Skriv anteckningar..."></textarea>
                 </label>
             </section>
 
@@ -217,56 +239,67 @@
                 </ul>
             </section>
         </main>
-        <!-- Inventorybox at the bottom -->
+
         <section class="sheet-inventory">
-            <div class="inventory-header">
-                <h2 class="inventory-title">Inventarie</h2>
-
-                <div class="inventory-header-right">
-                    <span class="inventory-barkraft-label">Bärkraft:</span>
-                    <strong id="barkraftValue">0</strong>
-
-                    <button id="addItemBtn" class="btn-small" type="button">+ Add item</button>
-                </div>
-            </div>
-
+            <h2 class="inventory-title">Inventarie</h2>
 
             <div class="inventory-body">
-                <!-- Vänster: grid -->
+                <!-- LEFT: bärkraft + knapp + grid -->
                 <div class="inventory-left">
+                    <div class="inventory-controls">
+                        <div class="inventory-barkraft">
+                            <span class="inventory-barkraft-label">Bärkraft:</span>
+                            <strong id="barkraftValue">0</strong>
+                        </div>
+
+                        <button id="addItemBtn" class="btn-small" type="button">+ Add item</button>
+                    </div>
+
                     <div class="inventory-wrap">
                         <div id="inventorySlots" class="inventory-grid inventory-slots"></div>
                         <div id="inventoryItems" class="inventory-grid inventory-items"></div>
                     </div>
                 </div>
 
-                <!-- Höger: valuta -->
+                <!-- RIGHT: sidebar -->
                 <aside class="inventory-right">
+                    <!-- Valuta -->
                     <div class="currency-panel">
                         <div class="currency-titlebar">VALUTA</div>
 
                         <div class="currency-rows">
-                            <div class="currency-row is-dark">
+                            <div class="currency-row">
                                 <span class="currency-label">Cuppar</span>
+                                <span class="currency-sprite currency-sprite--cuppar" aria-hidden="true"></span>
                                 <input id="currencyCuppar" class="currency-input" type="number" min="0" value="0" />
                             </div>
 
-                            <div class="currency-row is-light"></div>
-
-                            <div class="currency-row is-dark">
+                            <div class="currency-row">
                                 <span class="currency-label">Ferrar</span>
+                                <span class="currency-sprite currency-sprite--ferrar" aria-hidden="true"></span>
                                 <input id="currencyFerrar" class="currency-input" type="number" min="0" value="0" />
                             </div>
 
-                            <div class="currency-row is-light"></div>
-
-                            <div class="currency-row is-dark">
+                            <div class="currency-row">
                                 <span class="currency-label">Aurar</span>
+                                <span class="currency-sprite currency-sprite--aurar" aria-hidden="true"></span>
                                 <input id="currencyAurar" class="currency-input" type="number" min="0" value="0" />
                             </div>
                         </div>
-
                     </div>
+
+                    <!-- Pouch -->
+                    <div class="pouch-panel">
+                        <div class="pouch-titlebar">
+                            <span>Pouch</span>
+                            <span class="pouch-sprite" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="pouch-body">
+                                <textarea id="pouchNotes" class="vp-textarea" placeholder="Småföremål, t.ex. papperslappar, kryddor, småsten, etc...."></textarea>
+                        </div>
+                    </div>
+
                 </aside>
             </div>
         </section>
@@ -351,7 +384,7 @@
 
                     <label class="item-field item-field--wide">
                         <span>Beskrivning</span>
-                        <textarea id="descriptionInput" rows="4" placeholder="Skriv item-text här..."></textarea>
+                        <textarea id="descriptionInput"  rows="4" placeholder="Skriv item-text här..."></textarea>
                     </label>
                 </div>
 

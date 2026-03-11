@@ -1,23 +1,58 @@
-﻿.page {
+﻿/* =========================
+   Page wrapper
+   ========================= */
+
+.page {
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     padding: 2rem 1rem;
+    /* Om sheet blir bredare än viewport (stor inventory) */
+    overflow-x: auto;
 }
 
-/* Sheet container */
+/* =========================
+   Sheet container (2-col grid)
+   Header över båda, Main vänster, Inventory höger
+   ========================= */
+
 .sheet {
-    width: 960px;
+    /* 960px vänsterkolumn + inventory till höger kräver bredare sheet */
+    width: max-content;
+    max-width: calc(100% - 2rem);
     background: var(--paper);
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-2);
     box-shadow: var(--shadow);
     padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 960px auto;
+    grid-template-areas:
+        "header header"
+        "main   inventory";
     gap: 1.25rem;
+    align-items: start;
+    box-sizing: border-box;
 }
 
-/* Header */
+/* Placera dina befintliga block utan HTML-ändringar */
+.sheet-header {
+    grid-area: header;
+}
+
+.sheet-main {
+    grid-area: main;
+}
+
+.sheet-inventory {
+    grid-area: inventory;
+    align-self: start;
+}
+
+/* =========================
+   Header
+   ========================= */
+
 .sheet-header {
     display: flex;
     justify-content: space-between;
@@ -55,11 +90,15 @@
     color: var(--muted);
 }
 
-/* Main layout columns */
+/* =========================
+   Main layout columns (vänster block)
+   ========================= */
+
 .sheet-main {
     display: grid;
     grid-template-columns: 1.2fr 1.6fr 1.2fr;
     gap: 1rem;
+    min-width: 0; /* viktigt i grid så inget knuffar */
 }
 
 .sheet-column {
@@ -67,6 +106,7 @@
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
     padding: 0.75rem;
+    min-width: 0;
 }
 
     .sheet-column h2 {
@@ -85,4 +125,61 @@
     font-size: 0.9rem;
     color: var(--muted-2);
     margin-bottom: 0.5rem;
+}
+
+/* =========================
+   Shared textarea behavior (notes + pouch)
+   - fyller boxen i bredd
+   - kan bara dras nedåt
+   ========================= */
+
+.vp-textarea,
+.stat-textarea {
+    display: block;
+    width: 344px;
+    max-width: 100%;
+    box-sizing: border-box;
+    resize: vertical;
+    overflow: auto;
+    min-height: 220px;
+    border-radius: 6px;
+    border: 1px solid #b3a795;
+    background: #fffdf7;
+    padding: 0.5rem;
+    font: inherit;
+}
+
+/* Body-wrappers så marginalen blir lika på båda sidor */
+.pouch-body,
+.notes-body {
+    padding: 0.55rem;
+    box-sizing: border-box;
+}
+
+/* =========================
+   Responsive: stacka inventory under main
+   (justera breakpoint vid behov)
+   ========================= */
+
+@media (max-width: 1500px) {
+    .sheet {
+        width: min(960px, calc(100% - 2rem));
+        max-width: calc(100% - 2rem);
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "header"
+            "main"
+            "inventory";
+    }
+
+    .sheet-inventory {
+        justify-self: stretch;
+    }
+}
+
+/* Extra: på riktigt smala skärmar kan main-kolumnerna stackas */
+@media (max-width: 980px) {
+    .sheet-main {
+        grid-template-columns: 1fr;
+    }
 }
