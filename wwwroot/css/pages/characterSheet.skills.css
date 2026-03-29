@@ -1,0 +1,84 @@
+/* =========================
+   Skill panels (Lärdomar & Evolutioner)
+   ========================= */
+
+.skill-panel {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #f6f0e4;
+}
+
+.skill-panel + .skill-panel {
+    margin-top: 1.5rem;
+}
+
+.skill-titlebar {
+    background: #d8c9aa;
+    padding: 0.35rem 0.55rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.skill-add-btn {
+    padding: 0.1rem 0.45rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.skill-rows {
+    display: grid;
+}
+
+.skill-row {
+    display: grid;
+    grid-template-columns: 1fr 44px auto auto;
+    align-items: center;
+    column-gap: 0.35rem;
+    padding: 0.3rem 0.55rem;
+    background: #f3ead7;
+    border-bottom: 1px solid rgba(179, 167, 149, 0.6);
+}
+
+.skill-rows .skill-row:last-child {
+    border-bottom: 0;
+}
+
+.skill-name-input {
+    width: 100%;
+    box-sizing: border-box;
+    height: 28px;
+    border-radius: var(--radius-sm);
+    border: 1px solid #b3a795;
+    background: #fffdf7;
+    padding: 0 0.35rem;
+    font: inherit;
+    font-size: 0.85rem;
+}
+
+.skill-level-input {
+    width: 44px;
+    height: 28px;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    border: 1px solid #b3a795;
+    background: #fffdf7;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.skill-desc-btn,
+.skill-remove-btn {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.skill-remove-btn {
+    color: var(--muted);
+}

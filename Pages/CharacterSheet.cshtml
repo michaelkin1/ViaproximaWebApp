@@ -229,14 +229,25 @@
             </section>
 
 
-            <!-- Right column – skills -->
+            <!-- Right column – Lärdomar & Evolutioner -->
             <section class="sheet-column">
-                <h2>Färdigheter</h2>
-                <ul>
-                    <li>Kristallsejdare (widget senare)</li>
-                    <li>Shaman (widget senare)</li>
-                    <li>Övriga generiska skills</li>
-                </ul>
+
+                <div class="skill-panel">
+                    <div class="skill-titlebar">
+                        <span>Lärdomar</span>
+                        <button type="button" class="btn-small skill-add-btn" id="addLardomBtn">+</button>
+                    </div>
+                    <div class="skill-rows" id="lardomarRows"></div>
+                </div>
+
+                <div class="skill-panel">
+                    <div class="skill-titlebar">
+                        <span>Evolutioner</span>
+                        <button type="button" class="btn-small skill-add-btn" id="addEvolutionBtn">+</button>
+                    </div>
+                    <div class="skill-rows" id="evolutionerRows"></div>
+                </div>
+
             </section>
         </main>
 
@@ -306,6 +317,21 @@
 
 
 
+
+        <!-- Row description dialog (Lärdomar / Evolutioner) -->
+        <dialog id="rowDescDialog" class="item-dialog">
+            <form method="dialog" class="item-form">
+                <h3 style="margin:0 0 0.75rem;">Beskrivning</h3>
+                <label class="item-field">
+                    <span>Text</span>
+                    <textarea id="rowDescInput" rows="5" placeholder="Skriv beskrivning..."></textarea>
+                </label>
+                <div class="item-actions">
+                    <button type="button" id="rowDescCancelBtn" class="btn-small">Avbryt</button>
+                    <button type="button" id="rowDescSaveBtn" class="btn-small">Spara</button>
+                </div>
+            </form>
+        </dialog>
 
         <!-- Add/Edit Item dialog -->
         <dialog id="itemDialog" class="item-dialog">
@@ -410,7 +436,8 @@
     <link rel="stylesheet" href="~/css/pages/CharacterSheet.HP.css" asp-append-version="true" />
 
   <link rel="stylesheet" href="~/css/components/dialog.css" asp-append-version="true" />
-  
+  <link rel="stylesheet" href="~/css/pages/characterSheet.skills.css" asp-append-version="true" />
+
 }
 
 
@@ -431,6 +458,7 @@
 
     <script src="~/js/inventory/dialog.js"></script>
     <script src="~/js/pages/characterSheet.page.js"></script>
+    <script src="~/js/pages/characterSheet.skills.js"></script>
 }
 
   
