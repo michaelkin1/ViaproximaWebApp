@@ -8,10 +8,16 @@
     const xpInput = el("xpInput");
     const strengthInput = el("strengthInput");
     const barformagaInput = el("barformagaInput");
+    const talighetInput = el("talighetInput");
+    const fysiskInput = el("fysiskInput");
     const saveBtn = el("saveBtn");
     const saveStatus = el("saveStatus");
 
     const barkraftValue = el("barkraftValue");
+    const hpHeadMax = el("hpHeadMax");
+    const hpTorsoMax = el("hpTorsoMax");
+    const hpArmsMax = el("hpArmsMax");
+    const hpLegsMax = el("hpLegsMax");
     const slotsGrid = el("inventorySlots");
     const itemsGrid = el("inventoryItems");
 
@@ -53,6 +59,23 @@
         }
     }
 
+    async function refreshHp() {
+        try {
+            const talighet = Number(talighetInput?.value) || 0;
+            const fysisk = Number(fysiskInput?.value) || 0;
+
+            const data = await VP.api.rules.getHpRules(talighet, fysisk);
+
+            const max = data?.hpMax ?? 0;
+            if (hpHeadMax) hpHeadMax.textContent = max;
+            if (hpTorsoMax) hpTorsoMax.textContent = max;
+            if (hpArmsMax) hpArmsMax.textContent = max;
+            if (hpLegsMax) hpLegsMax.textContent = max;
+        } catch (err) {
+            console.error("HP rules error", err);
+        }
+    }
+
     async function reloadItems() {
         if (!state.characterId) return;
         try {
@@ -74,8 +97,11 @@
             xpInput.value = c.xp ?? 0;
             strengthInput.value = c.strength ?? 0;
             barformagaInput.value = c.barformaga ?? 0;
+            if (talighetInput) talighetInput.value = c.talighet ?? 0;
+            if (fysiskInput) fysiskInput.value = c.fysisk ?? 0;
 
             await refreshRules();
+            await refreshHp();
             await reloadItems();
             setStatus(`Loaded #${id}`);
         } catch (err) {
@@ -144,6 +170,8 @@
     // Events
     strengthInput.addEventListener("input", refreshRules);
     barformagaInput.addEventListener("input", refreshRules);
+    if (talighetInput) talighetInput.addEventListener("input", refreshHp);
+    if (fysiskInput) fysiskInput.addEventListener("input", refreshHp);
     saveBtn.addEventListener("click", saveCharacter);
 
     // Init
@@ -151,6 +179,7 @@
         console.log("[CharacterSheet] loaded (modular)");
         await dialog.wire();
         await refreshRules();
+        await refreshHp();
         if (state.characterId) await loadCharacter(state.characterId);
     })();
 })();

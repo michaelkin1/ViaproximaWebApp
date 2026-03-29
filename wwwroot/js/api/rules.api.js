@@ -8,5 +8,13 @@
         });
     }
 
-    VP.api.rules = { getInventoryGridRules };
+    async function getHpRules(talighet, fysisk) {
+        return VP.shared.requestJson("/api/rules/hp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ talighet, fysisk }),
+        });
+    }
+
+    VP.api.rules = { getInventoryGridRules, getHpRules };
 })();

@@ -55,6 +55,11 @@ public class Program
             c.Barformaga = dto.Barformaga;
             c.Xp = dto.Xp;
 
+            c.SkadaHuvud = dto.SkadaHuvud;
+            c.SkadaTorso = dto.SkadaTorso;
+            c.SkadaBen = dto.SkadaBen;
+            c.SkadaArmar = dto.SkadaArmar;
+
             await db.SaveChangesAsync();
             return Results.Ok();
         });
@@ -62,6 +67,15 @@ public class Program
         // =========================
         // Rules API (Bärkraft + grid size)
         // =========================
+
+        app.MapPost("/api/rules/hp", (HpRequest req) =>
+        {
+            var talighet = req.Talighet < 0 ? 0 : req.Talighet;
+            var fysisk = req.Fysisk < 0 ? 0 : req.Fysisk;
+            var hpMax = talighet + fysisk;
+            return Results.Ok(new HpResponse(hpMax));
+        });
+
         app.MapPost("/api/rules/inventory-grid", (InventoryGridRequest req) =>
         {
             var strength = req.Strength < 0 ? 0 : req.Strength;
