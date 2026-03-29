@@ -87,6 +87,34 @@
         }
     }
 
+    async function loadPortrait(id) {
+        const img   = el("portraitImg");
+        const empty = el("portraitEmpty");
+        const err   = el("portraitError");
+        if (!img || !empty) return;
+        try {
+            const data = await VP.shared.requestJson(`/api/characters/${id}/portrait`);
+            if (data?.url) {
+                await new Promise((resolve) => {
+                    const tempImg = new Image();
+                    tempImg.onload = () => {
+                        if (tempImg.naturalWidth > 2000 || tempImg.naturalHeight > 2000) {
+                            if (err) { err.textContent = "Bilden är för stor — max 2000x2000px"; err.style.display = "block"; }
+                            resolve();
+                            return;
+                        }
+                        img.src = data.url;
+                        img.style.display = "block";
+                        empty.style.display = "none";
+                        resolve();
+                    };
+                    tempImg.onerror = resolve;
+                    tempImg.src = data.url;
+                });
+            }
+        } catch { /* 404 = no portrait yet, keep empty state */ }
+    }
+
     async function loadCharacter(id) {
         try {
             setStatus("Loading...");
@@ -103,6 +131,7 @@
             await refreshRules();
             await refreshHp();
             await reloadItems();
+            await loadPortrait(id);
             setStatus(`Loaded #${id}`);
         } catch (err) {
             console.error("Load failed", err);
@@ -173,6 +202,52 @@
     if (talighetInput) talighetInput.addEventListener("input", refreshHp);
     if (fysiskInput) fysiskInput.addEventListener("input", refreshHp);
     saveBtn.addEventListener("click", saveCharacter);
+
+    // ---- Portrait ----
+    // Portraits are stored at wwwroot/portraits/{characterId}.{ext} — filesystem only, no DB.
+    // Future: add Character.PortraitFile column + one migration to persist the path in the DB,
+    //         then read c.portraitFile from getCharacter() instead of a separate GET call.
+    const portraitArea      = el("portraitArea");
+    const portraitImg       = el("portraitImg");
+    const portraitEmpty     = el("portraitEmpty");
+    const portraitFileInput = el("portraitFileInput");
+    const portraitError     = el("portraitError");
+
+    if (portraitArea && portraitFileInput && portraitImg && portraitEmpty) {
+        // Double-click when a portrait is shown → re-open file picker to replace it
+        portraitArea.addEventListener("click", () => portraitFileInput.click());
+
+        portraitFileInput.addEventListener("change", () => {
+            const file = portraitFileInput.files?.[0];
+            if (!file) return;
+
+            // Immediate local preview — no waiting for upload
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const tempImg = new Image();
+                tempImg.onload = () => {
+                    if (tempImg.naturalWidth > 2000 || tempImg.naturalHeight > 2000) {
+                        if (portraitError) { portraitError.textContent = "Bilden är för stor — max 2000x2000px"; portraitError.style.display = "block"; }
+                        return;
+                    }
+                    if (portraitError) portraitError.style.display = "none";
+                    portraitImg.src = e.target.result;
+                    portraitImg.style.display = "block";
+                    portraitEmpty.style.display = "none";
+
+                    // Persist to disk in the background
+                    if (state.characterId) {
+                        const form = new FormData();
+                        form.append("file", file);
+                        fetch(`/api/characters/${state.characterId}/portrait`, { method: "POST", body: form })
+                            .catch(err => console.error("[Portrait] upload failed", err));
+                    }
+                };
+                tempImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
 
     // Init
     (async () => {

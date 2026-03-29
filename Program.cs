@@ -291,6 +291,41 @@ public class Program
         });
 
         // =========================
+        // Portrait API (filesystem only — no DB)
+        // =========================
+
+        // GET: return portrait URL if file exists on disk, else 404
+        app.MapGet("/api/characters/{id:int}/portrait", (IWebHostEnvironment env, int id) =>
+        {
+            var dir = Path.Combine(env.WebRootPath, "portraits");
+            if (!Directory.Exists(dir)) return Results.NotFound();
+            var match = Directory.EnumerateFiles(dir, $"{id}.*").FirstOrDefault();
+            return match is null
+                ? Results.NotFound()
+                : Results.Ok(new { url = $"/portraits/{Path.GetFileName(match)}" });
+        });
+
+        // POST: save uploaded portrait to wwwroot/portraits/{id}.{ext}, overwrite if present
+        app.MapPost("/api/characters/{id:int}/portrait", async (IWebHostEnvironment env, int id, IFormFile file) =>
+        {
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (ext is not (".png" or ".jpg" or ".jpeg" or ".webp"))
+                return Results.BadRequest("Unsupported file type.");
+
+            var dir = Path.Combine(env.WebRootPath, "portraits");
+            Directory.CreateDirectory(dir);
+
+            foreach (var old in Directory.EnumerateFiles(dir, $"{id}.*"))
+                File.Delete(old);
+
+            var dest = Path.Combine(dir, $"{id}{ext}");
+            await using var stream = File.Create(dest);
+            await file.CopyToAsync(stream);
+
+            return Results.Ok(new { url = $"/portraits/{id}{ext}" });
+        }).DisableAntiforgery();
+
+        // =========================
         // Pipeline
         // =========================
         if (!app.Environment.IsDevelopment())

@@ -166,7 +166,15 @@
             <section class="sheet-column sheet-column--center">
                 <h2>Porträtt &amp; Anteckningar</h2>
 
-                <div class="portrait-placeholder">Porträtt här</div>
+                <div class="portrait-area" id="portraitArea" title="Lägg till bild på din karaktär">
+                    <input type="file" id="portraitFileInput" class="portrait-file-input" accept="image/png,image/jpeg,image/webp" />
+                    <img id="portraitImg" class="portrait-img" alt="Porträtt" />
+                    <div class="portrait-empty" id="portraitEmpty">
+                        <span class="portrait-empty-icon">+</span>
+                        <span class="portrait-empty-text">Lägg till bild på din karaktär</span>
+                    </div>
+                </div>
+                <div id="portraitError" class="portrait-error" style="display:none;"></div>
 
                 <!-- HP-panel (4 rader) -->
                 <div class="hp-panel">
@@ -219,7 +227,6 @@
                 </div>
 
 
-                <p class="hint">Senare: länk kopplad till en bild i <code>wwwroot/portraits/</code>.</p>
 
                 <!-- Anteckningar (valfritt men praktiskt om du ändå har en centerkolumn) -->
                 <label class="notes-block">
@@ -237,6 +244,11 @@
                         <span>Lärdomar</span>
                         <button type="button" class="btn-small skill-add-btn" id="addLardomBtn">+</button>
                     </div>
+                    <div class="skill-header-row">
+                        <span class="skill-col-naam">Namn</span>
+                        <span class="skill-col-niva">Nivå</span>
+                        <span class="skill-col-beskr">Beskrivning</span>
+                    </div>
                     <div class="skill-rows" id="lardomarRows"></div>
                 </div>
 
@@ -244,6 +256,11 @@
                     <div class="skill-titlebar">
                         <span>Evolutioner</span>
                         <button type="button" class="btn-small skill-add-btn" id="addEvolutionBtn">+</button>
+                    </div>
+                    <div class="skill-header-row">
+                        <span class="skill-col-naam">Namn</span>
+                        <span class="skill-col-niva">Nivå</span>
+                        <span class="skill-col-beskr">Beskrivning</span>
                     </div>
                     <div class="skill-rows" id="evolutionerRows"></div>
                 </div>
