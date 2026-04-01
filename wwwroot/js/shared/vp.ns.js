@@ -6,4 +6,5 @@
     VP.grid = VP.grid || {};
     VP.inventory = VP.inventory || {};
     VP.pages = VP.pages || {};
+    VP.pets  = VP.pets  || {};
 })();

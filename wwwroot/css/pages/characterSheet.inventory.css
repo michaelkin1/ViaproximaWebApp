@@ -259,4 +259,52 @@
     image-rendering: optimizeQuality /* fallback */
 }
 
+/* =========================
+   Pet panel (Djur)
+   ========================= */
+
+.pet-panel {
+    width: 100%;
+    margin-top: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: #f6f0e4;
+}
+
+.pet-panel-titlebar {
+    background: #d8c9aa;
+    padding: 0.45rem 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pet-panel-body {
+    padding: 0.5rem;
+}
+
+/* Pet grid fills the full panel width with fluid 1fr columns */
+.pet-panel .inventory-wrap {
+    width: 100%;
+}
+
+.pet-panel .inventory-grid {
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-rows: repeat(2, 64px) !important;
+    grid-auto-rows: 64px !important;
+}
+
+.pet-panel .slot {
+    width: auto;
+    height: auto;
+    min-height: 64px;
+}
+
 
