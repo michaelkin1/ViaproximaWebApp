@@ -297,14 +297,12 @@
 .pet-panel .inventory-grid {
     width: 100%;
     grid-template-columns: repeat(4, 1fr) !important;
-    grid-template-rows: repeat(2, 64px) !important;
-    grid-auto-rows: 64px !important;
 }
 
 .pet-panel .slot {
     width: auto;
     height: auto;
-    min-height: 64px;
+    aspect-ratio: 1;
 }
 
 

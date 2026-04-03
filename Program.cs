@@ -171,8 +171,8 @@ public class Program
         // =========================
         app.MapGet("/api/icons/catalog", (IWebHostEnvironment env) =>
         {
-            // scans: wwwroot/Icons/<Primary>/<Secondary>/*.svg  OR wwwroot/Icons/<Primary>/*.svg
-            var iconsRoot = Path.Combine(env.WebRootPath, "Icons");
+            // scans: wwwroot/IconsItems/<Primary>/<Secondary>/*.svg  OR wwwroot/IconsItems/<Primary>/*.svg
+            var iconsRoot = Path.Combine(env.WebRootPath, "IconsItems");
 
             if (!Directory.Exists(iconsRoot))
                 return Results.Ok(new { primaries = Array.Empty<object>() });
@@ -266,7 +266,7 @@ public class Program
                 if (secondaryDirs.Count == 0)
                 {
                     // Root-only primary (e.g. Shields/*.svg directly)
-                    var urlPrefix = $"/Icons/{primaryKey}";
+                    var urlPrefix = $"/IconsItems/{primaryKey}";
                     secondaries.Add(BuildSecondary(primaryKey, "_root", primaryDir, urlPrefix));
                 }
                 else
@@ -274,7 +274,7 @@ public class Program
                     foreach (var secDir in secondaryDirs)
                     {
                         var secondaryKey = Path.GetFileName(secDir);
-                        var urlPrefix = $"/Icons/{primaryKey}/{secondaryKey}";
+                        var urlPrefix = $"/IconsItems/{primaryKey}/{secondaryKey}";
                         secondaries.Add(BuildSecondary(primaryKey, secondaryKey, secDir, urlPrefix));
                     }
                 }

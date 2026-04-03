@@ -5,7 +5,7 @@
     const PET_COLS = 4;
     const PET_ROWS = 2;
 
-    // Hardcoded catalog — populate icons[] when SVGs are dropped into wwwroot/Icons/Pets/{type}/
+    // Hardcoded catalog — populate icons[] when SVGs are dropped into wwwroot/IconsItems/Pets/{type}/
     const PET_CATALOG = [
         { typeKey: "Fickdjur",  typeLabel: "Fickdjur",  icons: [] },
         { typeKey: "Fotdjur",   typeLabel: "Fotdjur",   icons: [] },
@@ -73,14 +73,14 @@
                 const msg = document.createElement("div");
                 msg.className = "hint";
                 msg.textContent = typeKey
-                    ? `Inga ikoner ännu — lägg till SVG-filer i wwwroot/Icons/Pets/${typeKey}/`
+                    ? `Inga ikoner ännu — lägg till SVG-filer i wwwroot/IconsItems/Pets/${typeKey}/`
                     : "Välj djurtyp för att se ikoner.";
                 dom.iconGrid.appendChild(msg);
                 return;
             }
 
             for (const file of icons) {
-                const url = `/Icons/Pets/${typeKey}/${file}`;
+                const url = `/IconsItems/Pets/${typeKey}/${file}`;
                 const btn = document.createElement("button");
                 btn.type = "button";
                 btn.className = "icon-tile";
@@ -136,7 +136,7 @@
 
             if (pet.iconFile) {
                 dom.iconFileInput.value = pet.iconFile;
-                const url = `/Icons/Pets/${pet.typeKey}/${pet.iconFile}`;
+                const url = `/IconsItems/Pets/${pet.typeKey}/${pet.iconFile}`;
                 dom.iconPreview.src = url;
                 dom.iconPreview.style.display = "block";
             }

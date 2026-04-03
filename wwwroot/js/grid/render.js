@@ -59,9 +59,9 @@
     function itemIconUrl(it) {
         if (!it.iconPrimary || !it.iconFile) return "";
         if (!it.iconSecondary || it.iconSecondary === "_root") {
-            return `/Icons/${it.iconPrimary}/${it.iconFile}`;
+            return `/IconsItems/${it.iconPrimary}/${it.iconFile}`;
         }
-        return `/Icons/${it.iconPrimary}/${it.iconSecondary}/${it.iconFile}`;
+        return `/IconsItems/${it.iconPrimary}/${it.iconSecondary}/${it.iconFile}`;
     }
 
     function renderItems(itemsGrid, state, items, onDblClick) {
