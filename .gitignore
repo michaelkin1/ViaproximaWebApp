@@ -485,6 +485,4 @@ app.db
 app.db-shm
 app.db-wal
 
-CLAUDE.md
-
 ClaudeChangeTracker.txt

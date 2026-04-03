@@ -1,0 +1,187 @@
+CHANGE 1:
+ Files changed
+
+  Models/InventoryGridDtos.cs
+
+  Added two new records mirroring the existing DTOs:
+  HpRequest(int Talighet, int Fysisk)
+  HpResponse(int HpMax)
+
+  Program.cs
+
+  1. New endpoint POST /api/rules/hp — stateless, takes {talighet, fysisk}, clamps negatives to 0, returns { hpMax: talighet + fysisk }. Mirrors the inventory-grid endpoint exactly.
+  2. Expanded PUT /api/characters/{id} — added SkadaHuvud, SkadaTorso, SkadaBen, SkadaArmar field mappings. No migration needed — those columns already exist in the DB from the earlier AddCharacterStats
+  migration.
+
+  wwwroot/js/api/rules.api.js
+
+  Added getHpRules(talighet, fysisk) alongside getInventoryGridRules. Updated the exported object.
+
+  wwwroot/js/pages/characterSheet.page.js
+
+  - Added DOM refs: talighetInput, fysiskInput, hpHeadMax, hpTorsoMax, hpArmsMax, hpLegsMax
+  - Added refreshHp() — calls VP.api.rules.getHpRules() and sets all four max spans to the result (mirrors refreshRules() exactly)
+  - loadCharacter() now populates talighetInput and fysiskInput from the API response, then calls refreshHp()
+  - Added input event listeners on both stat inputs → refreshHp
+  - Added await refreshHp() to the init sequence
+
+
+CHANGE 2: 
+ Summary of changes:
+
+  Pages/CharacterSheet.cshtml
+  - Replaced the placeholder right-column stub (Färdigheter / three dummy <li> items) with two .skill-panel blocks —
+  Lärdomar on top, Evolutioner below
+  - Added #rowDescDialog — a minimal <dialog> that reuses .item-dialog, .item-field, and .item-actions classes (same
+  structure as the existing item dialog)
+  - Linked characterSheet.skills.css in @section Styles
+  - Added characterSheet.skills.js at the end of @section Scripts
+
+  wwwroot/css/pages/characterSheet.skills.css (new)
+  - .skill-panel — matches .hp-panel (border, radius, overflow hidden, #f6f0e4 background)
+  - .skill-titlebar — matches .hp-titlebar (#d8c9aa, bold uppercase) but with display:flex;
+  justify-content:space-between so the + button sits on the right
+  - .skill-row — 4-column grid (1fr 44px auto auto: name | level | desc btn | remove btn), same #f3ead7 row background
+  as HP/currency rows
+  - .skill-name-input / .skill-level-input — match .hp-input dimensions and border styling
+  - .skill-panel + .skill-panel — margin-top: 1.5rem gives breathing room between the two sections
+
+  wwwroot/js/pages/characterSheet.skills.js (new)
+  - Self-contained IIFE (same pattern as characterSheet.page.js)
+  - Hardcoded dummy data for both sections (2 Lärdomar rows, 1 Evolutioner row pre-loaded)
+  - + button appends a new empty row; × button removes it
+  - Beskr. button: title attribute shows current description as a tooltip (or "Ingen beskrivning" if empty); clicking
+  opens #rowDescDialog to edit and save
+
+
+CHANGE 3: 
+What changed:
+
+  Pages/CharacterSheet.cshtml
+  - Replaced <div class="portrait-placeholder"> with a .portrait-area div containing an <img id="portraitImg"> (hidden
+  until image is selected) and a .portrait-empty overlay showing the + and label text
+  - Added hidden <input type="file" id="portraitFileInput">
+  - Removed the old hint <p> about wwwroot/portraits/
+
+  wwwroot/css/pages/characterSheet.layout.css
+  - Replaced the old .portrait-placeholder rule with .portrait-area — fixed height: 200px; min-height: 200px so the
+  center column never shrinks, border: 1px solid var(--border-2), background: var(--panel-2), overflow: hidden, cursor:
+  pointer
+  - .portrait-img — position: absolute; inset: 0; object-fit: cover — scales without distortion
+  - .portrait-empty — absolutely positioned overlay, flex column, centered + icon and label text; pointer-events: none
+  so clicks pass through to the parent area
+
+  wwwroot/js/pages/characterSheet.page.js
+  - Added portrait block with a clearly marked TODO comment describing the exact future steps (POST endpoint, GET on
+  init, Character.PortraitFile migration)
+  - Click on .portrait-area → triggers the hidden file input
+  - File input change → FileReader.readAsDataURL → sets img.src, hides the empty overlay
+
+  Future server-side step (the TODO):
+  Add POST /api/characters/{id}/portrait accepting IFormFile, saving to wwwroot/portraits/{id}.{ext}. Add GET
+  /api/characters/{id}/portrait returning the URL. Add public string? PortraitFile { get; set; } to Character.cs + one
+  migration. On loadCharacter(), fetch the portrait URL and populate portraitImg.src instead of the FileReader path. The
+   JS wiring shape stays identical — only the data source changes from a local blob to a server URL.
+Diagnostic findings:
+
+  1. Portrait HTML (CharacterSheet.cshtml line 169): <div class="portrait-area" id="portraitArea"> — correct element,
+  correct ID.
+  2. File input (line 176): <input type="file" id="portraitFileInput" style="display:none"> — exists, correct ID, but it
+   is outside and after the .portrait-area div, as a sibling.
+  3. Click handler (characterSheet.page.js line 202): portraitArea.addEventListener("click", () =>
+  portraitFileInput.click()) — syntactically correct, but depends on the browser accepting a programmatic .click() call
+  on a display:none input triggered from a listener. This is the weak link.
+  4. CSS/pointer-events: .portrait-empty correctly has pointer-events: none. .portrait-img has display: none from CSS.
+  No z-index or overlay issues found in the surrounding layout. No blocking parent CSS.
+  5. JS execution: IIFE is at bottom of <body> via @section Scripts (line 59 of _Layout.cshtml) — DOM is ready. Safety
+  abort checks nameInput, saveBtn, slotsGrid, itemsGrid — all present in HTML. The portrait if condition checks all four
+   portrait elements — all present. Code is reached.
+
+  Root cause: portraitFileInput.click() called programmatically on a display:none element is unreliable. While
+  Chrome/Edge support it, it fails silently in other contexts. The fix is to eliminate the JS trigger entirely — move
+  the file input inside the portrait area and make it an invisible full-size overlay via CSS. The user then clicks the
+  input directly; no JS dispatch needed.
+
+Fix:
+  Root cause: The original approach called portraitFileInput.click() programmatically on a display:none element from
+  within a JS event listener. While this technically works in Chrome/Edge, it's fragile — browsers treat programmatic
+  .click() on hidden inputs inconsistently, and it can be silently blocked depending on browser version, security
+  context, or timing.
+
+  Fix: Moved the <input type="file"> inside the .portrait-area div and gave it a new .portrait-file-input CSS class that
+   positions it as a transparent (opacity: 0) full-size overlay at z-index: 2. The user now clicks directly on the input
+   itself — the browser opens the file picker natively with no JavaScript dispatch involved at all. The change event
+  handler in JS is unchanged; only the click wiring was removed. The img stays at z-index: 1 so the input overlay stays
+  on top even after a portrait is loaded, allowing the user to click again to change it.
+
+
+Diagnosis:
+
+  1. Change handler (characterSheet.page.js lines 202–222): Code is correct — reader.readAsDataURL(file) is called,
+  onload sets portraitImg.src = e.target.result, portraitImg.style.display = "block", portraitEmpty.style.display =
+  "none". The FileReader and img assignment are fine.
+  2. portraitImg found correctly: el("portraitImg") at line 197 — element exists in HTML, captured before the if,
+  accessible in closure. Not null.
+  3. Empty overlay hidden: portraitEmpty.style.display = "none" is called. ✓
+  4. Root cause — the file input overlay never hides after selection: .portrait-file-input has position: absolute;
+  inset: 0; opacity: 0; z-index: 2. After the image loads, this element stays in place covering the entire portrait
+  area. Even though opacity: 0 means "transparent" in CSS, on Windows/Chrome the native file input renders with OS-level
+   chrome (button, text box) that can bleed through the opacity and visually obscure the z-index: 1 image underneath it.
+   The portraitImg IS being set — but it's hidden behind the un-removed file input overlay.
+  5. loadPortrait has the same issue — when loading a saved portrait on page refresh, the file input overlay also stays
+  in place.
+
+  Fix:
+  - In reader.onload: hide the file input after image loads
+  - In loadPortrait: same
+  - For double-click to change: dblclick on portraitArea calls portraitFileInput.click() — this is a synchronous call
+  inside a direct user gesture handler (dblclick IS a user activation), which is reliable in Chrome/Edge
+
+
+Root cause of Bug 1: The <input type="file"> overlay (position: absolute; inset: 0; z-index: 2; opacity: 0) was never
+  removed after an image was selected. Even though opacity: 0 makes it visually transparent in theory, on Windows/Chrome
+   the native file input renders OS-level chrome (button and text area) that can bleed through the CSS opacity and
+  obscure the image below it (z-index: 1). The image was being set correctly — it just couldn't be seen through the
+  overlay.
+
+  Fixes:
+  - reader.onload: adds portraitFileInput.style.display = "none" — hides the overlay the moment the image is shown, so
+  nothing sits on top of the portrait
+  - loadPortrait: same — when loading a saved portrait on page refresh, the overlay is also removed
+  - portraitArea dblclick: calls portraitFileInput.click() synchronously inside a dblclick user gesture handler —
+  Chrome/Edge recognise dblclick as a valid user activation for file input triggers, so the picker opens reliably. Once
+  the user selects a new image, the change handler fires again identically to the first selection: preview is immediate,
+   file input is hidden, upload goes to the server in the background.
+
+
+
+  Line 205 (was): portraitArea.addEventListener("dblclick", () => portraitFileInput.click());
+
+  Lines 205–208 (now):
+  205        portraitArea.addEventListener("dblclick", () => {
+  206            portraitFileInput.style.display = "block";
+  207            portraitFileInput.click();
+  208        });
+
+  All three fix points confirmed present:
+  1. reader.onload (line 217): portraitFileInput.style.display = "none" after portraitImg.src set ✓
+  2. loadPortrait (line 101): inp.style.display = "none" after img.src = data.url ✓
+  3. dblclick (lines 205–208): portraitFileInput.style.display = "block" then .click() ✓
+
+
+
+
+
+  Root cause of this bug: The opacity-0 overlay approach relies on direct OS-level clicks landing on the "Choose File"
+  button zone within the native <input type="file"> element. On Windows/Chrome, clicking elsewhere in the (invisible)
+  element area doesn't reliably open the file picker — the click is consumed without triggering the dialog.
+
+  CSS (characterSheet.layout.css, lines 136–144): Replaced the positioning/opacity overlay rules with display: none. The
+   input no longer needs to be in the render tree at all.
+
+  JS (characterSheet.page.js, line 205): Changed dblclick → click on portraitArea, and simplified to a one-liner.
+  portraitFileInput.click() called from inside a user-event handler counts as a trusted user activation — Chrome will
+  open the file picker every time, regardless of where in the area the user clicked. Single-click now works for both
+  first-time selection and replacement.
+
+  The display: none lines in reader.onload and loadPortrait are now no-ops but harmless — left in place.
