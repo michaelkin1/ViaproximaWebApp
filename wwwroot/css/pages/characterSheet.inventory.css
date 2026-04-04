@@ -289,14 +289,31 @@
     padding: 0.5rem;
 }
 
-/* Pet grid fills the full panel width with fluid 1fr columns */
+/* Pet grid: fluid columns fill panel width.
+   #petSlots (in-flow) drives the wrap's height via auto rows + aspect-ratio:1 on slots.
+   #petItems is absolutely positioned over the wrap, giving it a definitively-sized
+   containing block so its 1fr rows can resolve without a circular dependency. */
 .pet-panel .inventory-wrap {
     width: 100%;
+    position: relative;
 }
 
 .pet-panel .inventory-grid {
     width: 100%;
     grid-template-columns: repeat(4, 1fr) !important;
+}
+
+/* Slots determine wrap height: auto rows sized by slot aspect-ratio:1 = column width */
+#petSlots {
+    grid-template-rows: repeat(2, auto) !important;
+}
+
+/* Items overlay absolutely so they don't participate in wrap height calculation;
+   1fr rows resolve from the definite height provided by position:absolute + inset:0 */
+#petItems {
+    position: absolute;
+    inset: 0;
+    grid-template-rows: repeat(2, 1fr) !important;
 }
 
 .pet-panel .slot {

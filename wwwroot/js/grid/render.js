@@ -43,6 +43,8 @@
         const lines = [];
         if (it.name && it.name.trim()) lines.push(it.name.trim());
 
+        if (it.typeKey && it.typeKey.trim()) lines.push(`Tamdjurstyp: ${it.typeKey.trim()}`);
+
         const magic = it.isMagic ? " • Magisk" : "";
         lines.push(`Storlek: ${it.size ?? "1x1"}${magic}`);
 
@@ -57,6 +59,7 @@
     }
 
     function itemIconUrl(it) {
+        if (it.iconUrl) return it.iconUrl;
         if (!it.iconPrimary || !it.iconFile) return "";
         if (!it.iconSecondary || it.iconSecondary === "_root") {
             return `/IconsItems/${it.iconPrimary}/${it.iconFile}`;

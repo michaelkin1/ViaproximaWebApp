@@ -291,6 +291,55 @@ public class Program
         });
 
         // =========================
+        // Pets icon catalog API
+        // =========================
+        app.MapGet("/api/pets/icons/catalog", (IWebHostEnvironment env) =>
+        {
+            var root = Path.Combine(env.WebRootPath, "IconsPets");
+            if (!Directory.Exists(root))
+                return Results.Ok(new { types = Array.Empty<object>() });
+
+            var types = Directory.EnumerateDirectories(root)
+                .Select(dir =>
+                {
+                    var typeKey = Path.GetFileName(dir);
+                    var icons = Directory.EnumerateFiles(dir, "*.svg", SearchOption.TopDirectoryOnly)
+                        .Select(f => new
+                        {
+                            file = Path.GetFileName(f),
+                            url  = $"/IconsPets/{typeKey}/{Path.GetFileName(f)}"
+                        })
+                        .OrderBy(x => x.file)
+                        .ToList();
+                    return new { typeKey, icons };
+                })
+                .OrderBy(t => t.typeKey)
+                .ToList<object>();
+
+            return Results.Ok(new { types });
+        });
+
+        app.MapGet("/api/pets/icons", (IWebHostEnvironment env) =>
+        {
+            var root = Path.Combine(env.WebRootPath, "IconsPets", "Pets");
+            if (!Directory.Exists(root))
+                return Results.Ok(new { icons = Array.Empty<object>() });
+
+            var icons = Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+                .Where(f => f.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) ||
+                            f.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                .Select(f =>
+                {
+                    var rel = Path.GetRelativePath(root, f).Replace('\\', '/');
+                    return new { file = rel, url = $"/IconsPets/Pets/{rel}" };
+                })
+                .OrderBy(x => x.file)
+                .ToList<object>();
+
+            return Results.Ok(new { icons });
+        });
+
+        // =========================
         // Portrait API (filesystem only — no DB)
         // =========================
 

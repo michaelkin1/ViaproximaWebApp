@@ -1,29 +1,18 @@
-// pets/pets.js
-// Self-contained pet grid controller.
-// Uses VP.grid.placement and VP.grid.render; no API calls (local state only for now).
+VP.pets = VP.pets || {};
+
 (() => {
     const PET_COLS = 4;
     const PET_ROWS = 2;
 
-    // Hardcoded catalog — populate icons[] when SVGs are dropped into wwwroot/IconsItems/Pets/{type}/
-    const PET_CATALOG = [
-        { typeKey: "Fickdjur",  typeLabel: "Fickdjur",  icons: [] },
-        { typeKey: "Fotdjur",   typeLabel: "Fotdjur",   icons: [] },
-        { typeKey: "Riddjur",   typeLabel: "Riddjur",   icons: [] },
-        { typeKey: "Klampdjur", typeLabel: "Klampdjur", icons: [] },
-    ];
-
     function createController(dom) {
         let nextId = 1;
 
-        // State shape matches what VP.grid.render expects
         const state = {
             pets: [],
             currentCols: PET_COLS,
             currentRows: PET_ROWS,
         };
 
-        // Map a pet record to the shape VP.grid.render.renderItems expects
         function toRenderItem(p) {
             return {
                 id: p.id,
@@ -31,8 +20,8 @@
                 y: p.y,
                 size: p.size,
                 name: p.name,
-                iconPrimary: "Pets",
-                iconSecondary: p.typeKey,
+                typeKey: p.typeKey,
+                iconUrl: p.iconFile ? `/IconsPets/Pets/${p.iconFile}` : "",
                 iconFile: p.iconFile,
                 isMagic: false,
                 description: p.description,
@@ -44,56 +33,45 @@
             VP.grid.render.renderItems(dom.itemsGrid, state, state.pets.map(toRenderItem), openEdit);
         }
 
-        // --- Dialog helpers ---
-
-        function fillTypeSelect() {
-            dom.typeSelect.innerHTML = "";
-            const ph = document.createElement("option");
-            ph.value = "";
-            ph.textContent = "– Välj typ –";
-            dom.typeSelect.appendChild(ph);
-            for (const t of PET_CATALOG) {
-                const o = document.createElement("option");
-                o.value = t.typeKey;
-                o.textContent = t.typeLabel;
-                dom.typeSelect.appendChild(o);
-            }
+        function initTypeSelect() {
+            dom.typeSelect.innerHTML =
+                `<option value="">– Välj typ –</option>
+                 <option value="Fickdjur">Fickdjur</option>
+                 <option value="Fotdjur">Fotdjur</option>
+                 <option value="Klampdjur">Klampdjur</option>
+                 <option value="Riddjur">Riddjur</option>`;
         }
 
-        function renderIconPicker(typeKey) {
+        async function renderIconPicker() {
             dom.iconGrid.innerHTML = "";
             dom.iconFileInput.value = "";
             dom.iconPreview.style.display = "none";
             dom.iconPreview.src = "";
 
-            const cat = PET_CATALOG.find(x => x.typeKey === typeKey);
-            const icons = cat?.icons ?? [];
+            const { icons } = await VP.api.petsIcons.getIcons();
 
             if (!icons.length) {
                 const msg = document.createElement("div");
                 msg.className = "hint";
-                msg.textContent = typeKey
-                    ? `Inga ikoner ännu — lägg till SVG-filer i wwwroot/IconsItems/Pets/${typeKey}/`
-                    : "Välj djurtyp för att se ikoner.";
+                msg.textContent = "Inga ikoner ännu — lägg till filer i wwwroot/IconsPets/Pets/";
                 dom.iconGrid.appendChild(msg);
                 return;
             }
 
-            for (const file of icons) {
-                const url = `/IconsItems/Pets/${typeKey}/${file}`;
+            for (const icon of icons) {
                 const btn = document.createElement("button");
                 btn.type = "button";
                 btn.className = "icon-tile";
-                btn.title = file;
+                btn.title = icon.file;
 
                 const img = document.createElement("img");
-                img.src = url;
-                img.alt = file;
+                img.src = icon.url;
+                img.alt = icon.file;
                 btn.appendChild(img);
 
                 btn.addEventListener("click", () => {
-                    dom.iconFileInput.value = file;
-                    dom.iconPreview.src = url;
+                    dom.iconFileInput.value = icon.file;
+                    dom.iconPreview.src = icon.url;
                     dom.iconPreview.style.display = "block";
                     dom.iconGrid.querySelectorAll(".icon-tile.is-selected")
                         .forEach(x => x.classList.remove("is-selected"));
@@ -104,7 +82,7 @@
             }
         }
 
-        function resetForm() {
+        function resetFormSync() {
             dom.idInput.value = "";
             dom.nameInput.value = "";
             dom.sizeSelect.value = "1x1";
@@ -114,36 +92,40 @@
             dom.iconPreview.src = "";
             dom.iconGrid.innerHTML = "";
             dom.deleteBtn.style.display = "none";
-            fillTypeSelect();
         }
 
-        function openCreate() {
-            resetForm();
+        async function openCreate() {
+            resetFormSync();
+            initTypeSelect();
             dom.dialog.showModal();
+            await renderIconPicker();
         }
 
-        function openEdit(petId) {
+        async function openEdit(petId) {
             const pet = state.pets.find(p => p.id === petId);
             if (!pet) return;
 
-            resetForm();
+            resetFormSync();
+            initTypeSelect();
             dom.nameInput.value = pet.name ?? "";
-            dom.typeSelect.value = pet.typeKey ?? "";
             dom.sizeSelect.value = pet.size ?? "1x1";
             dom.descInput.value = pet.description ?? "";
+            dom.idInput.value = String(pet.id);
+            dom.deleteBtn.style.display = "";
+            dom.typeSelect.value = pet.typeKey ?? "";
+            dom.dialog.showModal();
 
-            renderIconPicker(pet.typeKey);
+            await renderIconPicker();
 
             if (pet.iconFile) {
                 dom.iconFileInput.value = pet.iconFile;
-                const url = `/IconsItems/Pets/${pet.typeKey}/${pet.iconFile}`;
+                const url = `/IconsPets/Pets/${pet.iconFile}`;
                 dom.iconPreview.src = url;
                 dom.iconPreview.style.display = "block";
+                dom.iconGrid.querySelectorAll(".icon-tile").forEach(btn => {
+                    if (btn.title === pet.iconFile) btn.classList.add("is-selected");
+                });
             }
-
-            dom.idInput.value = String(pet.id);
-            dom.deleteBtn.style.display = "";
-            dom.dialog.showModal();
         }
 
         function save() {
@@ -156,7 +138,6 @@
 
             if (!typeKey) return alert("Välj djurtyp.");
 
-            // Build placement items excluding the pet being edited
             const others = state.pets.filter(p => p.id !== editingId);
             const placementItems = others.map(p => ({ id: p.id, x: p.x, y: p.y, size: p.size }));
 
@@ -211,7 +192,6 @@
 
         function wire() {
             dom.addBtn.addEventListener("click", openCreate);
-            dom.typeSelect.addEventListener("change", () => renderIconPicker(dom.typeSelect.value));
             dom.cancelBtn.addEventListener("click", () => dom.dialog.close());
             dom.saveBtn.addEventListener("click", save);
             dom.deleteBtn.addEventListener("click", deleteCurrent);
@@ -220,28 +200,28 @@
         return { wire, renderGrid };
     }
 
+    VP.pets = VP.pets || {};
     VP.pets.createController = createController;
 
-    // Self-init against the page DOM
     (() => {
         function el(id) { return document.getElementById(id); }
 
         const dom = {
-            addBtn:       el("addPetBtn"),
-            dialog:       el("petDialog"),
-            idInput:      el("petIdInput"),
-            nameInput:    el("petNameInput"),
-            typeSelect:   el("petTypeSelect"),
-            sizeSelect:   el("petSizeSelect"),
-            iconGrid:     el("petIconGrid"),
+            addBtn:        el("addPetBtn"),
+            dialog:        el("petDialog"),
+            idInput:       el("petIdInput"),
+            nameInput:     el("petNameInput"),
+            typeSelect:    el("petTypeSelect"),
+            sizeSelect:    el("petSizeSelect"),
+            iconGrid:      el("petIconGrid"),
             iconFileInput: el("petIconFileInput"),
-            iconPreview:  el("petIconPreview"),
-            descInput:    el("petDescInput"),
-            saveBtn:      el("petSaveBtn"),
-            cancelBtn:    el("petCancelBtn"),
-            deleteBtn:    el("petDeleteBtn"),
-            slotsGrid:    el("petSlots"),
-            itemsGrid:    el("petItems"),
+            iconPreview:   el("petIconPreview"),
+            descInput:     el("petDescInput"),
+            saveBtn:       el("petSaveBtn"),
+            cancelBtn:     el("petCancelBtn"),
+            deleteBtn:     el("petDeleteBtn"),
+            slotsGrid:     el("petSlots"),
+            itemsGrid:     el("petItems"),
         };
 
         if (!dom.addBtn || !dom.dialog || !dom.slotsGrid) {

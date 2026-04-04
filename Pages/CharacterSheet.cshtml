@@ -370,7 +370,7 @@
         <!-- Add/Edit Pet dialog -->
         <dialog id="petDialog" class="item-dialog">
             <form method="dialog" class="item-form" id="petForm">
-                <h3 style="margin:0 0 0.75rem;">Lägg till / redigera djur</h3>
+                <h3 style="margin:0 0 0.75rem;">Lägg till / redigera tamdjur</h3>
 
                 <input type="hidden" id="petIdInput" value="" />
 
@@ -382,7 +382,7 @@
                     </label>
 
                     <label class="item-field">
-                        <span>Djurtyp</span>
+                        <span>Tamdjurstyp</span>
                         <select id="petTypeSelect">
                             <option value="">– Välj typ –</option>
                         </select>
@@ -420,7 +420,7 @@
                 <div class="item-actions">
                     <button type="button" id="petCancelBtn" class="btn-small">Avbryt</button>
                     <button type="button" id="petDeleteBtn" class="btn-small" style="display:none;">Ta bort</button>
-                    <button type="button" id="petSaveBtn" class="btn-small">Spara</button>
+                    <button type="button" id="petSaveBtn" class="btn-small">Spara tamdjur</button>
                 </div>
             </form>
         </dialog>
@@ -536,22 +536,23 @@
 
 
 @section Scripts {
-    <script src="~/js/shared/vp.ns.js"></script>
-    <script src="~/js/shared/http.js"></script>
-    <script src="~/js/shared/ui.js"></script>
+    <script src="~/js/shared/vp.ns.js" asp-append-version="true"></script>
+    <script src="~/js/shared/http.js" asp-append-version="true"></script>
+    <script src="~/js/shared/ui.js" asp-append-version="true"></script>
 
-    <script src="~/js/api/rules.api.js"></script>
-    <script src="~/js/api/characters.api.js"></script>
-    <script src="~/js/api/items.api.js"></script>
-    <script src="~/js/api/icons.api.js"></script>
+    <script src="~/js/api/rules.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/characters.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/items.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/icons.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/pets.icons.api.js" asp-append-version="true"></script>
 
-    <script src="~/js/grid/placement.js"></script>
-    <script src="~/js/grid/render.js"></script>
+    <script src="~/js/grid/placement.js" asp-append-version="true"></script>
+    <script src="~/js/grid/render.js" asp-append-version="true"></script>
 
-    <script src="~/js/inventory/dialog.js"></script>
-    <script src="~/js/pages/characterSheet.page.js"></script>
-    <script src="~/js/pages/characterSheet.skills.js"></script>
-    <script src="~/js/pets/pets.js"></script>
+    <script src="~/js/inventory/dialog.js" asp-append-version="true"></script>
+    <script src="~/js/pages/characterSheet.page.js" asp-append-version="true"></script>
+    <script src="~/js/pages/characterSheet.skills.js" asp-append-version="true"></script>
+    <script src="~/js/pets/pets.js" asp-append-version="true"></script>
 }
 
   
