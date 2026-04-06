@@ -44,7 +44,7 @@
 
                             <div class="stat-sub-row">
                                 <span>Genomslag</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="genomslagInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
                             <div class="stat-sub-row">
                                 <span>Bärförmåga</span>
@@ -53,11 +53,11 @@
                             </div>
                             <div class="stat-sub-row">
                                 <span>Förflytta</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="forflyttaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
                             <div class="stat-sub-row">
                                 <span>Brottas</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="brottasInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
                     </div>
 
@@ -65,16 +65,16 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Skicklighet</span>
-                            <input type="number" min="0" max="20" step="1" value=""
+                            <input id="skicklighetInput" type="number" min="0" max="20" step="1" value=""
                                 class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Skytte</span><input type="number" min="0" max="20" step="1"
+                        <div class="stat-sub-row"><span>Skytte</span><input id="skytteInput" type="number" min="0" max="20" step="1"
                                 value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Fingerfärdighet</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Fingerfärdighet</span><input id="fingerfardighetInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Träffsäkerhet</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Träffsäkerhet</span><input id="traffsakerhetInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Akrobatik</span><input type="number" min="0" max="20" step="1"
+                        <div class="stat-sub-row"><span>Akrobatik</span><input id="akrobatikInput" type="number" min="0" max="20" step="1"
                                 value="" class="stat-input" /></div>
                     </div>
 
@@ -89,7 +89,7 @@
 
                             <div class="stat-sub-row">
                                 <span>Mental</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="mentalInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
 
                             <div class="stat-sub-row">
@@ -99,12 +99,12 @@
 
                             <div class="stat-sub-row">
                                 <span>Blockera</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="blockeraInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
 
                             <div class="stat-sub-row">
                                 <span>Uthållighet</span>
-                                <input type="number" min="0" max="20" step="1" value="" class="stat-input" />
+                                <input id="uthallighetInput" type="number" min="0" max="20" step="1" value="" class="stat-input" />
                             </div>
                         </div>
 
@@ -113,16 +113,16 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Intelligens</span>
-                            <input type="number" min="0" max="20" step="1" value=""
+                            <input id="intelligensInput" type="number" min="0" max="20" step="1" value=""
                                 class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Allmänbildning</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Allmänbildning</span><input id="allmanbildningInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Logiskt tänkande</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Logiskt tänkande</span><input id="logisktTankandeInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Öga för detaljer</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Öga för detaljer</span><input id="ogaForDetaljerInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input id="uppfinningsrikedomInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
                     </div>
 
@@ -130,16 +130,16 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Klokhet</span>
-                            <input type="number" min="0" max="20" step="1" value=""
+                            <input id="klokhetInput" type="number" min="0" max="20" step="1" value=""
                                 class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Snabbtänkthet</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Snabbtänkthet</span><input id="snabbtankthetInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Känna av fara</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Känna av fara</span><input id="kannaAvFaraInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Se igenom lögner</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Se igenom lögner</span><input id="seIgenomLognerInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Magisk känsla</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Magisk känsla</span><input id="magiskKanslaInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
                     </div>
 
@@ -147,16 +147,16 @@
                     <div class="stat-group">
                         <div class="stat-main-row">
                             <span class="stat-main-label">Utstrålning</span>
-                            <input type="number" min="0" max="20" step="1" value=""
+                            <input id="utstralningInput" type="number" min="0" max="20" step="1" value=""
                                 class="stat-input stat-input--main" />
                         </div>
-                        <div class="stat-sub-row"><span>Ljuga</span><input type="number" min="0" max="20" step="1"
+                        <div class="stat-sub-row"><span>Ljuga</span><input id="ljugaInput" type="number" min="0" max="20" step="1"
                                 value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Övertala</span><input type="number" min="0" max="20" step="1"
+                        <div class="stat-sub-row"><span>Övertala</span><input id="overtalaInput" type="number" min="0" max="20" step="1"
                                 value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Intryck</span><input type="number" min="0" max="20" step="1"
+                        <div class="stat-sub-row"><span>Intryck</span><input id="intryckInput" type="number" min="0" max="20" step="1"
                                 value="" class="stat-input" /></div>
-                        <div class="stat-sub-row"><span>Väcka känslor</span><input type="number" min="0" max="20"
+                        <div class="stat-sub-row"><span>Väcka känslor</span><input id="vackaKanslorInput" type="number" min="0" max="20"
                                 step="1" value="" class="stat-input" /></div>
                     </div>
                 </div>
@@ -545,6 +545,7 @@
     <script src="~/js/api/items.api.js" asp-append-version="true"></script>
     <script src="~/js/api/icons.api.js" asp-append-version="true"></script>
     <script src="~/js/api/pets.icons.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/pets.api.js" asp-append-version="true"></script>
 
     <script src="~/js/grid/placement.js" asp-append-version="true"></script>
     <script src="~/js/grid/render.js" asp-append-version="true"></script>

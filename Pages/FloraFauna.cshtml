@@ -1,0 +1,39 @@
+@page
+@model Viaproxima.Web.Pages.FloraFaunaModel
+@{ ViewData["Title"] = "Flora & Fauna"; }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/floraFauna.css" asp-append-version="true" />
+}
+
+<div class="page">
+    <div class="sheet sheet--list">
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value">Flora &amp; Fauna</div>
+            </div>
+        </header>
+
+        <section class="sheet-column">
+            <div class="tab-bar">
+                <button class="tab-btn tab-btn--active" data-tab="flora">Flora</button>
+                <button class="tab-btn" data-tab="fauna">Fauna</button>
+            </div>
+
+            <div class="tab-content" id="tab-flora">
+                <iframe src="/pdfs/flora.pdf#toolbar=0" class="pdf-iframe"></iframe>
+            </div>
+            <div class="tab-content" id="tab-fauna" style="display:none">
+                <iframe src="/pdfs/fauna.pdf#toolbar=0" class="pdf-iframe"></iframe>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pages/floraFauna.page.js" asp-append-version="true"></script>
+}

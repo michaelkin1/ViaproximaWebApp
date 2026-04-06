@@ -47,7 +47,7 @@ public class Character
     public int SeIgenomLogner { get; set; }
     public int MagiskKansla { get; set; }
 
-    // ===== UTSTRÅLNING (substats) =====
+    // ===== UTSTRï¿½LNING (substats) =====
     public int Ljuga { get; set; }
     public int Overtala { get; set; }
     public int Intryck { get; set; }
@@ -58,11 +58,22 @@ public class Character
     public int Ferrar { get; set; }
     public int Aurar { get; set; }
 
-    // ===== Skada (nuvarande, max beräknas via rules) =====
+    // ===== Skada (nuvarande, max berï¿½knas via rules) =====
     public int SkadaHuvud { get; set; }
     public int SkadaTorso { get; set; }
     public int SkadaBen { get; set; }
     public int SkadaArmar { get; set; }
 
-    // ===== Skada (nuvarande, max beräknas via rules) =====
+    // ===== Skada (nuvarande, max berï¿½knas via rules) =====
+
+    // ===== Ã–vrigt =====
+    public string? Pouch { get; set; }
+    public string? Anteckningar { get; set; }
+
+    // ===== LÃ¤rdomar & Evolutioner =====
+    public ICollection<Lardom> Lardomar { get; set; } = new List<Lardom>();
+    public ICollection<Evolution> Evolutioner { get; set; } = new List<Evolution>();
+
+    // ===== Tamdjur =====
+    public ICollection<Pet> Pets { get; set; } = new List<Pet>();
 }

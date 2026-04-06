@@ -28,6 +28,9 @@ namespace Viaproxima.Web.Migrations
                     b.Property<int>("Allmanbildning")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Anteckningar")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Aurar")
                         .HasColumnType("INTEGER");
 
@@ -92,6 +95,9 @@ namespace Viaproxima.Web.Migrations
                     b.Property<int>("Overtala")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Pouch")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Race")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -147,6 +153,32 @@ namespace Viaproxima.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Characters");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Evolution", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Beskrivning")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Namn")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Niva")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("Evolutioner");
                 });
 
             modelBuilder.Entity("Viaproxima.Web.Data.InventoryItem", b =>
@@ -218,6 +250,84 @@ namespace Viaproxima.Web.Migrations
                     b.ToTable("InventoryItems");
                 });
 
+            modelBuilder.Entity("Viaproxima.Web.Data.Lardom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Beskrivning")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Namn")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Niva")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("Lardomar");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Pet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Beskrivning")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("IconFile")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Namn")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Storlek")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Tamdjurstyp")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("X")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Y")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Evolution", b =>
+                {
+                    b.HasOne("Viaproxima.Web.Data.Character", "Character")
+                        .WithMany("Evolutioner")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
             modelBuilder.Entity("Viaproxima.Web.Data.InventoryItem", b =>
                 {
                     b.HasOne("Viaproxima.Web.Data.Character", "Character")
@@ -227,6 +337,37 @@ namespace Viaproxima.Web.Migrations
                         .IsRequired();
 
                     b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Lardom", b =>
+                {
+                    b.HasOne("Viaproxima.Web.Data.Character", "Character")
+                        .WithMany("Lardomar")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Pet", b =>
+                {
+                    b.HasOne("Viaproxima.Web.Data.Character", "Character")
+                        .WithMany("Pets")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Character");
+                });
+
+            modelBuilder.Entity("Viaproxima.Web.Data.Character", b =>
+                {
+                    b.Navigation("Evolutioner");
+
+                    b.Navigation("Lardomar");
+
+                    b.Navigation("Pets");
                 });
 #pragma warning restore 612, 618
         }

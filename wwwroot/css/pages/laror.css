@@ -1,0 +1,52 @@
+/* Match Home page: no beige overlay, full-opacity background */
+body::before {
+    display: none;
+}
+
+/* Initial background for first tab (Röda Vreden) */
+body {
+    background-image: url("/Images/Lores/RedFS.png");
+}
+
+/* Tab bar */
+.laror-tab-bar {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+    width: 100%;
+}
+
+.laror-tab-btn {
+    flex: 1;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-md);
+    background: var(--panel-2);
+    font-family: var(--font);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.laror-tab-btn:hover {
+    filter: brightness(0.97);
+}
+
+.laror-tab-btn--active {
+    background: #d8c9aa;
+    border-color: #c0ae91;
+}
+
+/* iframe */
+.laror-iframe {
+    width: 100%;
+    height: 80vh;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    display: block;
+}

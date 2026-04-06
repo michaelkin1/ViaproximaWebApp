@@ -1,0 +1,67 @@
+@page
+@model Viaproxima.Web.Pages.LarorModel
+@{ ViewData["Title"] = "Läror"; }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/laror.css" asp-append-version="true" />
+}
+
+<div class="page">
+    <div class="sheet sheet--list">
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value">Läror</div>
+            </div>
+        </header>
+
+        <section class="sheet-column">
+            <div class="laror-tab-bar">
+                <button class="laror-tab-btn laror-tab-btn--active"
+                        data-tab="roda"
+                        data-bg="url('/Images/Lores/RedFS.png')">Röda Vreden</button>
+                <button class="laror-tab-btn"
+                        data-tab="grona"
+                        data-bg="url('/Images/Lores/GreenPA.png')">Gröna Skammen</button>
+                <button class="laror-tab-btn"
+                        data-tab="gula"
+                        data-bg="url('/Images/Lores/YellowLH.png')">Gula Lyckan</button>
+                <button class="laror-tab-btn"
+                        data-tab="lila"
+                        data-bg="url('/Images/Lores/PurpleNL.png')">Lila Stoltheten</button>
+                <button class="laror-tab-btn"
+                        data-tab="orangea"
+                        data-bg="url('/Images/Lores/OrangeSS.png')">Orangea Kärleken</button>
+                <button class="laror-tab-btn"
+                        data-tab="blaa"
+                        data-bg="url('/Images/Lores/BlueWW.png')">Blåa Sorgen</button>
+            </div>
+
+            <div class="laror-tab-content" id="tab-roda">
+                <iframe src="/pdfs/Lores/RödVrede.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+            <div class="laror-tab-content" id="tab-grona" style="display:none">
+                <iframe src="/pdfs/Lores/GrönSkam.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+            <div class="laror-tab-content" id="tab-gula" style="display:none">
+                <iframe src="/pdfs/Lores/GulLycka.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+            <div class="laror-tab-content" id="tab-lila" style="display:none">
+                <iframe src="/pdfs/Lores/LilaStolthet.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+            <div class="laror-tab-content" id="tab-orangea" style="display:none">
+                <iframe src="/pdfs/Lores/OrangeKärlek.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+            <div class="laror-tab-content" id="tab-blaa" style="display:none">
+                <iframe src="/pdfs/Lores/BlåSorg.pdf#toolbar=0" class="laror-iframe"></iframe>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/laror.js" asp-append-version="true"></script>
+}

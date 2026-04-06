@@ -2,6 +2,30 @@ html {
   font-size: 14px;
 }
 
+.navbar {
+  background: #ede7d9 !important;
+  min-height: 56px;
+}
+
+.navbar-nav {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.nav-link {
+  font-family: "Libre Baskerville", "Baskerville", serif;
+  font-size: 1.05rem;
+  border: 1px solid #c7b89d;
+  border-radius: 0 !important;
+  padding: 0.4rem 0.85rem !important;
+  background: #f6edde;
+}
+
+.nav-link:hover {
+  background: #ece3d0;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;

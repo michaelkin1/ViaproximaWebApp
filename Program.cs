@@ -51,14 +51,55 @@ public class Program
 
             c.Name = dto.Name;
             c.Race = dto.Race;
-            c.Strength = dto.Strength;
-            c.Barformaga = dto.Barformaga;
             c.Xp = dto.Xp;
+
+            c.Strength = dto.Strength;
+            c.Genomslag = dto.Genomslag;
+            c.Barformaga = dto.Barformaga;
+            c.Forflytta = dto.Forflytta;
+            c.Brottas = dto.Brottas;
+
+            c.Skicklighet = dto.Skicklighet;
+            c.Skytte = dto.Skytte;
+            c.Fingerfardighet = dto.Fingerfardighet;
+            c.Traffsakerhet = dto.Traffsakerhet;
+            c.Akrobatik = dto.Akrobatik;
+
+            c.Talighet = dto.Talighet;
+            c.Mental = dto.Mental;
+            c.Fysisk = dto.Fysisk;
+            c.Blockera = dto.Blockera;
+            c.Uthallighet = dto.Uthallighet;
+
+            c.Intelligens = dto.Intelligens;
+            c.Allmanbildning = dto.Allmanbildning;
+            c.LogisktTankande = dto.LogisktTankande;
+            c.OgaForDetaljer = dto.OgaForDetaljer;
+            c.Uppfinningsrikedom = dto.Uppfinningsrikedom;
+
+            c.Klokhet = dto.Klokhet;
+            c.Snabbtankthet = dto.Snabbtankthet;
+            c.KannaAvFara = dto.KannaAvFara;
+            c.SeIgenomLogner = dto.SeIgenomLogner;
+            c.MagiskKansla = dto.MagiskKansla;
+
+            c.Utstralning = dto.Utstralning;
+            c.Ljuga = dto.Ljuga;
+            c.Overtala = dto.Overtala;
+            c.Intryck = dto.Intryck;
+            c.VackaKanslor = dto.VackaKanslor;
+
+            c.Cuppar = dto.Cuppar;
+            c.Ferrar = dto.Ferrar;
+            c.Aurar = dto.Aurar;
 
             c.SkadaHuvud = dto.SkadaHuvud;
             c.SkadaTorso = dto.SkadaTorso;
             c.SkadaBen = dto.SkadaBen;
             c.SkadaArmar = dto.SkadaArmar;
+
+            c.Pouch = dto.Pouch;
+            c.Anteckningar = dto.Anteckningar;
 
             await db.SaveChangesAsync();
             return Results.Ok();
@@ -165,6 +206,135 @@ public class Program
             return Results.NoContent();
         });
 
+        // =========================
+        // Lärdomar API
+        // =========================
+
+        app.MapGet("/api/characters/{id:int}/lardomar", async (ApplicationDbContext db, int id) =>
+        {
+            var items = await db.Lardomar
+                .Where(x => x.CharacterId == id)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+            return Results.Ok(items);
+        });
+
+        app.MapPost("/api/characters/{id:int}/lardomar", async (ApplicationDbContext db, int id, Lardom dto) =>
+        {
+            dto.Id = 0;
+            dto.CharacterId = id;
+            db.Lardomar.Add(dto);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { id = dto.Id });
+        });
+
+        app.MapPut("/api/lardomar/{itemId:int}", async (ApplicationDbContext db, int itemId, Lardom dto) =>
+        {
+            var item = await db.Lardomar.FindAsync(itemId);
+            if (item is null) return Results.NotFound();
+            item.Namn = dto.Namn;
+            item.Niva = dto.Niva;
+            item.Beskrivning = dto.Beskrivning;
+            await db.SaveChangesAsync();
+            return Results.Ok();
+        });
+
+        app.MapDelete("/api/lardomar/{itemId:int}", async (ApplicationDbContext db, int itemId) =>
+        {
+            var item = await db.Lardomar.FindAsync(itemId);
+            if (item is null) return Results.NotFound();
+            db.Lardomar.Remove(item);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        });
+
+        // =========================
+        // Evolutioner API
+        // =========================
+
+        app.MapGet("/api/characters/{id:int}/evolutioner", async (ApplicationDbContext db, int id) =>
+        {
+            var items = await db.Evolutioner
+                .Where(x => x.CharacterId == id)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+            return Results.Ok(items);
+        });
+
+        app.MapPost("/api/characters/{id:int}/evolutioner", async (ApplicationDbContext db, int id, Evolution dto) =>
+        {
+            dto.Id = 0;
+            dto.CharacterId = id;
+            db.Evolutioner.Add(dto);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { id = dto.Id });
+        });
+
+        app.MapPut("/api/evolutioner/{itemId:int}", async (ApplicationDbContext db, int itemId, Evolution dto) =>
+        {
+            var item = await db.Evolutioner.FindAsync(itemId);
+            if (item is null) return Results.NotFound();
+            item.Namn = dto.Namn;
+            item.Niva = dto.Niva;
+            item.Beskrivning = dto.Beskrivning;
+            await db.SaveChangesAsync();
+            return Results.Ok();
+        });
+
+        app.MapDelete("/api/evolutioner/{itemId:int}", async (ApplicationDbContext db, int itemId) =>
+        {
+            var item = await db.Evolutioner.FindAsync(itemId);
+            if (item is null) return Results.NotFound();
+            db.Evolutioner.Remove(item);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        });
+
+        // =========================
+        // Pets API
+        // =========================
+
+        app.MapGet("/api/characters/{id:int}/pets", async (ApplicationDbContext db, int id) =>
+        {
+            var items = await db.Pets
+                .Where(x => x.CharacterId == id)
+                .OrderBy(x => x.Id)
+                .ToListAsync();
+            return Results.Ok(items);
+        });
+
+        app.MapPost("/api/characters/{id:int}/pets", async (ApplicationDbContext db, int id, Pet dto) =>
+        {
+            dto.Id = 0;
+            dto.CharacterId = id;
+            db.Pets.Add(dto);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { id = dto.Id });
+        });
+
+        app.MapPut("/api/pets/{petId:int}", async (ApplicationDbContext db, int petId, Pet dto) =>
+        {
+            var item = await db.Pets.FindAsync(petId);
+            if (item is null) return Results.NotFound();
+            item.Namn = dto.Namn;
+            item.Tamdjurstyp = dto.Tamdjurstyp;
+            item.Storlek = dto.Storlek;
+            item.Beskrivning = dto.Beskrivning;
+            item.IconFile = dto.IconFile;
+            item.X = dto.X;
+            item.Y = dto.Y;
+            await db.SaveChangesAsync();
+            return Results.Ok();
+        });
+
+        app.MapDelete("/api/pets/{petId:int}", async (ApplicationDbContext db, int petId) =>
+        {
+            var item = await db.Pets.FindAsync(petId);
+            if (item is null) return Results.NotFound();
+            db.Pets.Remove(item);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        });
 
         // =========================
         // Icons catalog API  (THE ONE your JS uses)

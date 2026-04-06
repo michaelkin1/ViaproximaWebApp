@@ -1,0 +1,62 @@
+/* =========================
+   Character List — narrow single-column layout
+   ========================= */
+
+.sheet--list {
+    width: min(640px, 100%);
+    grid-template-columns: 1fr;
+}
+
+/* =========================
+   Character rows
+   ========================= */
+
+.char-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.char-row:last-child {
+    border-bottom: none;
+}
+
+.char-row__link {
+    flex: 1;
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.char-row__link:hover {
+    color: var(--muted);
+}
+
+.char-row__race {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* =========================
+   Subtle delete button
+   ========================= */
+
+.btn-delete {
+    border: 1px solid transparent;
+    background: transparent;
+    color: var(--muted-2);
+    border-radius: var(--radius-sm);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0.45;
+    font-family: var(--font);
+    transition: opacity 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.btn-delete:hover {
+    opacity: 1;
+    border-color: var(--border-2);
+    background: var(--panel-2);
+}

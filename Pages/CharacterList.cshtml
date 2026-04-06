@@ -2,15 +2,22 @@
 @model Viaproxima.Web.Pages.CharacterListModel
 
 @{
-    ViewData["Title"] = "Character List";
+    ViewData["Title"] = "Karaktärslista";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterList.css" asp-append-version="true" />
 }
 
 <div class="page">
-    <div class="sheet">
+    <div class="sheet sheet--list">
         <header class="sheet-header">
             <div>
                 <div class="label">Viaproxima</div>
-                <div class="value">Character List</div>
+                <div class="value">Karaktärslista</div>
             </div>
         </header>
 
@@ -19,22 +26,23 @@
 
             @if (Model.Characters.Count == 0)
             {
-                <p class="hint">Inga sparade karaktärer ännu. Skapa en ny i Character Sheet och tryck Save.</p>
+                <p class="hint">Inga sparade karaktärer ännu. Skapa en ny och tryck Spara.</p>
             }
             else
             {
                 <ul style="margin:0; padding-left:0; list-style:none;">
                     @foreach (var c in Model.Characters)
                     {
-                        var name = string.IsNullOrWhiteSpace(c.Name) ? "Unnamed" : c.Name;
-                        var race = string.IsNullOrWhiteSpace(c.Race) ? "Unknown" : c.Race;
+                        var name = string.IsNullOrWhiteSpace(c.Name) ? "Namnlös" : c.Name;
+                        var race = string.IsNullOrWhiteSpace(c.Race) ? "Okänd" : c.Race;
 
-                        <li style="display:flex; align-items:center; justify-content:space-between; gap:0.75rem; padding:0.35rem 0; border-bottom:1px solid var(--border);">
-                            <a asp-page="/CharacterSheet"
+                        <li class="char-row">
+                            <a class="char-row__link"
+                               asp-page="/CharacterSheet"
                                asp-route-id="@c.Id"
                                target="_blank"
                                rel="noopener">
-                                @($"ID: {c.Id} – {name} ({race})")
+                                @name <span class="char-row__race">· @race</span>
                             </a>
 
                             <form method="post"
@@ -43,9 +51,9 @@
                                   style="margin:0;">
                                 @Html.AntiForgeryToken()
                                 <button type="submit"
-                                        class="btn-small"
-                                        onclick="return confirm('Delete ID @c.Id – @name?');">
-                                    Delete
+                                        class="btn-delete"
+                                        onclick="return confirm('Ta bort den här karaktären?');">
+                                    Ta bort
                                 </button>
                             </form>
                         </li>
@@ -57,7 +65,7 @@
         <section class="sheet-column">
             <h2>Ny karaktär</h2>
             <a class="btn-small" asp-page="/CharacterSheet" target="_blank" rel="noopener">
-                Open blank sheet (new)
+                Öppna tomt ark
             </a>
         </section>
     </div>

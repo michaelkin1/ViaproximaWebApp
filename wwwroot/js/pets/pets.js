@@ -4,14 +4,37 @@ VP.pets = VP.pets || {};
     const PET_COLS = 4;
     const PET_ROWS = 2;
 
-    function createController(dom) {
-        let nextId = 1;
-
+    function createController(dom, characterId) {
         const state = {
             pets: [],
             currentCols: PET_COLS,
             currentRows: PET_ROWS,
         };
+
+        function toDto(pet) {
+            return {
+                namn: pet.name,
+                tamdjurstyp: pet.typeKey,
+                storlek: pet.size,
+                beskrivning: pet.description,
+                iconFile: pet.iconFile,
+                x: pet.x,
+                y: pet.y,
+            };
+        }
+
+        function fromDto(dto) {
+            return {
+                id: dto.id,
+                name: dto.namn,
+                typeKey: dto.tamdjurstyp,
+                size: dto.storlek,
+                description: dto.beskrivning ?? "",
+                iconFile: dto.iconFile,
+                x: dto.x,
+                y: dto.y,
+            };
+        }
 
         function toRenderItem(p) {
             return {
@@ -128,7 +151,7 @@ VP.pets = VP.pets || {};
             }
         }
 
-        function save() {
+        async function save() {
             const typeKey     = dom.typeSelect.value;
             const size        = dom.sizeSelect.value || "1x1";
             const name        = (dom.nameInput.value || "").trim();
@@ -163,10 +186,18 @@ VP.pets = VP.pets || {};
             }
 
             if (editingId == null) {
-                state.pets.push({
-                    id: nextId++, typeKey, size, name, iconFile, description,
+                const pet = {
+                    id: 0, typeKey, size, name, iconFile, description,
                     x: placement.x, y: placement.y,
-                });
+                };
+                try {
+                    const result = await VP.api.pets.createPet(characterId, toDto(pet));
+                    pet.id = result.id;
+                } catch (err) {
+                    console.error("POST pet failed", err);
+                    return alert("Kunde inte spara djuret.");
+                }
+                state.pets.push(pet);
             } else {
                 const idx = state.pets.findIndex(p => p.id === editingId);
                 if (idx >= 0) {
@@ -175,6 +206,11 @@ VP.pets = VP.pets || {};
                         typeKey, size, name, iconFile, description,
                         x: placement.x, y: placement.y,
                     };
+                    try {
+                        await VP.api.pets.updatePet(editingId, toDto(state.pets[idx]));
+                    } catch (err) {
+                        console.error("PUT pet failed", err);
+                    }
                 }
             }
 
@@ -182,11 +218,28 @@ VP.pets = VP.pets || {};
             renderGrid();
         }
 
-        function deleteCurrent() {
+        async function deleteCurrent() {
             const id = dom.idInput.value ? Number(dom.idInput.value) : null;
             if (!id || !confirm(`Ta bort djur #${id}?`)) return;
+            try {
+                await VP.api.pets.deletePet(id);
+            } catch (err) {
+                console.error("DELETE pet failed", err);
+                return alert("Kunde inte ta bort djuret.");
+            }
             state.pets = state.pets.filter(p => p.id !== id);
             dom.dialog.close();
+            renderGrid();
+        }
+
+        async function loadPets() {
+            if (!characterId) return;
+            try {
+                const dtos = await VP.api.pets.getPetsForCharacter(characterId);
+                state.pets = (dtos || []).map(fromDto);
+            } catch (err) {
+                console.error("Load pets failed", err);
+            }
             renderGrid();
         }
 
@@ -197,7 +250,7 @@ VP.pets = VP.pets || {};
             dom.deleteBtn.addEventListener("click", deleteCurrent);
         }
 
-        return { wire, renderGrid };
+        return { wire, renderGrid, loadPets };
     }
 
     VP.pets = VP.pets || {};
@@ -205,6 +258,8 @@ VP.pets = VP.pets || {};
 
     (() => {
         function el(id) { return document.getElementById(id); }
+
+        const characterId = new URL(window.location.href).searchParams.get("id");
 
         const dom = {
             addBtn:        el("addPetBtn"),
@@ -229,8 +284,8 @@ VP.pets = VP.pets || {};
             return;
         }
 
-        const ctrl = createController(dom);
+        const ctrl = createController(dom, characterId);
         ctrl.wire();
-        ctrl.renderGrid();
+        ctrl.loadPets();
     })();
 })();
