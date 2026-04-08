@@ -1,0 +1,35 @@
+@page
+@model Viaproxima.Web.Pages.RulesModel
+@{ ViewData["Title"] = "Rules"; }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/floraFauna.css" asp-append-version="true" />
+}
+
+<div class="page">
+    <div class="sheet sheet--list">
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value">Rules</div>
+            </div>
+        </header>
+
+        <section class="sheet-column">
+            <div class="tab-bar">
+                <button class="tab-btn tab-btn--active" data-tab="spelarbok">Spelarbok</button>
+            </div>
+
+            <div class="tab-content" id="tab-spelarbok">
+                <iframe src="/pdfs/Rules/Spelarbok.pdf#toolbar=0&zoom=page-width" class="pdf-iframe"></iframe>
+            </div>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/pages/rules.page.js" asp-append-version="true"></script>
+}

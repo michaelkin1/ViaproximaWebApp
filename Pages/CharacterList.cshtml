@@ -45,28 +45,34 @@
                                 @name <span class="char-row__race">· @race</span>
                             </a>
 
-                            <form method="post"
-                                  asp-page-handler="Delete"
-                                  asp-route-id="@c.Id"
-                                  style="margin:0;">
-                                @Html.AntiForgeryToken()
-                                <button type="submit"
-                                        class="btn-delete"
-                                        onclick="return confirm('Ta bort den här karaktären?');">
-                                    Ta bort
-                                </button>
-                            </form>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <form method="post"
+                                      asp-page-handler="Delete"
+                                      asp-route-id="@c.Id"
+                                      style="margin:0;">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit"
+                                            class="btn-delete"
+                                            onclick="return confirm('Ta bort den här karaktären?');">
+                                        Ta bort
+                                    </button>
+                                </form>
+                            }
                         </li>
                     }
                 </ul>
             }
         </section>
 
-        <section class="sheet-column">
-            <h2>Ny karaktär</h2>
-            <a class="btn-small" asp-page="/CharacterSheet" target="_blank" rel="noopener">
-                Öppna tomt ark
-            </a>
-        </section>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <section class="sheet-column">
+                <h2>Ny karaktär</h2>
+                <a class="btn-small" asp-page="/CharacterSheet" target="_blank" rel="noopener">
+                    Öppna tomt ark
+                </a>
+            </section>
+        }
     </div>
 </div>

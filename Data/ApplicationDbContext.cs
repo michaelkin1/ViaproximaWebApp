@@ -16,4 +16,13 @@ public class ApplicationDbContext : DbContext
     public DbSet<Lardom> Lardomar => Set<Lardom>();
     public DbSet<Evolution> Evolutioner => Set<Evolution>();
     public DbSet<Pet> Pets => Set<Pet>();
+    public DbSet<User> Users => Set<User>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Username)
+            .IsUnique();
+    }
 }

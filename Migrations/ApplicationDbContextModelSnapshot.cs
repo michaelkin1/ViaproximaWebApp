@@ -317,6 +317,32 @@ namespace Viaproxima.Web.Migrations
                     b.ToTable("Pets");
                 });
 
+            modelBuilder.Entity("Viaproxima.Web.Data.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Viaproxima.Web.Data.Evolution", b =>
                 {
                     b.HasOne("Viaproxima.Web.Data.Character", "Character")

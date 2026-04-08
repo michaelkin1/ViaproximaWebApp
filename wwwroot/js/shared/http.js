@@ -1,15 +1,25 @@
-﻿// shared/http.js
+// shared/http.js
 (() => {
-    /**
-     * Standardiserat felobjekt för API.
-     * status: HTTP statuskod
-     * data: parsed JSON om möjligt
-     * text: raw text om JSON ej gick
-     */
     async function requestJson(url, options = {}) {
+        const method = (options.method || "GET").toUpperCase();
+
+        // Inject CSRF token for mutating requests
+        if (method !== "GET" && method !== "HEAD") {
+            const token = await VP.shared.getCsrfToken?.();
+            if (token) {
+                options.headers = options.headers || {};
+                options.headers["X-XSRF-TOKEN"] = token;
+            }
+        }
+
         const res = await fetch(url, options);
 
-        // Försök läsa JSON, annars text
+        // Redirect to login on 401
+        if (res.status === 401) {
+            window.location.href = "/Login";
+            throw new Error("Unauthorized");
+        }
+
         const contentType = res.headers.get("content-type") || "";
         let data = null;
         let text = null;
@@ -28,7 +38,7 @@
             throw err;
         }
 
-        return data; // kan vara null om endpoint ej returnerar json
+        return data;
     }
 
     VP.shared.requestJson = requestJson;

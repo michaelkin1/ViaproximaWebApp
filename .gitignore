@@ -485,4 +485,7 @@ app.db
 app.db-shm
 app.db-wal
 
+appsettings.Secrets.json
+
 ClaudeChangeTracker.txt
+ItemIconColors.txt

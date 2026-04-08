@@ -45,10 +45,7 @@
         }
 
         function getIconUrl(iconObj) {
-            const isMagic = !!dom.magicCheck.checked;
-            return isMagic
-                ? (iconObj.magicUrl || iconObj.normalUrl || "")
-                : (iconObj.normalUrl || iconObj.magicUrl || "");
+            return iconObj.normalUrl || iconObj.magicUrl || "";
         }
 
         function getFileNameFromUrl(u) {
@@ -91,14 +88,30 @@
                 btn.title = iconObj.baseName;
 
                 const img = document.createElement("img");
-                img.src = url;
+                img.dataset.originalSrc = url;
                 img.alt = iconObj.baseName;
+
+                if (dom.magicCheck.checked && url.endsWith(".svg")) {
+                    VP.grid.render.tintSvgToMagic(url).then(tintedUrl => {
+                        img.src = tintedUrl;
+                    });
+                } else {
+                    img.src = url;
+                }
                 btn.appendChild(img);
 
-                btn.addEventListener("click", () => {
+                btn.addEventListener("click", async () => {
                     dom.iconFileInput.value = getFileNameFromUrl(url);
-                    dom.iconPreview.src = url;
+                    dom.iconPreview.dataset.originalSrc = url;
                     dom.iconPreview.style.display = "block";
+
+                    if (dom.magicCheck.checked && url.endsWith(".svg")) {
+                        const tintedUrl = await VP.grid.render.tintSvgToMagic(url);
+                        dom.iconPreview.src = tintedUrl;
+                    } else {
+                        dom.iconPreview.src = url;
+                    }
+
                     dom.iconGrid.querySelectorAll(".icon-tile.is-selected")
                         .forEach(x => x.classList.remove("is-selected"));
                     btn.classList.add("is-selected");
@@ -161,9 +174,19 @@
             renderIconPicker(dom.primarySelect.value, dom.secondarySelect.value);
 
             if (it.iconFile) {
-                dom.iconFileInput.value = it.iconFile;
-                dom.iconPreview.src = VP.grid.render.itemIconUrl(it);
+                const normalFile = it.iconFile.replace(/_magic(\.[^.]+)$/i, "$1");
+                dom.iconFileInput.value = normalFile;
+                const previewSrc = VP.grid.render.itemIconUrl({ ...it, iconFile: normalFile });
+                dom.iconPreview.dataset.originalSrc = previewSrc;
                 dom.iconPreview.style.display = "block";
+
+                if (it.isMagic && previewSrc.endsWith(".svg")) {
+                    VP.grid.render.tintSvgToMagic(previewSrc).then(tintedUrl => {
+                        dom.iconPreview.src = tintedUrl;
+                    });
+                } else {
+                    dom.iconPreview.src = previewSrc;
+                }
             }
 
             dom.itemIdInput.value = String(it.id);
@@ -272,10 +295,31 @@
                 if (pk && sk) renderIconPicker(pk, sk);
             });
 
-            dom.magicCheck.addEventListener("change", () => {
-                const pk = dom.primarySelect.value;
-                const sk = dom.secondarySelect.value;
-                if (pk && sk) renderIconPicker(pk, sk);
+            dom.magicCheck.addEventListener("change", async () => {
+                const pickerImgs = dom.iconGrid.querySelectorAll("img");
+                if (dom.magicCheck.checked) {
+                    for (const img of pickerImgs) {
+                        const originalSrc = img.dataset.originalSrc || img.src;
+                        if (originalSrc.endsWith(".svg")) {
+                            const tintedUrl = await VP.grid.render.tintSvgToMagic(originalSrc);
+                            img.src = tintedUrl;
+                        }
+                    }
+                    const previewOriginal = dom.iconPreview.dataset.originalSrc || dom.iconPreview.src;
+                    if (previewOriginal && previewOriginal.endsWith(".svg")) {
+                        const tintedUrl = await VP.grid.render.tintSvgToMagic(previewOriginal);
+                        dom.iconPreview.src = tintedUrl;
+                    }
+                } else {
+                    for (const img of pickerImgs) {
+                        const originalSrc = img.dataset.originalSrc || img.src;
+                        img.src = originalSrc;
+                    }
+                    const previewOriginal = dom.iconPreview.dataset.originalSrc || dom.iconPreview.src;
+                    if (previewOriginal) {
+                        dom.iconPreview.src = previewOriginal;
+                    }
+                }
             });
 
             dom.itemCancelBtn.addEventListener("click", () => dom.itemDialog.close());

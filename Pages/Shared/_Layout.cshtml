@@ -26,7 +26,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
-                    <ul class="navbar-nav justify-content-center">
+                    <ul class="navbar-nav justify-content-center flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
@@ -39,11 +39,31 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Laror">Läror</a>
+                            <a class="nav-link text-dark" asp-page="/Rules">Rules</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/FloraFauna">Flora &amp; Fauna</a>
+                            <a class="nav-link text-dark" asp-page="/Laror">Lores</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-page="/FloraFauna">World Building</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <button type="button" id="logoutBtn" class="nav-link text-dark"
+                                        style="background:none;border:1px solid #c7b89d;cursor:pointer;">
+                                    Log Out (@User.Identity.Name)
+                                </button>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Login">Log In</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

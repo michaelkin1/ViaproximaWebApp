@@ -25,6 +25,9 @@ public class CharacterListModel : PageModel
 
     public async Task<IActionResult> OnPostDeleteAsync(int id)
     {
+        if (!User.IsInRole("Writer") && !User.IsInRole("Admin"))
+            return Forbid();
+
         var c = await _db.Characters.FindAsync(id);
         if (c is null) return RedirectToPage();
 

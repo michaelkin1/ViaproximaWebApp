@@ -1,5 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
+using System.Threading.RateLimiting;
+using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Viaproxima.Web.Data;
 using Viaproxima.Web.Models;
 
@@ -7,15 +13,68 @@ namespace Viaproxima.Web;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        builder.Configuration.AddJsonFile("appsettings.Secrets.json", optional: true, reloadOnChange: false);
 
         builder.Services.AddRazorPages();
 
         var dbPath = Path.Combine(builder.Environment.ContentRootPath, "app.db");
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite($"Data Source={dbPath}"));
+
+        builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
+
+        builder.Services.AddAuthentication("Cookies")
+            .AddCookie("Cookies", options =>
+            {
+                options.Cookie.Name = "Viaproxima.Auth";
+                options.Cookie.HttpOnly = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.LoginPath = "/Login";
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    if (context.Request.Path.StartsWithSegments("/api"))
+                    {
+                        context.Response.StatusCode = 401;
+                        return Task.CompletedTask;
+                    }
+                    context.Response.Redirect(context.RedirectUri);
+                    return Task.CompletedTask;
+                };
+            });
+
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("CanWrite", policy =>
+                policy.RequireRole("Writer", "Admin"));
+        });
+
+        builder.Services.AddAntiforgery(options =>
+        {
+            options.HeaderName = "X-XSRF-TOKEN";
+        });
+
+        builder.Services.AddRateLimiter(options =>
+        {
+            options.AddPolicy("LoginLimit", _ =>
+                RateLimitPartition.GetFixedWindowLimiter("login", _ => new FixedWindowRateLimiterOptions
+                {
+                    PermitLimit = 5,
+                    Window = TimeSpan.FromMinutes(1),
+                    QueueLimit = 0,
+                }));
+            options.OnRejected = async (context, ct) =>
+            {
+                context.HttpContext.Response.StatusCode = 429;
+                await context.HttpContext.Response.WriteAsync("Too many requests. Try again later.", ct);
+            };
+        });
 
         var app = builder.Build();
 
@@ -24,26 +83,103 @@ public class Program
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             db.Database.Migrate();
         }
+
+        await AdminSeeder.TrySeedFromArgsAsync(args, app.Services);
+
+        // =========================
+        // Pipeline
+        // =========================
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+            app.UseHttpsRedirection();
+        }
+
+        app.UseStaticFiles();
+        app.UseRouting();
+        app.UseRateLimiter();
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseAntiforgery();
+
+        // =========================
+        // Auth API
+        // =========================
+
+        app.MapGet("/api/auth/me", (HttpContext context) =>
+        {
+            var user = context.User;
+            if (user.Identity?.IsAuthenticated != true)
+                return Results.Ok(new { isAuthenticated = false, username = (string?)null, role = (string?)null });
+
+            return Results.Ok(new
+            {
+                isAuthenticated = true,
+                username = user.Identity.Name,
+                role = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
+            });
+        });
+
+        app.MapPost("/api/auth/login", async (
+            ApplicationDbContext db,
+            IPasswordHasher<User> hasher,
+            HttpContext context,
+            LoginRequest request) =>
+        {
+            var user = await db.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+            if (user is null)
+                return Results.Json(new { error = "Felaktigt användarnamn eller lösenord." }, statusCode: 401);
+
+            var result = hasher.VerifyHashedPassword(user, user.PasswordHash, request.Password);
+            if (result == PasswordVerificationResult.Failed)
+                return Results.Json(new { error = "Felaktigt användarnamn eller lösenord." }, statusCode: 401);
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, user.Username),
+                new(ClaimTypes.Role, user.Role),
+            };
+            var identity = new ClaimsIdentity(claims, "Cookies");
+            var principal = new ClaimsPrincipal(identity);
+
+            await context.SignInAsync("Cookies", principal);
+            return Results.Ok(new { username = user.Username, role = user.Role });
+        }).RequireRateLimiting("LoginLimit").DisableAntiforgery();
+
+        app.MapPost("/api/auth/logout", async (HttpContext context) =>
+        {
+            await context.SignOutAsync("Cookies");
+            return Results.Ok();
+        }).RequireAuthorization();
+
+        app.MapGet("/antiforgery/token", (IAntiforgery antiforgery, HttpContext context) =>
+        {
+            var tokens = antiforgery.GetAndStoreTokens(context);
+            return Results.Ok(new { token = tokens.RequestToken });
+        }).RequireAuthorization();
+
         // =========================
         // Character API
         // =========================
 
-        // Load one character
         app.MapGet("/api/characters/{id:int}", async (ApplicationDbContext db, int id) =>
         {
             var c = await db.Characters.FindAsync(id);
             return c is null ? Results.NotFound() : Results.Ok(c);
         });
 
-        // Create a character
         app.MapPost("/api/characters", async (ApplicationDbContext db, Character dto) =>
         {
             db.Characters.Add(dto);
             await db.SaveChangesAsync();
             return Results.Ok(new { id = dto.Id });
-        });
+        }).RequireAuthorization("CanWrite");
 
-        // Update a character
         app.MapPut("/api/characters/{id:int}", async (ApplicationDbContext db, int id, Character dto) =>
         {
             var c = await db.Characters.FindAsync(id);
@@ -103,10 +239,10 @@ public class Program
 
             await db.SaveChangesAsync();
             return Results.Ok();
-        });
+        }).RequireAuthorization("CanWrite");
 
         // =========================
-        // Rules API (Bärkraft + grid size)
+        // Rules API (stateless calculations — no auth required)
         // =========================
 
         app.MapPost("/api/rules/hp", (HpRequest req) =>
@@ -145,7 +281,6 @@ public class Program
         // Inventory Items API
         // =========================
 
-        // List items for a character
         app.MapGet("/api/characters/{id:int}/items", async (ApplicationDbContext db, int id) =>
         {
             var items = await db.InventoryItems
@@ -156,7 +291,6 @@ public class Program
             return Results.Ok(items);
         });
 
-        // Create an item for character
         app.MapPost("/api/characters/{id:int}/items", async (ApplicationDbContext db, int id, InventoryItem dto) =>
         {
             dto.Id = 0;
@@ -166,9 +300,8 @@ public class Program
             await db.SaveChangesAsync();
 
             return Results.Ok(new { id = dto.Id });
-        });
+        }).RequireAuthorization("CanWrite");
 
-        // Update an item
         app.MapPut("/api/items/{itemId:int}", async (ApplicationDbContext db, int itemId, InventoryItem dto) =>
         {
             var item = await db.InventoryItems.FindAsync(itemId);
@@ -193,9 +326,8 @@ public class Program
 
             await db.SaveChangesAsync();
             return Results.Ok();
-        });
+        }).RequireAuthorization("CanWrite");
 
-        // Delete an item
         app.MapDelete("/api/items/{itemId:int}", async (ApplicationDbContext db, int itemId) =>
         {
             var item = await db.InventoryItems.FindAsync(itemId);
@@ -204,7 +336,7 @@ public class Program
             db.InventoryItems.Remove(item);
             await db.SaveChangesAsync();
             return Results.NoContent();
-        });
+        }).RequireAuthorization("CanWrite");
 
         // =========================
         // Lärdomar API
@@ -226,7 +358,7 @@ public class Program
             db.Lardomar.Add(dto);
             await db.SaveChangesAsync();
             return Results.Ok(new { id = dto.Id });
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapPut("/api/lardomar/{itemId:int}", async (ApplicationDbContext db, int itemId, Lardom dto) =>
         {
@@ -237,7 +369,7 @@ public class Program
             item.Beskrivning = dto.Beskrivning;
             await db.SaveChangesAsync();
             return Results.Ok();
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapDelete("/api/lardomar/{itemId:int}", async (ApplicationDbContext db, int itemId) =>
         {
@@ -246,7 +378,7 @@ public class Program
             db.Lardomar.Remove(item);
             await db.SaveChangesAsync();
             return Results.NoContent();
-        });
+        }).RequireAuthorization("CanWrite");
 
         // =========================
         // Evolutioner API
@@ -268,7 +400,7 @@ public class Program
             db.Evolutioner.Add(dto);
             await db.SaveChangesAsync();
             return Results.Ok(new { id = dto.Id });
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapPut("/api/evolutioner/{itemId:int}", async (ApplicationDbContext db, int itemId, Evolution dto) =>
         {
@@ -279,7 +411,7 @@ public class Program
             item.Beskrivning = dto.Beskrivning;
             await db.SaveChangesAsync();
             return Results.Ok();
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapDelete("/api/evolutioner/{itemId:int}", async (ApplicationDbContext db, int itemId) =>
         {
@@ -288,7 +420,7 @@ public class Program
             db.Evolutioner.Remove(item);
             await db.SaveChangesAsync();
             return Results.NoContent();
-        });
+        }).RequireAuthorization("CanWrite");
 
         // =========================
         // Pets API
@@ -310,7 +442,7 @@ public class Program
             db.Pets.Add(dto);
             await db.SaveChangesAsync();
             return Results.Ok(new { id = dto.Id });
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapPut("/api/pets/{petId:int}", async (ApplicationDbContext db, int petId, Pet dto) =>
         {
@@ -325,7 +457,7 @@ public class Program
             item.Y = dto.Y;
             await db.SaveChangesAsync();
             return Results.Ok();
-        });
+        }).RequireAuthorization("CanWrite");
 
         app.MapDelete("/api/pets/{petId:int}", async (ApplicationDbContext db, int petId) =>
         {
@@ -334,27 +466,32 @@ public class Program
             db.Pets.Remove(item);
             await db.SaveChangesAsync();
             return Results.NoContent();
-        });
+        }).RequireAuthorization("CanWrite");
 
         // =========================
-        // Icons catalog API  (THE ONE your JS uses)
+        // Icons catalog API
         // =========================
         app.MapGet("/api/icons/catalog", (IWebHostEnvironment env) =>
         {
-            // scans: wwwroot/IconsItems/<Primary>/<Secondary>/*.svg  OR wwwroot/IconsItems/<Primary>/*.svg
             var iconsRoot = Path.Combine(env.WebRootPath, "IconsItems");
 
             if (!Directory.Exists(iconsRoot))
                 return Results.Ok(new { primaries = Array.Empty<object>() });
 
-            // Swedish labels (expand later or move to JSON)
             var primaryLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                ["MeleeWeapons"] = "Närstridsvapen",
-                ["Shields"] = "Sköldar",
-                ["Armour"] = "Rustning",
                 ["Ammo"] = "Ammunition",
+                ["Armour"] = "Rustning",
+                ["Artefacts"] = "Artefakter",
+                ["Clothes"] = "Kläder",
                 ["Crystals"] = "Kristaller",
+                ["Instrument"] = "Instrument",
+                ["Jewelry"] = "Smycken",
+                ["MeleeWeapons"] = "Närstridsvapen",
+                ["Miscellaneous"] = "Diverse",
+                ["RangedWeapons"] = "Distansvapen",
+                ["ShamanItems"] = "Shamaningredienser",
+                ["Shields"] = "Sköldar",
             };
 
             var secondaryLabels = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
@@ -401,7 +538,7 @@ public class Program
 
                     if (isMagic) pair.magic = url;
                     else if (isNormal) pair.normal = url;
-                    else pair.normal = url; // fallback if no suffix
+                    else pair.normal = url;
 
                     dict[baseName] = pair;
                 }
@@ -435,7 +572,6 @@ public class Program
 
                 if (secondaryDirs.Count == 0)
                 {
-                    // Root-only primary (e.g. Shields/*.svg directly)
                     var urlPrefix = $"/IconsItems/{primaryKey}";
                     secondaries.Add(BuildSecondary(primaryKey, "_root", primaryDir, urlPrefix));
                 }
@@ -463,46 +599,16 @@ public class Program
         // =========================
         // Pets icon catalog API
         // =========================
-        app.MapGet("/api/pets/icons/catalog", (IWebHostEnvironment env) =>
-        {
-            var root = Path.Combine(env.WebRootPath, "IconsPets");
-            if (!Directory.Exists(root))
-                return Results.Ok(new { types = Array.Empty<object>() });
-
-            var types = Directory.EnumerateDirectories(root)
-                .Select(dir =>
-                {
-                    var typeKey = Path.GetFileName(dir);
-                    var icons = Directory.EnumerateFiles(dir, "*.svg", SearchOption.TopDirectoryOnly)
-                        .Select(f => new
-                        {
-                            file = Path.GetFileName(f),
-                            url  = $"/IconsPets/{typeKey}/{Path.GetFileName(f)}"
-                        })
-                        .OrderBy(x => x.file)
-                        .ToList();
-                    return new { typeKey, icons };
-                })
-                .OrderBy(t => t.typeKey)
-                .ToList<object>();
-
-            return Results.Ok(new { types });
-        });
-
         app.MapGet("/api/pets/icons", (IWebHostEnvironment env) =>
         {
             var root = Path.Combine(env.WebRootPath, "IconsPets", "Pets");
             if (!Directory.Exists(root))
                 return Results.Ok(new { icons = Array.Empty<object>() });
 
-            var icons = Directory.EnumerateFiles(root, "*", SearchOption.AllDirectories)
+            var icons = Directory.EnumerateFiles(root, "*", SearchOption.TopDirectoryOnly)
                 .Where(f => f.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) ||
                             f.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                .Select(f =>
-                {
-                    var rel = Path.GetRelativePath(root, f).Replace('\\', '/');
-                    return new { file = rel, url = $"/IconsPets/Pets/{rel}" };
-                })
+                .Select(f => new { file = Path.GetFileName(f), url = $"/IconsPets/Pets/{Path.GetFileName(f)}" })
                 .OrderBy(x => x.file)
                 .ToList<object>();
 
@@ -510,10 +616,9 @@ public class Program
         });
 
         // =========================
-        // Portrait API (filesystem only — no DB)
+        // Portrait API
         // =========================
 
-        // GET: return portrait URL if file exists on disk, else 404
         app.MapGet("/api/characters/{id:int}/portrait", (IWebHostEnvironment env, int id) =>
         {
             var dir = Path.Combine(env.WebRootPath, "portraits");
@@ -524,7 +629,6 @@ public class Program
                 : Results.Ok(new { url = $"/portraits/{Path.GetFileName(match)}" });
         });
 
-        // POST: save uploaded portrait to wwwroot/portraits/{id}.{ext}, overwrite if present
         app.MapPost("/api/characters/{id:int}/portrait", async (IWebHostEnvironment env, int id, IFormFile file) =>
         {
             var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
@@ -542,22 +646,7 @@ public class Program
             await file.CopyToAsync(stream);
 
             return Results.Ok(new { url = $"/portraits/{id}{ext}" });
-        }).DisableAntiforgery();
-
-        // =========================
-        // Pipeline
-        // =========================
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Error");
-            app.UseHsts();
-            app.UseHttpsRedirection();
-        }
-
-        app.UseStaticFiles();
-
-        app.UseRouting();
-        app.UseAuthorization();
+        }).RequireAuthorization("CanWrite");
 
         app.MapRazorPages();
 

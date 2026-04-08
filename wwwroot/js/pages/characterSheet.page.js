@@ -350,7 +350,7 @@
             const reader = new FileReader();
             reader.onload = (e) => {
                 const tempImg = new Image();
-                tempImg.onload = () => {
+                tempImg.onload = async () => {
                     if (tempImg.naturalWidth > 2000 || tempImg.naturalHeight > 2000) {
                         if (portraitError) { portraitError.textContent = "Bilden är för stor — max 2000x2000px"; portraitError.style.display = "block"; }
                         return;
@@ -364,7 +364,10 @@
                     if (state.characterId) {
                         const form = new FormData();
                         form.append("file", file);
-                        fetch(`/api/characters/${state.characterId}/portrait`, { method: "POST", body: form })
+                        const token = await VP.shared.getCsrfToken?.();
+                        const headers = {};
+                        if (token) headers["X-XSRF-TOKEN"] = token;
+                        fetch(`/api/characters/${state.characterId}/portrait`, { method: "POST", body: form, headers })
                             .catch(err => console.error("[Portrait] upload failed", err));
                     }
                 };
@@ -381,5 +384,14 @@
         await refreshRules();
         await refreshHp();
         if (state.characterId) await loadCharacter(state.characterId);
+
+        // Hide write-only controls for unauthenticated viewers
+        const auth = await VP.shared.getAuthState?.();
+        if (!auth?.isAuthenticated) {
+            if (saveBtn)               saveBtn.style.display               = "none";
+            if (dialogDom.addItemBtn)  dialogDom.addItemBtn.style.display  = "none";
+            if (portraitArea)          portraitArea.style.cursor            = "default";
+            if (portraitArea)          portraitArea.onclick                 = null;
+        }
     })();
 })();

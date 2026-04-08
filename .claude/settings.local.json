@@ -2,7 +2,37 @@
   "permissions": {
     "allow": [
       "Bash(dotnet build:*)",
-      "Bash(dotnet run:*)"
+      "Bash(dotnet run:*)",
+      "Bash(mv big-diamond-ring.svg Big_Diamond_Ring.svg)",
+      "Bash(mv double-necklace.svg Double_Necklace.svg)",
+      "Bash(mv drop-earrings.svg Drop_Earrings.svg)",
+      "Bash(mv feather-necklace.svg Feather_Necklace.svg)",
+      "Bash(mv pendant-key.svg Pendant_Key.svg)",
+      "Bash(mv BatteredAxe_Normal.svg Battered_Axe.svg)",
+      "Bash(mv MagicAxe_Normal.svg Magic_Axe.svg)",
+      "Bash(mv StoneAxe_Normal.svg Stone_Axe.svg)",
+      "Bash(mv TwoHandedAxe_Normal.svg Two_Handed_Axe.svg)",
+      "Bash(mv BoneDagger_Normal.svg Bone_Dagger.svg)",
+      "Bash(mv BoneKnife_Normal.svg Bone_Knife.svg)",
+      "Bash(mv BarbedSpear_Normal.svg Barbed_Spear.svg)",
+      "Bash(mv FeatherSpear_Normal.svg Feather_Spear.svg)",
+      "Bash(mv StoneSpear_Normal.svg Stone_Spear.svg)",
+      "Bash(mv CrystalWand_Normal.svg Crystal_Wand.svg)",
+      "Bash(mv SheperdsStaff_Normal.svg Sheperd_Staff.svg)",
+      "Bash(mv WizardStaff_Normal.svg Wizard_Staff.svg)",
+      "Bash(mv WoodStaff_Normal.svg Wood_Staff.svg)",
+      "Bash(mv BarbedSword_Normal.svg Barbed_Sword.svg)",
+      "Bash(mv ShardSword_Normal.svg Shard_Sword.svg)",
+      "Bash(mv StoneSword_Normal.svg Stone_Sword.svg)",
+      "Bash(mv:*)",
+      "Bash(mv chalice-drops.svg Chalice_Drops.svg)",
+      "Bash(mv dice-twenty-faces-twenty.svg Dice_Twenty_Faces_Twenty.svg)",
+      "Bash(mv herbs-bundle.svg Herbs_Bundle.svg)",
+      "Bash(mv key.svg Key.svg)",
+      "Bash(mv pouch-with-beads.svg Pouch_With_Beads.svg)",
+      "Bash(mv HeavyShield_Normal.svg Heavy_Shield.svg)",
+      "Bash(mv LightShield_Normal.svg Light_Shield.svg)",
+      "Bash(mv MediumShield_Normal.svg Medium_Shield.svg)"
     ]
   }
 }

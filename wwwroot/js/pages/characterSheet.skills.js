@@ -18,7 +18,14 @@
     async function api(method, url, body) {
         const opts = { method, headers: { "Content-Type": "application/json" } };
         if (body !== undefined) opts.body = JSON.stringify(body);
+
+        if (method !== "GET") {
+            const token = await VP.shared.getCsrfToken?.();
+            if (token) opts.headers["X-XSRF-TOKEN"] = token;
+        }
+
         const res = await fetch(url, opts);
+        if (res.status === 401) { window.location.href = "/Login"; throw new Error("Unauthorized"); }
         if (!res.ok) throw new Error(`${method} ${url} → ${res.status}`);
         return res.status === 204 ? null : res.json();
     }
@@ -144,6 +151,15 @@
         ]).catch(err => { console.error("Load skills failed", err); return [[], []]; });
         renderAll((lardomar || []).map(toItem), "/api/lardomar", lardomarRows);
         renderAll((evolutioner || []).map(toItem), "/api/evolutioner", evolutionerRows);
+
+        // Hide add/edit controls for unauthenticated viewers
+        const auth = await VP.shared.getAuthState?.();
+        if (!auth?.isAuthenticated) {
+            if (addLardomBtn)    addLardomBtn.style.display    = "none";
+            if (addEvolutionBtn) addEvolutionBtn.style.display = "none";
+            lardomarRows.querySelectorAll(".skill-remove-btn, .skill-desc-btn").forEach(b => b.style.display = "none");
+            evolutionerRows.querySelectorAll(".skill-remove-btn, .skill-desc-btn").forEach(b => b.style.display = "none");
+        }
     }
 
     init();

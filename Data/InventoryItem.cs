@@ -25,7 +25,7 @@ public class InventoryItem
     // Optional: numeric "weight" if you want it separate from size
     public int Weight { get; set; } = 1;
 
-    // Selected file name, e.g. "StoneAxe_Normal.svg"
+    // Selected file name, e.g. "Stone_Axe.svg"
     public string IconFile { get; set; } = "";
 
     // Folder keys so we can rebuild URL:

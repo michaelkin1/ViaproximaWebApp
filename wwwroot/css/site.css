@@ -15,10 +15,11 @@ html {
 
 .nav-link {
   font-family: "Libre Baskerville", "Baskerville", serif;
-  font-size: 1.05rem;
+  font-size: 1.26rem;
+  font-weight: bold;
   border: 1px solid #c7b89d;
   border-radius: 0 !important;
-  padding: 0.4rem 0.85rem !important;
+  padding: 0.48rem 1.02rem !important;
   background: #f6edde;
 }
 

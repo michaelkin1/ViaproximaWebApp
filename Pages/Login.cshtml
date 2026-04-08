@@ -1,0 +1,83 @@
+@page
+@model Viaproxima.Web.Pages.LoginModel
+@{ ViewData["Title"] = "Logga in"; }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/login.css" asp-append-version="true" />
+}
+
+<div class="login-wrap">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="label">Viaproxima</div>
+            <div class="value">Logga in</div>
+        </div>
+
+        <div id="loginError" class="login-error" style="display:none;">
+            Felaktigt användarnamn eller lösenord.
+        </div>
+
+        <div class="login-body">
+            <label class="login-field">
+                <span>Användarnamn</span>
+                <input id="usernameInput" type="text" autocomplete="username" placeholder="Användarnamn" />
+            </label>
+
+            <label class="login-field">
+                <span>Lösenord</span>
+                <input id="passwordInput" type="password" autocomplete="current-password" placeholder="Lösenord" />
+            </label>
+
+            <button id="loginBtn" type="button" class="btn-small login-btn">Logga in</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (() => {
+            const usernameInput = document.getElementById("usernameInput");
+            const passwordInput = document.getElementById("passwordInput");
+            const loginBtn      = document.getElementById("loginBtn");
+            const loginError    = document.getElementById("loginError");
+
+            async function doLogin() {
+                loginError.style.display = "none";
+                loginBtn.disabled = true;
+
+                try {
+                    const res = await fetch("/api/auth/login", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            username: usernameInput.value,
+                            password: passwordInput.value,
+                        }),
+                    });
+
+                    if (res.ok) {
+                        window.location.href = "/CharacterList";
+                    } else {
+                        loginError.style.display = "block";
+                        passwordInput.value = "";
+                        passwordInput.focus();
+                    }
+                } catch {
+                    loginError.style.display = "block";
+                } finally {
+                    loginBtn.disabled = false;
+                }
+            }
+
+            loginBtn.addEventListener("click", doLogin);
+            passwordInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") doLogin();
+            });
+            usernameInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter") passwordInput.focus();
+            });
+        })();
+    </script>
+}
