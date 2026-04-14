@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.Antiforgery;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Viaproxima.Web.Data;
 using Viaproxima.Web.Models;
+using Viaproxima.Web.Models.Merchant;
+using Viaproxima.Web.Services;
 
 namespace Viaproxima.Web;
 
@@ -74,6 +77,25 @@ public class Program
                 context.HttpContext.Response.StatusCode = 429;
                 await context.HttpContext.Response.WriteAsync("Too many requests. Try again later.", ct);
             };
+        });
+
+        builder.Services.AddSingleton<IPromptAssembler>(sp =>
+        {
+            var env = sp.GetRequiredService<IWebHostEnvironment>();
+            var root = Path.Combine(env.WebRootPath, "MerchantRules");
+            var opts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+            var raserSkran = JsonSerializer.Deserialize<RaserSkranData>(
+                File.ReadAllText(Path.Combine(root, "viaproxima_raser_skran_design_sv.json")), opts)!;
+            var itemRules = JsonSerializer.Deserialize<ItemRulesData>(
+                File.ReadAllText(Path.Combine(root, "viaproxima_item_rules.json")), opts)!;
+            var layouts = JsonSerializer.Deserialize<LayoutsData>(
+                File.ReadAllText(Path.Combine(root, "viaproxima_layouts_150.json")), opts)!;
+            var creativity = JsonSerializer.Deserialize<CreativityData>(
+                File.ReadAllText(Path.Combine(root, "viaproxima_item_creativity.json")), opts)!;
+            var skeleton = File.ReadAllText(Path.Combine(root, "viaproxima_merchant_prompt_skeleton.md"));
+
+            return new PromptAssembler(raserSkran, itemRules, layouts, creativity, skeleton);
         });
 
         var app = builder.Build();

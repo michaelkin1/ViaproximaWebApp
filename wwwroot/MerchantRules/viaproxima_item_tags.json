@@ -1,0 +1,383 @@
+{
+  "version": "1.0",
+  "tags_per_item": 2,
+  "item_types": {
+    "MELEE": "Närstridsvapen",
+    "RANGED": "Avståndsvapen",
+    "AMMO": "Ammunition",
+    "ARMOR": "Rustning",
+    "SHIELD": "Sköldar",
+    "CLOTHES": "Kläder",
+    "JEWELRY": "Smycken",
+    "TOOLS": "Verktyg",
+    "PETS": "Tamdjur",
+    "CARRY": "Bäritems",
+    "LORE": "Lärdomsitems"
+  },
+  "tag_groups": [
+    {
+      "id": "COMBAT",
+      "name": "Strid",
+      "applies_to": [
+        "MELEE",
+        "RANGED",
+        "ARMOR",
+        "SHIELD",
+        "PETS",
+        "TOOLS"
+      ],
+      "tags": [
+        "Aggressiv",
+        "Defensiv",
+        "Kontroll",
+        "Precision",
+        "Räckvidd",
+        "Snabb"
+      ]
+    },
+    {
+      "id": "UTILITY",
+      "name": "Nytta",
+      "applies_to": [
+        "TOOLS",
+        "CARRY",
+        "CLOTHES",
+        "PETS",
+        "MELEE",
+        "RANGED",
+        "AMMO"
+      ],
+      "tags": [
+        "Transport",
+        "Förvaring",
+        "Spårning",
+        "Reparation",
+        "Överlevnad",
+        "Navigering"
+      ]
+    },
+    {
+      "id": "SOCIAL",
+      "name": "Socialt",
+      "applies_to": [
+        "CLOTHES",
+        "JEWELRY",
+        "LORE",
+        "MELEE",
+        "ARMOR",
+        "PETS"
+      ],
+      "tags": [
+        "Diskret",
+        "Hotfull",
+        "Status",
+        "Ceremoniell",
+        "Imponerande",
+        "Traditionell"
+      ]
+    },
+    {
+      "id": "BUILD",
+      "name": "Konstruktion",
+      "applies_to": [
+        "MELEE",
+        "RANGED",
+        "AMMO",
+        "ARMOR",
+        "SHIELD",
+        "CLOTHES",
+        "JEWELRY",
+        "TOOLS",
+        "PETS",
+        "CARRY",
+        "LORE"
+      ],
+      "tags": [
+        "Robust",
+        "Lätt",
+        "Tung",
+        "Flexibel",
+        "Modulär",
+        "Sliten"
+      ]
+    },
+    {
+      "id": "ENV",
+      "name": "Miljö",
+      "applies_to": [
+        "MELEE",
+        "RANGED",
+        "AMMO",
+        "ARMOR",
+        "SHIELD",
+        "CLOTHES",
+        "JEWELRY",
+        "TOOLS",
+        "PETS",
+        "CARRY",
+        "LORE"
+      ],
+      "tags": [
+        "Skog",
+        "Kust",
+        "Berg",
+        "Grotta",
+        "Natt",
+        "Vinter"
+      ]
+    },
+    {
+      "id": "ROLE",
+      "name": "Roll",
+      "applies_to": [
+        "MELEE",
+        "RANGED",
+        "ARMOR",
+        "SHIELD",
+        "TOOLS",
+        "PETS",
+        "CLOTHES"
+      ],
+      "tags": [
+        "Frontlinje",
+        "Stöd",
+        "Spaning",
+        "Flykt",
+        "Inbrytning",
+        "Försvar"
+      ]
+    }
+  ],
+  "selection_profiles": {
+    "MELEE": [
+      {
+        "group": "COMBAT",
+        "weight": 4
+      },
+      {
+        "group": "ROLE",
+        "weight": 3
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "SOCIAL",
+        "weight": 1
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      },
+      {
+        "group": "UTILITY",
+        "weight": 1
+      }
+    ],
+    "RANGED": [
+      {
+        "group": "COMBAT",
+        "weight": 4
+      },
+      {
+        "group": "ROLE",
+        "weight": 3
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "ENV",
+        "weight": 2
+      },
+      {
+        "group": "UTILITY",
+        "weight": 1
+      }
+    ],
+    "AMMO": [
+      {
+        "group": "COMBAT",
+        "weight": 2
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "ENV",
+        "weight": 2
+      },
+      {
+        "group": "UTILITY",
+        "weight": 1
+      }
+    ],
+    "ARMOR": [
+      {
+        "group": "COMBAT",
+        "weight": 4
+      },
+      {
+        "group": "ROLE",
+        "weight": 3
+      },
+      {
+        "group": "BUILD",
+        "weight": 3
+      },
+      {
+        "group": "SOCIAL",
+        "weight": 1
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "SHIELD": [
+      {
+        "group": "COMBAT",
+        "weight": 4
+      },
+      {
+        "group": "ROLE",
+        "weight": 3
+      },
+      {
+        "group": "BUILD",
+        "weight": 3
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "CLOTHES": [
+      {
+        "group": "SOCIAL",
+        "weight": 4
+      },
+      {
+        "group": "UTILITY",
+        "weight": 2
+      },
+      {
+        "group": "ROLE",
+        "weight": 2
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "JEWELRY": [
+      {
+        "group": "SOCIAL",
+        "weight": 4
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "TOOLS": [
+      {
+        "group": "UTILITY",
+        "weight": 4
+      },
+      {
+        "group": "BUILD",
+        "weight": 3
+      },
+      {
+        "group": "ROLE",
+        "weight": 2
+      },
+      {
+        "group": "COMBAT",
+        "weight": 1
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "PETS": [
+      {
+        "group": "ROLE",
+        "weight": 4
+      },
+      {
+        "group": "COMBAT",
+        "weight": 3
+      },
+      {
+        "group": "UTILITY",
+        "weight": 2
+      },
+      {
+        "group": "SOCIAL",
+        "weight": 1
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      },
+      {
+        "group": "BUILD",
+        "weight": 1
+      }
+    ],
+    "CARRY": [
+      {
+        "group": "UTILITY",
+        "weight": 4
+      },
+      {
+        "group": "BUILD",
+        "weight": 3
+      },
+      {
+        "group": "SOCIAL",
+        "weight": 1
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ],
+    "LORE": [
+      {
+        "group": "SOCIAL",
+        "weight": 3
+      },
+      {
+        "group": "BUILD",
+        "weight": 2
+      },
+      {
+        "group": "ENV",
+        "weight": 1
+      }
+    ]
+  },
+  "notes": {
+    "intent": "Generella enordstaggar som driver variationsriktning vid generering. Inte magi, inte mekanik.",
+    "guidelines": [
+      "Tilldela exakt 2 tags per item.",
+      "Välj tags via selection_profiles för itemets huvudtyp.",
+      "Undvik att välja två tags med exakt samma betydelse."
+    ]
+  }
+}

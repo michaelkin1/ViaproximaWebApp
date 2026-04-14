@@ -1,0 +1,337 @@
+{
+  "version": "2.0",
+  "enums": {
+    "MELEE": "Närstridsvapen",
+    "RANGED": "Avståndsvapen",
+    "AMMO": "Ammunition",
+    "ARMOR": "Rustning",
+    "SHIELD": "Sköldar",
+    "CLOTHES": "Kläder",
+    "JEWELRY": "Smycken",
+    "TOOLS": "Verktyg",
+    "PETS": "Tamdjur",
+    "CARRY": "Bäritems",
+    "LORE": "Lärdomsitems"
+  },
+  "global_rules": [
+    "Ett föremål får ha max 1 huvudbonus (HV eller CV eller KV).",
+    "Ett föremål får ha max 1 unik funktionell effekt.",
+    "Ett föremål får inte ändra grundmekanik (tärningsslag, skadeskala, blocksystem).",
+    "Bonusar ska normalt vara ±1–2. Max ±3 endast för starka magiska föremål.",
+    "Effekter ska vara situationsbundna, inte permanenta systemändringar."
+  ],
+  "damage_scale": {
+    "LOW": "D4",
+    "MID": "D4+4",
+    "HIGH": "D4+8",
+    "EXTREME": "D4+12",
+    "rule": "Skadenivå måste vara en av LOW/MID/HIGH/EXTREME eller en mellan-nivå uttryckt som 2D4+X enligt mellanlogik."
+  },
+  "grid_weight_rule": "Vikt anges alltid som rutmått AxB (ex: 1x1, 2x1, 2x2, 3x2).",
+  "weapon_profile_format": "\"En/Ett <adjektiv> <material><vapentyp> som gör <skadenivå> och väger <AxB>. Därtill <effekt>. Däremot <nackdel om rimlig>.\"",
+  "type_rules": {
+    "MELEE": {
+      "must_include": [
+        "Skadenivå enligt damage_scale",
+        "Vikt i rutor enligt grid_weight_rule",
+        "Minst 1 funktionell fördel",
+        "Text i weapon_profile_format"
+      ],
+      "constraints": [
+        "Får inte överstiga EXTREME skada.",
+        "Får inte ignorera rustnings-/blockregler.",
+        "Får inte ge permanent skadenivåhöjning utanför sin profil.",
+        "Får inte ge mer än ±3 HV."
+      ]
+    },
+    "RANGED": {
+      "must_include": [
+        "Skadenivå enligt damage_scale",
+        "Vikt i rutor enligt grid_weight_rule",
+        "Markera om ammunition krävs (ja/nej)",
+        "Text i weapon_profile_format"
+      ],
+      "ammo_dependency": "Om ammunition krävs: vapnet kan inte användas utan ammunition.",
+      "constraints": [
+        "Får inte ge obegränsad ammunition.",
+        "Får inte ignorera rustnings-/blockregler.",
+        "Får inte ändra skadeskalan."
+      ]
+    },
+    "AMMO": {
+      "must_include": [
+        "Förbrukningsregel (antal användningar eller engångseffekt)"
+      ],
+      "constraints": [
+        "Får inte permanent ändra vapnets basprofil.",
+        "Får endast modifiera skada eller funktion situationsbundet.",
+        "Får inte ge mer än 1 extra effekt.",
+        "Får inte höja skada mer än 1 skadenivå."
+      ]
+    },
+    "ARMOR": {
+      "must_include": [
+        "Typ: Lätt eller Medeltung eller Tung",
+        "Total hållbarhet (exakt heltal, se armor_types)",
+        "Vilka skadenivåer rustningen kan blockera (ur damage_scale)",
+        "Vikt i rutor enligt grid_weight_rule",
+        "Blocksystem (se block_rules)"
+      ],
+      "armor_types": {
+        "Lätt": {
+          "blockerar": ["LOW"],
+          "hållbarhet": 6,
+          "vikt": "2x1",
+          "exempelmaterial": ["Bast", "läder", "tunt trä", "växtfibrer"]
+        },
+        "Medeltung": {
+          "blockerar": ["LOW", "MID"],
+          "hållbarhet": 9,
+          "vikt": "2x2",
+          "exempelmaterial": ["Härdad djurhud", "benplattor", "tjockt trä"]
+        },
+        "Tung": {
+          "blockerar": ["LOW", "MID", "HIGH"],
+          "hållbarhet": 12,
+          "vikt": "3x2",
+          "exempelmaterial": ["Fossila skal", "stenplattor", "massivt trä"]
+        }
+      },
+      "block_rules": [
+        "Vid träff slås 1D6.",
+        "På 5–6 blockeras slaget.",
+        "Vid lyckad blockering sänks skadan en nivå.",
+        "Hållbarheten minskar med: LOW −1, MID −2, HIGH −3, EXTREME −5 (bryter rustningen direkt).",
+        "Vid misslyckad blockering tar rustningen ingen skada.",
+        "Om skadan överstiger rustningens designnivå (men ej EXTREME) kan rustningen inte blockera och tar ingen skada."
+      ],
+      "constraints": [
+        "Rustning kan inte blockera över sin designnivå.",
+        "EXTREME skada kan inte blockeras av någon rustning.",
+        "Får inte ge permanent skadereduktion utan blockslag."
+      ]
+    },
+    "SHIELD": {
+      "must_include": [
+        "Typ: Liten eller Medeltung eller Tung",
+        "Total hållbarhet (exakt heltal, se shield_types)",
+        "Vikt i rutor enligt grid_weight_rule"
+      ],
+      "shield_types": {
+        "Liten": {
+          "hv_bonus": "+1",
+          "hållbarhet": 6,
+          "vikt": "2x1",
+          "nackdelar": "Inga nackdelar",
+          "exempel": ["Armbindel", "träskiva", "hornsköld"]
+        },
+        "Medeltung": {
+          "hv_bonus": "+2",
+          "hållbarhet": 9,
+          "vikt": "2x2",
+          "nackdelar": "Svår att kombinera med tvåhandsvapen",
+          "exempel": ["Rundsköld", "serpentträplatta", "bensköld"]
+        },
+        "Tung": {
+          "hv_bonus": "+2",
+          "hållbarhet": 12,
+          "vikt": "3x2",
+          "nackdelar": "Svår att röra sig smidigt med. Tillåter sköldstöt.",
+          "exempel": ["Fossilt skal", "massiv träsköld"]
+        }
+      },
+      "shield_bash_rules": [
+        "Endast tunga sköldar (eller särskilt designade magiska sköldar) får utföra sköldstöt.",
+        "Vid blockering med +2 HV eller mer: knuffa fienden bakåt ett par meter i valfri riktning och orsaka kort bedövning (förlorar nästa reaktion)."
+      ],
+      "constraints": [
+        "Max +2 HV.",
+        "Får inte ändra blockmekanik."
+      ]
+    },
+    "CLOTHES": {
+      "must_include": [
+        "Social, miljömässig eller situationsbunden funktion"
+      ],
+      "constraints": [
+        "Får inte ge vapenskada.",
+        "Får inte fungera som rustning utan explicit regel.",
+        "Får inte ändra kärnmekanik."
+      ]
+    },
+    "JEWELRY": {
+      "must_include": [
+        "En fokuserad, begränsad effekt"
+      ],
+      "constraints": [
+        "Max ±2 HV på en specifik subegenskap.",
+        "Får inte ge breda systemändringar.",
+        "Liknande effekter staplas inte obegränsat."
+      ]
+    },
+    "TOOLS": {
+      "must_include": [
+        "En konkret användning i scen"
+      ],
+      "constraints": [
+        "Max ±2 HV i relevant situation.",
+        "Får inte fungera som fullvärdigt vapen utan explicit regel.",
+        "Får inte ge breda permanenta bonusar."
+      ]
+    },
+    "PETS": {
+      "must_include": [
+        "Storlek: fickdjur eller fotdjur eller riddjur eller trampdjur (se pet_sizes)",
+        "1–2 evolutioner"
+      ],
+      "pet_sizes": {
+        "Fickdjur": {
+          "storlek": "Mycket små (musstorlek)",
+          "beskrivning": "Får plats i fickan. Enkla att bära med sig. Kan gömmas eller bo i väskor.",
+          "exempel": ["Näbbfink", "skråtta", "suripadda"]
+        },
+        "Fotdjur": {
+          "storlek": "Små till medelstora (som katt eller hund)",
+          "beskrivning": "Följer sin ägare till fots. Kräver viss skötsel men är flexibla följeslagare.",
+          "exempel": ["Hurre", "lomander", "grismongo"]
+        },
+        "Riddjur": {
+          "storlek": "Stora (häststorlek)",
+          "beskrivning": "Kan ridas. Kräver plats, foder och vård. Bra för resor och strid.",
+          "exempel": ["Hästa", "sandlöpare", "koråka"]
+        },
+        "Trampdjur": {
+          "storlek": "Väldigt stora (flodhäst–elefant)",
+          "beskrivning": "Enorma följeslagare. Svåra att ha med överallt. Imponerande närvaro.",
+          "exempel": ["Krabbfant", "nosoxe", "råttofant"]
+        }
+      },
+      "constraints": [
+        "Max 2 evolutioner vid köp. Fler kan köpas med erfarenhetspoäng i samråd med spelledaren.",
+        "Direkt skada får inte överstiga rimlig nivå för storlekskategorin.",
+        "Får inte ersätta spelarkaraktärers kärnroller."
+      ]
+    },
+    "CARRY": {
+      "must_include": [
+        "Förvaring, organisering eller transportfunktion"
+      ],
+      "constraints": [
+        "Får inte ge stridsbonus.",
+        "Får inte obegränsat öka bärförmåga.",
+        "Effekter ska vara logistiska, inte offensiva."
+      ]
+    },
+    "LORE": {
+      "must_include": [
+        "Koppla föremålet till exakt en lärdom: KRISTALLSEJDARE eller SHAMAN eller LYÅDSKAPARE eller ORAKEL"
+      ],
+      "lore_rules": {
+        "KRISTALLSEJDARE": {
+          "system": [
+            "Varje dag rullas 1D6 per nivå för att fastslå tillgängliga besvärjelser.",
+            "Manapool fastslås genom 2D6 efter besvärjelseslaget.",
+            "Vid besvärjelsekast väljs upp till 6 tärningar ur poolen – resultatet måste nå eller överträffa besvärjelsens CV-krav.",
+            "Exakt två sexor vid ett besvärjelsekast orsakar överflöd/miscast."
+          ],
+          "allowed_effects": [
+            "+1 CV vid besvärjelsekast",
+            "1 extra besvärjelsetärning ur manapoolen",
+            "Begränsad mildring av överflöd/miscast",
+            "Förstärkning av en specifik lära (röd/grön/gul/lila/orange/blå)",
+            "Snabbare eller billigare kast av en specifik besvärjelse"
+          ],
+          "forbidden": [
+            "Eliminera miscast helt",
+            "Ersätta eller utöka manapoolen permanent",
+            "Obegränsad lagring av besvärjelser"
+          ]
+        },
+        "SHAMAN": {
+          "system": [
+            "Ingredienser representeras av kort med raritet och tärningsvärde.",
+            "Tärningar slås och summeras till kraftvärde (KV).",
+            "Ritualer har ett KV-krav som måste nås för att lyckas.",
+            "Misslyckas shamanen med KV-kravet sker konsekvenser proportionellt mot underskottet."
+          ],
+          "ingredient_rarities": {
+            "Vanlig":    { "tärningsvärden": ["D3", "D6"] },
+            "Ovanlig":   { "tärningsvärden": ["D8", "D10"] },
+            "Sällsynt":  { "tärningsvärden": ["D12", "D20"] },
+            "Mytisk":    { "tärningsvärden": ["D30", "D60"] }
+          },
+          "ingredient_types": {
+            "Svampar":    { "effekter": ["Gift", "sannspådom", "visioner", "drömmar"] },
+            "Djurdelar":  { "effekter": ["Förhöjda sinnen", "kroppslig förstärkning", "blodritualer"] },
+            "Essens":     { "effekter": ["Naturlig påverkan", "känna av omvärlden", "elementritualer"] },
+            "Mineraler":  { "effekter": ["Skyddande ritualer", "fokus", "försegling", "hinder"] },
+            "Växter":     { "effekter": ["Helande ritualer", "dämpning", "tillväxt", "rening", "snår"] }
+          },
+          "kv_scale": {
+            "10–20":  "Enkla omen, lindrad smärta, skärpta sinnen.",
+            "21–40":  "Vägvisande syner, djurisk förstärkning, binda en plats eller stig.",
+            "41–60":  "Djupa drömresor, kalla på uråldriga krafter, förvrida väder eller terräng lokalt.",
+            "61+":    "Flytta gränsen mellan världar, märka ut öden, väcka sovande krafter i naturen."
+          },
+          "allowed_effects": [
+            "Räknas som en specifik ingredienstyp eller ett specifikt tärningsvärde i ritualer",
+            "Förstärka en tydlig ritualtyp (t.ex. helande, spådom, bindning)",
+            "Göra en ritual mer stabil (minska risken för förvriden effekt vid underskott)",
+            "Sänka KV-krav situationsbundet (t.ex. vid specifik plats eller ingredienstyp)"
+          ],
+          "forbidden": [
+            "Eliminera ingredienskrav helt",
+            "Göra ritualer omedelbara utan begränsning",
+            "Garantera framgång oavsett KV"
+          ]
+        },
+        "LYÅDSKAPARE": {
+          "system": [
+            "Kräver trans (ca 1 runda) innan magi tar form – lyådskaparen är sårbar under transen.",
+            "Kräver att ljud kan färdas (fungerar ej i vakuum, under vatten eller med förstört instrument).",
+            "Instrumentets skick är avgörande – dåligt skött instrument riskerar att gå sönder och bryta magin.",
+            "Inriktning väljs vid skapandet: Kontroll, Läsning eller Flykt.",
+            "Kraft skalas med nivå: räckvidd 5–10m (nivå 1) upp till 500m (nivå 5), maxvikt 5kg upp till 500kg."
+          ],
+          "allowed_effects": [
+            "Förkorta transtiden",
+            "Skydda eller förstärka instrumentets hållbarhet",
+            "Förstärka räckvidd eller antal mål",
+            "Låta ljud färdas genom ovanliga medier (sten, ben, tunna väggar)",
+            "Förstärka musikens moraleffekt på allierade"
+          ],
+          "forbidden": [
+            "Ta bort behovet av ljud helt",
+            "Ta bort sårbarhet under trans helt",
+            "Ge magi utan instrument eller trans"
+          ]
+        },
+        "ORAKEL": {
+          "system": [
+            "Mirakel erhålls via rollspelad förhandling med ett gudomligt sändebud.",
+            "Spelledaren gestaltar sändebudet.",
+            "Utfallet beror på oraklets nivå, tidigare relation med sändebudet och vad som offras.",
+            "Ju viktigare offret är för oraklet, desto större chans till kraftfull hjälp.",
+            "Respektlösa eller billiga offer kan leda till avslag, hot eller nya krav."
+          ],
+          "allowed_effects": [
+            "Förbättra förhandlingsposition inför sändebudet (heliga sigill, reliker)",
+            "Minska offerkravet i begränsad grad",
+            "Mildra konsekvenserna vid ett dåligt utfall i förhandlingen",
+            "Lagra en svag välsignelse för senare aktivering",
+            "Göra det lättare att tolka tecken och omen"
+          ],
+          "forbidden": [
+            "Garantera mirakel",
+            "Eliminera relationens eller offrets betydelse",
+            "Kalla på sändebudet utan bön eller ritual"
+          ]
+        }
+      },
+      "constraints": [
+        "Får inte ersätta lärdomens grundmekanik.",
+        "Får inte ge obegränsad magi."
+      ]
+    }
+  }
+}

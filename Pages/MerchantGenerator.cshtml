@@ -1,0 +1,67 @@
+@page
+@model Viaproxima.Web.Pages.MerchantGeneratorModel
+
+@{
+    ViewData["Title"] = "Handlargenerator";
+}
+
+<h1>Handlargenerator</h1>
+
+<div class="container mt-4">
+    <form method="post">
+        <div class="form-group">
+            <label for="SkråId">Skrå</label>
+            <select id="SkråId" asp-for="SkråId" asp-items="Model.Skrån" class="form-control"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="RasId">Ras</label>
+            <select id="RasId" asp-for="RasId" asp-items="Model.Raser" class="form-control"></select>
+        </div>
+
+        <div class="form-group">
+            <label for="AntalItems">Antal föremål</label>
+            <input type="number" id="AntalItems" asp-for="AntalItems" min="4" max="12" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label for="LärdomFokus">Lärdomsfokus (valfritt)</label>
+            <select id="LärdomFokus" asp-for="LärdomFokus" class="form-control">
+                <option value="">-- Ingen --</option>
+                <option value="Kristallsejdare">Kristallsejdare</option>
+                <option value="Shaman">Shaman</option>
+                <option value="Lyådskapare">Lyådskapare</option>
+                <option value="Orakel">Orakel</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Generera prompt</button>
+    </form>
+</div>
+
+@if (Model.GeneradPrompt != null)
+{
+    <div class="container mt-5">
+        <h3>Resultat</h3>
+        <p><strong>Layout:</strong> @Model.LayoutId</p>
+
+        <div class="form-group">
+            <label for="prompt-output">Genererad prompt:</label>
+            <textarea id="prompt-output" class="form-control" rows="40" readonly>@Model.GeneradPrompt</textarea>
+        </div>
+
+        <button type="button" class="btn btn-secondary" onclick="copyPrompt()">Kopiera prompt</button>
+    </div>
+
+    <script>
+        function copyPrompt() {
+            const textarea = document.getElementById('prompt-output');
+            navigator.clipboard.writeText(textarea.value).then(() => {
+                alert('Prompt kopierad till urklipp!');
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Kunde inte kopiera prompt.');
+            });
+        }
+    </script>
+}

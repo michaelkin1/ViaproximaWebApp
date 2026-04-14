@@ -1,0 +1,194 @@
+{
+  "version": "1.1",
+  "purpose": "Kreativa riktningsgivare för itemgenerering. Inte regler – utan verktyg för att skapa items som är minnesvärda, inte bara korrekta.",
+  "meta_instruktion": "Alla inspirationskorn och flavor_seeds i denna fil illustrerar ett tänkesätt eller en ton – de är inte mallar att variera. Läs dem för att förstå riktningen, generera sedan något eget. Om ett genererat item liknar ett inspirationskorn har LLM:en tänkt för lite. Målet är items som inte hade kunnat finnas i något annat rollspel.",
+
+  "balance_targets": {
+    "hv_cv_kv_items": {
+      "andel": "~50%",
+      "beskrivning": "Items med tydliga numeriska bonusar. Spelare vet omedelbart vad de gör och varför de är värdefulla.",
+      "riktlinje": "Håll bonusar i ±1–2 HV. Koppla alltid bonusen till en specifik subegenskap eller situation, aldrig brett."
+    },
+    "unika_effekt_items": {
+      "andel": "~50%",
+      "beskrivning": "Items vars värde ligger i vad de *gör*, inte vilken siffra de ger. Kan vara svaga i strid men ovärderliga i rätt scen.",
+      "riktlinje": "Effekten ska vara omedelbart begriplig och användbar. Spelaren ska kunna peka på en konkret scen där itemet skiner."
+    },
+    "kraftnivåer": {
+      "Vardagligt": {
+        "beskrivning": "Liten, pålitlig bonus eller enkel praktisk funktion. Inget dramatiskt.",
+        "effektstyrka": "±1 HV, eller engångseffekt av begränsad räckvidd.",
+        "nackdel": "Sällan nödvändig."
+      },
+      "Unikt": {
+        "beskrivning": "Tydlig, specifik effekt som skiljer sig från generisk utrustning. Kan ha lätt nackdel.",
+        "effektstyrka": "±2 HV, eller situationell effekt med tydlig identitet.",
+        "nackdel": "Gärna en lätt nackdel eller ett villkor för att balansera."
+      },
+      "Magiskt": {
+        "beskrivning": "Stark eller bred effekt. Ska nästan alltid ha en kostnad, ett krav eller en begränsning.",
+        "effektstyrka": "±3 HV max, eller kraftig unik effekt.",
+        "nackdel": "Starkt magiskt item utan nackdel är ett designfel. Kostnaden kan vara fysisk, social, magisk eller narrativ."
+      }
+    }
+  },
+
+  "effect_archetypes": {
+    "beskrivning": "Fem mönster för vad som gör ett item intressant utöver sina stats. Välj ett per unikt eller magiskt item. Vardagliga items behöver inte ett arketyp.",
+    "anvisning": "inspirationskorn visar hur arketypen *tänker*, inte hur den ser ut. Generera aldrig en variant av ett inspirationskorn – använd det för att förstå logiken, hitta sedan en helt annan ingång.",
+    "arketyper": {
+      "Villkorlig": {
+        "kärnidé": "Itemet fungerar bara under ett specifikt villkor – men när villkoret uppfylls är det exceptionellt.",
+        "inspirationskorn": [
+          "Fungerar bara nattetid, eller bara under regn.",
+          "Ger bonus enbart mot en specifik typ av motståndare.",
+          "Aktiveras av en specifik känsla eller sinnestillstånd hos bäraren."
+        ],
+        "designfråga": "Vilket villkor gör itemet intressant att planera kring, utan att det blir oanvändbart?"
+      },
+      "Dubbelsidig": {
+        "kärnidé": "Fördelen och nackdelen är oupplösligt sammanlänkade – man kan inte ha den ena utan den andra.",
+        "inspirationskorn": [
+          "Ger +2 HV på anfall men −1 HV på försvar varje runda det används.",
+          "Helar bäraren men drar KV från shamanens nästa ritual.",
+          "Gör bäraren omöjlig att spåra men även omöjlig att hitta av allierade."
+        ],
+        "designfråga": "Är fördelen och nackdelen verkligen sammanlänkade, eller är nackdelen bara ett påklistrat straff?"
+      },
+      "Narrativ": {
+        "kärnidé": "Itemet berättar något om världen, sin tidigare ägare eller Viaproxima. Värdet är lika mycket berättande som mekaniskt.",
+        "inspirationskorn": [
+          "En kniv som alltid är varm – dess förra ägare dog i eld och värmen lämnade aldrig bladet.",
+          "En sköld med ett namn inristat på insidan. Namnet tillhör ingen i världen längre.",
+          "En påse som alltid doftar av en specifik ort, oavsett var man är."
+        ],
+        "designfråga": "Vad berättar itemet om världen eller sin historia, utan att texten behöver förklara det rakt ut?"
+      },
+      "Situationell": {
+        "kärnidé": "Extremt stark i en specifik typ av scen. I alla andra scener nästan värdelöst. Spelaren lär sig att spara det.",
+        "inspirationskorn": [
+          "Ger +3 HV men bara vid förhandlingar som rör skulder eller kontrakt.",
+          "Kan bryta alla rep och bindningar – men bara en gång per dag.",
+          "Dubblerar tamdjurets förmåga under exakt en runda per strid."
+        ],
+        "designfråga": "Är den specifika situationen tillräckligt vanlig för att itemet ska kännas relevant, men inte så vanlig att begränsningen saknar mening?"
+      },
+      "Kostnad": {
+        "kärnidé": "Itemet kräver något av bäraren för att fungera – inte en nackdel utan ett aktivt val.",
+        "inspirationskorn": [
+          "Kräver att bäraren offrar blod (tar 1 LOW skada) för att aktiveras.",
+          "Fungerar bara om bäraren bär det synligt och aldrig gömmer det.",
+          "Kräver att bäraren uttalar ett löfte högt varje gång det används.",
+          "Förbrukar en ingrediens ur shamanens förråd vid varje bruk."
+        ],
+        "designfråga": "Är kostnaden ett genuint val, eller är den så liten att den alltid ignoreras?"
+      }
+    }
+  },
+
+  "flavor_seeds": {
+    "beskrivning": "Per skrå: korta fraser som antyder vad som är konstigt, karakteristiskt eller narrativt intressant med just det skråets items. Används för att färga itemets identitet utöver estetik och material.",
+    "anvisning": "Dessa fraser beskriver ett *tänkesätt*, inte ett item. Läs dem, känn tonen, lägg sedan undan dem och hitta något som inte finns på listan. Ett bra skrå-item hade kunnat få en erfaren Adveokatern att nicka igenkännande – inte för att det liknar något de sett, utan för att det känns rätt.",
+    "skrån": {
+      "ADVEOKATERNA": {
+        "inspirationskorn": [
+          "Items som minns varje händelse de bevittnat – och ibland vittnar mot sin ägare.",
+          "Sigill och markeringar som inte kan förfalskas, men vars innebörd kan tolkas på fler sätt än ett.",
+          "Föremål som binder löften lika hårt som rep binder händer.",
+          "Saker som fungerar bättre ju mer formell situationen är.",
+          "Items vars effekt förändras beroende på om bäraren brutit ett löfte nyligen."
+        ]
+      },
+      "MORTOKATERNA": {
+        "inspirationskorn": [
+          "Verktyg som vet skillnaden på skyldig och oskyldig – och behandlar dem olika.",
+          "Items som fungerar bättre ju längre jakten pågått.",
+          "Föremål designade för att inte lämna spår, men som ändå alltid hittar hem.",
+          "Saker som är omöjliga att ta ifrån sin bärare utan dennes medgivande.",
+          "Items som reagerar på lögner i närheten."
+        ]
+      },
+      "ZOOKATERNA": {
+        "inspirationskorn": [
+          "Items som har rest längre än de flesta äventyrare och bär på det.",
+          "Föremål som tamdjur instinktivt dras till eller flyr från.",
+          "Saker som fungerar annorlunda beroende på vilket djur som är i närheten.",
+          "Items som är optimerade för att packas snabbt och försvinna ännu snabbare.",
+          "Föremål som låter sin bärare kommunicera med ett specifikt djurslag."
+        ]
+      },
+      "FLOROKATERNA": {
+        "inspirationskorn": [
+          "Items som växer eller förändras med sin ägare över tid.",
+          "Föremål som reagerar på årstid, väder eller terräng.",
+          "Saker som är levande – inte metaforiskt, faktiskt levande.",
+          "Items som kräver skötsel som en planta, men belönar den som ger den.",
+          "Föremål vars effekt beror på vad bäraren ätit eller rört vid nyligen."
+        ]
+      },
+      "EKOKATERNA": {
+        "inspirationskorn": [
+          "Items som minns sina tidigare ägare och vilka skulder de lämnade efter sig.",
+          "Föremål vars värde beror på vem som vet att du har det.",
+          "Saker som fungerar annorlunda beroende på om du är skyldig någon en tjänst.",
+          "Items som alltid är värda exakt vad du behöver dem vara värda – men aldrig mer.",
+          "Föremål som binder två parter i ett outtalat kontrakt när de byter ägare."
+        ]
+      },
+      "KARTOKATERNA": {
+        "inspirationskorn": [
+          "Items som vet var de är, men inte alltid berättar det.",
+          "Föremål som fungerar bättre på platser som aldrig kartlagts.",
+          "Saker som reagerar på gränser – territoriella, magiska eller personliga.",
+          "Items som har en historia kopplad till en specifik plats i världen.",
+          "Föremål som hjälper dig hitta det du letar efter, men kanske inte på det sätt du väntade."
+        ]
+      },
+      "FABROKATERNA": {
+        "inspirationskorn": [
+          "Items som förändrar hur andra uppfattar sin bärare – inte magiskt, utan genom presentation.",
+          "Föremål som berättar en historia om sin bärare utan att bäraren vet om det.",
+          "Saker vars effekt beror på vem som ser att du bär dem.",
+          "Items som är omöjliga att bära diskret – de kräver att synas.",
+          "Föremål som lagrar en känsla eller ett minne och avger det vid rätt tillfälle."
+        ]
+      },
+      "MATROKATERNA": {
+        "inspirationskorn": [
+          "Items som fungerar bättre ju mer slitna de är.",
+          "Föremål som kan användas på tre olika sätt, men bara ett av dem är det uppenbara.",
+          "Saker som improviserade lösningar har gjort starkare, inte svagare.",
+          "Items som kan repareras på plats med vad som helst, men aldrig blir precis som de var.",
+          "Föremål som minns varje lagning och bär spåren synligt."
+        ]
+      }
+    }
+  },
+
+  "world_anchors": {
+    "beskrivning": "Konkreta detaljer om Viaproxima som LLM:en ska använda för att förankra items i världen. Motverkar generisk fantasiestetik.",
+    "material_som_finns": [
+      "Trä, ben, sten, växtfibrer, läder, enkla kristaller, fossiler, djurhud, skal, harts, mossa, rotfiber, kitin"
+    ],
+    "material_som_inte_finns": [
+      "Metall (extremt sällsynt, ses som magiskt/legendariskt – använd sparsamt och med konsekvens)",
+      "Glas, porslin, tyger av industriell kvalitet"
+    ],
+    "estetisk_riktning": "Rå, organisk, hantverksmässig – men magisk. Items ser ut som om de tillverkades för hand av någon som visste exakt vad de gjorde.",
+    "magisk_ton": "Magi i Viaproxima är nyckfull, personlig och kostsam. Magiska items ska kännas som att de bär på ett pris – synligt eller dolt.",
+    "valuta_referens": {
+      "Cuppar": "Vardagliga transaktioner. Billiga items.",
+      "Ferrar": "Större affärer. Medelstarka items.",
+      "Aurar": "Sällsynta, svåra att få tag på. Starka magiska items."
+    }
+  },
+
+  "item_identity_checklist": {
+    "beskrivning": "Tre frågor LLM:en ska kunna svara ja på för varje unikt eller magiskt item. Om svaret är nej på fler än en – generera om.",
+    "frågor": [
+      "Kan en spelare peka på en konkret scen under äventyret där detta item skulle vara avgörande?",
+      "Är itemet omöjligt att förväxla med ett generiskt fantasiföremål från ett annat rollspel?",
+      "Känns itemets nackdel eller kostnad som en del av dess identitet, inte som ett påklistrat straff?"
+    ]
+  }
+}

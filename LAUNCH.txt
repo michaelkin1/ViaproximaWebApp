@@ -1,0 +1,101 @@
+================================================================================
+  VIAPROXIMA.WEB — CLOUDFLARE TUNNEL LAUNCH GUIDE
+================================================================================
+
+TUNNEL REFERENCE
+  Tunnel Name:  viaproxima
+  Tunnel ID:    c816b02c-6702-4172-a6d3-93d3fea4d1d4
+  Domain:       viaproxima.com
+  App Port:     localhost:5083
+
+================================================================================
+FIRST-TIME SETUP CHECKLIST (Already Complete)
+================================================================================
+
+ ✓ Cloudflare Tunnel created with UUID c816b02c-6702-4172-a6d3-93d3fea4d1d4
+ ✓ Credentials file saved to ~/.cloudflared/c816b02c-6702-4172-a6d3-93d3fea4d1d4.json
+ ✓ config.yml written to ~/.cloudflared/config.yml
+ ✓ DNS routes added (viaproxima.com & www.viaproxima.com → tunnel)
+ ✓ Ingress rules validated ✓
+ ✓ ForwardedHeaders middleware already configured in Program.cs
+ ✓ Kestrel listening on http://localhost:5083
+
+================================================================================
+EVERY LAUNCH — RUN BOTH COMMANDS
+================================================================================
+
+Terminal 1 (Project directory):
+  $ dotnet run
+
+  Expected: App starts on http://localhost:5083 with "Application started"
+
+Terminal 2 (any directory):
+  $ cloudflared tunnel run viaproxima
+
+  Expected: Shows "Registered tunnel connection" + listening on connections
+
+Then visit:
+  https://viaproxima.com (or https://www.viaproxima.com)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+✗ "Tunnel not connected" / "No active connection"
+  → Did you run "cloudflared tunnel run viaproxima" in Terminal 2?
+  → Is the app still running in Terminal 1?
+  → Check both terminals for error messages.
+
+✗ "ERR Request failed" or "502 Bad Gateway"
+  → The tunnel is running but the app isn't responding.
+  → Check Terminal 1 — is the app still running (look for exceptions)?
+  → Is localhost:5083 actually serving? Run: curl http://localhost:5083
+  → Restart the app with "dotnet run"
+
+✗ "Address already in use" / "Port 5083 is busy"
+  → Another process is using port 5083.
+  → Find and kill it:
+    Windows: netstat -ano | findstr :5083 → taskkill /PID <PID>
+    Linux/Mac: lsof -i :5083 → kill -9 <PID>
+  → Or change Kestrel port in appsettings.json → update config.yml
+
+✗ DNS not resolving / "Can't reach viaproxima.com"
+  → DNS changes take up to 48 hours (usually 5–30 min).
+  → Check Cloudflare dashboard to confirm CNAME records exist.
+  → Try flushing local DNS:
+    Windows: ipconfig /flushdns
+    Mac: sudo dscacheutil -flushcache
+  → If still broken, verify tunnel is listed: cloudflared tunnel list
+
+✗ "origin certificate not found" when creating/running tunnel
+  → Run: cloudflared login
+  → Complete the browser auth and wait for cert.pem to appear in ~/.cloudflared/
+  → Then retry the command.
+
+================================================================================
+MONITORING THE TUNNEL
+================================================================================
+
+Check tunnel status:
+  $ cloudflared tunnel list
+
+Show active connections:
+  $ cloudflared tunnel info viaproxima
+
+Validate config rules:
+  $ cloudflared tunnel ingress validate
+
+View logs (real-time):
+  In Terminal 2, cloudflared tunnel run viaproxima shows logs directly
+
+================================================================================
+STOPPING
+================================================================================
+
+To stop serving (but keep the app):
+  Terminal 2: Press Ctrl+C (stops tunnel)
+  Terminal 1: Press Ctrl+C (stops app)
+
+The tunnel will auto-close. DNS records remain; the domain stays registered.
+
+================================================================================

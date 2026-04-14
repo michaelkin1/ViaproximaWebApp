@@ -1,0 +1,1602 @@
+{
+  "mapping": {
+    "MELEE": "Närstridsvapen",
+    "RANGED": "Avståndsvapen",
+    "AMMO": "Ammunition",
+    "ARMOR": "Rustning",
+    "SHIELD": "Sköldar",
+    "CLOTHES": "Kläder",
+    "JEWELRY": "Smycken",
+    "TOOLS": "Verktyg",
+    "PETS": "Tamdjur",
+    "CARRY": "Bäritems",
+    "LORE": "Lärdomsitems"
+  },
+  "layouts": [
+    {
+      "id": "L001",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "RANGED": 2,
+        "AMMO": 1,
+        "ARMOR": 1,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L002",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "ARMOR": 2,
+        "SHIELD": 1,
+        "PETS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L003",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 2,
+        "MELEE": 2,
+        "ARMOR": 2,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L004",
+      "slots": 10,
+      "counts": {
+        "LORE": 2,
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L005",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "RANGED": 3,
+        "AMMO": 2
+      }
+    },
+    {
+      "id": "L006",
+      "slots": 10,
+      "counts": {
+        "MELEE": 3,
+        "ARMOR": 3,
+        "SHIELD": 2,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L007",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "MELEE": 2,
+        "TOOLS": 2,
+        "JEWELRY": 1,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L008",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 2,
+        "TOOLS": 3,
+        "PETS": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L009",
+      "slots": 10,
+      "counts": {
+        "MELEE": 3,
+        "RANGED": 2,
+        "AMMO": 1,
+        "LORE": 2,
+        "JEWELRY": 2
+      }
+    },
+    {
+      "id": "L010",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 4,
+        "MELEE": 3,
+        "ARMOR": 1,
+        "SHIELD": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L011",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "JEWELRY": 2,
+        "CLOTHES": 1,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L012",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 2,
+        "MELEE": 3,
+        "SHIELD": 1,
+        "ARMOR": 1
+      }
+    },
+    {
+      "id": "L013",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "TOOLS": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L014",
+      "slots": 10,
+      "counts": {
+        "PETS": 4,
+        "TOOLS": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L015",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "ARMOR": 1,
+        "SHIELD": 1,
+        "TOOLS": 1,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L016",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "MELEE": 4,
+        "ARMOR": 2,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L017",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "TOOLS": 3,
+        "JEWELRY": 2,
+        "CLOTHES": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L018",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "TOOLS": 3,
+        "ARMOR": 1,
+        "SHIELD": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L019",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 3,
+        "TOOLS": 2,
+        "PETS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L020",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "MELEE": 2,
+        "ARMOR": 1,
+        "SHIELD": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L021",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "TOOLS": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L022",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "JEWELRY": 2,
+        "CLOTHES": 2,
+        "TOOLS": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L023",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "MELEE": 3,
+        "PETS": 2,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L024",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "LORE": 2,
+        "ARMOR": 1,
+        "SHIELD": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L025",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 4,
+        "PETS": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L026",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 1,
+        "MELEE": 3,
+        "ARMOR": 2,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L027",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "ARMOR": 3,
+        "SHIELD": 3,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L028",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "TOOLS": 2,
+        "JEWELRY": 1,
+        "CLOTHES": 1,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L029",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "TOOLS": 3,
+        "CARRY": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L030",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 2,
+        "MELEE": 2,
+        "TOOLS": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L031",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "SHIELD": 2,
+        "ARMOR": 2,
+        "TOOLS": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L032",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "JEWELRY": 3,
+        "CLOTHES": 2,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L033",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "MELEE": 5,
+        "ARMOR": 1,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L034",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 4,
+        "MELEE": 3,
+        "LORE": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L035",
+      "slots": 10,
+      "counts": {
+        "PETS": 3,
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L036",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "ARMOR": 2,
+        "SHIELD": 1,
+        "LORE": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L037",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "MELEE": 3,
+        "ARMOR": 2,
+        "SHIELD": 2
+      }
+    },
+    {
+      "id": "L038",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "TOOLS": 3,
+        "JEWELRY": 1,
+        "CLOTHES": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L039",
+      "slots": 10,
+      "counts": {
+        "MELEE": 3,
+        "RANGED": 2,
+        "AMMO": 1,
+        "ARMOR": 2,
+        "SHIELD": 2
+      }
+    },
+    {
+      "id": "L040",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "PETS": 2,
+        "LORE": 1,
+        "CLOTHES": 1,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L041",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "TOOLS": 2,
+        "LORE": 2,
+        "ARMOR": 1,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L042",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "TOOLS": 3,
+        "PETS": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L043",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "LORE": 2,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L044",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "TOOLS": 2,
+        "JEWELRY": 1,
+        "CLOTHES": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L045",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "ARMOR": 3,
+        "SHIELD": 1,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L046",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "MELEE": 5,
+        "ARMOR": 1,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L047",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "PETS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L048",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "RANGED": 2,
+        "AMMO": 1,
+        "ARMOR": 1,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L049",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "JEWELRY": 2,
+        "CLOTHES": 2,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L050",
+      "slots": 10,
+      "counts": {
+        "RANGED": 3,
+        "AMMO": 2,
+        "MELEE": 3,
+        "ARMOR": 1,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L051",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L052",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 2,
+        "LORE": 2,
+        "TOOLS": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L053",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 3
+      }
+    },
+    {
+      "id": "L054",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "LORE": 2,
+        "JEWELRY": 2,
+        "CLOTHES": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L055",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "CARRY": 2,
+        "PETS": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L056",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L057",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L058",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "TOOLS": 2,
+        "PETS": 2,
+        "CARRY": 3
+      }
+    },
+    {
+      "id": "L059",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "ARMOR": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L060",
+      "slots": 10,
+      "counts": {
+        "PETS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L061",
+      "slots": 10,
+      "counts": {
+        "LORE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L062",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 3
+      }
+    },
+    {
+      "id": "L063",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 3,
+        "CARRY": 2,
+        "LORE": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L064",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "PETS": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L065",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 2,
+        "LORE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L066",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 3
+      }
+    },
+    {
+      "id": "L067",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "LORE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 3
+      }
+    },
+    {
+      "id": "L068",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L069",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "LORE": 2,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L070",
+      "slots": 10,
+      "counts": {
+        "CARRY": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L071",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 3
+      }
+    },
+    {
+      "id": "L072",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 1,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L073",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L074",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "LORE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L075",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 3
+      }
+    },
+    {
+      "id": "L076",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L077",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "TOOLS": 2,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L078",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L079",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 3
+      }
+    },
+    {
+      "id": "L080",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L081",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "ARMOR": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L082",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L083",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "LORE": 2,
+        "CLOTHES": 2,
+        "CARRY": 3
+      }
+    },
+    {
+      "id": "L084",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 3,
+        "PETS": 2,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L085",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "LORE": 2,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L086",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "LORE": 2
+      }
+    },
+    {
+      "id": "L087",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L088",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 3
+      }
+    },
+    {
+      "id": "L089",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L090",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "LORE": 2
+      }
+    },
+    {
+      "id": "L091",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "PETS": 2,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L092",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "LORE": 3
+      }
+    },
+    {
+      "id": "L093",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L094",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "LORE": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L095",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "LORE": 2
+      }
+    },
+    {
+      "id": "L096",
+      "slots": 10,
+      "counts": {
+        "RANGED": 2,
+        "AMMO": 1,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 3
+      }
+    },
+    {
+      "id": "L097",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L098",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 2,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L099",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L100",
+      "slots": 10,
+      "counts": {
+        "MELEE": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 2,
+        "TOOLS": 2,
+        "CARRY": 2
+      }
+    },
+    {
+      "id": "L101",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "JEWELRY": 4,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L102",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "CARRY": 3,
+        "TOOLS": 2
+      }
+    },
+    {
+      "id": "L103",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 5,
+        "JEWELRY": 3,
+        "LORE": 2
+      }
+    },
+    {
+      "id": "L104",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "CARRY": 3,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L105",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "ARMOR": 3,
+        "SHIELD": 2
+      }
+    },
+    {
+      "id": "L106",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "TOOLS": 3,
+        "CLOTHES": 2
+      }
+    },
+    {
+      "id": "L107",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "CLOTHES": 3,
+        "JEWELRY": 2
+      }
+    },
+    {
+      "id": "L108",
+      "slots": 10,
+      "counts": {
+        "JEWELRY": 5,
+        "LORE": 3,
+        "CLOTHES": 2
+      }
+    },
+    {
+      "id": "L109",
+      "slots": 10,
+      "counts": {
+        "CARRY": 5,
+        "TOOLS": 3,
+        "PETS": 2
+      }
+    },
+    {
+      "id": "L110",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 5,
+        "SHIELD": 3,
+        "MELEE": 2
+      }
+    },
+    {
+      "id": "L111",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "JEWELRY": 2,
+        "CLOTHES": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L112",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "TOOLS": 2,
+        "CARRY": 2,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L113",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 5,
+        "JEWELRY": 2,
+        "CARRY": 2,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L114",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "LORE": 2,
+        "JEWELRY": 2,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L115",
+      "slots": 10,
+      "counts": {
+        "MELEE": 5,
+        "RANGED": 2,
+        "AMMO": 1,
+        "ARMOR": 2
+      }
+    },
+    {
+      "id": "L116",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "TOOLS": 2,
+        "PETS": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L117",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "JEWELRY": 2,
+        "CLOTHES": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L118",
+      "slots": 10,
+      "counts": {
+        "JEWELRY": 5,
+        "CLOTHES": 2,
+        "LORE": 2,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L119",
+      "slots": 10,
+      "counts": {
+        "CARRY": 5,
+        "PETS": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L120",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 5,
+        "SHIELD": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L121",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "JEWELRY": 4,
+        "CLOTHES": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L122",
+      "slots": 10,
+      "counts": {
+        "PETS": 4,
+        "CARRY": 4,
+        "TOOLS": 1,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L123",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 4,
+        "JEWELRY": 4,
+        "LORE": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L124",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 4,
+        "CARRY": 4,
+        "PETS": 1,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L125",
+      "slots": 10,
+      "counts": {
+        "MELEE": 4,
+        "ARMOR": 4,
+        "SHIELD": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L126",
+      "slots": 10,
+      "counts": {
+        "LORE": 4,
+        "JEWELRY": 3,
+        "CLOTHES": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L127",
+      "slots": 10,
+      "counts": {
+        "PETS": 4,
+        "CLOTHES": 3,
+        "JEWELRY": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L128",
+      "slots": 10,
+      "counts": {
+        "JEWELRY": 4,
+        "LORE": 3,
+        "TOOLS": 2,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L129",
+      "slots": 10,
+      "counts": {
+        "CARRY": 4,
+        "TOOLS": 3,
+        "PETS": 2,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L130",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 4,
+        "SHIELD": 3,
+        "CLOTHES": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L131",
+      "slots": 10,
+      "counts": {
+        "RANGED": 5,
+        "AMMO": 3,
+        "MELEE": 2
+      }
+    },
+    {
+      "id": "L132",
+      "slots": 10,
+      "counts": {
+        "RANGED": 5,
+        "AMMO": 2,
+        "ARMOR": 2,
+        "SHIELD": 1
+      }
+    },
+    {
+      "id": "L133",
+      "slots": 10,
+      "counts": {
+        "RANGED": 5,
+        "AMMO": 2,
+        "TOOLS": 2,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L134",
+      "slots": 10,
+      "counts": {
+        "RANGED": 5,
+        "AMMO": 2,
+        "CLOTHES": 2,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L135",
+      "slots": 10,
+      "counts": {
+        "RANGED": 5,
+        "AMMO": 2,
+        "LORE": 2,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L136",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "CLOTHES": 3,
+        "JEWELRY": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L137",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "TOOLS": 3,
+        "CARRY": 1,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L138",
+      "slots": 10,
+      "counts": {
+        "JEWELRY": 5,
+        "CLOTHES": 3,
+        "LORE": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L139",
+      "slots": 10,
+      "counts": {
+        "CARRY": 5,
+        "CLOTHES": 3,
+        "PETS": 1,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L140",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "CLOTHES": 3,
+        "JEWELRY": 1,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L141",
+      "slots": 10,
+      "counts": {
+        "LORE": 3,
+        "JEWELRY": 3,
+        "CLOTHES": 3,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L142",
+      "slots": 10,
+      "counts": {
+        "PETS": 3,
+        "CARRY": 3,
+        "TOOLS": 3,
+        "CLOTHES": 1
+      }
+    },
+    {
+      "id": "L143",
+      "slots": 10,
+      "counts": {
+        "CLOTHES": 3,
+        "JEWELRY": 3,
+        "CARRY": 3,
+        "LORE": 1
+      }
+    },
+    {
+      "id": "L144",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 3,
+        "CARRY": 3,
+        "PETS": 3,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L145",
+      "slots": 10,
+      "counts": {
+        "ARMOR": 3,
+        "SHIELD": 3,
+        "MELEE": 3,
+        "TOOLS": 1
+      }
+    },
+    {
+      "id": "L146",
+      "slots": 10,
+      "counts": {
+        "LORE": 5,
+        "JEWELRY": 3,
+        "TOOLS": 1,
+        "CARRY": 1
+      }
+    },
+    {
+      "id": "L147",
+      "slots": 10,
+      "counts": {
+        "PETS": 5,
+        "CARRY": 3,
+        "CLOTHES": 1,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L148",
+      "slots": 10,
+      "counts": {
+        "JEWELRY": 5,
+        "LORE": 3,
+        "CLOTHES": 1,
+        "PETS": 1
+      }
+    },
+    {
+      "id": "L149",
+      "slots": 10,
+      "counts": {
+        "CARRY": 5,
+        "TOOLS": 3,
+        "PETS": 1,
+        "JEWELRY": 1
+      }
+    },
+    {
+      "id": "L150",
+      "slots": 10,
+      "counts": {
+        "TOOLS": 5,
+        "CARRY": 3,
+        "CLOTHES": 1,
+        "LORE": 1
+      }
+    }
+  ]
+}
