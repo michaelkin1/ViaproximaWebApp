@@ -1,0 +1,556 @@
+{
+  "guild": "ADVEOKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Sealed magical authority. Magic that has been witnessed, inscribed, and made binding. Power with structure. Items feel like crystallized Advenire force — precise, marked, dangerous if mishandled. The law aesthetic is in the HOW, not the WHAT.",
+  "feeling": "Magical authority made tangible. Every item feels like it has already been signed, witnessed, and filed somewhere you will never find.",
+  "underlying_tension": "The tension between raw Advenire power and the structures built to contain, certify, and weaponize it. Adveokaterna are magic specialists who wear the costume of lawyers.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Azorius — the tension between magical power and the structures built to contain and regulate it; enforcement through precision rather than force",
+          "type": "concept"
+        },
+        {
+          "tag": "Izzet — magic as obsessive experiment, constantly iterated, unstable by design, brilliant and dangerous in equal measure",
+          "type": "concept"
+        },
+        {
+          "tag": "Dimir — knowledge as the real power; the one who holds the true name or the hidden record controls the outcome before anyone else knows the game has started",
+          "type": "concept"
+        },
+        {
+          "tag": "Simic — deliberate magical modification at a fundamental level; something changed permanently and the change is now the thing's nature",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "The rune Othalan carved backward — a stave of inheritance used in reverse to sever a bloodline's claim on a thing or place",
+          "type": "object"
+        },
+        {
+          "tag": "Galdr cord — knotted fiber sung over during ritual, each knot holding one spoken formula that releases on untying",
+          "type": "object"
+        },
+        {
+          "tag": "Skaldic kenning as true name — the belief that certain formulaic phrases are not metaphor but real names, and speaking them aloud has consequence",
+          "type": "concept"
+        },
+        {
+          "tag": "Sejdr sight — the volva who speaks what she sees from the high seat; knowledge extracted from Advenire through ritual isolation has a cost paid after, not during",
+          "type": "concept"
+        },
+        {
+          "tag": "Sejdr platform preparation — the raised seat, the specific songs, the specific attendants; the approach to Advenire requires a precise setup or the connection does not hold",
+          "type": "ritual"
+        },
+        {
+          "tag": "Odin's eye in Mimir's well — something precious surrendered permanently in exchange for a single drink of hidden knowledge; the cost is paid once and cannot be undone",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Theurgic ascent — the idea that correct ritual procedure draws divine force down into the material world; Advenire does not come to the unprepared",
+          "type": "concept"
+        },
+        {
+          "tag": "The pharmakos logic — consequence deliberately loaded into a vessel and expelled from the community; magical harm transferred rather than destroyed",
+          "type": "concept"
+        },
+        {
+          "tag": "Hecate's strophalos — a spinning disc of bone inscribed with divine names used to call forces to a crossroads point; the inscription is the call, not the spinning",
+          "type": "figure"
+        },
+        {
+          "tag": "Circe's rhizotomy — the precise cutting and combining of roots at the right time to produce transformation; exact procedure as the magic, not the ingredients alone",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "The Maqlu incantation tablets — a multi-tablet anti-witchcraft sequence performed at night; burning effigies of the witch while reciting reversal formulae to undo active magic",
+          "type": "ritual"
+        },
+        {
+          "tag": "Namburbi apotropaic — a ritual specifically designed to redirect a bad omen already observed; the future is not fixed if the counter is performed in time",
+          "type": "ritual"
+        },
+        {
+          "tag": "Assinnu priest-objects — sacred items handled only by ritual specialists of ambiguous social category; certain magical power requires a specific kind of person to touch it",
+          "type": "object"
+        },
+        {
+          "tag": "Kudurru boundary stone — a carved stone whose inscriptions do not describe a boundary but create one; the marking is the legal and magical fact simultaneously",
+          "type": "object"
+        },
+        {
+          "tag": "The me of Eridu — discrete magical properties each treated as a separable, stealable object; power has categories and each category can be isolated, moved, or lost",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The crane bag of Manannan — a pouch whose contents are only visible at high tide; a container whose accessibility is governed by conditions entirely outside the bearer's control",
+          "type": "object"
+        },
+        {
+          "tag": "Ogham few Straif — the blackthorn letter associated with forced journeys and magical compulsion; the inscription that makes you go whether you choose to or not",
+          "type": "object"
+        },
+        {
+          "tag": "Cauldron of Annwn — a vessel stolen from the otherworld that refuses to boil food for a coward; the object judges the user and withholds function based on that judgment",
+          "type": "story"
+        },
+        {
+          "tag": "The Lia Fail's scream — a stone that screams only when the rightful person stands on it; the magical object that responds differently to different users as its primary function",
+          "type": "story"
+        },
+        {
+          "tag": "Druidic oral seal — knowledge deliberately withheld from inscription so it dies with its keeper; the refusal to record as a form of magical access control",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Debt to the fifth sun — the universe exists because blood was given; all magical power is borrowed against a debt that accumulates and must eventually be paid in full",
+          "type": "concept"
+        },
+        {
+          "tag": "Tonalpohualli fate-reading — each day has a specific magical character that enables or prohibits certain actions; time itself is the limiting condition on what can be done",
+          "type": "concept"
+        },
+        {
+          "tag": "Nahualli doubling — a magical practitioner has an animal counterpart whose fate is bound to theirs; harm one and you harm both, the link is not metaphor but mechanism",
+          "type": "concept"
+        },
+        {
+          "tag": "Tezcatlipoca's obsidian mirror ritual — gazing into the smoking mirror to witness true nature and hidden acts; the preparation that makes the vision possible, not the vision itself",
+          "type": "ritual"
+        },
+        {
+          "tag": "The flaying of Xipe Totec — renewal achieved by wearing the skin of what came before; transformation that requires complete replacement, not modification or addition",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Katashiro paper doll — a human-shaped cut-out used to absorb ritual impurity or magical consequence transferred from a person; substitution as the core magical mechanism",
+          "type": "object"
+        },
+        {
+          "tag": "Gohei wand — a ritual staff with folded paper streamers whose specific fold pattern indicates which kami is being addressed; the form of the object encodes its address",
+          "type": "object"
+        },
+        {
+          "tag": "Kotodama norito — a prayer whose words are themselves the active force; the correct sequence of syllables opens a channel that intent and emotion alone cannot open",
+          "type": "ritual"
+        },
+        {
+          "tag": "Misogi prerequisite — purification as non-negotiable precondition; Advenire does not respond to an unprepared vessel regardless of the practitioner's power or intent",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Osun's brass pot — a vessel kept filled with water and sacred objects that holds the ase of its owner; if it tips, the owner is in danger regardless of physical distance",
+          "type": "object"
+        },
+        {
+          "tag": "Ikin palm nuts — sixteen sacred seeds cast and read as a divination system; every answer already exists in the pattern, the skill is entirely in the reading",
+          "type": "object"
+        },
+        {
+          "tag": "Ori as negotiable self — the inner spiritual force carried in the skull, separate from the body, that can be spoken to and its trajectory adjusted through deliberate ritual",
+          "type": "figure"
+        },
+        {
+          "tag": "Ase accumulation ritual — objects and people gain magical force through repeated meaningful action; power earned into a thing over time, not installed at creation",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Slavic, Egyptian, Polynesian, Hindu",
+      "tags": [
+        {
+          "tag": "Egyptian ushabti activation — a figurine that becomes a functional worker when the correct formula is spoken over it; text animates matter, silence leaves it inert",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu yantra geometry — a diagram whose specific proportions and line arrangements are a functional magical object, not a representation of one",
+          "type": "object"
+        },
+        {
+          "tag": "Slavic domovoi binding ritual — the household spirit attached to a specific object at the threshold; displace the object and you displace the protection, regardless of intent",
+          "type": "ritual"
+        },
+        {
+          "tag": "Polynesian mana custodian — a person whose role is to carry accumulated sacred power on behalf of a community; the figure whose body is the vessel for something that belongs to others",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The fairy bargain — both parties received exactly what they asked for; neither received what they meant; the terms were real but the understanding on both sides was not",
+          "type": "concept"
+        },
+        {
+          "tag": "Cold iron logic — some materials neutralize magic entirely by their nature, not through ritual; knowing the counter is as powerful as knowing the spell",
+          "type": "concept"
+        },
+        {
+          "tag": "The interrupted ritual — magic that fails catastrophically when broken mid-process; incomplete is categorically worse than never started",
+          "type": "story"
+        },
+        {
+          "tag": "The witch's ladder — a cord with objects knotted into it at intervals, each knot storing a single effect that releases when untied; the object and its unmaking are one",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "Jiangshi sealing strip — a paper placed on the forehead that suspends a dangerous force in complete stasis; remove it and the force activates immediately and fully",
+          "type": "object"
+        },
+        {
+          "tag": "Jade authentication disc — a specific material used to verify high-value magical transactions; the substance whose presence makes the agreement real and enforceable",
+          "type": "object"
+        },
+        {
+          "tag": "Fu talisman writing sequence — written in a specific order with specific materials at a specific time; the process of writing is the magic, not the finished object",
+          "type": "ritual"
+        },
+        {
+          "tag": "The hundredth repetition threshold — power that accumulates through exact repetition and only triggers at a precise count; one fewer and nothing happens at all",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: Middle Eastern, West African, South American",
+      "tags": [
+        {
+          "tag": "The Solomon seal ring — authority over spirits derived from the inscription alone, not from the hand holding it; the mark outranks the bearer",
+          "type": "object"
+        },
+        {
+          "tag": "Nazar boncugu — an eye-shaped amulet that absorbs directed magical harm by shattering; the protection is single-use and visibly spent when it has succeeded",
+          "type": "object"
+        },
+        {
+          "tag": "Anansi's incomplete gift — power given with a deliberate gap; the trickster always keeps the part that makes the rest dependent on returning for more",
+          "type": "story"
+        },
+        {
+          "tag": "The price of three wishes — every magical gain in the story comes with a cost of equal weight, just shaped differently than the recipient expected",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Apotropaic daisy wheel — a geometric mark carved into a surface not to add power but to prevent something from crossing; protection through denial of entry rather than active defense",
+          "type": "object"
+        },
+        {
+          "tag": "Witch bottle — a vessel filled with the owner's own hair, nails, and urine buried at the threshold; traps harmful magic by giving it something recognizable to enter instead",
+          "type": "object"
+        },
+        {
+          "tag": "Rowan and iron combined — two different protective principles used together because neither alone is sufficient against all threats; layered protections with incompatible mechanisms",
+          "type": "ritual"
+        },
+        {
+          "tag": "Corpse road avoidance — paths used to carry the dead become permanently marked; the living avoid them because some routes change their category once used for a specific purpose",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Earthsea true naming — knowing what something actually is gives complete leverage over it; the real name and the common name are categorically different things with different power",
+          "type": "concept"
+        },
+        {
+          "tag": "Allomancy's hard rules — a magic system where material, cost, and effect are all fixed without exception; creativity exists only in application, never in bending the rules themselves",
+          "type": "concept"
+        },
+        {
+          "tag": "Sympathy's correspondence — magic that works by establishing a physical or conceptual link between two things; what happens to one happens proportionally to the other",
+          "type": "concept"
+        },
+        {
+          "tag": "The Doors of Stone logic — knowledge so dangerous it is kept behind multiple layers of deliberate obscurement; the container is as important as the content it protects",
+          "type": "concept"
+        },
+        {
+          "tag": "Pratchett's headology — an effect that works because the target believes it will; the belief is the actual mechanism, the object is just the delivery system for the belief",
+          "type": "concept"
+        },
+        {
+          "tag": "Le Guin's equilibrium — every magical act shifts a balance somewhere else in the world; the consequences arrive, just not always where or when they are expected",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Coherence (2013) — identical objects from different states of reality cannot coexist without destabilizing both; duplication creates instability proportional to the similarity",
+          "type": "concept"
+        },
+        {
+          "tag": "The Prestige (2006) — every magical effect has a cost paid before the audience sees the trick; the pledge, the turn, and the prestige are always all three present whether visible or not",
+          "type": "concept"
+        },
+        {
+          "tag": "Annihilation (2018) — a force that does not destroy but transforms and reflects; contact with it changes the fundamental nature of the thing that touches it",
+          "type": "story"
+        },
+        {
+          "tag": "The Witch (2015) — power offered freely by something that wants something very specific in return; the terms become clear only after the exchange is already complete",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Noita's combinatorial magic — small components each with fixed rules that produce emergent and sometimes catastrophic effects when combined; the system punishes ignorance and rewards understanding",
+          "type": "concept"
+        },
+        {
+          "tag": "Outer Wilds' knowledge as key — understanding accumulates across iterations and unlocks what force alone cannot; the power comes from knowing, not from having or hitting",
+          "type": "concept"
+        },
+        {
+          "tag": "Hades' boon trigger — a magical enhancement with a specific activation condition and a defined interaction cost; situational power, not passive power",
+          "type": "concept"
+        },
+        {
+          "tag": "Obra Dinn's frozen moment — a specific instant in time preserved in suspension, accessible but not alterable; truth held in stasis that can be witnessed but not changed",
+          "type": "story"
+        },
+        {
+          "tag": "Pathologic's plague district seal — a cloth marker designating a zone under specific rules that differ from the surrounding area; the object that makes the boundary real by existing at it",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Howl's calcifer contract — magic that has already permanently changed the user; the cost was paid before the story began and now it is simply lived with as a condition of existence",
+          "type": "story"
+        },
+        {
+          "tag": "Nausicaa's spore handling — dangerous material that is also essential; requires exact knowledge to handle safely, and ignorance is fatal rather than merely harmful",
+          "type": "story"
+        },
+        {
+          "tag": "Spirited Away's name-taking — control over identity achieved by altering what someone is called; the name is structurally load-bearing, not decorative, and removing it changes what the person can do",
+          "type": "concept"
+        },
+        {
+          "tag": "Mononoke's curse mark — power and doom distributed as a single inseparable effect; the bearer gains and loses simultaneously and cannot have one without the other",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Equivalent exchange — every magical operation has a conservation law; nothing enters the system without something of equivalent value leaving it",
+          "type": "concept"
+        },
+        {
+          "tag": "Nen self-imposed constraints — restricting your own magical use in a specific way amplifies that power proportionally; the tighter the voluntary constraint, the greater the resulting effect",
+          "type": "concept"
+        },
+        {
+          "tag": "Binding vow logic — a promise made to a supernatural system that upgrades magical power in exchange for a permanent and non-negotiable behavioral limitation",
+          "type": "concept"
+        },
+        {
+          "tag": "Cursed technique specificity — each magical ability has exactly defined rules, a defined limitation, and a defined counter; no ability is without its specific answer",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Null field presence — an object or person that suppresses magical force in their vicinity purely by existing; anti-magic as passive presence, not active action or expenditure",
+          "type": "concept"
+        },
+        {
+          "tag": "Chaos glyph instability — inscribed magical symbols that are functional but inherently self-destructive; the more powerful the inscription, the more it wants to unwrite itself",
+          "type": "concept"
+        },
+        {
+          "tag": "Gellar field generator — a device that maintains a bubble of protected reality while moving through hostile magical space; the boundary is everything, and what maintains it is everything",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Endless spell persistence — a magical effect released into the world that continues operating independently of its caster; the spell outlives the intention and runs on its own logic",
+          "type": "concept"
+        },
+        {
+          "tag": "Realmstone shard — a raw crystal specific to one type of Advenire energy; enormously powerful, enormously unstable, handled only by those who understand the price of mishandling it",
+          "type": "object"
+        },
+        {
+          "tag": "The Penumbral Pendulum — a swinging magical object that periodically reverses magical effects in its area; a force that does not destroy spells but inverts them on a schedule",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Ioun stone orbit — a magical object that functions through proximity and movement around the bearer rather than through contact; the relationship matters, not possession alone",
+          "type": "concept"
+        },
+        {
+          "tag": "Attunement slot logic — a limit on how many magical relationships a person can maintain simultaneously; scarcity of attention and capacity as a design mechanic",
+          "type": "concept"
+        },
+        {
+          "tag": "Runestone inscription — an inscribed stone that stores a single magical effect indefinitely in inert form, activating only when the trigger condition is met exactly",
+          "type": "object"
+        },
+        {
+          "tag": "Bead of Force — a small, smooth, completely unremarkable object holding enormous compressed energy released only under one specific physical condition",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "The King in Yellow contagion — a magical effect whose mechanism is exposure; knowing the thing exists is already participation in it, and there is no unknowing",
+          "type": "concept"
+        },
+        {
+          "tag": "Folk horror calendar logic — certain magical acts are only possible or only dangerous at specific points in the year; the calendar is a magical structure as real as any physical boundary",
+          "type": "concept"
+        },
+        {
+          "tag": "Body horror as transformation record — the changed body as a document of what happened to it; the history of what a thing has been through can be read in its current form",
+          "type": "story"
+        },
+        {
+          "tag": "Ligotti's animate objects — objects that seem to have interiority without evidence of mechanism; they do not move but they wait, and waiting is a form of will",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Resonant frequency — every material has a pitch at which it becomes structurally vulnerable; the right sound does not break a thing, it asks the thing to break itself",
+          "type": "concept"
+        },
+        {
+          "tag": "The Shepard tone — a sound that seems to rise forever without arriving anywhere; the illusion of continuous escalation with no ceiling and no resolution",
+          "type": "concept"
+        },
+        {
+          "tag": "Acoustic shadow — a phenomenon where sound fails to travel where it should; some spaces are magically silent while the spaces immediately adjacent are deafening",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "Threshold logic — a doorway is not just a gap in a wall but a category boundary; crossing it changes what the person crossing is allowed to be on the other side",
+          "type": "concept"
+        },
+        {
+          "tag": "The omphalos — a point designated as the center of the world; magical force concentrates at declared centers regardless of what the surrounding geography suggests",
+          "type": "concept"
+        },
+        {
+          "tag": "Temenos enclosure ritual — the act of physically marking a perimeter to separate a space from ordinary space; what happens inside follows different rules from what happens outside",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

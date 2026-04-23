@@ -9,37 +9,71 @@
 
 <div class="container mt-4">
     <form method="post">
-        <div class="form-group">
-            <label for="SkråId">Skrå</label>
-            <select id="SkråId" asp-for="SkråId" asp-items="Model.Skrån" class="form-control"></select>
+        <!-- Guild and Race Selection -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="GuildId">Skrå</label>
+                <select id="GuildId" asp-for="GuildId" asp-items="Model.Guilds" class="form-control"></select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="RaceId">Ras</label>
+                <select id="RaceId" asp-for="RaceId" asp-items="Model.Races" class="form-control"></select>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="RasId">Ras</label>
-            <select id="RasId" asp-for="RasId" asp-items="Model.Raser" class="form-control"></select>
+        <!-- Item Type Counts -->
+        <div class="card mt-4 mb-4">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Välj föremål</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Föremålstyp</th>
+                                <th>Antal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var (code, swedish) in Model.ItemTypes)
+                            {
+                                <tr>
+                                    <td>
+                                        @swedish
+                                        <span class="badge bg-secondary">@code</span>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="item-count-input form-control form-control-sm"
+                                               name="ItemTypeCounts[@code]" min="0" max="12" value="0" style="max-width: 80px;" />
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-3 alert alert-info d-inline-block">
+                    <strong>Totalt:</strong> <span id="item-total">0</span> / 12
+                </div>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label for="AntalItems">Antal föremål</label>
-            <input type="number" id="AntalItems" asp-for="AntalItems" min="4" max="12" class="form-control" />
-        </div>
+        <!-- Error Message -->
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @Model.ErrorMessage
+            </div>
+        }
 
-        <div class="form-group">
-            <label for="LärdomFokus">Lärdomsfokus (valfritt)</label>
-            <select id="LärdomFokus" asp-for="LärdomFokus" class="form-control">
-                <option value="">-- Ingen --</option>
-                <option value="Kristallsejdare">Kristallsejdare</option>
-                <option value="Shaman">Shaman</option>
-                <option value="Lyådskapare">Lyådskapare</option>
-                <option value="Orakel">Orakel</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Generera prompt</button>
+        <!-- Submit Button -->
+        <button type="submit" id="submit-btn" class="btn btn-primary">Generera prompt</button>
     </form>
 </div>
 
-@if (Model.GeneradPrompt != null)
+<!-- Result Section -->
+@if (!string.IsNullOrEmpty(Model.GeneratedPrompt))
 {
     <div class="container mt-5">
         <h3>Resultat</h3>
@@ -47,7 +81,7 @@
 
         <div class="form-group">
             <label for="prompt-output">Genererad prompt:</label>
-            <textarea id="prompt-output" class="form-control" rows="40" readonly>@Model.GeneradPrompt</textarea>
+            <textarea id="prompt-output" class="form-control" rows="40" readonly>@Model.GeneratedPrompt</textarea>
         </div>
 
         <button type="button" class="btn btn-secondary" onclick="copyPrompt()">Kopiera prompt</button>
@@ -65,3 +99,22 @@
         }
     </script>
 }
+
+<!-- Item Counter Script -->
+<script>
+    (function() {
+        const inputs = document.querySelectorAll('.item-count-input');
+        const totalEl = document.getElementById('item-total');
+        const submitBtn = document.getElementById('submit-btn');
+
+        function updateTotal() {
+            const sum = Array.from(inputs).reduce((s, i) => s + (parseInt(i.value) || 0), 0);
+            totalEl.textContent = sum;
+            submitBtn.disabled = sum === 0 || sum > 12;
+            totalEl.parentElement.classList.toggle('text-danger', sum > 12);
+        }
+
+        inputs.forEach(i => i.addEventListener('input', updateTotal));
+        updateTotal();
+    })();
+</script>

@@ -15,60 +15,67 @@ public class MerchantGeneratorModel : PageModel
         _assembler = assembler;
     }
 
-    public List<SelectListItem> Raser { get; set; } = [];
-    public List<SelectListItem> Skrån { get; set; } = [];
+    public List<SelectListItem> Races { get; set; } = [];
+    public List<SelectListItem> Guilds { get; set; } = [];
+    public List<(string Code, string SwedishName)> ItemTypes { get; set; } = [];
 
     [BindProperty]
-    public string SkråId { get; set; } = "";
+    public string GuildId { get; set; } = "";
 
     [BindProperty]
-    public string RasId { get; set; } = "";
+    public string RaceId { get; set; } = "";
 
     [BindProperty]
-    public int AntalItems { get; set; } = 8;
+    public Dictionary<string, int> ItemTypeCounts { get; set; } = new();
 
-    [BindProperty]
-    public string? LärdomFokus { get; set; }
-
-    public string? GeneradPrompt { get; set; }
+    public string? GeneratedPrompt { get; set; }
     public string? LayoutId { get; set; }
+    public string? ErrorMessage { get; set; }
 
     public void OnGet()
     {
-        PopulateDropdowns();
+        Populate();
     }
 
     public void OnPost()
     {
-        PopulateDropdowns();
+        Populate();
 
-        var result = _assembler.BuildPrompt(new PromptParams(SkråId, RasId, AntalItems, LärdomFokus));
-        GeneradPrompt = result.Prompt;
+        var total = ItemTypeCounts.Values.Sum();
+        if (total == 0 || total > 12)
+        {
+            ErrorMessage = $"Total items must be between 1 and 12. Current: {total}.";
+            return;
+        }
+
+        var result = _assembler.BuildPrompt(new PromptParams(GuildId, RaceId, ItemTypeCounts));
+        GeneratedPrompt = result.Prompt;
         LayoutId = result.LayoutId;
     }
 
-    private void PopulateDropdowns()
+    private void Populate()
     {
-        var raser = _assembler.GetRaser();
-        var skrån = _assembler.GetSkrån();
-
-        Raser = raser
-            .Select(r => new SelectListItem(r.Namn, r.Id))
+        Races = _assembler.GetRaces()
+            .Select(r => new SelectListItem(r.Name, r.Id))
             .ToList();
 
-        Skrån = skrån
-            .Select(s => new SelectListItem(s.Namn, s.Id))
+        Guilds = _assembler.GetGuilds()
+            .Select(g => new SelectListItem(g.Name, g.Id))
+            .ToList();
+
+        ItemTypes = _assembler.GetItemTypeCodes()
+            .Select(c => (c, _assembler.GetSwedishTypeName(c)))
             .ToList();
 
         // Default selections
-        if (string.IsNullOrEmpty(SkråId) && Skrån.Any())
+        if (string.IsNullOrEmpty(GuildId) && Guilds.Any())
         {
-            SkråId = Skrån.First().Value;
+            GuildId = Guilds.First().Value;
         }
 
-        if (string.IsNullOrEmpty(RasId) && Raser.Any())
+        if (string.IsNullOrEmpty(RaceId) && Races.Any())
         {
-            RasId = Raser.First().Value;
+            RaceId = Races.First().Value;
         }
     }
 }

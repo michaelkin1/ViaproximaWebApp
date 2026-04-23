@@ -1,0 +1,556 @@
+{
+  "guild": "FABROKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "The body is a document. What you wear announces what you are allowed to be. Identity worn on the outside. Social transitions marked in material. Pattern as language for those who can read it.",
+  "feeling": "Confident and expressive. Wearing this changes not just how others see you, but what role you are allowed to play.",
+  "underlying_tension": "The tension between the decoration that is never merely decoration and the audience that may or may not be able to read what is being said. Fabrokaterna items are always social acts — claims, signals, permissions — wearing the wrong one in the wrong place is not a mistake, it is a statement.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Orzhov visible wealth — status displayed through material quality and ornamentation; the garment as the argument for your position in a hierarchy made before you speak",
+          "type": "concept"
+        },
+        {
+          "tag": "Selesnya uniformity — a collective aesthetic that erases individual identity and replaces it with membership; the garment as proof of belonging rather than as expression of self",
+          "type": "concept"
+        },
+        {
+          "tag": "Dimir concealment — clothing or marking that makes the wearer less visible as themselves; the outfit that removes legibility rather than establishing it",
+          "type": "concept"
+        },
+        {
+          "tag": "Rakdos performance aesthetic — clothing designed for maximum visibility and impact at distance; the outfit as the first act of the performance before anything else begins",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Freya's feather cloak — a garment that transforms the wearer's mode of movement rather than their appearance; wearing it changes physical capability rather than social legibility",
+          "type": "object"
+        },
+        {
+          "tag": "The ring Draupnir — an ornament that produces copies of itself at regular intervals; jewelry as a generative object rather than a static one, its value in what it produces",
+          "type": "object"
+        },
+        {
+          "tag": "Odin's traveler disguise — the deliberate adoption of a lower-status appearance to move through spaces that would otherwise refuse entry; the costume as a social access tool",
+          "type": "concept"
+        },
+        {
+          "tag": "Valkyrie armor as office — the equipment of a role that makes the role real; you are what you wear in the context of the function, and wearing it without the function is transgression",
+          "type": "concept"
+        },
+        {
+          "tag": "The gift-garment exchange ritual — the ceremony of presenting a specific garment to formalize an alliance or obligation; the cloth as the physical form of the agreement rather than its symbol",
+          "type": "ritual"
+        },
+        {
+          "tag": "Skirnir's gifts of clothing — garments and ornaments given to purchase a giant's daughter; objects whose value is entirely in what their acceptance signals about the new relationship",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Hephaestus's narrative armor — a garment whose surface tells a complete story legible to those who can read it; the thing worn as a document that travels with the body",
+          "type": "concept"
+        },
+        {
+          "tag": "The poisoned robe as weapon — a gift of clothing that kills through the social obligation to wear what you are given; the garment weaponized through the courtesy that makes refusing it impossible",
+          "type": "concept"
+        },
+        {
+          "tag": "Athena's aegis as authority — a divine garment worn as a signal of protection and power; wearing the thing that belongs to a greater power makes the wearer an extension of that power temporarily",
+          "type": "figure"
+        },
+        {
+          "tag": "Ritual donning of the peplos — the ceremony of dressing a divine statue in a new garment; clothing as the act of renewal, the new textile as the new year of divine favor",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "The stripping of Inanna's garments — at each gate a specific item of clothing or jewelry removed; identity stripped away piece by piece until nothing remains that marks who she was",
+          "type": "ritual"
+        },
+        {
+          "tag": "Royal regalia investiture — the ceremony of placing the crown, robe, and staff on a new ruler; the equipment of power making the power real through being worn rather than through being held",
+          "type": "ritual"
+        },
+        {
+          "tag": "Lapis lazuli cylinder seal — a personal mark worn on the body as a pendant that also functions as a legal signature; the smallest wearable object carrying the full weight of personal identity",
+          "type": "object"
+        },
+        {
+          "tag": "Temple garment of divine office — a specific robe worn only by priests of a specific rank that changes what the wearer is permitted to do and touch; the garment as the credential",
+          "type": "object"
+        },
+        {
+          "tag": "Divine regalia as transferable power — the crown and robe that make a king; equipment that can be stolen and worn by someone else, transferring legitimacy along with the cloth",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The brat as social measure — a cloak whose size indicates the number of people a leader is obligated to clothe; the garment as a legible statement of the scale of responsibility claimed",
+          "type": "object"
+        },
+        {
+          "tag": "The warrior's torque — a neck ring whose presence, weight, and material indicate rank and allegiance in a system legible to other warriors; the ornament as a portable public credential",
+          "type": "object"
+        },
+        {
+          "tag": "The druid's white robe protection — a garment that signals a role so unambiguously that the wearer is protected from violence by convention alone; the costume as diplomatic immunity",
+          "type": "story"
+        },
+        {
+          "tag": "Battle paint transformation — patterns applied to the body before combat that change the psychological and social category of the person wearing them; the decoration as a preparation for becoming something else",
+          "type": "story"
+        },
+        {
+          "tag": "Coming-of-age garment ritual — the ceremony of clothing a person in adult clothing for the first time; the new garment as the mechanism of the social transition rather than its celebration",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Featherwork's material hierarchy — garments made from specific bird feathers as the highest prestige objects in the culture; the material itself as the argument for the wearer's status rather than the form",
+          "type": "concept"
+        },
+        {
+          "tag": "Warrior rank costume system — specific animal skins and feather arrangements designating military achievement; the costume as a portable record of deeds readable by any warrior who encounters the wearer",
+          "type": "concept"
+        },
+        {
+          "tag": "Sumptuary law enforcement — codified rules determining what each social rank may and may not wear; the garment as a legal object regulated by authority rather than by personal choice",
+          "type": "concept"
+        },
+        {
+          "tag": "Divine impersonator costuming ritual — the specific process of dressing a human to embody a deity for the duration of a ceremony; the costume that makes the wearer the god while worn",
+          "type": "ritual"
+        },
+        {
+          "tag": "The flayed skin garment of Xipe Totec — renewal expressed as wearing the skin of what came before; transformation that requires the complete replacement of the outer surface rather than modification",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Court robe layered color system — a garment whose visible color at each hem indicates a specific rank; the outfit as a data display that communicates precise social information to the informed observer",
+          "type": "object"
+        },
+        {
+          "tag": "Noh mask — a carved face covering that makes the wearer the character depicted for the duration of the performance; the object that replaces the person's identity with another while worn",
+          "type": "object"
+        },
+        {
+          "tag": "Shrine maiden investiture ritual — the ceremony of putting on the specific garments that designate a ritual role; the dressing as the assumption of the function rather than its announcement",
+          "type": "ritual"
+        },
+        {
+          "tag": "Furisode sleeve reading — the length of a kimono's sleeve indicating the wearer's social availability and status; a single garment measurement carrying a precise and publicly legible social fact",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Egungun full-body costume — a garment that makes the wearer entirely invisible and makes an ancestor present in their place; the cloth as the mechanism of possession rather than merely its symbol",
+          "type": "object"
+        },
+        {
+          "tag": "Beaded crown with face veil — a crown whose bead veil prevents the king's face from being seen directly; power mediated through material, the face of authority deliberately obscured",
+          "type": "object"
+        },
+        {
+          "tag": "Oshun as adornment figure — the orisha of beauty, rivers, and luxury whose domain includes the transformative power of appearance; the figure for whom beauty is not superficial but generative",
+          "type": "figure"
+        },
+        {
+          "tag": "Aso-oke group wearing occasion — the ceremony of wearing a shared cloth pattern as a collective declaration of social belonging and shared status at a specific significant event",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Polynesian, Hindu, Egyptian, Slavic",
+      "tags": [
+        {
+          "tag": "Polynesian tapa cloth rank marker — a specific beaten-bark cloth pattern worn only by those of sufficient rank; the material and pattern together as a credential readable by the entire community",
+          "type": "object"
+        },
+        {
+          "tag": "Slavic embroidered protective border — a specific pattern worked into the hem and collar of a garment that provides spiritual protection; the decoration as the functional layer rather than as ornament",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu wedding garment exchange ceremony — the specific ritual of exchanging garments as part of marriage; the cloth as the legal and spiritual mechanism of the transition between social states",
+          "type": "ritual"
+        },
+        {
+          "tag": "Polynesian tattoo master — the specialist whose knowledge of pattern encodes biography, lineage, and social position on permanent skin; the figure whose medium is the body itself",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The garment as social admission — clothing that allows the wearer into spaces that would otherwise refuse them; the outfit as the credential for entering a category of social access",
+          "type": "concept"
+        },
+        {
+          "tag": "The emperor's new clothes — the socially maintained fiction that the wearer is clothed when they are not; status as a collectively agreed hallucination sustained by everyone's investment in sustaining it",
+          "type": "concept"
+        },
+        {
+          "tag": "The shirt of Nessus — a gift of clothing that cannot be removed once worn; the garment whose acceptance creates an inescapable obligation that only reveals itself after wearing begins",
+          "type": "story"
+        },
+        {
+          "tag": "The witch's ladder sewn into a garment — a cord with stored effects hidden inside clothing rather than worn separately; power concealed in the material itself rather than displayed",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "The crane's woven feather robe — a garment made by a supernatural being in its animal form; the cloth that reveals the nature of its maker to anyone who examines it closely enough",
+          "type": "object"
+        },
+        {
+          "tag": "Kimono pattern's seasonal restriction — a specific design that is only appropriate at a specific time of year; wearing the wrong pattern at the wrong time as a social transgression rather than merely a mistake",
+          "type": "object"
+        },
+        {
+          "tag": "The demon disguise removal ritual — the ceremony of revealing what a creature actually is by removing the garment that made it appear human; the cloth as the technology of impersonation, its removal as exposure",
+          "type": "ritual"
+        },
+        {
+          "tag": "The celestial weaver's thread — fabric produced by a divine being whose quality exceeds the category of material; cloth that functions as evidence of its maker's nature",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Indigenous North American, Middle Eastern",
+      "tags": [
+        {
+          "tag": "Kente pattern record — a hand-woven cloth pattern that encodes a specific historical or social narrative; the textile as a record system for communities where writing is absent",
+          "type": "object"
+        },
+        {
+          "tag": "Mud cloth protective pattern — specific geometric marks applied to fabric that provide spiritual protection against specific dangers; the decoration whose function is entirely protective rather than aesthetic",
+          "type": "object"
+        },
+        {
+          "tag": "The invisibility cloak's social function — a garment that removes the wearer from social visibility while leaving them physically present; being present but no longer participating in the social contract",
+          "type": "story"
+        },
+        {
+          "tag": "The shaman's costume as spirit armor — a garment assembled from materials that provide protection in spiritual rather than physical encounters; the outfit designed for a different kind of danger",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The amulet sewn into a garment's lining — a magical object concealed within clothing rather than displayed; power hidden in the material so that neither allies nor enemies know it is there",
+          "type": "object"
+        },
+        {
+          "tag": "Mourning color declaration — a specific color worn as an announcement of social state; the garment as a statement that requires no words and cannot be misread by those who share the convention",
+          "type": "object"
+        },
+        {
+          "tag": "Clothes worn inside out against spirits — a garment deliberately worn incorrectly as a specific magical act; the deviation from normal wear as the mechanism of protection rather than an error",
+          "type": "ritual"
+        },
+        {
+          "tag": "The wedding dress unseen before ceremony — a garment whose power depends entirely on the timing of its revelation; effectiveness that requires not being seen before the specific moment of display",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "N.K. Jemisin's orogene uniforms — clothing imposed on a group as a mark; the garment repurposed from a tool of oppression into a source of collective identity by those forced to wear it",
+          "type": "concept"
+        },
+        {
+          "tag": "Hilary Mantel's historical costume — clothing as the complete context of a person; what you wear determines what you can think, say, and do in a given historical and social moment",
+          "type": "concept"
+        },
+        {
+          "tag": "Susanna Clarke's Faerie garments — clothing from another world that marks the wearer as having been somewhere most people have not; the outfit as evidence of an experience rather than as status claim",
+          "type": "concept"
+        },
+        {
+          "tag": "Pratchett's Guild uniform logic — a society where what you wear declares exactly who you are and what you are permitted to do, enforced socially rather than by any official mechanism",
+          "type": "concept"
+        },
+        {
+          "tag": "Patrick Rothfuss's sympathy-stitched garments — clothing that has magical properties worked into its construction at the point of making; the magic inseparable from the material",
+          "type": "concept"
+        },
+        {
+          "tag": "Ursula Le Guin's textile as cultural record — garments in different cultures expressing completely different relationships between self, community, and the role of appearance in social life",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "The Grand Budapest Hotel (2014) — uniform as complete identity; the concierge's costume as an entire social system compressed into a jacket and cap that tells everyone everything instantly",
+          "type": "concept"
+        },
+        {
+          "tag": "A Bigger Splash (2015) — the way people dress around each other as continuous social performance; clothing as the ongoing negotiation of status and desire conducted without words",
+          "type": "concept"
+        },
+        {
+          "tag": "Black Panther (2018) — a garment whose extraordinary capability is concealed within a traditional textile form; the advanced and the ancestral occupying the same material simultaneously",
+          "type": "story"
+        },
+        {
+          "tag": "Memoria (2021) — the question of what an experience leaves on a person who undergoes it; the body as a surface that records what happens to it in ways that can be read by those who know how",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Disco Elysium's clothing stats — wearing an outfit that modifies not just appearance but the wearer's behavior and available options; the garment as a behavioral constraint and enabler simultaneously",
+          "type": "concept"
+        },
+        {
+          "tag": "Bloodborne's hunter garb legibility — a specific aesthetic associated with a specific role that makes the wearer immediately legible to others who know the system; the outfit as a declaration of category",
+          "type": "concept"
+        },
+        {
+          "tag": "Assassin's Creed's social camouflage — invisibility achieved through wearing exactly what the surrounding crowd wears; disappearance through perfect conformity rather than through concealment",
+          "type": "concept"
+        },
+        {
+          "tag": "Hades' mirror of night — the ritual of choosing how to present yourself before each attempt; deliberate appearance selection as part of the preparation process rather than as vanity",
+          "type": "story"
+        },
+        {
+          "tag": "Nier Automata's costume data chip — a small object that completely changes how the wearer appears to others; the entire social surface altered by a thing that fits in a pocket",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Howl's appearance investment — a character whose relationship with his own appearance is central to his identity and his power; investment in how you look as a form of self-definition that is also genuinely functional",
+          "type": "story"
+        },
+        {
+          "tag": "Spirited Away's uniform assignment — a garment given that changes the wearer's role and obligations; the costume as the job itself, not just the signal that the job has begun",
+          "type": "story"
+        },
+        {
+          "tag": "Nausicaa's protective suit — clothing that makes an otherwise lethal environment survivable; the garment as the technology of access to spaces that would otherwise refuse the human body",
+          "type": "concept"
+        },
+        {
+          "tag": "Princess Mononoke's face paint — marks applied that change the social and spiritual category of the person wearing them; the decoration that crosses a line between ordinary person and something else",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "JoJo's fashion as character expression — a figure defined as much by what they wear as by their abilities; the outfit as the complete external statement of a person's nature rather than a secondary detail",
+          "type": "concept"
+        },
+        {
+          "tag": "Demon Slayer's haori credential — a specific garment pattern associated with a specific individual that functions as the only credential needed for recognition within the organization",
+          "type": "concept"
+        },
+        {
+          "tag": "Tokyo Ghoul's mask as second identity — a face covering that creates a separate self with separate permissions; the mask as the costume of the dangerous version of a person who cannot show that version otherwise",
+          "type": "concept"
+        },
+        {
+          "tag": "Sailor Moon's transformation sequence — the garment as the act; putting it on is the magic, not the preparation for the magic; the costume change as the mechanism of transformation",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Space Marine chapter color system — a complete identity expressed through a color scheme; affiliation, capability, history, and rank all legible at distance to those who know the code",
+          "type": "concept"
+        },
+        {
+          "tag": "Chaos mutation as ultimate affiliation mark — the body itself modified by allegiance; physical change as the most permanent and irrevocable expression of belonging to a cause",
+          "type": "concept"
+        },
+        {
+          "tag": "Inquisitor's rosette — the smallest possible object that carries the maximum possible social authority; a single worn item that overrides every other social hierarchy it encounters",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Slaanesh's aesthetic corruption — beauty as a force that gradually changes what it touches; the pursuit of perfect appearance as the mechanism through which self is eventually lost",
+          "type": "concept"
+        },
+        {
+          "tag": "Stormcast Eternal sigmarite armor — a suit of armor that is also the vessel of resurrection; the garment that contains something beyond the body it covers and makes that body replaceable",
+          "type": "object"
+        },
+        {
+          "tag": "Kharadron endrin harness — a full sealed suit that is also the technology of survival at altitude; the garment as the only reason the wearer can be in the place they are",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Ring of disguise logic — a worn object that replaces the wearer's appearance completely; the item as the technology of identity substitution, the self temporarily set aside",
+          "type": "concept"
+        },
+        {
+          "tag": "Armor class as social signal — in a world where armor is rare and expensive, wearing it makes a statement about capability and intent before any exchange of words",
+          "type": "concept"
+        },
+        {
+          "tag": "Hat of disguise — a single item of headwear that changes everything else about how the wearer appears; the minimum investment required to change perceived identity entirely",
+          "type": "object"
+        },
+        {
+          "tag": "Cloak of elvenkind — a garment that reduces the wearer's visual and auditory presence without changing their physical form; invisibility through reduction rather than through substitution",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "The skin suit — a covering made from another person worn to pass as them; the horror of wearing an identity taken from someone else as a complete system of deception",
+          "type": "concept"
+        },
+        {
+          "tag": "Suspiria's ballet uniform — beautiful and specialized clothing as the aesthetic of a system that destroys the person inside it; the costume that signals belonging to something that will not let you leave",
+          "type": "concept"
+        },
+        {
+          "tag": "The Yellow Wallpaper's pattern — a visual system on a surface that becomes an obsession; the decoration that the trapped person reads until it becomes an entire world with its own logic",
+          "type": "story"
+        },
+        {
+          "tag": "The folk horror costume figure — a person wearing a mask or costume who cannot or will not remove it; the uncertainty about whether a face beneath still exists or whether the costume has become the person",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "The performer's costume contract — the specific clothing of a performer that signals role and establishes the terms of the audience relationship before the first note; the outfit as the agreement",
+          "type": "concept"
+        },
+        {
+          "tag": "Sound as textile texture — the idea that certain sounds have a felt quality, a material presence in the listener's body; the sonic equivalent of a fabric's hand felt rather than seen",
+          "type": "concept"
+        },
+        {
+          "tag": "The drum's decorated surface — an instrument whose painted or carved exterior is as communicative as its sound; the visual language of the object that makes the music as significant as what it produces",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The dressing room as threshold — the space between the ordinary self and the performed self; a room whose only purpose is the managed transition between identities, the garment change as the crossing",
+          "type": "concept"
+        },
+        {
+          "tag": "Textile as architectural surface — woven material used to define a space rather than to cover a body; the cloth hung to create a room, the pattern of the fabric as the character of the space it makes",
+          "type": "concept"
+        },
+        {
+          "tag": "The ceremonial dressing space ritual — the procedure of preparing and adorning a person for a significant social transition within a specific designated space; the room and the dressing together as the ceremony",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

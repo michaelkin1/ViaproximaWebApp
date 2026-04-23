@@ -1,0 +1,61 @@
+{
+  "version": "1.0",
+  "guilds": [
+    {
+      "id": "ADVEOKATERNA",
+      "name": "Adveokaterna",
+      "theme": "magic, mystical arts, seidr, law, oath, seal, ritual structure, binding, measured, witness, consequence",
+      "lore": "Adveokaterna operate where law, promises, and Advenire converge. In a world without writing, binding agreements require objects. Witnesses made of bone and stone and knotwork carry the weight of a deal long after the parties have parted. They are hired when an agreement must truly hold, when a magical transaction needs to be certified, when someone needs proof that something happened. Because of this they are seen as sharp, formal, and difficult to deceive. They occupy a strange social position: respected by nearly everyone, fully trusted by almost no one. Their merchants are always, quietly, keeping a record.",
+      "feeling": "Magical authority made tangible. Every item feels like it has already been signed, witnessed, and filed somewhere you will never find."
+    },
+    {
+      "id": "MORTOKATERNA",
+      "name": "Mortokaterna",
+      "theme": "order, enforcement, discipline, restraint, authority, pursuit, debt, finality, bounty hunter",
+      "lore": "Mortokaterna stand for enforcement, pursuit, and conclusion. In some communities they serve as guards; in others they are feared debt-collectors or bounty hunters operating under contract. Either way they are associated with order, authority, and the things that must eventually be finished. They move through society as a reminder that consequences exist. Oaths broken, debts unpaid, and agreements violated will eventually be answered. A Mortokaterna merchant usually knows exactly who in a settlement owes what to whom. They note every significant sale they make, along with who they sold it to.",
+      "feeling": "Quiet institutional threat. Built to hold, built to catch, built to last through whatever comes after."
+    },
+    {
+      "id": "ZOOKATERNA",
+      "name": "Zookaterna",
+      "theme": "caravan, beast handling, spectacle, performance, movement, rhythm, travel, connection, the road, circus, animal handling, animals",
+      "lore": "Zookaterna live in motion and connect distant places through animals, performance, and trade. Where they camp, life temporarily gathers. Rumor, market, and foreign impressions from places most locals have never seen. They function as an informal information network across regions that would otherwise have no contact, and their presence signals both opportunity and disruption. Their goods are designed to be visible at a distance and packed in five minutes. They have a habit of leaving towns in the middle of the night. Always politely, always with full payment, always without warning.",
+      "feeling": "Warm controlled chaos. Everything is portable, everything is slightly unpredictable, and something alive is always nearby."
+    },
+    {
+      "id": "FLOROKATERNA",
+      "name": "Florokaterna",
+      "theme": "alchemy, growth, root, spore, primal, infusion, remedy, feral knowledge, the living edge, verdant, druidism",
+      "lore": "Florokaterna work at the boundary between alchemy and nature magic and they see no difference between the two. Their knowledge can soothe fever, cleanse wounds, and strengthen bodies, but also induce visions, alter behavior, or cause harm. Because of this they are surrounded by both deep trust and careful wariness. Communities depend on them, but few fully understand what they are doing. They move through the world as if the living landscape is a workshop they have always had access to. Their presence tends to make things grow, change, or smell faintly of something you cannot name.",
+      "feeling": "Dense, humid, slightly unsettling. The item is probably still doing something even when no one is using it."
+    },
+    {
+      "id": "EKOKATERNA",
+      "name": "Ekokaterna",
+      "theme": "risk, odds, value, leverage, exchange, wager, debt, future position, contract",
+      "lore": "Ekokaterna trade in value rather than just objects. Where others see simple barter, they see debt, risk, and future benefit. They are needed when disputes must be avoided, when a deal needs structure, when someone requires a neutral party who understands what things are actually worth. Their sharp minds make them indispensable and mean that many regard them with wariness in equal measure. Nothing they offer is free, and everything has a built-in trade-off. A Ekokaterna merchant is almost always pleasant to talk to, and almost always dangerous to owe anything to.",
+      "feeling": "Dry, strategic, full of loopholes. Every item has a flip side already calculated, and the merchant already knows how this ends."
+    },
+    {
+      "id": "KARTOKATERNA",
+      "name": "Kartokaterna",
+      "theme": "navigation, terrain, survey, route, boundary, expedition, the unknown made passable, adventure",
+      "lore": "Kartokaterna measure the world. In a civilization without writing, geographic knowledge is power and Kartokaterna control it through knotted distance-ropes, leather-and-bone relief models, and oral route descriptions shared only for payment. Their maps are often built as much from memory and narrative as from precise measurement, and the line between cartography and storytelling is one they rarely bother to draw. A Kartokaterna merchant never offers information for free. They readily offer a deal though: knowledge in exchange for a description of where you are going, and a promise to report what you found when you return.",
+      "feeling": "Weathered and focused. This item has been somewhere you have not, and it knows something about what is out there."
+    },
+    {
+      "id": "FABROKATERNA",
+      "name": "Fabrokaterna",
+      "theme": "textile, pattern, dye, ornament, identity, ceremony, the body as document, status legible at a glance, expression",
+      "lore": "In a world without writing, the body is a document. Fabrokaterna understand this better than any other guild. They weave identity into garments that announce affiliation, into jewelry that marks debt or loyalty, into ceremonial objects whose patterns are read by the initiated like text. They are present at every important social transition: alliances, funerals, coming-of-age rites, the sealing of agreements. What they make is never purely decorative. It is always also a social act, a claim, a signal. Their merchants always wear the best-fitting garment in the room, and they know exactly what it signals to every person who looks.",
+      "feeling": "Confident and expressive. Wearing this changes not just how others see you, but what role you are allowed to play."
+    },
+    {
+      "id": "MATROKATERNA",
+      "name": "Matrokaterna",
+      "theme": "craft, build, repair, durability, improvisation, handy, robust, craftsmanship, structure, the thing that must not fail",
+      "lore": "Matrokaterna build things that hold. In Viaproxima, where a broken tool can mean death and a failed structure can mean catastrophe, that is not a small thing. They are the craftspeople who repair what others cannot, the builders who solve problems no one else has yet identified as problems. They occupy an unglamorous but foundational role in every community they touch. The people you call when something has gone wrong, or when you need something that will not. Their merchants are direct, practical, and quietly proud. They give no guarantees on magic. They give guarantees that it holds and they mean it.",
+      "feeling": "Solid and unimpressed. Every joint is visible, every material chosen for function first, and this has already survived something you have not seen yet."
+    }
+  ]
+}

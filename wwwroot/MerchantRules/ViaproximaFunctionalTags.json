@@ -1,0 +1,439 @@
+{
+  "version": "2.0",
+  "description": "Functional tags describe a core capability — not an item type, not a use case. Each tag is abstract enough that it could manifest as a weapon, a tool, a ritual object, a social object, a survival item, or a trade good depending on guild identity, twist, and context. The tag says what the item can do. The guild says what it looks like. The twist says what is complicated about it.",
+  "design_principle": "Every tag should pass the three-item test: can it plausibly produce a weapon, a tool, AND a ritual object? If a tag can only produce one type of item it is too specific. Specificity lives in the guild and the twist, not in the tag.",
+  "functional_tags": [
+    {
+      "id": "FT_001",
+      "tag": "amplifies force or impact applied through it",
+      "category": "force_and_energy",
+      "note": "weapon upgrade, a lever, a ritual amplifier, a percussion instrument that carries further, a press that seals wounds"
+    },
+    {
+      "id": "FT_002",
+      "tag": "absorbs and stores energy from an outside source, releasing it later",
+      "category": "force_and_energy",
+      "note": "a capacitor stone, a bow that draws power from tension, a ritual vessel charged by moonlight, a trap that stores kinetic force"
+    },
+    {
+      "id": "FT_003",
+      "tag": "redirects force or momentum rather than stopping it",
+      "category": "force_and_energy",
+      "note": "a deflecting shield, a ritual that turns a curse back, a rope system that changes a load's direction, a social tool that turns aggression into compliance"
+    },
+    {
+      "id": "FT_004",
+      "tag": "generates persistent heat or cold in a controlled radius",
+      "category": "force_and_energy",
+      "note": "a warming stone, a preservation vessel, a weapon that burns, a ritual tool that chills fever, a way to survive extreme environments"
+    },
+    {
+      "id": "FT_005",
+      "tag": "produces or sustains light with properties beyond ordinary fire",
+      "category": "force_and_energy",
+      "note": "a light source that reveals hidden things, one that only illuminates for the holder, one that cannot be extinguished by wind or water, one used in rituals of truth"
+    },
+    {
+      "id": "FT_006",
+      "tag": "disrupts or interferes with coherent thought, attention, or concentration",
+      "category": "force_and_energy",
+      "note": "a combat disorienter, a negotiation tool, a ritual that breaks focus from a harmful obsession, a sound or smell that scatters animals"
+    },
+    {
+      "id": "FT_007",
+      "tag": "accelerates or enhances a natural process already underway",
+      "category": "force_and_energy",
+      "note": "speeds healing, fermentation, growth, rot, fire spreading, a ritual already in progress, the drying of a wound, the setting of a bone"
+    },
+    {
+      "id": "FT_008",
+      "tag": "slows or suspends a natural process",
+      "category": "force_and_energy",
+      "note": "preserves food, slows bleeding, holds a ritual effect in stasis, delays the spread of poison, keeps a fire from consuming its fuel"
+    },
+    {
+      "id": "FT_009",
+      "tag": "reveals what is present but not visible to ordinary perception",
+      "category": "perception_and_awareness",
+      "note": "finds hidden objects, reads magical residue, locates living things through walls, sees emotional states as color, detects structural weakness in materials"
+    },
+    {
+      "id": "FT_010",
+      "tag": "extends the reach of one or more senses beyond their natural range",
+      "category": "perception_and_awareness",
+      "note": "hears across distance, sees in darkness, smells a trail hours old, feels vibrations through stone, tastes poison in food before swallowing"
+    },
+    {
+      "id": "FT_011",
+      "tag": "reads the history or previous use of an object or location",
+      "category": "perception_and_awareness",
+      "note": "knows who last held something, what was said in a room, whether blood was spilled here, what a tool was used for, the age of a wound or mark"
+    },
+    {
+      "id": "FT_012",
+      "tag": "detects the presence or direction of something specific at a distance",
+      "category": "perception_and_awareness",
+      "note": "a compass for water, a tool that points toward a person, a ritual that locates a type of creature, a device that finds structural weakness"
+    },
+    {
+      "id": "FT_013",
+      "tag": "reads whether something is genuine or has been altered, forged, or misrepresented",
+      "category": "perception_and_awareness",
+      "note": "detects lies, forgeries, substituted goods, false identity, broken oaths, tampered food, counterfeit currency"
+    },
+    {
+      "id": "FT_014",
+      "tag": "perceives the emotional or intentional state of a nearby creature",
+      "category": "perception_and_awareness",
+      "note": "reads fear, desire, deception, grief, aggression — useful in negotiation, taming animals, reading a crowd, identifying the dangerous person in a room"
+    },
+    {
+      "id": "FT_015",
+      "tag": "anticipates an immediate threat before it becomes visible or audible",
+      "category": "perception_and_awareness",
+      "note": "warns of ambush, structural collapse, an incoming storm, a creature about to strike, a lie about to be told"
+    },
+    {
+      "id": "FT_016",
+      "tag": "reads patterns in the environment to predict near-future conditions",
+      "category": "perception_and_awareness",
+      "note": "weather reading, animal behavior interpretation, route danger assessment, ritual outcome likelihood, crowd behavior projection"
+    },
+    {
+      "id": "FT_017",
+      "tag": "records or stores an experience, event, or piece of information for later retrieval",
+      "category": "memory_and_knowledge",
+      "note": "a memory vessel, a contract witness, a stone that holds a voice, a mark that replays what happened, an object that carries a route description"
+    },
+    {
+      "id": "FT_018",
+      "tag": "transfers knowledge or skill from one source to a recipient",
+      "category": "memory_and_knowledge",
+      "note": "teaches a language, passes on a ritual procedure, carries a craftsperson's technique, transfers an animal's instincts, shares a dying person's final knowledge"
+    },
+    {
+      "id": "FT_019",
+      "tag": "accesses knowledge or memory that does not belong to the bearer",
+      "category": "memory_and_knowledge",
+      "note": "reads another person's memory, communes with a dead ancestor, extracts a location from an object, learns what a creature knows, reads the land's accumulated experience"
+    },
+    {
+      "id": "FT_020",
+      "tag": "allows comprehension of an unfamiliar communication system",
+      "category": "memory_and_knowledge",
+      "note": "decodes a language, reads animal signals, interprets ritual markings, understands a foreign contract, translates environmental signs"
+    },
+    {
+      "id": "FT_021",
+      "tag": "provides guidance about a specific decision or path forward",
+      "category": "memory_and_knowledge",
+      "note": "divination, omen reading, route advice from a spirit, a tool that indicates the better of two options, a ritual that narrows uncertainty"
+    },
+    {
+      "id": "FT_022",
+      "tag": "makes the bearer appear as something they are not",
+      "category": "identity_and_influence",
+      "note": "disguise, false guild affiliation, altered species impression, projected authority, impersonation of a known person"
+    },
+    {
+      "id": "FT_023",
+      "tag": "signals belonging, rank, or affiliation in a way that commands a specific response",
+      "category": "identity_and_influence",
+      "note": "guild credential, tribal mark, authority token, a signal that opens doors or prevents conflict, a rank indicator readable only by initiates"
+    },
+    {
+      "id": "FT_024",
+      "tag": "makes the bearer more persuasive or credible without changing what they say",
+      "category": "identity_and_influence",
+      "note": "a voice that carries authority, an appearance that suggests expertise, a smell that makes others trust, a posture aid, a social amplifier"
+    },
+    {
+      "id": "FT_025",
+      "tag": "makes the bearer less noticeable, memorable, or socially legible",
+      "category": "identity_and_influence",
+      "note": "social invisibility, forgettability, blending into a crowd, removing the impression of threat, making a transaction not worth remembering"
+    },
+    {
+      "id": "FT_026",
+      "tag": "induces a specific emotional state in a target — not by force but by influence",
+      "category": "identity_and_influence",
+      "note": "calm, trust, unease, generosity, nostalgia, grief, desire — useful in negotiation, ritual, animal handling, crowd management, conflict de-escalation"
+    },
+    {
+      "id": "FT_027",
+      "tag": "marks or binds an agreement between parties in a way that has consequence",
+      "category": "identity_and_influence",
+      "note": "a contract seal, a debt marker, an oath witness, a bond that causes discomfort if violated, a record that cannot be denied"
+    },
+    {
+      "id": "FT_028",
+      "tag": "assesses the true nature, quality, or value of something",
+      "category": "identity_and_influence",
+      "note": "identifies genuine goods, reads a creature's actual strength, assesses a wound's severity, determines the real worth of an object in trade"
+    },
+    {
+      "id": "FT_029",
+      "tag": "allows passage through, across, or into something that would otherwise resist",
+      "category": "movement_and_access",
+      "note": "opens locked things, crosses difficult terrain, gains entry to a sealed space, passes a social barrier, navigates a ritual boundary"
+    },
+    {
+      "id": "FT_030",
+      "tag": "makes the bearer's movement silent, traceless, or difficult to follow",
+      "category": "movement_and_access",
+      "note": "silent travel, no scent trail, no footprints, movement that confuses trackers, passage that leaves no memory in witnesses"
+    },
+    {
+      "id": "FT_031",
+      "tag": "increases the efficiency or ease of covering distance",
+      "category": "movement_and_access",
+      "note": "faster travel, reduced fatigue on the road, lighter load, a route that takes less time than it should, a mount that performs beyond its limits"
+    },
+    {
+      "id": "FT_032",
+      "tag": "allows movement or function in an environment the bearer is not built for",
+      "category": "movement_and_access",
+      "note": "breathing underwater, moving in extreme cold, climbing without grip, operating in darkness, surviving at altitude, working in toxic air"
+    },
+    {
+      "id": "FT_033",
+      "tag": "establishes or marks a route, boundary, or position",
+      "category": "movement_and_access",
+      "note": "waymarking, territory declaration, ritual boundary setting, a trail that can be followed back, a border that others recognize as real"
+    },
+    {
+      "id": "FT_034",
+      "tag": "allows the bearer to carry or transport significantly more than their body permits",
+      "category": "movement_and_access",
+      "note": "expanded carrying capacity, a pack that distributes weight, a creature trained to carry loads, a container that holds more than its size suggests, a ritual that lightens"
+    },
+    {
+      "id": "FT_035",
+      "tag": "prevents or resists physical harm to the bearer or a designated target",
+      "category": "protection_and_resilience",
+      "note": "armor function, warding, harm reduction, protection of a specific body area, shielding a companion or object rather than the bearer"
+    },
+    {
+      "id": "FT_036",
+      "tag": "resists or nullifies a specific category of harm or threat",
+      "category": "protection_and_resilience",
+      "note": "poison resistance, fire protection, disease immunity, resistance to a specific type of creature, protection from a specific ritual effect"
+    },
+    {
+      "id": "FT_037",
+      "tag": "stabilizes or maintains a condition against forces trying to change it",
+      "category": "protection_and_resilience",
+      "note": "keeps a wound from worsening, holds a structure together under stress, prevents a ritual from destabilizing, maintains a social situation that is about to collapse"
+    },
+    {
+      "id": "FT_038",
+      "tag": "returns the bearer or a target toward a prior state after change or damage",
+      "category": "protection_and_resilience",
+      "note": "healing, object repair, reversal of a transformation, undoing a ritual effect, restoring a relationship after conflict"
+    },
+    {
+      "id": "FT_039",
+      "tag": "extends endurance beyond what the body or material would normally sustain",
+      "category": "protection_and_resilience",
+      "note": "stamina in travel, functioning without sleep or food, a structure that lasts longer than its materials should, a ritual that holds past its normal duration"
+    },
+    {
+      "id": "FT_040",
+      "tag": "contains, seals, or prevents the spread of something",
+      "category": "protection_and_resilience",
+      "note": "traps a creature, seals a wound, contains a magical effect, prevents a secret from spreading, isolates a corrupted object, quarantines a space"
+    },
+    {
+      "id": "FT_041",
+      "tag": "binds, restrains, or holds a target against their will or motion",
+      "category": "control_and_constraint",
+      "note": "physical restraint, immobilization, trapping a creature, holding a person in place during a ritual, securing cargo that resists being moved"
+    },
+    {
+      "id": "FT_042",
+      "tag": "compels or strongly inclines a target toward a specific behavior",
+      "category": "control_and_constraint",
+      "note": "a geas, a debt enforcement tool, a trained animal command, a ritual obligation, a social pressure that cannot easily be refused"
+    },
+    {
+      "id": "FT_043",
+      "tag": "prevents a target from performing a specific type of action",
+      "category": "control_and_constraint",
+      "note": "silences speech, prevents casting, stops a creature from fleeing, blocks a specific skill, creates a behavioral prohibition"
+    },
+    {
+      "id": "FT_044",
+      "tag": "draws a target toward a specific location, object, or person",
+      "category": "control_and_constraint",
+      "note": "lures a creature, pulls a person into a negotiation, makes an object irresistible to a specific type of being, draws a spirit to a ritual site"
+    },
+    {
+      "id": "FT_045",
+      "tag": "causes a target to redirect attention, effort, or aggression toward something other than their current focus",
+      "category": "control_and_constraint",
+      "note": "misdirection in combat, distraction in negotiation, redirecting an animal from a herd, pulling a crowd's attention, making a ritual effect seek a different target"
+    },
+    {
+      "id": "FT_046",
+      "tag": "preserves an object, substance, or creature against decay, time, or change",
+      "category": "craft_and_trade",
+      "note": "food preservation, wound dressing that holds, a hide that resists rot, a ritual component kept potent, a memory held intact, a body prepared for burial"
+    },
+    {
+      "id": "FT_047",
+      "tag": "improves the quality, durability, or effectiveness of a material or object being worked",
+      "category": "craft_and_trade",
+      "note": "a tool that makes better tools, a substance that strengthens fibers, a ritual that improves a batch of medicine, a binding agent that holds longer"
+    },
+    {
+      "id": "FT_048",
+      "tag": "tracks or reveals the origin, movement, or ownership of an object or creature",
+      "category": "craft_and_trade",
+      "note": "marks stolen goods, follows a traded item's path, identifies who handled something, traces a creature's territory, records who has touched a contract"
+    },
+    {
+      "id": "FT_049",
+      "tag": "reproduces, duplicates, or copies something with precision",
+      "category": "craft_and_trade",
+      "note": "copies a map, replicates a seal, duplicates a ritual component, produces a second key, copies the appearance of an object or marking"
+    },
+    {
+      "id": "FT_050",
+      "tag": "separates, refines, or extracts a specific component from a mixture or material",
+      "category": "craft_and_trade",
+      "note": "purifies water, extracts a toxin from a plant, separates a ritual ingredient from a compound, identifies the useful part of a raw material"
+    },
+    {
+      "id": "FT_051",
+      "tag": "combines or binds separate things into a more effective whole",
+      "category": "craft_and_trade",
+      "note": "joins broken objects, fuses ritual components, binds a wound, creates an alloy or compound, merges two separate agreements into one"
+    },
+    {
+      "id": "FT_052",
+      "tag": "measures, calibrates, or establishes a precise standard",
+      "category": "craft_and_trade",
+      "note": "a trade weight, a distance rope, a time-keeper, a dose measurement tool, a ritual that establishes what counts as enough"
+    },
+    {
+      "id": "FT_053",
+      "tag": "assists or accelerates the performance of a ritual or magical act",
+      "category": "ritual_and_magic",
+      "note": "reduces preparation time, lowers the ingredient cost, stabilizes an unstable ritual, extends the duration of an effect, makes a marginal success into a reliable one"
+    },
+    {
+      "id": "FT_054",
+      "tag": "substitutes for a rare, expensive, or unavailable component",
+      "category": "ritual_and_magic",
+      "note": "replaces a specific ingredient, stands in for a living creature in a ritual, allows a ceremony to proceed without its normal requirements"
+    },
+    {
+      "id": "FT_055",
+      "tag": "stores a magical effect and releases it under a specific condition",
+      "category": "ritual_and_magic",
+      "note": "a spell held in an object, a ritual triggered by contact, a blessing activated at the right moment, a curse that waits for its condition"
+    },
+    {
+      "id": "FT_056",
+      "tag": "channels or focuses a specific type of magical force more efficiently",
+      "category": "ritual_and_magic",
+      "note": "a crystal that focuses a lore's energy, a vessel that holds shamanic power without loss, an instrument that carries lyådskapare sound further, an orakel token that improves negotiation"
+    },
+    {
+      "id": "FT_057",
+      "tag": "disrupts, dampens, or interferes with magical forces in its vicinity",
+      "category": "ritual_and_magic",
+      "note": "anti-magic field, ritual interference, makes a sejdare's connection unstable, disrupts a shaman's ingredient, breaks concentration on a spell"
+    },
+    {
+      "id": "FT_058",
+      "tag": "makes contact with or receives a response from a non-physical entity",
+      "category": "ritual_and_magic",
+      "note": "spirit communication, ancestor consultation, addressing a god's emissary, asking a question of a dead person, calling something from Advenire"
+    },
+    {
+      "id": "FT_059",
+      "tag": "marks a location, object, or person as significant in a way that others can perceive",
+      "category": "ritual_and_magic",
+      "note": "a sacred marking, a curse visible to those with magical perception, a guild seal that announces what it protects, a territorial marker readable by spirits"
+    },
+    {
+      "id": "FT_060",
+      "tag": "reverses, cancels, or undoes a magical effect already in place",
+      "category": "ritual_and_magic",
+      "note": "breaks a curse, ends a ritual early, dissolves a binding, cancels a blessing that has become a problem, removes a marking"
+    },
+    {
+      "id": "FT_061",
+      "tag": "influences the behavior, disposition, or movement of animals",
+      "category": "nature_and_environment",
+      "note": "calms a frightened animal, draws a specific creature type, repels predators, makes a wild animal tolerate handling, signals safety or danger to nearby fauna"
+    },
+    {
+      "id": "FT_062",
+      "tag": "affects the growth, health, or behavior of plants or fungi",
+      "category": "nature_and_environment",
+      "note": "accelerates growth, kills a plant or fungus, makes a medicinal herb more potent, causes a vine to grow in a specific direction, revives a dying crop"
+    },
+    {
+      "id": "FT_063",
+      "tag": "reads or interprets the current state of the natural environment",
+      "category": "nature_and_environment",
+      "note": "weather prediction, terrain assessment, water quality reading, soil condition, the health of a forest, whether a place has been disturbed recently"
+    },
+    {
+      "id": "FT_064",
+      "tag": "locates a specific natural resource in unfamiliar terrain",
+      "category": "nature_and_environment",
+      "note": "water finding, edible plant detection, mineral location, shelter assessment, the presence of a specific creature, a usable path through difficult ground"
+    },
+    {
+      "id": "FT_065",
+      "tag": "alters or manipulates a localized environmental condition",
+      "category": "nature_and_environment",
+      "note": "clears fog, stirs still air, dries wet ground, cools a hot space, makes a fire burn hotter or cooler, draws rain to a small area"
+    },
+    {
+      "id": "FT_066",
+      "tag": "temporarily bonds a creature to the bearer's presence or purpose",
+      "category": "nature_and_environment",
+      "note": "tames a wild animal temporarily, summons a creature to assist, holds a creature's attention, makes a creature follow a specific instruction"
+    },
+    {
+      "id": "FT_067",
+      "tag": "manipulates sound in the surrounding environment",
+      "category": "nature_and_environment",
+      "note": "carries a voice further, deadens sound in a space, redirects an echo, makes a location seem occupied or empty, amplifies a specific frequency"
+    },
+    {
+      "id": "FT_068",
+      "tag": "applies a lasting harmful or degrading effect to a target over time",
+      "category": "harm_and_threat",
+      "note": "poison, curse, infection, rot, a debt that compounds, a social stigma that spreads, a wound that resists healing"
+    },
+    {
+      "id": "FT_069",
+      "tag": "delivers a sudden concentrated harmful effect",
+      "category": "harm_and_threat",
+      "note": "a strike that exceeds the weapon's ordinary capacity, a ritual effect that injures, a social blow that ends a relationship, a revelation that destroys trust"
+    },
+    {
+      "id": "FT_070",
+      "tag": "signals or projects threat in a way that changes how others behave around the bearer",
+      "category": "harm_and_threat",
+      "note": "an intimidation aura, a reputation marker, a smell or sound that reads as dangerous, a visible mark of past violence, something that makes people recalculate"
+    },
+    {
+      "id": "FT_071",
+      "tag": "makes the bearer harder to harm, reach, or successfully target",
+      "category": "harm_and_threat",
+      "note": "evasion, misdirection of attacks, making the bearer not worth engaging, protecting a specific vulnerability, making targeting uncertain"
+    },
+    {
+      "id": "FT_072",
+      "tag": "transfers harm or consequence from the bearer to something or someone else",
+      "category": "harm_and_threat",
+      "note": "redirects a blow, passes a curse to a new host, makes a contract violation fall on a proxy, deflects a social attack toward a third party"
+    }
+  ]
+}

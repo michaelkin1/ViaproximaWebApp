@@ -1,0 +1,83 @@
+{
+  "version": "1.0",
+  "design_principle": "Race defines only the merchant's appearance — never the items. Visual tags, material bias, and aesthetic bias are directional cues for how the merchant looks, moves, and presents themselves. Any race can belong to any guild.",
+  "appearance_guidance": {
+    "rule": "Race determines appearance first. Personality and tribe add secondary layers only.",
+    "hierarchy": {
+      "Viveer": "most humanoid of all races",
+      "Faamer": "anthropomorphic mammal-based morphology",
+      "Volamer": "anthropomorphic bird-based morphology",
+      "Flegamer": "anthropomorphic reptile or amphibian morphology",
+      "Cresseer": "anthropomorphic dryad or ent, elemental and nature spirit forms",
+      "Vettuer": "somewhat anthropomorphic awakened object or construct forms",
+      "Skotoner": "somewhat anthropomorphic twisted, monster-hybrid or undead forms",
+      "Kalluer": "anthropomorphic insectoid, crustacean, exoskeletal morphology"
+    }
+  },
+  "races": [
+    {
+      "id": "VIVEER",
+      "name": "Viveer",
+      "description": "The most humanoid race in Viaproxima but do not mistake familiarity for warmth. Viveer come in far greater variation of size and eye color than any human, yet are deeply suspicious of anyone who does not look exactly like them. Most live in closed, appearance-obsessed communities where xenophobia is the social glue. Their god Mitriki values preserving ancient knowledge — new ideas are taboo. Everything worth knowing has already been written down by someone else.",
+      "visual_tags": ["humanoid", "tribal", "ritual_markings", "layered_clothing", "balanced_silhouette", "earthy_tones"],
+      "material_bias": ["woven_fiber", "leather", "bone", "carved_wood"],
+      "aesthetic_bias": ["structured", "traditional", "symbolic", "practical"]
+    },
+    {
+      "id": "FAAMER",
+      "name": "Faamer",
+      "description": "Furred, clawed, horned, tailed — Faamer cover a wild range of mammalian forms, from the size of a small dog to the size of a small elephant. They are strong, fearless, and combat-ready, though they have a well-earned reputation for hitting first and thinking later. Most live in mixed-race family clans. Their god Folgor — a colossal two-headed mammoth with mountains on its back — represents everything they value: family above all else, at any cost.",
+      "visual_tags": ["anthropomorphic_mammal", "fur", "claws", "horns_optional", "varied_size", "organic_silhouette"],
+      "material_bias": ["hide", "bone", "tooth", "horn", "raw_fiber"],
+      "aesthetic_bias": ["instinctive", "bodily", "untamed", "primal"]
+    },
+    {
+      "id": "VOLAMER",
+      "name": "Volamer",
+      "description": "Feathered and light-framed, Volamer look fragile and tend to win anyway. They have no interest in laws, rules, or loyalty — only freedom and outcomes. A Volamer would steal from a beggar, lose it all gambling, shrug, and move on. They flock together not out of solidarity but because no other race will have them. They worship Sternine, said to be Folgor's eldest son, a god of independence and defiance.",
+      "visual_tags": ["anthropomorphic_bird", "feathers", "beaked_profile", "light_frame", "ornamented_plumage"],
+      "material_bias": ["feather_detail", "light_wood", "braided_fiber", "beadwork"],
+      "aesthetic_bias": ["mobile", "ornamental", "expressive", "free_spirited"]
+    },
+    {
+      "id": "FLEGAMER",
+      "name": "Flegamer",
+      "description": "Amphibian and reptilian in form — smooth or scaled, webbed or clawed, large-eyed and quiet. Flegamer are built to survive almost anywhere, which is why they are found almost everywhere. Their weakness is temperature extremes: heat makes them frantic and reckless, cold makes them sluggish and detached. Their god Ebba governs tides and weather. Flegamer who follow Ebba try to live like water — adaptive, yielding, always finding a way through.",
+      "visual_tags": ["amphibian_reptile", "smooth_or_scaled_skin", "large_eyes", "rounded_form", "moist_texture"],
+      "material_bias": ["soft_leather", "woven_grass", "shell_fragments", "waterproof_wrappings"],
+      "aesthetic_bias": ["fluid", "adaptive", "quiet", "organic"]
+    },
+    {
+      "id": "KALLUER",
+      "name": "Kalluer",
+      "description": "Exoskeletal, multi-limbed, claw-handed, with dry unblinking eyes. Kalluer are born in swarms and live in dense family colonies. Their driving philosophy is to spread their lineage — at any cost, by any means. They worship Kung Kallus, a titanic Kallu said to feast and party beneath the earth. When the ground shakes, Kalluer say he is having a particularly good time.",
+      "visual_tags": ["insectoid", "exoskeleton", "segmented", "multi_limb_possible", "angular_profile"],
+      "material_bias": ["chitin", "rigid_fiber", "jointed_construction", "hardened_resin"],
+      "aesthetic_bias": ["structural", "mechanical_organic", "layered", "reinforced"]
+    },
+    {
+      "id": "CRESEER",
+      "name": "Creseer",
+      "description": "Nature elementals — wood, stone, moss, fungus, water, sometimes fire or crystal. Creseer have the energy of a stick with googly eyes that somehow developed free will and an opinion about everything. Most claim to have figured out how the universe works, which makes them insufferable but occasionally useful. Their belief centers on Viaträdet, the divine tree whose roots connect all living things — meaning everything is, at its core, one thing.",
+      "visual_tags": ["nature_elemental", "wooden_growth", "stone_fragments", "fungal_details", "irregular_form"],
+      "material_bias": ["root", "bark", "stone", "moss", "crystal_fragment"],
+      "aesthetic_bias": ["ancient", "natural_growth", "textured", "asymmetrical"]
+    },
+    {
+      "id": "SKOTONER",
+      "name": "Skotoner",
+      "description": "Half-dead in appearance, distorted in form, and utterly unbothered by either fact. Skotoner look like someone who has been buried for two days and had unfortunate parents. This has given them a certain freedom — when you start at the bottom, nothing feels like a real threat. Skotoner are often relaxed, fearless, and surprisingly exotic company. Many worship Mortmori, god of death and inevitability, and find genuine comfort in the idea that everything beautiful ends.",
+      "visual_tags": ["grotesque", "mutated", "extra_features_possible", "mask_like_faces", "distorted_silhouette"],
+      "material_bias": ["rough_hide", "stitched_material", "bone_fragments", "dark_fiber"],
+      "aesthetic_bias": ["raw", "unsettling", "corporeal", "intense"]
+    },
+    {
+      "id": "VETTUER",
+      "name": "Vettuer",
+      "description": "Animated objects — not golems, not robots, but objects that became something when they were forgotten and magic found them. A loom-vettu is thin and rigid with threads for hair. A cart-vettu rolls away mid-conversation without apology. A talisman-vettu talks constantly about energy flows and universal purpose. Every Vettuer is defined by their origin object and the Purpose that came with it. Lose the Purpose and they spiral into existential panic until someone gives them a new one. No gods — only the Syfte.",
+      "visual_tags": ["animated_object", "origin_object_visible", "functional_body_parts", "uncanny_silhouette"],
+      "material_bias": ["origin_material", "worn_surface", "functional_components", "object_logic"],
+      "aesthetic_bias": ["purposeful", "identity_crisis", "unpredictable", "singular"]
+    }
+  ]
+}

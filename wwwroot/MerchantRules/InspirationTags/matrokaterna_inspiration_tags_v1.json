@@ -1,0 +1,556 @@
+{
+  "guild": "MATROKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Things that must not fail. Craft as a moral act. The pride of invisible good work. Improvisation under real constraint. Function before everything. The unglamorous necessity that holds everything else together.",
+  "feeling": "Solid and unimpressed. Every joint is visible, every material chosen for function first, and this has already survived something you have not seen yet.",
+  "underlying_tension": "The tension between the craftsperson's knowledge that the work is good and the world's tendency to ignore good work until it fails. Matrokaterna items are not beautiful because beauty was the goal — they are beautiful because precision is beautiful. They have already been tested.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Gruul improvised weapons — using whatever material is available rather than what is ideal; the found material as the only material because there is no other material and the job must be done",
+          "type": "concept"
+        },
+        {
+          "tag": "Izzet iterative engineering — the thing built ten times in succession until it works; craft as a process of acknowledged successive failure and incremental correction rather than inspiration",
+          "type": "concept"
+        },
+        {
+          "tag": "Dimir's hidden infrastructure — the systems that make everything else function that nobody sees, acknowledges, or maintains until they fail; the essential invisibility of good support work",
+          "type": "concept"
+        },
+        {
+          "tag": "Naya's scale engineering — building for creatures and loads far larger than your own body; the design challenge of working at a scale your physical form does not occupy",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Skidbladnir — a vessel that sails with any wind and folds small enough to fit in a pocket; the design problem of storage solved by making the solution part of the object's fundamental nature",
+          "type": "object"
+        },
+        {
+          "tag": "Gleipnir's intangible materials — the strongest binding ever made from things that do not exist: the sound of a cat's footstep, the roots of a mountain; the material that cannot be seen or touched holding what iron cannot",
+          "type": "object"
+        },
+        {
+          "tag": "Dwarf craft supremacy — the beings who made the best things in the world; the craftsperson as the figure whose work exceeds the capability of any warrior, god, or king who tries to do without it",
+          "type": "concept"
+        },
+        {
+          "tag": "The ship's annual maintenance ritual — the specific care performed on a longship before each sailing season; the maintenance that makes the vessel trustworthy rather than the construction that made it first",
+          "type": "concept"
+        },
+        {
+          "tag": "Mjolnir's short handle — the greatest weapon ever made with one manufacturing defect; the object that is extraordinary and permanently flawed simultaneously, the flaw now inseparable from the history",
+          "type": "ritual"
+        },
+        {
+          "tag": "The building of Asgard's walls — a contractor working under a contract with a hidden clause whose expertise is underestimated until it is nearly too late; the builder who understands what others do not until the wall is almost done",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Hephaestus's automated servants — tools that work without a person holding them; the craftsperson's fundamental dream of equipment that extends their capability indefinitely without requiring their continuous presence",
+          "type": "concept"
+        },
+        {
+          "tag": "The labyrinth as engineering triumph — a structure so precisely designed it defeats everyone who enters it; mastery expressed as a problem with no solution for those who did not build it",
+          "type": "concept"
+        },
+        {
+          "tag": "Hephaestus as the essential craftsperson — the god who is lame and ugly and without whom nothing in the divine world functions; the indispensable figure who is the least celebrated precisely because everyone needs what they make",
+          "type": "figure"
+        },
+        {
+          "tag": "The wax and feather assembly ritual — the specific procedure of combining available materials into something that solves an impossible problem; each step required in a specific order or the solution fails",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "Temple foundation deposit ritual — the specific objects placed inside a building's foundation at construction; the ceremony that makes the structure more than a physical object from the moment building begins",
+          "type": "ritual"
+        },
+        {
+          "tag": "Ark construction procedure — building to a precise specification for a purpose that is not yet clear; the craftsperson who makes the thing they are told to make and understands later why the specifications were what they were",
+          "type": "ritual"
+        },
+        {
+          "tag": "The bronze-age composite tool kit — a specific set of implements that together enable a craftsperson to make almost anything; the ensemble whose value is in the combination rather than in any individual piece",
+          "type": "object"
+        },
+        {
+          "tag": "Enki's pickaxe gift — a specific tool given to humanity by the god of craft and wisdom; the divine origin of the practical object as acknowledgment that useful things matter as much as powerful ones",
+          "type": "object"
+        },
+        {
+          "tag": "Ziggurat load distribution — a structure built to spread enormous weight across a base large enough to hold it; the engineering logic visible in the form, the solution expressed as shape",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "Goibhniu's indestructible weapons — a smith whose work cannot be broken by any means; durability as the proof and the definition of craftsmanship rather than beauty or power",
+          "type": "object"
+        },
+        {
+          "tag": "The cauldron of plenty — a vessel whose primary feature is that it never fails to provide; an artifact defined entirely by its unbreakable function rather than by its appearance or origin",
+          "type": "object"
+        },
+        {
+          "tag": "The wicker man's construction — a structure assembled from woven plant material at scale beyond its ordinary use; craft applied to a purpose entirely outside the original function of the craft",
+          "type": "story"
+        },
+        {
+          "tag": "The treasure of the Tuatha De Danann — four objects each made to solve one specific problem precisely and completely; the craftsperson who makes the exactly right thing rather than an adequate general-purpose thing",
+          "type": "story"
+        },
+        {
+          "tag": "The smith's blessing ritual before forging — the ceremony performed before beginning a significant piece of work; the acknowledgment that making something important requires preparation beyond the physical",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Obsidian blade technology — a cutting edge achievable only through one specific material worked in one specific way; the substance that enables the function and cannot be substituted without losing the function entirely",
+          "type": "concept"
+        },
+        {
+          "tag": "Aztec aqueduct redundancy — water delivered through a double-channel system so one channel can be repaired while the other operates; the engineering principle of building failure recovery into the design",
+          "type": "concept"
+        },
+        {
+          "tag": "Featherwork's irreplaceable skill — a craft so technically demanding that its products cannot be replicated by untrained hands regardless of available materials; skill as the thing that cannot be purchased, only accumulated through practice",
+          "type": "concept"
+        },
+        {
+          "tag": "Chinampas construction procedure — the specific sequence of weaving reeds and piling soil to create agricultural land where no land existed; making the medium before making the thing, creating the precondition for the work",
+          "type": "ritual"
+        },
+        {
+          "tag": "The ball court's precision requirement — a game that requires a structure built to exact dimensional specifications; the engineering of a space as demanding as the making of a precision tool",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Ise shrine timber — sacred wood prepared according to specifications unchanged for over a millennium; the material that carries the continuity of a tradition through the physical fact of having been prepared correctly",
+          "type": "object"
+        },
+        {
+          "tag": "The folded paper crane's structural logic — an object whose integrity depends entirely on the exactness of each fold in sequence; a process where a single imprecision at any point makes the whole fail",
+          "type": "object"
+        },
+        {
+          "tag": "Ise shrine rebuilding cycle ritual — the ceremony of constructing an identical shrine on a twenty-year cycle using traditional methods; the craft of making new things that are identical to old things as a spiritual practice of continuity",
+          "type": "ritual"
+        },
+        {
+          "tag": "The sword polisher's revealing practice — a craftsperson who does not make the sword but removes what obscures it; craft as revelation of what was already in the material rather than as addition of something new",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Ogun's iron tools — the implements associated with the god of iron, craft, and the hunt; tools that are simultaneously weapons, the distinction between making and destroying collapsed into the same set of objects",
+          "type": "object"
+        },
+        {
+          "tag": "The calabash as fundamental vessel — a gourd shaped and used for everything from storage to ritual to measurement; the generalist tool whose virtue is its complete versatility across every context",
+          "type": "object"
+        },
+        {
+          "tag": "Ogun as path-clearer — the first god through the forest, clearing the route for others; the craftsperson who makes something possible for everyone who comes after without receiving credit for the clearing",
+          "type": "figure"
+        },
+        {
+          "tag": "Blacksmith's forge consecration — the ritual of preparing the forge and tools before beginning significant work; the ceremony that makes the craft space ready to produce something that will last",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Polynesian, Hindu, Egyptian, Slavic",
+      "tags": [
+        {
+          "tag": "Polynesian canoe's lashed joint — a specific technique of binding structural members together with cordage that becomes stronger under load; the joint that tightens when the thing it holds is stressed",
+          "type": "object"
+        },
+        {
+          "tag": "Egyptian mason's copper chisel — the specific tool used to work stone at a precision that the tool itself barely survives; an instrument at the edge of its material capacity, replaced constantly because it does its job",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu temple consecration ceremony — the ritual that transforms a completed building into a living sacred space; the procedure that makes the finished structure into the thing it was built to be",
+          "type": "ritual"
+        },
+        {
+          "tag": "Slavic village blacksmith as necessary outsider — the craftsperson whose knowledge of transformation makes them both indispensable and socially marginal; needed by everyone, fully trusted by almost no one",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The three tasks under increasing constraint — a series of problems that must be solved with decreasing resources and increasing difficulty; the craftsperson who improvises upward when the situation gets worse",
+          "type": "concept"
+        },
+        {
+          "tag": "The self-working tool — a hammer that drives nails, a broom that sweeps; the craftsperson's dream of equipment that continues performing its function without the craftsperson present to direct it",
+          "type": "concept"
+        },
+        {
+          "tag": "The cobbler and the elves — skilled work done invisibly at night for no acknowledged reward; craft as a form of service that does not require witness or credit to be valid",
+          "type": "story"
+        },
+        {
+          "tag": "The magic millstone — a grinding tool that produces whatever is commanded of it; the craftsperson's object that has been made to do the work independently, now continuing whether or not anyone wants it to",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "The master swordsmith's folded steel — a blade whose quality comes from a process repeated hundreds of times; the object whose value is entirely in the time and precision of its making rather than in its material",
+          "type": "object"
+        },
+        {
+          "tag": "The living doll — a crafted object so precisely made that it has acquired something like life; the theoretical endpoint of craft as the creation of something that resembles its maker in the quality of its being",
+          "type": "object"
+        },
+        {
+          "tag": "The thousand cranes folding discipline — a craft practice whose power accumulates through exact repetition at volume; each individual piece unremarkable, the meaning emerging only from the total number",
+          "type": "ritual"
+        },
+        {
+          "tag": "The jade carver's time — a material so hard that great works require decades; craft defined by the relationship to time rather than by the speed of production, patience as the primary skill",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Inuit, Indigenous North American, Amazonian",
+      "tags": [
+        {
+          "tag": "The spider's web as engineering model — the most efficient structure for its purpose, made from the body of the maker; the craftsperson who produces both the material and the tool from the same source",
+          "type": "object"
+        },
+        {
+          "tag": "Inuit snow shelter construction — a structure that uses the available material to solve an immediate survival problem in conditions that will not permit error or delay; the design only possible because of what the environment provides",
+          "type": "object"
+        },
+        {
+          "tag": "Anansi's trap construction — a situation assembled from available elements that catches what could not be caught by force; the craftsperson who solves a problem by building the right context rather than the right weapon",
+          "type": "story"
+        },
+        {
+          "tag": "The boomerang's return engineering — a tool whose function requires it to use the forces it encounters during flight to return to its starting point; design that works with physics rather than against it",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The cornerstone offering — an object or offering placed inside the foundation of a building during construction; the thing built into the structure that holds the structure's luck for as long as the structure stands",
+          "type": "object"
+        },
+        {
+          "tag": "The master's mark hidden in the work — a symbol worked into an object at a concealed location; the signature that proves origin and quality to those who know where to look and what to look for",
+          "type": "object"
+        },
+        {
+          "tag": "Tools that must not be lent ritual — the practice of never lending a craftsperson's tools to another because lending weakens them; the belief that the tool is an extension of the craftsperson rather than a separable object",
+          "type": "ritual"
+        },
+        {
+          "tag": "The first object made by an apprentice kept — the deliberate preservation of the first piece produced before skill was developed; the imperfect early work kept as a reference point and a record of beginning",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Tolkien's sub-creation — making things as participation in the original act of creation; the craftsperson's work as an expression of their deepest nature rather than as the production of a commodity",
+          "type": "concept"
+        },
+        {
+          "tag": "Brandon Sanderson's fabrials — magical devices that work through captured spren in specific configurations; the craftsperson who must understand both the physical and the magical to make something that functions at all",
+          "type": "concept"
+        },
+        {
+          "tag": "Robin Hobb's Skill-carved objects — items made by people with magical ability who work something of themselves into the material; the maker's identity as an ingredient that cannot be separated from the finished object",
+          "type": "concept"
+        },
+        {
+          "tag": "Joe Abercrombie's practical weapons — blades described in terms of maintenance requirements and failure modes rather than of glory; the unglamorous reality of things that must keep functioning under sustained and brutal use",
+          "type": "concept"
+        },
+        {
+          "tag": "China Miéville's remade bodies — people physically modified by craft tools applied to human flesh; the craftsperson's capability extended to the alteration of the human form as material",
+          "type": "concept"
+        },
+        {
+          "tag": "Pratchett's Discworld guilds — craft organizations that take their function so seriously they become extraordinary; the guild as the institution that makes the trade both possible and strange",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Mad Max Fury Road (2015) — vehicles maintained under impossible conditions by people who understand them completely; the craftsperson as the essential figure in a world where supply chains no longer exist",
+          "type": "concept"
+        },
+        {
+          "tag": "The Martian (2015) — improvisation as survival; using what is available in ways it was not designed for to solve problems that were not anticipated by the people who made the available things",
+          "type": "concept"
+        },
+        {
+          "tag": "Jiro Dreams of Sushi (2011) — craft as the complete project of a life; the thing made perfectly as the evidence of a person's entire investment of time and attention, the work and the person inseparable",
+          "type": "story"
+        },
+        {
+          "tag": "Hunt for the Wilderpeople (2016) — improvised shelter and survival using available materials in unfamiliar terrain; the craft knowledge that makes wilderness livable for those who have it and lethal for those who do not",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Dwarf Fortress' quality gradations — objects of varying quality whose differences matter mechanically; the gap between a masterwork and a standard item expressed as a real functional difference rather than as a label",
+          "type": "concept"
+        },
+        {
+          "tag": "Minecraft's combinatorial crafting — specific arrangements of specific materials producing specific results without exception; the logic of the grid as the logic of making, no substitutions permitted",
+          "type": "concept"
+        },
+        {
+          "tag": "Kenshi's equipment degradation — objects that wear out through use and must be maintained; the craftsperson's work as an ongoing relationship with the object rather than a completed transaction",
+          "type": "concept"
+        },
+        {
+          "tag": "Death Stranding's infrastructure investment — constructing things that benefit every person who passes through the area after you; the craft work that outlasts the craftsperson's presence and serves strangers indefinitely",
+          "type": "story"
+        },
+        {
+          "tag": "Obra Dinn's material evidence log — the physical record kept of every object found and what it reveals; the craftsperson's eye applied to reading objects for the events they witnessed and survived",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Nausicaa's glider construction — a vehicle built from available materials that enables a mode of travel no one else has; the craftsperson who creates a new category of capability rather than improving an existing one",
+          "type": "story"
+        },
+        {
+          "tag": "Howl's Moving Castle's mechanical complexity — a structure that moves through a combination of magic and engineering; the castle as a machine whose operation requires understanding both systems simultaneously",
+          "type": "story"
+        },
+        {
+          "tag": "Castle in the Sky's ancient engineering — technology so advanced it appears magical to those who encounter it without understanding it; craft knowledge that has exceeded the comprehension of everyone currently alive",
+          "type": "concept"
+        },
+        {
+          "tag": "Kiki's broom as familiar tool — a basic implement whose effectiveness depends on the relationship between user and object; the familiar tool as an extension of the self that requires no instruction once the relationship is established",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Dr. Stone's technology sequence — rebuilding civilization through sequential craft achievements where each discovery unlocks the next; the order of making as fixed as any physical law",
+          "type": "concept"
+        },
+        {
+          "tag": "Fullmetal Alchemist's craft-magic — alchemy as engineering with absolute rules; the craftsperson who works within physical laws rather than around them, creativity existing only in application",
+          "type": "concept"
+        },
+        {
+          "tag": "Vinland Saga's ship knowledge — the technical understanding of vessels as a survival skill; not just using the tool but understanding it well enough to keep it functioning when no one else can",
+          "type": "concept"
+        },
+        {
+          "tag": "Attack on Titan's ODM gear expertise — a tool that requires extensive training to use safely; the knowledge gap between the person who made the thing and the person who has mastered its use as two distinct kinds of understanding",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Ork mekboy's confidence engineering — technology that functions partly because the builder believes it will; the craftsperson whose certainty about the object is itself a component of the object's operation",
+          "type": "concept"
+        },
+        {
+          "tag": "Techmarine's bridging knowledge — a craftsperson who speaks two incompatible knowledge systems and can operate in both; the figure who makes things work by understanding both the engineering and the ritual",
+          "type": "concept"
+        },
+        {
+          "tag": "Standard Template Construct — a design reproduced without modification for millennia because it was made correctly the first time; the craft object whose perfection is expressed as its complete invariance across generations",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Kharadron aether-gold mining equipment — tools built to harvest a resource from a lethal environment at altitude; craft knowledge as the only reason the bearer can be in the place the work requires",
+          "type": "concept"
+        },
+        {
+          "tag": "Duardin ancestor rune-stamped tool — an implement marked with lineage runes at its making; the craftsperson's signature as a claim of heritage and tradition rather than merely of authorship",
+          "type": "object"
+        },
+        {
+          "tag": "Ironjawz scrap construct — a structure assembled from salvaged materials by beings who do not understand refinement but understand function completely; the unlovely thing that holds and does its job",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Artificer's infuse item — magical capability worked into an object through craft rather than through spellcasting; the craftsperson as a magical class defined entirely by what they make rather than by what they cast",
+          "type": "concept"
+        },
+        {
+          "tag": "Component quality in crafting systems — the difference between making something from the best available materials and making it from whatever is at hand; quality as a function of what you had to work with",
+          "type": "concept"
+        },
+        {
+          "tag": "Immovable rod — a simple metal rod with a single button that locks it in place in space regardless of what force is applied; one function, one mechanism, no failure modes if used correctly",
+          "type": "object"
+        },
+        {
+          "tag": "Portable hole — a piece of cloth that creates a small extradimensional space when laid on a surface; a tool whose engineering is entirely hidden inside what appears to be a simple material object",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "Frankenstein's successful failure — the thing made perfectly by every measurable standard that fails completely at the level of its actual purpose; craft triumphant and catastrophic in the same moment",
+          "type": "concept"
+        },
+        {
+          "tag": "The haunted house as bad construction — a building whose horror is its structural defects; the space that was built wrong from the beginning and has been wrong ever since in ways that accumulated rather than being corrected",
+          "type": "concept"
+        },
+        {
+          "tag": "Annihilation's organic architecture — the environment rearranging biological material into structural forms; nature operating as a craftsperson using living things as building materials",
+          "type": "story"
+        },
+        {
+          "tag": "The Wicker Man's builder — the figure who constructs a ritual object at enormous scale from woven plant material knowing its purpose from the beginning; craft applied to a single catastrophic use",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Instrument making as craft — an object built to produce sound of a specific quality that cannot be achieved by any other means; the craftsperson who makes the tool that makes the music possible",
+          "type": "concept"
+        },
+        {
+          "tag": "Acoustic space engineering — shaping a physical space so that sound behaves in a specific predictable way inside it; the built environment as a musical instrument whose material determines its sound",
+          "type": "concept"
+        },
+        {
+          "tag": "The tuning fork as calibration standard — a tool whose only function is to provide a precise reference point for other instruments; the object that exists only to make other objects accurate",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The joint as the proof of mastery — the connection between two materials that must hold under load; the detail that is invisible when it works and catastrophic when it fails, the measure of whether the work was actually good",
+          "type": "concept"
+        },
+        {
+          "tag": "The foundation before the building — the first work done is the last to be seen and the first to matter if it was done wrong; the craftsperson who builds what no one will notice as long as it works",
+          "type": "concept"
+        },
+        {
+          "tag": "Scaffolding removal ritual — the ceremony of taking away the temporary structure that made the permanent structure possible; the moment of finding out whether the thing stands on its own",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

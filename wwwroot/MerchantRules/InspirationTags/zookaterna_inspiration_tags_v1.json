@@ -1,0 +1,556 @@
+{
+  "guild": "ZOOKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Living chaos in motion. The road, the animal, the performance. Things that breathe and surprise. Temporary bonds that carry information across distance. Everything portable, everything slightly unpredictable.",
+  "feeling": "Warm controlled chaos. Everything is portable, everything is slightly unpredictable, and something alive is always nearby.",
+  "underlying_tension": "The tension between the freedom of motion and the bonds — to animals, to routes, to other people — that motion creates. Zookaterna items are alive or were alive or smell like something alive. They travel well and they do not sit still.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Gruul — feral momentum; the logic of moving because standing still is itself a kind of dying; the road as the survival strategy rather than the destination",
+          "type": "concept"
+        },
+        {
+          "tag": "Simic adaptation — a living thing modified to thrive in a new environment; the body of an animal as a problem that has already solved itself differently than expected",
+          "type": "concept"
+        },
+        {
+          "tag": "Rakdos spectacle — the crowd's attention as the real product; everything else is the mechanism for getting it and holding it long enough to do something useful",
+          "type": "concept"
+        },
+        {
+          "tag": "Temur — the three-part logic of speed, ferocity, and cunning operating together; each creature in a group playing a different role that makes the others possible",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Sleipnir's bridle — the tack for a horse that moves between worlds; equipment whose function is not speed but category of travel",
+          "type": "object"
+        },
+        {
+          "tag": "Ratatoskr's hollow tooth — a cavity in the messenger squirrel's tooth where small messages are kept during the journey between realms; the animal as a courier whose body is the container",
+          "type": "object"
+        },
+        {
+          "tag": "Shape-shifting as hamr — the idea that a person has an animal double that can be sent out while the body sleeps; a self that travels separately from the body that stays",
+          "type": "concept"
+        },
+        {
+          "tag": "Huginn and Muninn's daily range — two creatures sent out each morning across the whole world and returned by evening; awareness extended through animal intermediaries to places the sender cannot go",
+          "type": "concept"
+        },
+        {
+          "tag": "The berserker's animal preparation — the ritual of entering an animal's behavioral state before combat; the performance of the animal identity as the source of the power, not just the symbol of it",
+          "type": "ritual"
+        },
+        {
+          "tag": "Odin's wolves fed at his table — animals sustained by something beyond ordinary hunger at the table of a god who himself does not eat; the pack and the provider in a relationship that makes no ordinary sense",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "The Hydra's adaptive response — each removal of a part produces two replacements; a living system that becomes more of what it is in direct proportion to the force applied against it",
+          "type": "concept"
+        },
+        {
+          "tag": "Proteus's shapeshifting resistance — a figure that cannot be held because it continuously becomes something different; the animal that defeats containment by never remaining what it was when you grabbed it",
+          "type": "concept"
+        },
+        {
+          "tag": "Pegasus as location key — a creature that makes a specific destination reachable that would otherwise be impossible; the animal as the method of access rather than a tool for a task",
+          "type": "figure"
+        },
+        {
+          "tag": "Orphic animal consecration — the ritual preparation of an animal before it is used as a vehicle for divine contact; the creature made ready for a function beyond its ordinary nature",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "Enkidu's taming ritual — the specific sequence of events that drew a wild being from the animal world into the human one; the crossing that changes both the one who crossed and the one who received them",
+          "type": "ritual"
+        },
+        {
+          "tag": "The lion hunt staging — a performance of a specific kill in a specific way to demonstrate a specific kind of authority; the hunt as theatrical proof of power rather than practical need",
+          "type": "ritual"
+        },
+        {
+          "tag": "The Bull of Heaven's release mechanism — the specific action that unleashes a divine animal into the world; a creature whose destructive purpose is set by who sent it, not by its own nature",
+          "type": "object"
+        },
+        {
+          "tag": "Enkidu's animal-skin garment — clothing made from the skins of the animals he ran with; the material that carries the memory of a life lived as something other than human",
+          "type": "object"
+        },
+        {
+          "tag": "Humbaba's territory bond — a guardian creature defined entirely by the space it inhabits; remove it from its territory and it becomes something categorically different",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The selkie's skin — a removable pelt that stores the animal identity; whoever holds the skin holds the ability to become the creature, and losing it means losing the form",
+          "type": "object"
+        },
+        {
+          "tag": "Cernunnos's torc — a neck ring worn by the antlered figure surrounded by gathered animals; the object that marks the one who can make incompatible creatures coexist in peace",
+          "type": "object"
+        },
+        {
+          "tag": "The salmon of knowledge swallowed whole — wisdom transferred not by teaching but by eating; knowledge as a substance that travels through the food chain and arrives already digested",
+          "type": "story"
+        },
+        {
+          "tag": "The shape-shifting combat sequence — a conflict expressed as a series of animal transformations, each one chosen to counter the previous; survival through continuous adaptive improvisation",
+          "type": "story"
+        },
+        {
+          "tag": "The white stag following ritual — a specific behavior required when the otherworldly animal appears; you follow it, you do not chase it; speed is irrelevant, attention is everything",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Nahualli animal parallel — every person has an animal counterpart whose fate runs alongside theirs; the animal is not a companion but a parallel self, harming one harms both",
+          "type": "concept"
+        },
+        {
+          "tag": "Quetzalcoatl's dual nature — a creature that combines sky and earth, flight and ground, in a single body; the animal that embodies contradiction as its fundamental character rather than its anomaly",
+          "type": "concept"
+        },
+        {
+          "tag": "The eagle and cactus as sign — a traveling people recognize a specific animal behavior as the signal to stop moving; the creature's action as a message that ends a journey and begins a settlement",
+          "type": "concept"
+        },
+        {
+          "tag": "Jaguar warrior transformation ritual — the procedure of entering a non-human behavioral state through costume and ceremony before combat; the animal identity worn over the human one by deliberate preparation",
+          "type": "ritual"
+        },
+        {
+          "tag": "Xolotl guiding the dead — an animal specifically associated with accompanying the living through dangerous transitions; the creature whose purpose is to be present during crossing, not to lead or to protect",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Tanuki transformation leaf — a mundane object placed on the head that enables a complete change of appearance; the prop whose presence is the entire mechanism of the transformation",
+          "type": "object"
+        },
+        {
+          "tag": "Kitsune's accumulated tails — visible markers of how much magical experience and age a fox has accumulated; power made legible through a physical count on the animal's body",
+          "type": "object"
+        },
+        {
+          "tag": "Shrine messenger animal preparation — the specific feeding, washing, and housing of an animal designated as a divine carrier; the creature made ready for its role through sustained treatment",
+          "type": "ritual"
+        },
+        {
+          "tag": "Animal kami recognition ritual — the ceremony of identifying which animals in a location have developed resident spirits through age or significance; reading the living world for what has become sacred in it",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Osun's peacock feather fan — a specific object associated with beauty, water, and dangerous feminine power; the decorative item that is also a weapon and a signal simultaneously",
+          "type": "object"
+        },
+        {
+          "tag": "Ogun's dog token — a carved or actual representation of the animal associated with the god of iron and the hunt; the object that marks something as belonging to a specific kind of power",
+          "type": "object"
+        },
+        {
+          "tag": "Anansi as information hub — a figure at the center of every network of story and rumor; the creature that knows everything because everything eventually passes through its threads",
+          "type": "figure"
+        },
+        {
+          "tag": "Animal sacrifice communication ritual — the offering of an animal's life as a structured message to a specific divine force; the creature as the medium through which the conversation must pass",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Polynesian, Slavic, Hindu, Egyptian",
+      "tags": [
+        {
+          "tag": "Polynesian navigator bird release — a specific bird carried on a vessel and released to find land; the animal as a precision instrument read by its behavior rather than commanded",
+          "type": "object"
+        },
+        {
+          "tag": "Slavic zhar-ptitsa feather — a single feather from a firebird that provides light but also attracts danger; a fragment of something extraordinary that carries its full nature into the ordinary world",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu Garuda's summoning — the procedure of calling the divine bird-carrier; an animal of such scale that its movement makes geography irrelevant to those it carries",
+          "type": "ritual"
+        },
+        {
+          "tag": "Egyptian Thoth's ibis — the bird that watches and records rather than acts; an animal associated entirely with witness and knowledge, never with force",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The animal helper logic — a creature that aids the protagonist specifically because it was once shown kindness; reciprocity as the underlying logic of animal alliance across time and distance",
+          "type": "concept"
+        },
+        {
+          "tag": "The familiar as remote presence — a small animal that extends the practitioner's will and senses to places the practitioner cannot go; the creature as a distributed piece of a person",
+          "type": "concept"
+        },
+        {
+          "tag": "The transformed prince revealed — a person trapped in an animal body until a specific condition is met; the animal form as a container for something that does not belong there",
+          "type": "story"
+        },
+        {
+          "tag": "The trickster hare's speed — a creature that wins through thought faster than the opponent's body; the mind's acceleration expressed as physical quickness",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "The crane's gratitude robe — a garment woven by a rescued animal in its true form as repayment; the gift whose material reveals the nature of the giver if examined closely",
+          "type": "object"
+        },
+        {
+          "tag": "The fox bride's concealed pelt — a second skin kept hidden that contains the animal identity; discovery of it ends the bond and ends the disguise simultaneously",
+          "type": "object"
+        },
+        {
+          "tag": "The loyal dog's return preparation — a ritual of leaving a specific object at a specific place so the animal can find its way back across impossible distance or death",
+          "type": "ritual"
+        },
+        {
+          "tag": "The monkey king's radical flexibility — a figure who succeeds in any situation by becoming whatever that situation requires; survival through complete willingness to change approach",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Indigenous North American, South American",
+      "tags": [
+        {
+          "tag": "Thunderbird's weather-marking feather — a single feather from the creature whose movement affects atmospheric conditions; the fragment whose presence indicates what is coming",
+          "type": "object"
+        },
+        {
+          "tag": "Mapuche Anchimallen light vessel — a small container used to hold the bioluminescent creature that signals approaching danger; the animal kept in portable form for travel",
+          "type": "object"
+        },
+        {
+          "tag": "Coyote's deliberate failure — the trickster who sometimes fails on purpose because the chaos produced by failure is more useful to them than the order produced by success",
+          "type": "story"
+        },
+        {
+          "tag": "The information network of small creatures — the idea that birds, insects, and rodents collectively know everything that happens in a region and can be read by those who know how to listen",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The wren's winter crown — a specific small bird ceremonially hunted and displayed as the king of birds on one day per year; the creature whose status is entirely a story and is no less real for that",
+          "type": "object"
+        },
+        {
+          "tag": "The hare's foot token — a carried charm made from a specific part of a specific animal caught in a specific way; the object whose power depends entirely on the correctness of the procedure that produced it",
+          "type": "object"
+        },
+        {
+          "tag": "Reading animal behavior as weather — watching specific creatures closely before a journey to determine what conditions are coming; the living world as a distributed forecasting system",
+          "type": "ritual"
+        },
+        {
+          "tag": "First animal across the threshold ritual — the deliberate management of which creature enters a new space first to determine what fortune follows; precedence as a magical fact established through controlled staging",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "His Dark Materials' daemon bond — an animal form of a person's inner nature made external and physical; the soul given a body of its own that travels alongside the person it belongs to",
+          "type": "concept"
+        },
+        {
+          "tag": "Robin Hobb's Wit bond — a magical connection between human and animal that makes both aware of the other's experience at all times; the bond as mutual vulnerability as much as mutual strength",
+          "type": "concept"
+        },
+        {
+          "tag": "Tolkien's Eagles' arrival logic — help that appears precisely when needed and departs the moment the need is resolved; assistance that does not stay longer than its purpose requires",
+          "type": "concept"
+        },
+        {
+          "tag": "Pullman's spectres' prey — creatures that feed specifically on adult consciousness rather than on flesh; a predator defined entirely by what it eats and the invisibility of that eating",
+          "type": "concept"
+        },
+        {
+          "tag": "Brian Jacques' animal culture — creatures organized into recognizable social roles using only their animal natures scaled up; culture expressed through species rather than imposed on it from outside",
+          "type": "concept"
+        },
+        {
+          "tag": "Pratchett's Librarian's expertise — an animal who is also the most knowledgeable person in the building; the form changed but the knowledge intact, respected for what it knows not what it looks like",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Okja (2017) — a creature raised in a bond that was always also a commodity to someone else; the animal at the intersection of genuine relationship and economic calculation",
+          "type": "concept"
+        },
+        {
+          "tag": "The Bear (1988) — a young animal navigating danger through observation of a more experienced creature rather than through instruction; learning by proximity rather than by teaching",
+          "type": "concept"
+        },
+        {
+          "tag": "Beasts of the Southern Wild (2012) — wild animals as the external expression of a child's emotional state; creature and feeling as one continuous thing rather than symbol and symbolized",
+          "type": "story"
+        },
+        {
+          "tag": "The Black Stallion (1979) — a bond formed in isolation without shared language or prior training; trust established entirely through patience and sustained presence",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Monster Hunter's ecosystem logic — every creature has a role in the environment; remove one and the others change in response; the world is a system of relationships, not a collection of entities",
+          "type": "concept"
+        },
+        {
+          "tag": "Rain World's food chain position — a world where the player is neither apex predator nor base prey but somewhere in the middle, simultaneously hunted and hunting",
+          "type": "concept"
+        },
+        {
+          "tag": "Stardew Valley's animal trust — creatures that give more as the relationship improves over time; the quality of the ongoing relationship as the game mechanic rather than the quality of the equipment",
+          "type": "concept"
+        },
+        {
+          "tag": "Shadow of the Colossus — a creature so large it is also the terrain; the thing you are fighting is also the place you are standing on while you fight it",
+          "type": "story"
+        },
+        {
+          "tag": "Spiritfarer's passenger manifest — a record kept by a creature-ferry of who has been carried and where; the log that is also the biography of every crossing made",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "My Neighbor Totoro's encounter — a creature found through stillness and openness rather than through pursuit; the animal that comes to the one who waits correctly rather than the one who searches actively",
+          "type": "story"
+        },
+        {
+          "tag": "The Cat Bus's dual nature — a creature whose body serves as a vehicle for others without diminishing what it fundamentally is; function added to animal nature without replacing it",
+          "type": "story"
+        },
+        {
+          "tag": "Nausicaa's insect empathy — understanding achieved by entering the perceptual world of creatures rather than dominating them; knowledge that requires surrendering the human perspective to obtain",
+          "type": "concept"
+        },
+        {
+          "tag": "Princess Mononoke's animal gods — creatures of divine scale whose actions are entirely proportional to what was done to them; force that responds rather than initiates, reactive rather than aggressive",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Pokemon's relationship growth — a creature that becomes more capable through lived experience with a specific person; the bond between two individuals as the source of development, not training alone",
+          "type": "concept"
+        },
+        {
+          "tag": "Made in Abyss' creature concealment — every animal in the deep is more dangerous than its surface appearance suggests; the gap between what something looks like and what it does as a survival strategy",
+          "type": "concept"
+        },
+        {
+          "tag": "Beastars' social pressure — a society attempting to contain animal nature within social structure; the constant pressure of instinct against the agreements made to suppress it",
+          "type": "concept"
+        },
+        {
+          "tag": "One Piece's Zoan three-state logic — a person who can exist as animal, hybrid, or human; three genuinely different modes of being available to the same individual",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Fenrisian wolf bond — the wolves of Fenris who choose their own Space Marine rather than being assigned; the animal that selects rather than being selected, the bond initiated from the animal's side",
+          "type": "concept"
+        },
+        {
+          "tag": "Beastmen's hybrid instability — creatures caught permanently between two forms, belonging fully to neither; the hybrid as a state of perpetual instability rather than a stable combination",
+          "type": "concept"
+        },
+        {
+          "tag": "Catachan devil's sensory gland — a harvested organ from a notoriously dangerous predator that retains a fraction of the creature's extraordinary sensory capability after removal",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Seraphon's predetermined behavior — creatures that operate according to ancient plans they do not question and cannot deviate from; behavior entirely determined by origin rather than by circumstance",
+          "type": "concept"
+        },
+        {
+          "tag": "Sylvaneth spirit-pod — a seed-like vessel that contains a nascent tree-creature; a living thing in its most portable form, carrying its full future inside a small present container",
+          "type": "object"
+        },
+        {
+          "tag": "Nighthaunt chain-leash — a length of spectral chain used to bind a haunting creature to a specific area or object; a restraint made from the same immaterial substance as the thing it holds",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Ranger's beast companion synchronization — an animal that develops in parallel with its partner; the bond expressed as matched growth rather than as training or command",
+          "type": "concept"
+        },
+        {
+          "tag": "Druid's wild shape retention — the caster who becomes an animal and must remember to return; the human identity as something that waits underneath the animal form rather than disappearing",
+          "type": "concept"
+        },
+        {
+          "tag": "Figurine of wondrous power — a small carved animal that becomes a real creature when activated and returns to figurine form after; the object that is also an animal that is also an object",
+          "type": "object"
+        },
+        {
+          "tag": "Bag of tricks — a pouch that produces a random animal each time something is pulled from it; a container whose contents are alive and unpredictable rather than stored and fixed",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "The Birds' scale horror — individually harmless creatures that become catastrophic through coordination and sheer number; the horror of scale rather than the horror of individual nature",
+          "type": "concept"
+        },
+        {
+          "tag": "Folk horror's prepared animal — a creature kept and cared for specifically for a use it does not know about; the animal raised with attention and given a purpose it never understands",
+          "type": "concept"
+        },
+        {
+          "tag": "Annihilation's transformed fauna — animals changed by passing through a space; the creature's body as evidence of what a place does to living things that move through it",
+          "type": "story"
+        },
+        {
+          "tag": "The familiar as leverage — a bonded creature that can be used as a hostage against its partner; the bond as a vulnerability exploitable by anyone who understands how deep it runs",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Animal call as encoded information — the vocalizations of specific creatures carrying precise content to those who know the system; sound as a communication network that predates language",
+          "type": "concept"
+        },
+        {
+          "tag": "Infrasound as behavioral driver — frequencies below the threshold of conscious hearing that produce specific responses in animals and people; influence that works without being detected",
+          "type": "concept"
+        },
+        {
+          "tag": "The caravan rhythm — a beat maintained during travel that synchronizes the pace of animals and humans into a single shared movement; the drum as the agreement between species",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The animal trail as route — a path formed by creature movement over time that becomes the most efficient route through terrain; the living world as a cartographer whose work accumulates invisibly",
+          "type": "concept"
+        },
+        {
+          "tag": "The camp circle's temporary logic — a spatial arrangement that creates community for a single night and dissolves in the morning; structure that exists only while needed and leaves no trace",
+          "type": "concept"
+        },
+        {
+          "tag": "The corral establishment ritual — the procedure of creating an enclosure that keeps an animal in without breaking its will; the deliberate design of a containment that is accepted rather than imposed",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

@@ -85,17 +85,50 @@ public class Program
             var root = Path.Combine(env.WebRootPath, "MerchantRules");
             var opts = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
-            var raserSkran = JsonSerializer.Deserialize<RaserSkranData>(
-                File.ReadAllText(Path.Combine(root, "viaproxima_raser_skran_design_sv.json")), opts)!;
-            var itemRules = JsonSerializer.Deserialize<ItemRulesData>(
-                File.ReadAllText(Path.Combine(root, "viaproxima_item_rules.json")), opts)!;
-            var layouts = JsonSerializer.Deserialize<LayoutsData>(
-                File.ReadAllText(Path.Combine(root, "viaproxima_layouts_150.json")), opts)!;
-            var creativity = JsonSerializer.Deserialize<CreativityData>(
-                File.ReadAllText(Path.Combine(root, "viaproxima_item_creativity.json")), opts)!;
-            var skeleton = File.ReadAllText(Path.Combine(root, "viaproxima_merchant_prompt_skeleton.md"));
+            var races = JsonSerializer.Deserialize<RacesData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaRaces.json")), opts)!.Races;
 
-            return new PromptAssembler(raserSkran, itemRules, layouts, creativity, skeleton);
+            var guilds = JsonSerializer.Deserialize<GuildsData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaGuildsLore.json")), opts)!.Guilds;
+
+            // type_rules has heterogeneous shape per entry — clone each JsonElement before doc is disposed
+            Dictionary<string, JsonElement> typeRules;
+            using (var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "ViaproximaItemRules.json"))))
+            {
+                typeRules = doc.RootElement
+                    .GetProperty("type_rules")
+                    .EnumerateObject()
+                    .ToDictionary(p => p.Name, p => p.Value.Clone());
+            }
+
+            var funcTags = JsonSerializer.Deserialize<FunctionalTagsData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaFunctionalTags.json")), opts)!.FunctionalTags;
+
+            var twistTags = JsonSerializer.Deserialize<TwistTagsData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaTwistTags.json")), opts)!.TwistTags;
+
+            var worldContext = File.ReadAllText(Path.Combine(root, "world_context.txt"));
+            var promptTemplate = File.ReadAllText(Path.Combine(root, "PromptTemplate.md"));
+
+            // Flatten inspiration tags per guild: guild.Id → flat list of all InspirationTagEntry
+            var inspirationDir = Path.Combine(root, "InspirationTags");
+            var guildInspirationTags = new Dictionary<string, List<InspirationTagEntry>>();
+            foreach (var guild in guilds)
+            {
+                var filename = $"{guild.Id.ToLower()}_inspiration_tags_v1.json";
+                var filepath = Path.Combine(inspirationDir, filename);
+                if (File.Exists(filepath))
+                {
+                    var data = JsonSerializer.Deserialize<GuildInspirationData>(
+                        File.ReadAllText(filepath), opts)!;
+                    guildInspirationTags[guild.Id] = data.Categories.Values
+                        .SelectMany(c => c.Tags)
+                        .ToList();
+                }
+            }
+
+            return new PromptAssembler(races, guilds, typeRules, funcTags, twistTags,
+                guildInspirationTags, worldContext, promptTemplate);
         });
 
         var app = builder.Build();

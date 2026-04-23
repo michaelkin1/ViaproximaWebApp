@@ -1,0 +1,556 @@
+{
+  "guild": "MORTOKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Finality and pursuit. Things that cannot be escaped, that hold, that close. The weight of consequence arriving. Not cruel — institutional. Cold patience that outlasts everything.",
+  "feeling": "Quiet institutional threat. Built to hold, built to catch, built to last through whatever comes after.",
+  "underlying_tension": "The tension between the personal act of enforcement and the impersonal system that demands it. Mortokaterna items are not angry — they are patient. They do not punish. They conclude.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Orzhov — power maintained through debt, legacy, and the long memory of obligation; the institution outlives every individual inside it and collects on both sides of death",
+          "type": "concept"
+        },
+        {
+          "tag": "Azorius enforcement — law not as principle but as mechanism; the apparatus that makes consequences arrive whether or not anyone personally chooses to deliver them",
+          "type": "concept"
+        },
+        {
+          "tag": "Golgari cycle — nothing is wasted, everything that falls feeds what comes next; the system that makes death productive rather than final",
+          "type": "concept"
+        },
+        {
+          "tag": "Rakdos controlled release — the performance of consequence as its own form of authority; destruction staged so the watching matters as much as the act",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Naglfar — a ship built from the unburied dead's nails; materials that accumulate slowly toward a catastrophic purpose no single contributor chose or understood",
+          "type": "object"
+        },
+        {
+          "tag": "Fenrir's silk binding Gleipnir — the strongest restraint made from things that do not exist; intangibility as the only material sufficient to hold real power",
+          "type": "object"
+        },
+        {
+          "tag": "The valkyrie's selection — not killing but choosing; the battle's outcome is determined elsewhere and the physical event merely enacts what was already decided",
+          "type": "concept"
+        },
+        {
+          "tag": "Niflheim's one-way roads — paths through the death-realm that only the dead may travel; routes that change the category of the thing walking them, not just the destination",
+          "type": "concept"
+        },
+        {
+          "tag": "The pre-battle oath ritual — a vow made before combat that binds the outcome to specific conditions; the ritual that makes the result binding before the first blow lands",
+          "type": "ritual"
+        },
+        {
+          "tag": "Hel's divided hall — a domain split between the honored and the ignoble dead; judgment expressed entirely through space and condition, never through spoken verdict",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Nemesis as proportion — the force that restores balance after excess; not vengeance but correction, automated and impersonal, indifferent to the feelings of either party",
+          "type": "concept"
+        },
+        {
+          "tag": "Tantalus condition — punishment that withholds rather than inflicts; consequence expressed as permanent proximity to what cannot be reached rather than active suffering",
+          "type": "concept"
+        },
+        {
+          "tag": "The Erinyes — divine forces that follow oath-breakers not to punish immediately but to be always present; haunting as enforcement, persistence as the actual weapon",
+          "type": "figure"
+        },
+        {
+          "tag": "Charon's toll — passage requires specific payment; the transaction is non-negotiable and the currency is exact; unprepared travelers are not harmed, they are simply stopped",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "Inanna's descent gates — at each of the seven gates something must be surrendered before passage is permitted; you cannot pass through unchanged, each threshold costs you something specific",
+          "type": "ritual"
+        },
+        {
+          "tag": "The galla demons' approach ritual — enforcers who arrive silently, feel nothing, accept nothing, and depart only when the account is settled; the procedure of collection with no room for negotiation",
+          "type": "ritual"
+        },
+        {
+          "tag": "The tablet of fates — a physical record whose possession confers legitimate authority over what it describes; whoever holds the document holds the power it names",
+          "type": "object"
+        },
+        {
+          "tag": "Kurnugi dust and clay — the underworld where the dead eat dust and wear feathers for clothing; a place defined not by cruelty but by permanent diminishment of everything that made a person",
+          "type": "object"
+        },
+        {
+          "tag": "The return condition of Tammuz — a substitute must be provided before the prisoner is released; freedom requires replacement, not just escape; the system demands the account balance",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "Annwn's hounds — the white red-eared dogs of the otherworld that track by a scent no living creature can wash away; pursuit that cannot be defeated by concealment or distance",
+          "type": "object"
+        },
+        {
+          "tag": "The severed head of Bran — a head that retains knowledge and the ability to speak after death; authority that does not end when the body does",
+          "type": "object"
+        },
+        {
+          "tag": "The Wild Hunt — relentless pursuit that cannot be outrun, only delayed; the quarry's only options are perfect concealment or joining what is chasing them",
+          "type": "story"
+        },
+        {
+          "tag": "The geasa of Cu Chulainn — a hero destroyed not by an enemy but by the collision of two binding obligations he cannot satisfy simultaneously; the trap made entirely of his own prior commitments",
+          "type": "story"
+        },
+        {
+          "tag": "Crom Cruach's tithe — a portion of what is produced must be given; the obligation is structural and not personal, and the weight of it accumulates whether acknowledged or not",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Mictlan's four-year journey — the dead do not arrive at their destination immediately but must navigate nine specific territories over four years; consequence that takes its full time to arrive",
+          "type": "concept"
+        },
+        {
+          "tag": "The five nameless days — the five days at the year's end when normal rules are suspended and dangerous forces move without restriction; consequence that arrives on a schedule, not in response to action",
+          "type": "concept"
+        },
+        {
+          "tag": "Tlazolteotl's consumption — a goddess who absorbs sin; consequence removed not by forgiveness but by being consumed by something large enough to hold it permanently",
+          "type": "concept"
+        },
+        {
+          "tag": "Dog burial for the dead — a specific animal buried with the dead person to guide them through Mictlan; preparation made before departure for a journey whose route is fixed and known",
+          "type": "ritual"
+        },
+        {
+          "tag": "Huitzilopochtli's daily victory — the sun must be sustained each day by effort and cost; without ongoing maintenance the system collapses regardless of what was given before",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The Yellow Springs boundary stone — the line between the living and dead worlds held in place by a specific physical object placed by Izanagi; remove it and the boundary fails immediately",
+          "type": "object"
+        },
+        {
+          "tag": "Oni's iron club — the weapon carried by debt-collecting supernatural agents; not a weapon of war but a tool of account-settlement, used only when other means have been exhausted",
+          "type": "object"
+        },
+        {
+          "tag": "Kegare purification ritual — spiritual impurity accumulated through contact with death must be actively cleared by specific procedure; it spreads, it cannot be simply ignored, and ignoring it worsens it",
+          "type": "ritual"
+        },
+        {
+          "tag": "Izanami's pursuit ritual boundary — the line drawn between the living and dead realms formalized through a specific exchange of words; the boundary held by declaration, not by force",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Ogun's iron oath object — a piece of iron on which serious oaths are sworn; violation is enforced by the god of iron himself, the most unforgiving force in the pantheon",
+          "type": "object"
+        },
+        {
+          "tag": "Egungun costume — a full-body garment that makes the wearer invisible and makes an ancestor temporarily present; the form is the permission, and the permission has a time limit",
+          "type": "object"
+        },
+        {
+          "tag": "Eshu as gatekeeper — the figure who stands at every crossroads and through whom every transaction and journey must pass; the intermediary who cannot be bypassed, only negotiated with properly",
+          "type": "figure"
+        },
+        {
+          "tag": "Abiku binding ritual — a ceremony performed to break the cycle of a child who dies and returns repeatedly; the ritual that attempts to make consequence conclude rather than loop",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Egyptian, Slavic, Hindu, Polynesian",
+      "tags": [
+        {
+          "tag": "Ma'at's feather — the specific feather against which the dead heart is weighed; a physical standard so precise that the judgment it enables is immediate and final with no appeal",
+          "type": "object"
+        },
+        {
+          "tag": "Slavic Nav spirit-rope — a cord used in burial rituals to bind the restless dead to their correct place; the physical restraint that keeps the unresolved from wandering",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu shraddha — the ritual feeding of ancestors performed by descendants on a fixed schedule; an obligation that continues after death on both sides, enforced by cosmic structure",
+          "type": "ritual"
+        },
+        {
+          "tag": "Polynesian tapu enforcer — a person whose role is to identify and respond to tapu violations; the figure who exists because the structure enforces itself but still needs a human agent",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The huntsman who cannot stop — a figure cursed to pursue forever without rest; the punishment is not destruction but continuation, the inability to conclude",
+          "type": "concept"
+        },
+        {
+          "tag": "The ghost who cannot leave — a spirit bound to a location until a specific unresolved condition is met; departure requires resolution, not just the passage of time",
+          "type": "concept"
+        },
+        {
+          "tag": "The debtor marked at midnight — a person who owes a supernatural debt acquires a physical mark visible only to those who know what to look for; obligation made legible to the right eyes",
+          "type": "story"
+        },
+        {
+          "tag": "Iron key to one lock — a key that opens only one specific lock and cannot be duplicated; access controlled by physical uniqueness alone, not by knowledge or authority",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "Yama's ledger — a written record of every living being's allotted time, consulted to determine precisely when death should arrive; the book is the authority and the authority is the book",
+          "type": "object"
+        },
+        {
+          "tag": "The hungry ghost's unfinished object — a specific possession left incomplete at death that tethers the spirit to the living world until someone finishes it",
+          "type": "object"
+        },
+        {
+          "tag": "Red string severance — a ceremony that cuts a fated connection between two people; the ritual that makes it possible to undo what was structurally bound",
+          "type": "ritual"
+        },
+        {
+          "tag": "The underworld bureaucracy — death administered as paperwork, procedure, and queue; consequence that moves slowly and impersonally but inevitably through a system that does not lose files",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Middle Eastern, Mesoamerican",
+      "tags": [
+        {
+          "tag": "Anubis's scales — the instrument of classification at judgment; the device that determines which category a thing belongs to, not whether it deserves mercy",
+          "type": "object"
+        },
+        {
+          "tag": "Mapuche wekufe binding cord — a harmful spirit bound to a specific object by someone who knows the correct procedure; the binding holds precisely as long as the object remains intact",
+          "type": "object"
+        },
+        {
+          "tag": "Oya's final clearing — the orisha of storms and death who removes what is finished to make space for what comes next; destruction that is maintenance, not malice",
+          "type": "story"
+        },
+        {
+          "tag": "Azrael's non-negotiability — the angel of death has no discretion; the appointment is kept regardless of circumstances, protest, wealth, or offering",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Coins on the eyes of the dead — payment placed at the moment of death so the toll is ready; the transaction prepared before the journey begins rather than scrambled for at the crossing",
+          "type": "object"
+        },
+        {
+          "tag": "The exact-fit shroud — a burial garment cut to precise size; imprecision in preparation for death invites the dead back to correct what was done carelessly",
+          "type": "object"
+        },
+        {
+          "tag": "Salt line against the returning dead — a specific barrier substance placed at the threshold that the restless dead cannot cross; containment through material, not prayer",
+          "type": "ritual"
+        },
+        {
+          "tag": "All knots untied at death — every knot in the dying person's environment must be untied before they pass so the soul does not catch; constraint removed at the moment of transition",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Pratchett's Death — consequence personified not as cruelty but as punctuality; the figure who has a job and does it without malice, without delay, and without exception",
+          "type": "concept"
+        },
+        {
+          "tag": "Gaiman's oldest authority — the things that have power because they existed before the rules were made; age as a form of legitimacy that cannot be argued with",
+          "type": "concept"
+        },
+        {
+          "tag": "Joe Abercrombie's delayed consequence — every act of violence in the story has a downstream cost that appears chapters later; nothing is consequence-free, only consequence-delayed",
+          "type": "concept"
+        },
+        {
+          "tag": "Steven Erikson's pinned god — enormous power rendered permanently immobile; force that cannot act directly but whose influence spreads outward from where it is fixed",
+          "type": "concept"
+        },
+        {
+          "tag": "The Black Company's written record — an institution that survives by keeping an exact account of everything done in its name; the record is the institution, and destroying the record destroys the legitimacy",
+          "type": "concept"
+        },
+        {
+          "tag": "Susanna Clarke's Faerie time — years pass inside that are minutes outside; the place that holds you longer than you knew you were held, consequence arriving at a different rate than experience",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "No Country for Old Men (2007) — a force that is not evil but simply consistent; it does not hate, it does not hurry, and it arrives precisely when it was always going to arrive",
+          "type": "concept"
+        },
+        {
+          "tag": "It Follows (2014) — a consequence that transfers through specific contact and cannot be permanently outrun; it walks, it does not tire, and it always knows the current location of what it follows",
+          "type": "concept"
+        },
+        {
+          "tag": "A Ghost Story (2017) — a presence that persists after its purpose has ended; still there because leaving requires something that has not yet happened, waiting without agenda",
+          "type": "story"
+        },
+        {
+          "tag": "Green Room (2015) — the moment a location becomes a trap; once inside, the entire logic of the situation changes and escape becomes the only meaningful question",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Darkest Dungeon's stress accumulation — pressure builds invisibly and then expresses catastrophically at a threshold; the breakdown arrives after the limit, not at it",
+          "type": "concept"
+        },
+        {
+          "tag": "Hollow Knight's infection spread — a force that moves through a population changing everything it touches; contamination as slow institutional conquest rather than sudden attack",
+          "type": "concept"
+        },
+        {
+          "tag": "Pathologic's epidemic logic — a crisis that spreads according to its own internal rules regardless of player action; the system that does not respond to individual heroics",
+          "type": "concept"
+        },
+        {
+          "tag": "Morrowind's Tribunal — gods who are gods because they took the power and now maintain it through constant effort; authority that has no inherent right, only the ongoing work of holding it",
+          "type": "story"
+        },
+        {
+          "tag": "Disco Elysium's failed check object — an item that exists only because a skill test failed; the physical evidence of a moment things went wrong, kept as a record",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Spirited Away's debt contract — the obligation is real the moment you eat; what you consume you owe for, and the system does not accept ignorance as an excuse or a defense",
+          "type": "story"
+        },
+        {
+          "tag": "The Cat Returns' escalation — a polite situation that slowly becomes inescapable; each small acceptance makes the next refusal harder until refusal is no longer structurally available",
+          "type": "story"
+        },
+        {
+          "tag": "Nausicaa's inevitability — the thing everyone is working to prevent is the thing that must happen; fighting the future is the mechanism by which the future is eventually delivered",
+          "type": "concept"
+        },
+        {
+          "tag": "Princess Mononoke's industrial cost — forces that destroy not from malice but from operational necessity; the mill must run, the ore must be processed, the forest pays the cost regardless of anyone's feelings about it",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Full Metal Alchemist's toll — the cost of transgression is always a part of the self; not external punishment administered by another but internal permanent subtraction",
+          "type": "concept"
+        },
+        {
+          "tag": "Vinland Saga's chain of violence — every act of killing creates new obligation extending forward; the sequence cannot be interrupted from inside it, only from outside",
+          "type": "concept"
+        },
+        {
+          "tag": "Berserk's brand — a mark that makes the bearer permanently visible to forces that would otherwise ignore them; being marked changes your relationship to the entire world, not just to the marker",
+          "type": "concept"
+        },
+        {
+          "tag": "Attack on Titan's paths — a network connecting all members of a lineage across time and space; consequence and information travel through it regardless of physical distance or death",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Inquisition authority — the power to act anywhere without local permission; jurisdiction that overrides all other jurisdiction by its nature, not by argument or negotiation",
+          "type": "concept"
+        },
+        {
+          "tag": "The Black Ships' scheduled collection — a regular gathering of the dangerous and the unusual; not punishment but containment, routine and inevitable, arriving on a calendar",
+          "type": "concept"
+        },
+        {
+          "tag": "Null rod — an object that cancels magical force in its immediate vicinity purely by existing; the most powerful anti-magic tool is entirely passive",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Nagash's prior claim — all souls belong to the god of death; the claim predates each soul's existence and cannot be contested, only delayed at increasing cost",
+          "type": "concept"
+        },
+        {
+          "tag": "The Shyish Nadir — a point of absolute gravitational pull for soul-energy at the heart of the death realm; inevitability expressed as physics rather than will",
+          "type": "object"
+        },
+        {
+          "tag": "Chainrasp shroud — a garment made from the compressed forms of bound spirits; the object whose material is the thing it was made to contain",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Geas compulsion — a magical instruction that cannot be ignored without escalating consequence; the spell does not force action, it makes inaction progressively more costly",
+          "type": "concept"
+        },
+        {
+          "tag": "Forbiddance permanence — a magical ward that once placed cannot be moved, suspended, or temporarily disabled; protection that commits fully or not at all",
+          "type": "concept"
+        },
+        {
+          "tag": "Mark of justice — a conditional curse that activates only when a specific behavior occurs; a sleeping consequence waiting precisely for the trigger condition",
+          "type": "object"
+        },
+        {
+          "tag": "Imprisonment gem — a target reduced and sealed inside a stone; power neutralized through miniaturization and enclosure rather than through destruction",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "The Overlook Hotel's institutional memory — a place that remembers everything that happened inside it and uses that memory to make the same things happen again",
+          "type": "concept"
+        },
+        {
+          "tag": "Ring's fixed countdown — a deadline that cannot be interrupted, extended, or negotiated; the horror is the countdown itself, not what waits at the end of it",
+          "type": "concept"
+        },
+        {
+          "tag": "Hereditary's inherited obligation — something passed through a family line that recipients did not choose and cannot refuse; belonging to a lineage as an inescapable form of debt",
+          "type": "story"
+        },
+        {
+          "tag": "The Collector figure — a being from folk horror traditions who arrives at appointed times to take what was promised; not monstrous but contractual, not violent unless payment is refused",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "The sustained note that will not decay — a tone that refuses to diminish; its persistence forces everything around it to accommodate its continued presence",
+          "type": "concept"
+        },
+        {
+          "tag": "Silence as judgment — the deliberate removal of sound from a specific space as a form of institutional consequence; the condemned surrounded by quiet while everyone else continues normally",
+          "type": "concept"
+        },
+        {
+          "tag": "The death knell's announcement function — a specific pattern of sound that changes nothing but makes the change real by being heard; the sound that converts a fact into a public fact",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The panopticon logic — observation as control; behavior changes when the possibility of being watched is always present regardless of whether watching is actually occurring",
+          "type": "concept"
+        },
+        {
+          "tag": "The prison that shapes its occupant — a space designed not just to contain but to change the thing inside it over time through sustained environmental pressure",
+          "type": "concept"
+        },
+        {
+          "tag": "The sealed room opening — the ritual of deciding what rules apply when a space that has been closed long enough to become a different place is finally opened",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

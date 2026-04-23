@@ -1,0 +1,556 @@
+{
+  "guild": "FLOROKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Feral living knowledge. Growth that does not ask permission. The boundary between remedy and poison is the same plant at different doses. Things that keep working after you stop watching.",
+  "feeling": "Dense, humid, slightly unsettling. The item is probably still doing something even when no one is using it.",
+  "underlying_tension": "The tension between the healer and the poisoner — Florokaterna items are never neutral. They grow, they change, they accumulate. The knowledge that saves and the knowledge that destroys are the same knowledge applied differently.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Golgari — life and death as a single continuous cycle; the compost heap and the seed are the same thing at different points in the same process",
+          "type": "concept"
+        },
+        {
+          "tag": "Simic modification — living systems deliberately directed rather than merely observed; growth that has been given a specific destination it would not have found on its own",
+          "type": "concept"
+        },
+        {
+          "tag": "Sultai resource extraction — using everything available including the dead; nothing in the living world wasted if it can still serve a function in the next stage of the cycle",
+          "type": "concept"
+        },
+        {
+          "tag": "Abzan deep roots — survival through patient accumulation and depth rather than speed or force; the thing that outlasts everything else by simply not stopping",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Idunn's apple vessel — the container in which the apples of youth are kept; the object whose function is entirely preservation, preventing the thing inside from changing",
+          "type": "object"
+        },
+        {
+          "tag": "Mistletoe as the overlooked exception — the one plant excluded from an oath of protection because it seemed too small to matter; the thing left out of the system becomes the only thing that matters",
+          "type": "object"
+        },
+        {
+          "tag": "Yggdrasil's simultaneous roots — a single living thing present in three different worlds at once; the plant that exists in more than one state of reality without contradiction",
+          "type": "concept"
+        },
+        {
+          "tag": "The world-serpent's growth logic — a creature that grew to encircle the world simply by continuously eating; scale achieved through accumulation alone with no designed endpoint and no upper limit",
+          "type": "concept"
+        },
+        {
+          "tag": "The mead of poetry brewing ritual — a murdered god's blood fermented with honey over time into a substance that carries divine creative power; transformation of death into knowledge through patient chemical process",
+          "type": "ritual"
+        },
+        {
+          "tag": "The plant that was not named in the oath — Loki finding the one living thing Frigg forgot to ask; the gap in a comprehensive protection becoming the only possible weapon",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Circe's pharmakeia — the same plant used to heal or harm depending on preparation, dose, and intent; the pharmacist's fundamental moral ambiguity baked into the craft itself",
+          "type": "concept"
+        },
+        {
+          "tag": "Persephone's pomegranate reclassification — a food that permanently changes the category of the person who eats it; consumption as the mechanism of irreversible transformation",
+          "type": "concept"
+        },
+        {
+          "tag": "Hecate as plant knowledge keeper — the goddess associated with herbs, poisons, and the knowledge of their uses at crossroads; the figure who holds botanical knowledge at the boundary between worlds",
+          "type": "figure"
+        },
+        {
+          "tag": "Theophrastan root-cutting ritual — the precise procedure for harvesting medicinal plants including direction faced, tool used, time of day, and prayers spoken; the harvest as a magical act as much as a practical one",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "Cedar forest harvest ritual — the specific ceremony required before felling a sacred tree; the act of taking from the living world requiring acknowledgment of what is being taken from",
+          "type": "ritual"
+        },
+        {
+          "tag": "Asafoetida preparation ritual — a plant worked into medicine, cooking, and magical protection through a specific sequence; one substance serving multiple incompatible categories through correct preparation",
+          "type": "ritual"
+        },
+        {
+          "tag": "The plant of immortality from the sea floor — Gilgamesh's herb that restores youth but is stolen by a serpent before it can be used; the knowledge of a remedy and its possession are two separate things",
+          "type": "object"
+        },
+        {
+          "tag": "Nisaba's first grain offering — the earliest cultivated plant presented to a deity as acknowledgment; farming as a form of ongoing communication with the forces that make growth possible",
+          "type": "object"
+        },
+        {
+          "tag": "The cedar forest as sacred category — a specific ecosystem designated inviolable by divine decree; certain plants exist in a category that makes their harvesting an act of transgression regardless of need",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "Vervain bundle — a herb so sacred to druidic ritual that it must be harvested at a specific astronomical moment with a specific tool; the plant's power entirely dependent on the precision of its collection",
+          "type": "object"
+        },
+        {
+          "tag": "The rowan branch — a specific wood that disrupts hostile magic by its nature rather than through ritual preparation; the plant as a counter to forces that are not plants",
+          "type": "object"
+        },
+        {
+          "tag": "The hazel nuts falling into the sacred pool — wisdom accumulated in a tree's fruit that transfers to whatever eats it; knowledge as an edible substance that travels through the food chain",
+          "type": "story"
+        },
+        {
+          "tag": "Sleeping beauty's thorn hedge — a plant that grows without being tended to protect something sleeping; growth as a form of guardianship that does not require the gardener's presence to continue",
+          "type": "story"
+        },
+        {
+          "tag": "Sacred nemeton clearing ritual — the ceremony of maintaining a forest clearing as a temple by the act of using it rather than by building anything in it; the space made holy through repeated human presence",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Tlaloc's rain debt — plants only grow because rain is given by a god who requires payment; every harvest is evidence of a supernatural transaction that must be continuously renewed",
+          "type": "concept"
+        },
+        {
+          "tag": "Xochipilli's dual domain — the god of flowers, games, and hallucinogens as a single unified category; beauty and altered consciousness as the same divine territory rather than separate things",
+          "type": "concept"
+        },
+        {
+          "tag": "Copal as divine food — burning a specific plant resin produces the substance that gods eat; plant matter transformed through fire becomes the currency of communication with the divine",
+          "type": "concept"
+        },
+        {
+          "tag": "Teonanacatl preparation ritual — the specific conditions under which the sacred mushroom is consumed to open a channel to divine communication; the substance that translates rather than heals or harms",
+          "type": "ritual"
+        },
+        {
+          "tag": "The maize god's annual death and return — a crop plant whose growing cycle is also a divine narrative repeated every year; the biology of a specific plant as a sacred story performed by the world",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Sakaki branch offering — an evergreen branch presented to kami specifically because its permanent color makes it acceptable; the plant selected for its refusal to change as the quality that makes it sacred",
+          "type": "object"
+        },
+        {
+          "tag": "Rice paddy as living gift — cultivated grain understood as a divine substance that must be maintained through ongoing human effort; farming as the ritual that keeps a gift from the gods alive",
+          "type": "object"
+        },
+        {
+          "tag": "Forest kami aging ritual — the ceremony of acknowledging when a tree has grown old enough to have developed a resident spirit; reading the living world for what has become conscious through time",
+          "type": "ritual"
+        },
+        {
+          "tag": "Salt and sakaki purification — two substances used in combination because neither alone achieves the full protection; mineral and plant working together on incompatible principles simultaneously",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Osain's single eye and single arm — a forest spirit of asymmetrical, damaged form who nonetheless holds the most complete botanical knowledge in the world; imperfection as the mark of genuine expertise",
+          "type": "object"
+        },
+        {
+          "tag": "Oshun's honey vessel — a container of honey associated with a river goddess; a substance produced by living things from flowers that carries a divine quality into the material world",
+          "type": "object"
+        },
+        {
+          "tag": "Osain as forest gatekeeper — the spirit who must be addressed before any plant is taken from its environment; the figure whose permission makes the taking legitimate rather than extractive",
+          "type": "figure"
+        },
+        {
+          "tag": "Ewe preparation for orisha — the specific way a plant must be treated before it becomes an acceptable offering; the transformation of ordinary botanical material into something the divine will receive",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Slavic, Hindu, Polynesian, Egyptian",
+      "tags": [
+        {
+          "tag": "Hindu soma vessel — the container in which the pressed plant juice is held before consumption; the object whose contents exist on the boundary between medicine, food, and divine substance",
+          "type": "object"
+        },
+        {
+          "tag": "Egyptian blue lotus at dawn — a flower that opens precisely at sunrise and closes at dusk; a plant whose cycle is cosmologically synchronized, its behavior a reflection of something larger",
+          "type": "object"
+        },
+        {
+          "tag": "Slavic leshy confusion ritual — the forest spirit's practice of rearranging paths and landmarks to protect the trees; the deliberate disorientation of intruders as an act of botanical guardianship",
+          "type": "ritual"
+        },
+        {
+          "tag": "Polynesian breadfruit cultivator — the specialist whose knowledge of breadfruit cultivation across the Pacific made navigation itself possible; botanical expertise as the technology that made distance crossable",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The doctrine of signatures — a plant's external appearance indicates its medicinal application; the exterior of a living thing reveals its function to those who have learned to read it",
+          "type": "concept"
+        },
+        {
+          "tag": "The poison that resembles food — a substance that works by appearing to be something safe; the plant that kills through resemblance rather than through force",
+          "type": "concept"
+        },
+        {
+          "tag": "The mandrake's harvest scream — a plant that injures those who uproot it incorrectly; a resource that actively resists improper extraction and punishes harvesting done without the right knowledge",
+          "type": "story"
+        },
+        {
+          "tag": "The witch's salve — a compound of specific plants applied to the skin that produces visions or altered states; the preparation that requires knowledge, not just ingredients",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "The peach of immortality — a fruit that grows on a cycle so long that its availability is an event rather than a harvest; the plant whose value comes from its rarity in time rather than in space",
+          "type": "object"
+        },
+        {
+          "tag": "The bamboo princess container — a person discovered inside a plant; the living thing as a container for something that should not fit inside it and yet does",
+          "type": "object"
+        },
+        {
+          "tag": "Herbal lineage transmission ritual — the ceremony in which plant knowledge passes from a single teacher to a single student with nothing written; the knowledge that dies immediately if the chain breaks",
+          "type": "ritual"
+        },
+        {
+          "tag": "The pine and chrysanthemum as seasonal signals — specific plants as a legible social and temporal language; knowing which plant to display and when as a form of communication with those who can read it",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Amazonian, Mesoamerican",
+      "tags": [
+        {
+          "tag": "The baobab's inverted form — a tree that looks as if its roots are in the air; a plant whose appearance suggests it belongs to a different order of things than it actually occupies",
+          "type": "object"
+        },
+        {
+          "tag": "The midnight-blooming plant — a flower whose only moment of power or beauty occurs when almost no one is present to witness it; a property that is real but almost never observed",
+          "type": "object"
+        },
+        {
+          "tag": "The ayahuasca vine's teaching — a plant preparation that opens a specific kind of vision available through no other means; the brew as the only existing key to a particular perceptual space",
+          "type": "story"
+        },
+        {
+          "tag": "The ceiba as cosmological axis — a specific tree designated as the connection between underworld, earth, and sky; a plant functioning as structural cosmological fact rather than as symbol or metaphor",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "St. John's Wort at midsummer — a plant whose protective power is tied to a specific narrow annual window; effectiveness that expires if the plant is not gathered and deployed within the correct days",
+          "type": "object"
+        },
+        {
+          "tag": "Garlic knot at the threshold — a bulb whose protection works through what it releases into the surrounding air rather than through contact or inscription; the plant that works by smell",
+          "type": "object"
+        },
+        {
+          "tag": "Dawn harvest timing — the belief that the same plant gathered at different times of day has different potency; the hour of collection as a genuine ingredient in the result",
+          "type": "ritual"
+        },
+        {
+          "tag": "The herb garden laid out by doctrine of signatures — a garden arranged according to the visible properties of plants rather than by growth requirements; spatial organization as a knowledge system",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Jeff VanderMeer's Area X biology — a living system that has developed its own agenda independent of human purpose; nature not as backdrop or resource but as the primary agent with its own direction",
+          "type": "concept"
+        },
+        {
+          "tag": "Naomi Novik's Uprooted — a forest that is actively malevolent and a witch who holds it back through specific intimate knowledge of its nature rather than through power",
+          "type": "concept"
+        },
+        {
+          "tag": "Tolkien's Ents — trees that became animate through long association with language and thought; plants that absorbed something from prolonged contact with consciousness and kept it",
+          "type": "concept"
+        },
+        {
+          "tag": "Ursula Le Guin's patient botanical magic — power that works through accumulation, deep knowledge, and time rather than through force or spectacle; the slow magic that outlasts the fast magic",
+          "type": "concept"
+        },
+        {
+          "tag": "Brian Catling's Vorrh — a forest so old it predates human consciousness and operates by rules that humans cannot fully comprehend; the living system whose logic is older than language",
+          "type": "concept"
+        },
+        {
+          "tag": "Terry Pratchett's moving trees — plants that relocate given sufficient motivation; the assumption of rootedness as the thing that makes mobility surprising rather than the mobility itself",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Annihilation (2018) — a force that rewrites living things using the logic of their own cellular material; mutation as a process that uses the target's own biology as the instrument of change",
+          "type": "concept"
+        },
+        {
+          "tag": "The Village (2004) — a community organized around a maintained boundary with the wild; the edge between settlement and wilderness as the central social and magical fact",
+          "type": "concept"
+        },
+        {
+          "tag": "Pan's Labyrinth (2006) — a mandrake root placed in milk and blood that takes on the health condition of the person it is meant to help; the plant as a sympathetic body double absorbing what the person cannot",
+          "type": "story"
+        },
+        {
+          "tag": "Princess Mononoke (1997) — a toxic and deadly forest that is actually performing necessary purification work; the thing that appears dangerous is doing something essential that stopping would destroy",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Darkwood's unstable forest — a living environment that changes between sessions and cannot be fully mapped because its internal geography is not fixed; the landscape as an unreliable container",
+          "type": "concept"
+        },
+        {
+          "tag": "Bloodborne's insight-dependent growth — biological features that appear or intensify based on the observer's mental state; living things that are partly perception, that change when the watcher changes",
+          "type": "concept"
+        },
+        {
+          "tag": "Sunless Sea's fungal civilization — an entire economy and culture built around a single kingdom of living organisms; the fungus as the foundation everything else depends on",
+          "type": "concept"
+        },
+        {
+          "tag": "Niche's evolutionary pressure — a trait that is advantageous now becomes a liability when the environment shifts; adaptation as a process that cannot anticipate its own future consequences",
+          "type": "story"
+        },
+        {
+          "tag": "Mushishi's mushi ink — a substance produced by boundary organisms that records what it touches; a material that is also a living process, collecting information passively",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Nausicaa's fungal purification — a deadly toxic forest that is actually cleansing the world of pollution; the thing that appears universally dangerous is performing necessary work that would kill us to stop",
+          "type": "story"
+        },
+        {
+          "tag": "The forest god's death and regeneration — a divine ecosystem entity whose removal causes immediate death followed by wild uncontrolled regrowth; the god and the ecology as one inseparable thing",
+          "type": "story"
+        },
+        {
+          "tag": "My Neighbor Totoro's camphor tree — a tree so large and old it has become a place rather than a plant; the individual organism that has grown to environmental scale through time alone",
+          "type": "concept"
+        },
+        {
+          "tag": "Kiki's grandmother herbs — botanical knowledge used daily without ceremony or drama; the quiet power of knowing exactly what grows where and what it does and using that knowledge practically",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Mushishi's mushi ecology — organisms at the boundary between living and non-living, energy and matter; creatures that are also processes, that exist as much as verbs as they do as nouns",
+          "type": "concept"
+        },
+        {
+          "tag": "Dororo's blighted land — a region where nothing grows because something was extracted from it; ecological failure as legible evidence of a supernatural transaction gone wrong",
+          "type": "concept"
+        },
+        {
+          "tag": "Mononoke (2007)'s medicine seller — a figure who uses plant and material knowledge to diagnose and confront supernatural problems; healing knowledge applied to things that are not diseases",
+          "type": "concept"
+        },
+        {
+          "tag": "Vinland Saga's survival botany — the difference between knowing and not knowing which plants are edible, medicinal, or poisonous as the literal difference between surviving and not surviving the winter",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Catachan's hostile biosphere — an ecosystem that evolved every element specifically to kill anything not native to it; a living environment that functions as a weapon through its ordinary operation",
+          "type": "concept"
+        },
+        {
+          "tag": "Nurgle's garden paradox — rot and growth as the same thing viewed from different angles; disease as a form of abundance, corruption as a kind of fertility, decay as the condition of new life",
+          "type": "concept"
+        },
+        {
+          "tag": "Spore mine — a living organism whose entire biological purpose is to be a single-use weapon; evolution applied to produce a creature that exists specifically to die usefully",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Ghyran life magic overflow — a realm where living things grow so fast and so large that architecture and biology become indistinguishable; fertility as a force that overwhelms rather than nurtures",
+          "type": "concept"
+        },
+        {
+          "tag": "Sylvaneth spirit-song bark — a piece of living wood that hums with the resonance of the tree-creature it was taken from; a fragment that retains the biological connection to its source",
+          "type": "object"
+        },
+        {
+          "tag": "Everspring Swathe seed-pod — a seed from the realm of perpetual growth that, once planted, cannot stop growing; a seed whose nature is the absence of a limit",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Goodberry nutrition replacement — a small magical fruit that substitutes for a full day's food; an item whose value is entirely in what it replaces rather than what it adds, invisible when working correctly",
+          "type": "concept"
+        },
+        {
+          "tag": "Poison craft's dual expertise — the alchemist whose healing knowledge and poisoning knowledge are identical; the same preparation applied differently, the same skill used for opposite purposes",
+          "type": "concept"
+        },
+        {
+          "tag": "Healer's kit component bag — a collection of specific plant materials whose effectiveness depends on which ones are present rather than how many; quality of contents rather than quantity",
+          "type": "object"
+        },
+        {
+          "tag": "Goodberry cluster — a small group of magically produced fruits that look identical but have subtly different effects depending on which one is eaten; the variation hidden inside apparent uniformity",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "Colour Out of Space's blight — a force that warps biology from the inside; plants and animals changed by contact with something that has no analogue in any natural system",
+          "type": "concept"
+        },
+        {
+          "tag": "Midsommar's floral aesthetics — flowers used to make the context of something terrible beautiful; the plant as the decorative layer placed over an act of violence to make it acceptable to participants",
+          "type": "concept"
+        },
+        {
+          "tag": "The wicker man's material — plant material woven into the structure of a sacrificial container; the living material used as the form that makes the act sacred rather than just violent",
+          "type": "story"
+        },
+        {
+          "tag": "The Green Man's consuming growth — a figure from folk horror who is not evil but simply vegetable; not aggressive but absolutely indifferent to human concerns, growing over everything given time",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Plant response to frequency — the documented tendency of living plants to orient toward or away from specific sound frequencies; the living thing that listens without ears and responds without choosing",
+          "type": "concept"
+        },
+        {
+          "tag": "Forest soundscape as diagnostic — the collective sound of a healthy forest as a tool for reading the state of each of its parts; the whole audible in a way that the parts examined individually are not",
+          "type": "concept"
+        },
+        {
+          "tag": "Fermentation's slow voice — the barely audible process of living organisms converting one substance into another over time; a sound that only exists if you are patient enough to stay close and quiet long enough",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The garden as controlled wilderness — a space where nature is permitted within a defined boundary; the enclosure that makes wildness legible and usable by giving it an edge",
+          "type": "concept"
+        },
+        {
+          "tag": "Living root bridge — a structure grown rather than built over generations; architecture that is also a living thing and that improves structurally as it ages rather than deteriorating",
+          "type": "concept"
+        },
+        {
+          "tag": "Sacred grove clearing maintenance ritual — the practice of keeping a forest opening clear through repeated use rather than through cutting; the space that exists because humans keep returning to it",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,556 @@
+{
+  "guild": "KARTOKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "The unknown made navigable. Memory as map. Things that have been somewhere and carry it with them. The boundary between the known and the unknown is the only boundary that matters.",
+  "feeling": "Weathered and focused. This item has been somewhere you have not, and it knows something about what is out there.",
+  "underlying_tension": "The tension between the knowledge that makes a route possible and the refusal to share that knowledge for free. Kartokaterna items orient, guide, or mark — they change what is reachable, not what is there.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Temur — the logic of pushing into hostile unknown territory and surviving through adaptability rather than through preparation; the route made by moving through it",
+          "type": "concept"
+        },
+        {
+          "tag": "Sultai knowledge hoarding — collecting information from dangerous places and controlling who can access it; the archive as the form that power takes when it cannot be held by force",
+          "type": "concept"
+        },
+        {
+          "tag": "Zendikar's living world — a landscape that is itself an active force with its own movement and agenda; terrain that cannot be mapped once and trusted because it does not hold still",
+          "type": "concept"
+        },
+        {
+          "tag": "Simic environmental adaptation — modifying something to survive in a new environment; the adjustment required when you move into territory you were not built for and cannot leave",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Bifrost bridge mechanism — a structure that connects two incompatible spaces and can be permanently closed; the infrastructure of passage as a political tool held by whoever controls the crossing",
+          "type": "object"
+        },
+        {
+          "tag": "The longship's prow marker — a carved figure at the front of a vessel that announces its origin and purpose to those who can read such signals; the object that makes the ship legible from a distance",
+          "type": "object"
+        },
+        {
+          "tag": "Yggdrasil as spatial framework — the world tree as the structure within which all places exist and in relation to which all locations can be understood; navigation by comprehending the whole",
+          "type": "concept"
+        },
+        {
+          "tag": "The nine worlds as territory types — each realm defined not by location but by what lives there and what entering it costs; space understood as a category of experience rather than a coordinate",
+          "type": "concept"
+        },
+        {
+          "tag": "Odin's wandering-in-disguise method — the practice of traveling as someone else to gather intelligence about places and people you could not access as yourself; the journey as the methodology of knowledge",
+          "type": "ritual"
+        },
+        {
+          "tag": "The road to Hel described as directions — go north, go down, cross the river Gjoll, pass the hound; mythological geography expressed as navigable instruction rather than metaphor",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "The labyrinth as anti-navigation — a space designed specifically to defeat orientation; terrain used as a weapon against the person inside it by making the most basic skill impossible",
+          "type": "concept"
+        },
+        {
+          "tag": "The Pillars of Hercules as terminal boundary — a landmark at the edge of the known world beyond which the map contains nothing; the monument that marks where knowledge stops and the unknown begins",
+          "type": "concept"
+        },
+        {
+          "tag": "Ariadne as route-keeper — a figure who holds the knowledge of how to navigate a space that cannot be understood without her; the person whose knowledge is more valuable than any tool",
+          "type": "figure"
+        },
+        {
+          "tag": "The Odyssey's staging ritual — the preparation made at each new island before moving on; reading the new territory for danger, resource, and route before committing to the next leg",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "The Babylonian world map disc — a clay disc showing the entire known world as a flat surface surrounded by ocean; the map as an assertion of comprehensiveness rather than as a claim of accuracy",
+          "type": "object"
+        },
+        {
+          "tag": "Gilgamesh's mountain of darkness transit tool — the specific object Gilgamesh uses to cross twelve leagues of absolute darkness in the allotted time; a navigational aid for a route with no visible landmarks",
+          "type": "object"
+        },
+        {
+          "tag": "The trade route consecration ritual — the ceremony performed before beginning a long journey that places the route under divine protection for the duration of travel",
+          "type": "ritual"
+        },
+        {
+          "tag": "The Waters of Death crossing procedure — the specific technique required to cross water that kills anything that touches it directly; the method that makes an impassable terrain feature passable",
+          "type": "ritual"
+        },
+        {
+          "tag": "The mountain of sunrise as cosmological landmark — a specific terrain feature at the edge of the world through which the sun passes; geography that exists at the boundary between the physical and the cosmological",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The hollow hill entrance stone — a specific type of geographic feature that is also a threshold into another world; a landmark that looks like terrain but functions as a door",
+          "type": "object"
+        },
+        {
+          "tag": "Immram voyage island record — a knotted or carved account of the islands encountered in an otherworldly sea voyage, each with impossible properties; the map of a route through categorical impossibilities",
+          "type": "object"
+        },
+        {
+          "tag": "Tir na nOg's moving location — an otherworldly destination that cannot be found twice by the same route; a real place that does not hold still and therefore cannot be mapped in any useful sense",
+          "type": "story"
+        },
+        {
+          "tag": "The ford crossing's category change — a specific type of river crossing point where more than just the water is crossed; the place where the traveler arrives as something slightly different from what they were",
+          "type": "story"
+        },
+        {
+          "tag": "The direction-setting ritual before an immram — the ceremony of determining which direction to sail before a voyage into completely unknown waters; committing to a heading without a destination",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "The four-directional cosmology — each cardinal direction associated with a specific color, god, and quality; orientation in physical space as simultaneously orientation in a symbolic and spiritual system",
+          "type": "concept"
+        },
+        {
+          "tag": "Mictlan's nine-level geography — the dead must navigate nine specific territories each with specific challenges; the afterlife as a fully navigable geography requiring specific knowledge and specific tools",
+          "type": "concept"
+        },
+        {
+          "tag": "The migration narrative's destination logic — a people following a divine sign across unknown territory to an endpoint they will only recognize when they arrive; the journey validated retroactively by what is found",
+          "type": "concept"
+        },
+        {
+          "tag": "The pochteca route preparation ritual — the specific ceremony performed before a long-distance merchant journey including the divination of which days are safe for travel and which are not",
+          "type": "ritual"
+        },
+        {
+          "tag": "The eagle and cactus recognition — the divine sign recognized by a traveling people as the signal to stop moving and build; an animal's behavior in a specific location as the end of a journey's navigation",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Torii gate as territorial marker — a structure that marks the boundary between ordinary and sacred space; the threshold made visible and legible from a distance so it cannot be crossed accidentally",
+          "type": "object"
+        },
+        {
+          "tag": "Sacred mountain summit cairn — a stone marker placed at the peak of a sacred mountain by pilgrims; the physical record of arrival at a significant destination accumulated over generations",
+          "type": "object"
+        },
+        {
+          "tag": "Pilgrimage route preparation ritual — the ceremony of preparing the body and spirit for a journey whose value is in the walking rather than in the destination; the road as the practice",
+          "type": "ritual"
+        },
+        {
+          "tag": "Sacred site orientation ritual — the procedure of determining the correct relationship between a new structure and the sacred geography surrounding it; building in correct alignment as a religious act",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Eshu's crossroads staff — a carved object associated with the deity who governs all points of intersection; carried by those who travel frequently as acknowledgment of whose territory the road belongs to",
+          "type": "object"
+        },
+        {
+          "tag": "Ile-Ife origin marker — a physical object associated with the place understood as the point where the world began; the artifact that anchors the most significant location in the entire cosmological map",
+          "type": "object"
+        },
+        {
+          "tag": "Eshu as mandatory crossing point — the figure through whom every journey must pass; the deity who governs all roads not because he built them but because travel itself is his domain",
+          "type": "figure"
+        },
+        {
+          "tag": "Road opening ceremony — the ritual performed before beginning a significant journey to request Eshu's permission and goodwill; the acknowledgment that the road belongs to another before you walk it",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Polynesian, Aboriginal Australian, Slavic, Hindu",
+      "tags": [
+        {
+          "tag": "Polynesian star compass — a memorized navigational system built from star positions, wave patterns, and bird behavior; a map that exists entirely in the navigator's body rather than on any surface",
+          "type": "object"
+        },
+        {
+          "tag": "Aboriginal songline encoded object — a carved or marked object that corresponds to a section of a songline route; the physical anchor for a portion of geography held in song",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu tirtha crossing procedure — the specific ritual performed at a sacred ford or riverbank where the mundane and divine worlds are closest; the ceremony that makes the crossing significant rather than merely physical",
+          "type": "ritual"
+        },
+        {
+          "tag": "Slavic Baba Yaga as gate figure — a figure who stands at the boundary between the known world and the forest beyond it; the one who must be correctly approached before the route forward becomes available",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The forest as active disorientation — a space that makes travelers lose direction not through complexity but through intent; the wood as terrain that resists navigation rather than merely challenges it",
+          "type": "concept"
+        },
+        {
+          "tag": "The road that responds to the traveler — a path that leads to different destinations depending on who is walking it; routes that are not fixed in space but responsive to the nature of the person using them",
+          "type": "concept"
+        },
+        {
+          "tag": "The breadcrumb trail destroyed — a self-laid navigational aid that is then eliminated by the environment; the attempt to make a returnable path through a space that refuses to be mapped",
+          "type": "story"
+        },
+        {
+          "tag": "The glass mountain surface — terrain that is impassable not because of distance but because of material property; the challenge that is not about endurance or speed but about having the right approach",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "The dragon palace's undersea map — a chart of routes through a location accessible only by a specific mode of travel; the geography of a place that most people can reach but very few can navigate once inside",
+          "type": "object"
+        },
+        {
+          "tag": "The dream-sourced map — geographic information received during sleep and recorded on waking; a chart whose accuracy cannot be verified by ordinary means and whose authority rests entirely on trust",
+          "type": "object"
+        },
+        {
+          "tag": "The bamboo grove liminal preparation — the specific behavior required when entering a specific terrain type associated with transitions; the grove you walk through differently because of what has been known to happen there",
+          "type": "ritual"
+        },
+        {
+          "tag": "The bridge between states — a crossing that connects not just two places but two conditions; infrastructure that changes what you are as well as where you are",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: Saharan, West African, Amazonian, Inuit",
+      "tags": [
+        {
+          "tag": "Saharan waymarker cairn — a stack of stones placed at intervals in featureless terrain to indicate a route; navigation infrastructure that exists only to be found by those who already know to look",
+          "type": "object"
+        },
+        {
+          "tag": "Inuit snow reading tool — a stick or bone used to assess snow conditions before committing to a route; a simple object whose value is entirely in how it is read by the person holding it",
+          "type": "object"
+        },
+        {
+          "tag": "Anansi's sky road — a path to a location that most creatures cannot access because they do not know the route exists; the route as the privilege that makes the destination possible",
+          "type": "story"
+        },
+        {
+          "tag": "The river as direction-giver — a watercourse that carries information about upstream and downstream conditions as part of its nature; reading the current as reading a map that updates continuously",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The crossroads burial mound — a grave placed specifically at an intersection to confuse the returning dead; the junction as a space that defeats orientation even for those who knew the route in life",
+          "type": "object"
+        },
+        {
+          "tag": "The ley line marker stone — a standing stone placed on a line connecting significant sites; the physical evidence of a belief that important places are arranged rather than randomly distributed",
+          "type": "object"
+        },
+        {
+          "tag": "Never-turn-back commitment ritual — the practice of making a specific gesture or declaration at the moment of departure that makes returning without completing the journey a form of failure; the departure as a binding",
+          "type": "ritual"
+        },
+        {
+          "tag": "Right-hand wall rule — the heuristic of following one surface consistently through a maze until an exit is found; problem-solving through unwavering rule application rather than through spatial understanding",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Tolkien's map as world proof — the map as evidence of a world's internal coherence; a place becomes more real when it can be navigated at multiple scales by someone who was not there",
+          "type": "concept"
+        },
+        {
+          "tag": "Ursula Le Guin's Earthsea inversion — a world where water is the default terrain and land is the interruption; making strange the spatial assumptions that are usually invisible by reversing them completely",
+          "type": "concept"
+        },
+        {
+          "tag": "Jeff VanderMeer's Area X transformation — familiar territory that has become alien; a landscape you thought you knew whose rules have been replaced by rules you cannot read",
+          "type": "concept"
+        },
+        {
+          "tag": "China Miéville's New Crobuzon scale — a city so dense and complex it cannot be held in a single mental model; scale that defeats comprehension rather than distance that defeats reach",
+          "type": "concept"
+        },
+        {
+          "tag": "Iain M. Banks' civilizational navigation — moving through space at a scale where the significant distances are political and cultural rather than physical; geography replaced by relationship as the operative map",
+          "type": "concept"
+        },
+        {
+          "tag": "Patrick Rothfuss's Waystone Inn position — a location at the edge of what the protagonist knows; the end of the known world as a specific kind of place with a specific kind of person in it waiting",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Stalker (1979) — a guide who leads others through a zone whose rules he understands and they do not; expertise expressed as survivable navigation of terrain that kills those who try to read it independently",
+          "type": "concept"
+        },
+        {
+          "tag": "Aguirre, Wrath of God (1972) — a journey that loses its original purpose and continues on momentum alone; movement that is no longer navigation but compulsion, going because stopping is no longer possible",
+          "type": "concept"
+        },
+        {
+          "tag": "The Revenant (2015) — navigation as the primary survival skill; reading the landscape for food, shelter, and route in conditions where a single misreading is fatal",
+          "type": "story"
+        },
+        {
+          "tag": "Into the Wild (2007) — the discovery that a place you imagined is not the place you arrive at; the gap between the map held in the mind and the territory under the feet",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Outer Wilds' solar system as puzzle — a space whose geography is also its mystery; understanding where everything is and why it moves that way is the same thing as solving the game",
+          "type": "concept"
+        },
+        {
+          "tag": "Dark Souls' interconnected revelation — a world that reveals its own spatial structure through the accumulation of experience; the map understood only by having been in it long enough",
+          "type": "concept"
+        },
+        {
+          "tag": "Morrowind's written directions — navigation through reading rather than through marked waypoints; the instruction as the route, the words as the landmarks, understanding as the tool",
+          "type": "concept"
+        },
+        {
+          "tag": "Subnautica's first descent — the moment of committing to going deeper than you can easily return from; the point where the map you have is no longer sufficient and must be built by going forward",
+          "type": "story"
+        },
+        {
+          "tag": "Pathologic's district boundary marker — a physical object placed at the edge of a quarantine zone that changes the rules governing what happens inside it; the marker that makes the boundary real",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Castle in the Sky's aerial perspective — the view from above that reveals patterns invisible from the ground; the altitude that makes the structure of the landscape legible in a way surface travel never permits",
+          "type": "story"
+        },
+        {
+          "tag": "Howl's Moving Castle's door selector — a single door that opens onto multiple different locations depending on which position is chosen; the threshold as a selector rather than a fixed connector",
+          "type": "story"
+        },
+        {
+          "tag": "Nausicaa's toxic jungle mapping — charting a space that is actively trying to kill you as the only means of moving through it without dying; knowledge as the protective layer between the traveler and the terrain",
+          "type": "concept"
+        },
+        {
+          "tag": "Spirited Away's adjacent world logic — a space that exists directly beside the ordinary world but whose internal geography operates by completely different directional rules",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Made in Abyss' vertical geography — a world where depth is simultaneously the measure of distance and the measure of danger; going further means going deeper into something that cannot be undone",
+          "type": "concept"
+        },
+        {
+          "tag": "One Piece's Grand Line resistance — a sea route that defeats all conventional navigation instruments and requires entirely different tools and knowledge to traverse",
+          "type": "concept"
+        },
+        {
+          "tag": "Attack on Titan's wall geography — a map defined entirely by what is kept outside rather than by what is inside; the cartography of fear rather than of territory",
+          "type": "concept"
+        },
+        {
+          "tag": "Vinland Saga's historical geography — a story set in real places in historically accurate relationship; the world as a place where things that happened left marks that the traveler can read",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Warp navigation's instability — travel through a dimension where distance and time do not behave consistently; the route that must be recalculated each time because no two passages are alike",
+          "type": "concept"
+        },
+        {
+          "tag": "Rogue Trader cartographic license — the legal authorization to map and claim territory beyond the Imperium's borders; the document that makes exploration legitimate rather than merely reckless",
+          "type": "concept"
+        },
+        {
+          "tag": "Astronomican beacon fragment — a shard of material associated with the navigational beacon that guides ships through the Warp; the piece of the lighthouse carried by those who cannot see the whole",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Realmgate transit logic — specific fixed locations that connect two realms; geography defined by the position of these transit nodes rather than by any continuous surface",
+          "type": "concept"
+        },
+        {
+          "tag": "Kharadron aether-route chart — a map of wind currents at altitude specific to a region; navigational knowledge that only applies to those traveling by a specific method at a specific height",
+          "type": "object"
+        },
+        {
+          "tag": "Endless spell movement trail — a physical record left by a self-propelled magical effect as it moves across terrain; the map of something that navigates independently and leaves its path behind it",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Hexcrawl accumulation — a world understood through the slow addition of explored areas; the map that grows only as fast as the players move through the world it represents",
+          "type": "concept"
+        },
+        {
+          "tag": "Teleportation circle error margin — magical long-distance transit with an accuracy that decreases with distance; the further you go the less certain your arrival point becomes",
+          "type": "concept"
+        },
+        {
+          "tag": "Rope trick extradimensional entrance — a specific physical object that must be in a specific position to open access to a space that has no location in ordinary geography",
+          "type": "object"
+        },
+        {
+          "tag": "Sending stone directional pair — two objects whose function is to maintain awareness of each other's position across any distance; a navigational relationship compressed into two handheld objects",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "House of Leaves' expanding interior — a space whose interior does not correspond to its exterior and that continues expanding inward; the horror of a geography with no outside and no stable floor plan",
+          "type": "concept"
+        },
+        {
+          "tag": "Blair Witch's circular path — movement in a direction that returns to the starting point; displacement that produces no change of location regardless of distance covered",
+          "type": "concept"
+        },
+        {
+          "tag": "Silent Hill's responsive geography — a town whose physical layout changes in response to the psychological state of the person inside it; terrain as a projection of interiority rather than a fixed external fact",
+          "type": "story"
+        },
+        {
+          "tag": "The guide who knows too much — a figure who can lead you through a dangerous place but whose knowledge of it raises the question of how they survived long enough to learn it",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Echolocation mapping — building a spatial model of an environment from sound reflections; a map constructed entirely from what comes back rather than from what can be seen",
+          "type": "concept"
+        },
+        {
+          "tag": "Acoustic geography — different terrains produce different soundscapes that carry reliable information about what kind of space you are in; learning to read what you hear as navigation",
+          "type": "concept"
+        },
+        {
+          "tag": "The drum signal's range — sound used to communicate across terrain that cannot be crossed by sight; the broadcast as the solution to the line-of-sight problem in route coordination",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The waymarker's minimal function — a physical object placed at intervals whose only purpose is to be found by those who know to look; navigation infrastructure with no purpose other than its navigational one",
+          "type": "concept"
+        },
+        {
+          "tag": "The sacred mountain as absolute reference — a peak so significant that all direction in a region is understood relative to it; the landmark that organizes all surrounding space around itself",
+          "type": "concept"
+        },
+        {
+          "tag": "Bridge toll establishment ritual — the ceremony of claiming a crossing point and formalizing the cost of using it; the procedure that transforms a physical structure into a territorial assertion",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

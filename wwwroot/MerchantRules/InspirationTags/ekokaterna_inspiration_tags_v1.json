@@ -1,0 +1,556 @@
+{
+  "guild": "EKOKATERNA",
+  "version": "1.0",
+  "total_tags": 100,
+  "essence": "Calculated asymmetry. Every exchange has a hidden architecture. The person across from you already knows how this ends. Risk as a tool. Debt as a relationship. Value as something that can be moved, stored, and weaponized.",
+  "feeling": "Dry, strategic, full of loopholes. Every item has a flip side already calculated, and the merchant already knows how this ends.",
+  "underlying_tension": "The tension between appearing neutral and never being neutral. Ekokaterna items help the bearer understand what things are actually worth — and that knowledge is always leverage over someone who does not have it.",
+  "categories": {
+    "mtg": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Dimir — knowledge as the only real commodity; the one who knows what others do not has already won before the game begins and before anyone knows a game is being played",
+          "type": "concept"
+        },
+        {
+          "tag": "Orzhov — wealth maintained across generations through structured obligation; the institution that profits from both sides of every transaction and outlives every individual inside it",
+          "type": "concept"
+        },
+        {
+          "tag": "Esper control — the patience to wait until the opponent has fully committed before acting; the decisive advantage of being the last person in the room to move",
+          "type": "concept"
+        },
+        {
+          "tag": "Izzet high-variance investment — putting resources into experiments with wildly unpredictable returns; the deliberately high-risk bet as a calculated strategy rather than recklessness",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_norse": {
+      "count": 6,
+      "type_constraints": "object (2), concept (2), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Andvari's cursed gold ring — a specific piece of wealth that carries a hidden liability to every subsequent owner; the resource that transfers its cost along with its value",
+          "type": "object"
+        },
+        {
+          "tag": "The mead of poetry's partial distribution — Odin shares most of the mead but keeps some; the deliberate partial release of a valuable resource as a mechanism of ongoing leverage",
+          "type": "object"
+        },
+        {
+          "tag": "The gift economy of the Aesir — gifts given with the understood expectation of gifts returned; generosity structured as a form of investment in future obligation rather than as altruism",
+          "type": "concept"
+        },
+        {
+          "tag": "The price of prophecy — Odin pays something precious for every piece of foreknowledge; information about the future costs categorically more than information about the past",
+          "type": "concept"
+        },
+        {
+          "tag": "The wager with the dwarves ritual — the specific terms under which Loki stakes his head and then argues the terms on a technicality; the contract honored in letter while violated completely in spirit",
+          "type": "ritual"
+        },
+        {
+          "tag": "Fafnir's transformation — wealth accumulated far beyond any possible use that changes the hoarder into something that can only protect it; the point where having becomes the thing that having costs you",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_greek": {
+      "count": 4,
+      "type_constraints": "concept (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Midas's precision problem — getting exactly what was asked for in a form that makes it worthless; the fulfilled contract that destroys through literal compliance rather than through betrayal",
+          "type": "concept"
+        },
+        {
+          "tag": "The golden fleece as credential — an object whose value is almost entirely in what the act of acquiring it proves rather than in what the object itself does; the trophy as the real product",
+          "type": "concept"
+        },
+        {
+          "tag": "Hermes as the unified domain — the same deity governing commerce, theft, and messages simultaneously; buying, stealing, and information as a single coherent domain rather than three separate ones",
+          "type": "figure"
+        },
+        {
+          "tag": "Sisyphus's procedural exploit — a figure who escapes consequences twice by finding gaps in the procedure rather than by fighting the system; the loophole as the real weapon",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_mesopotamian": {
+      "count": 5,
+      "type_constraints": "ritual (2), object (2), concept (1)",
+      "tags": [
+        {
+          "tag": "Tamkaru licensing ritual — the specific ceremony by which a merchant received royal authorization to operate; the permission that made commerce legitimate rather than merely transactional",
+          "type": "ritual"
+        },
+        {
+          "tag": "Tuppi clay tablet — a fired clay record of a specific transaction kept by both parties; the written record that functions as the deal's enforcer independent of either party's memory or goodwill",
+          "type": "object"
+        },
+        {
+          "tag": "Silver ring currency weight — a standardized loop of metal whose value is determined by agreement rather than by intrinsic quality; value as a social fact maintained by consensus",
+          "type": "object"
+        },
+        {
+          "tag": "Temple granary loan ritual — the ceremony of depositing grain in a sacred space and receiving a measured quantity in return at interest; the religious institution as the original bank",
+          "type": "ritual"
+        },
+        {
+          "tag": "Hammurabi's price range — an authority that sets the acceptable limits of a transaction rather than its exact terms; the external regulation of what a deal is permitted to be",
+          "type": "concept"
+        }
+      ]
+    },
+    "mythology_celtic": {
+      "count": 5,
+      "type_constraints": "object (2), story (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "Brehon honor price tablet — a carved record of a person's legal value used to calculate damages; worth expressed as a precise and publicly known quantity rather than as a subjective judgment",
+          "type": "object"
+        },
+        {
+          "tag": "The pledged champion's bond token — an object exchanged when a warrior contracts their service for a specific term; personal capability formalized as a tradeable and transferable commodity",
+          "type": "object"
+        },
+        {
+          "tag": "Rumpelstiltskin's contract logic — a deal made in desperation whose true terms only become clear after the agreement is binding; the fine print as the actual content of the arrangement",
+          "type": "story"
+        },
+        {
+          "tag": "The satirist's destruction — a poet who could economically ruin a person through verse alone; information about reputation weaponized as a form of financial damage with no physical component",
+          "type": "story"
+        },
+        {
+          "tag": "Sacred host obligation ritual — the ceremony of establishing hospitality as a binding mutual contract; generosity formalized so that failure to provide it carries measurable legal consequence",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_aztec": {
+      "count": 5,
+      "type_constraints": "concept (3), ritual (1), story (1)",
+      "tags": [
+        {
+          "tag": "Divine debt to the fifth sun — the universe runs on borrowed energy that must be continuously serviced; existence itself as an ongoing financial obligation to forces that will collect",
+          "type": "concept"
+        },
+        {
+          "tag": "Pochteca's dual role — long-distance merchants who also functioned as intelligence agents for the ruler; trade as statecraft, commerce as the cover for information gathering",
+          "type": "concept"
+        },
+        {
+          "tag": "The tianguis as information system — a massive periodic market whose designated sections and price norms function as a managed and readable information environment",
+          "type": "concept"
+        },
+        {
+          "tag": "Cacao currency preparation ritual — the specific process of preparing cacao beans for use as money rather than as food; the transformation of a consumable into a medium of exchange through procedure",
+          "type": "ritual"
+        },
+        {
+          "tag": "Tribute list inscription — the carving of an empire's extraction requirements into permanent record; the ledger as the architecture of power, the accounting as the mechanism of domination",
+          "type": "story"
+        }
+      ]
+    },
+    "mythology_shinto": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "Omamori specificity token — a talisman that covers exactly one category of misfortune and no other; protection purchased for a precisely defined scope with nothing outside that scope included",
+          "type": "object"
+        },
+        {
+          "tag": "Mikuji lottery slip — a written oracle whose answer is paid for regardless of whether the answer is favorable; the purchase of information whose quality cannot be guaranteed in advance",
+          "type": "object"
+        },
+        {
+          "tag": "Shrine offering negotiation — the ritual calibration of gift size to desired outcome; the structured conversation between worshipper and kami conducted entirely through material exchange",
+          "type": "ritual"
+        },
+        {
+          "tag": "En-musubi red thread ceremony — the ritual acknowledgment of a fated connection between two parties; the supernatural matchmaker's intervention formalized through a specific material object",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_yoruba": {
+      "count": 4,
+      "type_constraints": "object (2), figure (1), ritual (1)",
+      "tags": [
+        {
+          "tag": "Cowrie shell currency standard — a natural object standardized into money through collective agreement; value assigned to an abundant material entirely by social consensus rather than physical scarcity",
+          "type": "object"
+        },
+        {
+          "tag": "Ifa divination record — a physical record of a specific reading kept as a reference for future consultation; the documented oracle as an ongoing resource rather than a single-use event",
+          "type": "object"
+        },
+        {
+          "tag": "Eshu as unavoidable intermediary — the figure through whom every transaction must pass; the gatekeeper who cannot be bypassed, who profits from all exchange simply by being structurally necessary",
+          "type": "figure"
+        },
+        {
+          "tag": "Ifa consultation fee calibration — the specific ritual of determining what the divination will cost before it begins; the price of information about fate set before the information is received",
+          "type": "ritual"
+        }
+      ]
+    },
+    "mythology_other": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), figure (1)",
+      "note": "Sources: Egyptian, Polynesian, Hindu, Slavic",
+      "tags": [
+        {
+          "tag": "Egyptian honest scale — the balance used in trade whose accurate calibration was a religious as well as a commercial obligation; fairness in exchange as a cosmic principle with divine enforcement",
+          "type": "object"
+        },
+        {
+          "tag": "Hindu merchant ledger stone — a carved or marked stone used to keep permanent commercial records; the durable record as the foundation of trust across transactions separated by time",
+          "type": "object"
+        },
+        {
+          "tag": "Polynesian moka escalation ritual — the ceremony of competitive gift exchange where each response must exceed what was given; generosity as an arms race conducted through material rather than through weapons",
+          "type": "ritual"
+        },
+        {
+          "tag": "Slavic domovoi maintenance figure — the household spirit that must be continuously fed small gifts to keep functioning; the ongoing maintenance cost of a useful relationship that stops working if the payments stop",
+          "type": "figure"
+        }
+      ]
+    },
+    "folktale_european": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "The devil at the crossroads — a supernatural entity that offers extraordinary value for a price that seems acceptable at the time and proves not to be once the terms are fully understood",
+          "type": "concept"
+        },
+        {
+          "tag": "The escalating debt — each solved problem creates a larger one; the resolution of an obligation as the mechanism that generates the next obligation at greater scale",
+          "type": "concept"
+        },
+        {
+          "tag": "The usurer's personal bond — a loan whose guarantee is something irreplaceable rather than financial; when the money cannot be repaid something that cannot be recovered is taken instead",
+          "type": "story"
+        },
+        {
+          "tag": "The magic purse that never empties — a container of value that cannot be depleted; the fantasy of infinite liquidity expressed as a physical object that fits in a pocket",
+          "type": "object"
+        }
+      ]
+    },
+    "folktale_eastasian": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (1), concept (1)",
+      "tags": [
+        {
+          "tag": "Jade authentication disc — a specific material used to verify that a high-value transaction is genuine; the substance whose presence makes the agreement real and whose absence makes it suspect",
+          "type": "object"
+        },
+        {
+          "tag": "The merchant ghost's unfinished ledger — a trader whose commercial accounts were unresolved at death; the incomplete transaction as the specific reason for haunting rather than any emotional attachment",
+          "type": "object"
+        },
+        {
+          "tag": "The grateful debtor's return ceremony — the ritual acknowledgment of a debt repaid at greater value than what was owed; delayed reciprocity formalized as a social obligation rather than a personal choice",
+          "type": "ritual"
+        },
+        {
+          "tag": "The literal interpretation trap — a promise fulfilled exactly as stated in a form that violates its intent completely; the contract honored in letter while being destroyed in spirit",
+          "type": "concept"
+        }
+      ]
+    },
+    "folktale_other": {
+      "count": 4,
+      "type_constraints": "object (2), story (1), concept (1)",
+      "note": "Sources: West African, Middle Eastern, Mesoamerican",
+      "tags": [
+        {
+          "tag": "Anansi's trade surplus object — a thing Anansi ends a story holding that he did not hold at the start, obtained through cleverness alone without force or luck; the intelligence premium made physical",
+          "type": "object"
+        },
+        {
+          "tag": "The calabash of conditional plenty — a vessel that produces food on demand until a specific prohibited question is asked; abundance that is conditional on a behavioral rule the user does not know in advance",
+          "type": "object"
+        },
+        {
+          "tag": "The genie's perfect literalism — a wish granted exactly as stated rather than as intended; the supernatural party that honors the contract completely while making the fulfillment worthless",
+          "type": "story"
+        },
+        {
+          "tag": "The marketplace djinn enforcement — a supernatural presence at a specific trading location that ensures fair exchange; justice embedded structurally in the infrastructure of commerce rather than administered externally",
+          "type": "concept"
+        }
+      ]
+    },
+    "medieval_superstitions": {
+      "count": 4,
+      "type_constraints": "object (2), ritual (2)",
+      "tags": [
+        {
+          "tag": "The merchant's mark stamped on goods — a personal symbol applied as a guarantee of origin and quality; the brand as a magical assertion of accountability that travels with the object",
+          "type": "object"
+        },
+        {
+          "tag": "The water-thrown coin — value deliberately destroyed to purchase favorable probability; the sacrifice of current wealth as a ritual investment in future outcome",
+          "type": "object"
+        },
+        {
+          "tag": "The first sale of the day ritual — selling deliberately below value to the first customer to secure good fortune for all subsequent transactions; the loss leader as a magical investment",
+          "type": "ritual"
+        },
+        {
+          "tag": "The binding handshake — a specific physical gesture that transforms a verbal agreement into something binding; the body as the witness, the seal, and the guarantee simultaneously",
+          "type": "ritual"
+        }
+      ]
+    },
+    "fantasy_literary": {
+      "count": 6,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Scott Lynch's Gentlemen Bastards — a crew that runs cons requiring the target to actively participate in their own deception; the mark as a collaborator in their own loss rather than a passive victim",
+          "type": "concept"
+        },
+        {
+          "tag": "Pratchett's Going Postal — a con artist who discovers that running a legitimate operation is more interesting and more profitable than fraud; honesty as an unexpected competitive advantage",
+          "type": "concept"
+        },
+        {
+          "tag": "Neal Stephenson's Baroque Cycle — the invention of financial instruments as world-changing technology; the abstraction of value into pure transferable information as a form of magic",
+          "type": "concept"
+        },
+        {
+          "tag": "Le Carré's intelligence economy — information as the only real currency in the system; everything else including people and relationships is just the means of obtaining and exchanging it",
+          "type": "concept"
+        },
+        {
+          "tag": "China Miéville's Bas-Lag economy — a city where radically incompatible value systems and currencies operate simultaneously and must be navigated without a common standard",
+          "type": "concept"
+        },
+        {
+          "tag": "Ursula Le Guin's The Dispossessed — two economic systems placed in direct comparison; the hidden assumptions of each only becoming visible when placed next to the assumptions of the other",
+          "type": "concept"
+        }
+      ]
+    },
+    "fantasy_movie": {
+      "count": 4,
+      "type_constraints": "concept (2), story (2)",
+      "tags": [
+        {
+          "tag": "Parasite (2019) — an economy of infiltration where each gain requires installing a corresponding loss elsewhere; the whole system balanced on maintained concealment",
+          "type": "concept"
+        },
+        {
+          "tag": "The Big Short (2015) — the contrarian position as the only rational response to collective delusion; betting against the thing everyone treats as safe because you understand what they do not",
+          "type": "concept"
+        },
+        {
+          "tag": "Margin Call (2011) — the moment when those who know must decide what to do with knowing before anyone else knows they know; information advantage as a moral problem with a time limit",
+          "type": "story"
+        },
+        {
+          "tag": "Knives Out (2019) — an inheritance as a strategic object whose disposition matters more than its amount because of what claiming it reveals about everyone who wants it",
+          "type": "story"
+        }
+      ]
+    },
+    "game": {
+      "count": 5,
+      "type_constraints": "concept (3), story (1), object (1)",
+      "tags": [
+        {
+          "tag": "Offworld Trading Company — a real-time market where the act of buying changes the price for everyone else; every transaction is simultaneously an act of manipulation on the market it occurs in",
+          "type": "concept"
+        },
+        {
+          "tag": "Crusader Kings' claim system — the distinction between holding power and holding a legitimate claim to power; legal standing as a resource that can be acquired, transferred, and spent",
+          "type": "concept"
+        },
+        {
+          "tag": "Frostpunk's resource allocation — every distribution of a scarce resource is a political act with social consequences that extend far beyond the economic ones",
+          "type": "concept"
+        },
+        {
+          "tag": "Dwarf Fortress' single artifact economy — one handcrafted object of extraordinary quality that reshapes the entire trade dynamic of a region simply by existing in it",
+          "type": "story"
+        },
+        {
+          "tag": "Spice and Wolf's arbitrage record — a merchant's written calculation of price differentials between two markets; the document that makes the profit possible before the journey begins",
+          "type": "object"
+        }
+      ]
+    },
+    "ghibli": {
+      "count": 4,
+      "type_constraints": "story (2), concept (2)",
+      "tags": [
+        {
+          "tag": "Spirited Away's bathhouse labor economy — work as the price of continued existence in a space; labor as the medium through which a powerless person accumulates standing in a system that was not designed for them",
+          "type": "story"
+        },
+        {
+          "tag": "The Cat Returns' accumulating obligation — small gifts accepted without understanding their individual cost until the total obligation becomes structurally inescapable",
+          "type": "story"
+        },
+        {
+          "tag": "Castle in the Sky's dangerous treasure — wealth so large it cannot be used without immediately becoming a target; the possession that makes continued possession the primary problem",
+          "type": "concept"
+        },
+        {
+          "tag": "Howl's Moving Castle's maintenance economy — a household that costs constantly to keep running and that cannot be allowed to stop; the ongoing expense of sustaining something whose value requires continuity",
+          "type": "concept"
+        }
+      ]
+    },
+    "anime_manga": {
+      "count": 4,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "Spice and Wolf's price differential — the merchant who understands regional value differences as the most powerful person in any territory they move through",
+          "type": "concept"
+        },
+        {
+          "tag": "Hunter x Hunter's Greed Island economy — artificial scarcity inside a closed system creating real value for things that only matter within the defined boundaries of that system",
+          "type": "concept"
+        },
+        {
+          "tag": "No Game No Life's formalized risk — a society where everything including territory and lives is decided through games; risk made into the universal medium of all transactions",
+          "type": "concept"
+        },
+        {
+          "tag": "JoJo's stand exchange rates — abilities that operate according to strict internal rules and can be countered, combined, or traded; power as a system with specific exchange logic rather than as a raw force",
+          "type": "concept"
+        }
+      ]
+    },
+    "wh40k": {
+      "count": 3,
+      "type_constraints": "concept (2), object (1)",
+      "tags": [
+        {
+          "tag": "Rogue Trader warrant — a document granting permission to operate outside normal rules in exchange for returning value from the unknown; the license as the entire business model",
+          "type": "concept"
+        },
+        {
+          "tag": "Chaos undivided bargaining timeline — a deal that appears favorable until you understand how long the other party is willing to wait for their return; the exchange that only looks good on a short timeline",
+          "type": "concept"
+        },
+        {
+          "tag": "Mechanicus data-tithe cogitator — a device that automatically records and transmits commercial and technical data to the Omnissiah's priesthood; the tool whose secondary function is constant surveillance",
+          "type": "object"
+        }
+      ]
+    },
+    "aos": {
+      "count": 3,
+      "type_constraints": "concept (1), object (2)",
+      "tags": [
+        {
+          "tag": "Kharadron Artikulate contract — a formal written agreement between sky-ships covering every foreseeable scenario; the document that governs behavior in situations that have not happened yet",
+          "type": "concept"
+        },
+        {
+          "tag": "Aether-gold sealed flask — a precisely measured quantity of the most valuable substance in the Kharadron economy stored in a standardized container; the unit of value made portable and exact",
+          "type": "object"
+        },
+        {
+          "tag": "Shyish soul-coin — a currency minted from compressed soul-energy; the medium of exchange whose supply is controlled by the god of death and whose value is therefore subject to his decisions",
+          "type": "object"
+        }
+      ]
+    },
+    "tabletop_resources": {
+      "count": 4,
+      "type_constraints": "concept (2), object (2)",
+      "tags": [
+        {
+          "tag": "Identify spell as due diligence — the magical examination required before trusting an unknown object; verification as a non-optional prerequisite for safe use rather than an optional extra step",
+          "type": "concept"
+        },
+        {
+          "tag": "Attunement slot scarcity — a hard limit on how many magical relationships a person can maintain simultaneously; the scarcity of capacity rather than of objects as the binding constraint",
+          "type": "concept"
+        },
+        {
+          "tag": "Sending stone pair — two objects whose value is entirely relational; each one worthless without its counterpart, together worth more than either could be independently",
+          "type": "object"
+        },
+        {
+          "tag": "Bag of holding appraisal — the gap between what the object is worth and what someone will pay for it in a specific market at a specific moment; value as a function of context not of quality",
+          "type": "object"
+        }
+      ]
+    },
+    "horror": {
+      "count": 4,
+      "type_constraints": "concept (2), story (1), figure (1)",
+      "tags": [
+        {
+          "tag": "The monkey's paw fulfillment — a wish granted at the cost of something the wisher valued more than what they asked for; the contract honored completely in a form that makes the fulfillment worthless",
+          "type": "concept"
+        },
+        {
+          "tag": "Midsommar's hospitality capture — generosity so complete and so sustained that it becomes a form of control; the mechanism of care used to make departure impossible without rupturing the relationship",
+          "type": "concept"
+        },
+        {
+          "tag": "Get Out's auction — a transaction in which the commodity being sold does not know it is being sold; commerce conducted entirely behind the back of the thing being traded",
+          "type": "story"
+        },
+        {
+          "tag": "The pawnbroker figure from folk horror — a figure who accepts anything as collateral and whose terms are always met eventually; the lender who has been doing this long enough to know every outcome",
+          "type": "figure"
+        }
+      ]
+    },
+    "music_and_sound": {
+      "count": 3,
+      "type_constraints": "all concept",
+      "tags": [
+        {
+          "tag": "The auctioneer's rhythm — a specific vocal pattern used to create urgency and prevent deliberation; sound deployed as a psychological tool to compress decision-making time",
+          "type": "concept"
+        },
+        {
+          "tag": "The vendor's signal sound — a specific sound associated with a specific type of offer; the auditory brand that communicates product category across a crowded and noisy market",
+          "type": "concept"
+        },
+        {
+          "tag": "The spoken contract's activation — a verbal agreement that only becomes binding when spoken aloud in the presence of specific witnesses; orality as the mechanism of legal and magical activation",
+          "type": "concept"
+        }
+      ]
+    },
+    "architecture_and_space": {
+      "count": 3,
+      "type_constraints": "concept (2), ritual (1)",
+      "tags": [
+        {
+          "tag": "The market square as enabling infrastructure — a designated space where different value systems meet; the location as the technology that makes exchange between incompatible parties possible",
+          "type": "concept"
+        },
+        {
+          "tag": "The crossroads as neutral ground — a location belonging to no single party and therefore usable by all; the nowhere space as the only place where certain transactions can legitimately occur",
+          "type": "concept"
+        },
+        {
+          "tag": "The counting house consecration — the ritual of establishing a specific space as dedicated to the tabulation and storage of value; the ceremony that makes a room into an institution",
+          "type": "ritual"
+        }
+      ]
+    }
+  }
+}

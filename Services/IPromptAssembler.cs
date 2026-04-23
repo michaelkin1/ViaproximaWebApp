@@ -5,6 +5,8 @@ namespace Viaproxima.Web.Services;
 public interface IPromptAssembler
 {
     PromptResult BuildPrompt(PromptParams parameters);
-    IReadOnlyList<Ras> GetRaser();
-    IReadOnlyList<Skrå> GetSkrån();
+    IReadOnlyList<ViaproximaRace> GetRaces();
+    IReadOnlyList<ViaproximaGuild> GetGuilds();
+    IReadOnlyList<string> GetItemTypeCodes();
+    string GetSwedishTypeName(string typeCode);
 }
