@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/floraFauna.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 }
 
 <div class="page">
@@ -14,7 +15,7 @@
         <header class="sheet-header">
             <div>
                 <div class="label">Viaproxima</div>
-                <div class="value">Rules</div>
+                <div class="value" id="cardTitle">Rules</div>
             </div>
         </header>
 
@@ -22,6 +23,22 @@
             <div class="tab-bar">
                 <button class="tab-btn tab-btn--active" data-tab="spelarbok">Spelarbok</button>
                 <button class="tab-btn" data-tab="poangkostnader">Poängkostnader</button>
+                <button class="tab-btn" data-tab="laror">Läror</button>
+            </div>
+
+            <div class="lore-sub-bar" id="loreSubBar" style="display:none">
+                <button class="lore-sub-btn" data-lore="roda"
+                    style="--lore-color:#c0392b;--lore-active-bg:#fdf0ee">Röda Vreden</button>
+                <button class="lore-sub-btn" data-lore="grona"
+                    style="--lore-color:#27ae60;--lore-active-bg:#edfaf1">Gröna Skammen</button>
+                <button class="lore-sub-btn" data-lore="gula"
+                    style="--lore-color:#d4a017;--lore-active-bg:#fefae9">Gula Lyckan</button>
+                <button class="lore-sub-btn" data-lore="lila"
+                    style="--lore-color:#7d3c98;--lore-active-bg:#f5eeff">Lila Stoltheten</button>
+                <button class="lore-sub-btn" data-lore="orangea"
+                    style="--lore-color:#ca6f1e;--lore-active-bg:#fef4ea">Orangea Kärleken</button>
+                <button class="lore-sub-btn" data-lore="blaa"
+                    style="--lore-color:#2471a3;--lore-active-bg:#eaf4fd">Blåa Sorgen</button>
             </div>
 
             <div class="tab-content" id="tab-spelarbok">
@@ -30,6 +47,57 @@
 
             <div class="tab-content" id="tab-poangkostnader" style="display:none;">
                 <iframe src="/pdfs/Rules/viaproxima_karaktarsskapande.pdf#toolbar=0&zoom=page-width" class="pdf-iframe"></iframe>
+            </div>
+
+            <div class="tab-content" id="tab-laror" style="display:none;">
+                <div class="lore-panel" id="lore-roda" style="position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#7a1a0e,#3a0a04);color:#f5c6b0">
+                        <span class="lore-banner__dot" style="background:#c0392b"></span>
+                        <span class="lore-banner__name">Röda Vreden</span>
+                        <span class="lore-banner__sub">— Eld och Rök</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/RödVrede.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
+                <div class="lore-panel" id="lore-grona" style="display:none;position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#0e4a1e,#06200c);color:#a8e6b8">
+                        <span class="lore-banner__dot" style="background:#27ae60"></span>
+                        <span class="lore-banner__name">Gröna Skammen</span>
+                        <span class="lore-banner__sub">— Skog och Skam</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/GrönSkam.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
+                <div class="lore-panel" id="lore-gula" style="display:none;position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#7a5a08,#3a2a02);color:#f5e0a0">
+                        <span class="lore-banner__dot" style="background:#d4a017"></span>
+                        <span class="lore-banner__name">Gula Lyckan</span>
+                        <span class="lore-banner__sub">— Sol och Slump</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/GulLycka.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
+                <div class="lore-panel" id="lore-lila" style="display:none;position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#3a1050,#1a0828);color:#d8b8f0">
+                        <span class="lore-banner__dot" style="background:#7d3c98"></span>
+                        <span class="lore-banner__name">Lila Stoltheten</span>
+                        <span class="lore-banner__sub">— Makt och Majestät</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/LilaStolthet.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
+                <div class="lore-panel" id="lore-orangea" style="display:none;position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#7a3008,#3a1402);color:#f5c890">
+                        <span class="lore-banner__dot" style="background:#ca6f1e"></span>
+                        <span class="lore-banner__name">Orangea Kärleken</span>
+                        <span class="lore-banner__sub">— Värme och Vilja</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/OrangeKärlek.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
+                <div class="lore-panel" id="lore-blaa" style="display:none;position:relative">
+                    <div class="lore-banner" style="background:linear-gradient(to right,#0e2a50,#06121e);color:#a0c8f0">
+                        <span class="lore-banner__dot" style="background:#2471a3"></span>
+                        <span class="lore-banner__name">Blåa Sorgen</span>
+                        <span class="lore-banner__sub">— Vatten och Vemod</span>
+                    </div>
+                    <iframe src="/pdfs/Lores/BlåSorg.pdf#toolbar=0" class="pdf-iframe lore-iframe"></iframe>
+                </div>
             </div>
         </section>
     </div>

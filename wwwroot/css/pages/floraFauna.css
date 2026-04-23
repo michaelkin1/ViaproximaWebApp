@@ -70,3 +70,88 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
 }
+
+/* Lore sub-tab bar */
+.lore-sub-bar {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.75rem;
+}
+
+.lore-sub-btn {
+    flex: 1;
+    padding: 0.4rem 0.4rem;
+    border: 1px solid var(--border-2);
+    border-left: 4px solid var(--lore-color, #888);
+    border-radius: var(--radius-md);
+    background: var(--panel-2);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lore-sub-btn:hover {
+    filter: brightness(0.97);
+}
+
+.lore-sub-btn--active {
+    background: var(--lore-active-bg, #f0ece4);
+    border-left-color: var(--lore-color, #888);
+    border-top-color: var(--lore-color, #888);
+}
+
+/* Lore banner */
+.lore-banner {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 1rem;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-bottom: 0;
+}
+
+.lore-banner__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.7;
+    flex-shrink: 0;
+}
+
+.lore-banner__name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: inherit;
+}
+
+.lore-banner__sub {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    opacity: 0.75;
+    margin-left: 4px;
+    color: inherit;
+}
+
+.lore-panel {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.lore-iframe {
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+
+body.lore-bg-active::before,
+body.lore-bg-active::after {
+    display: none !important;
+}
