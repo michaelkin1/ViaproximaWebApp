@@ -4,7 +4,8 @@ VP.pets = VP.pets || {};
     const PET_COLS = 4;
     const PET_ROWS = 2;
 
-    function createController(dom, characterId) {
+    function createController(dom, initialCharacterId) {
+        let characterId = initialCharacterId;
         const state = {
             pets: [],
             currentCols: PET_COLS,
@@ -250,7 +251,8 @@ VP.pets = VP.pets || {};
             dom.deleteBtn.addEventListener("click", deleteCurrent);
         }
 
-        return { wire, renderGrid, loadPets };
+        function setCharacterId(id) { characterId = id; }
+        return { wire, renderGrid, loadPets, setCharacterId };
     }
 
     VP.pets = VP.pets || {};
@@ -287,5 +289,6 @@ VP.pets = VP.pets || {};
         const ctrl = createController(dom, characterId);
         ctrl.wire();
         ctrl.loadPets();
+        VP.pets.ctrl = ctrl;
     })();
 })();

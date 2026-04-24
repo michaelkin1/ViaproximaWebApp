@@ -1,78 +1,480 @@
 @page
 @model Viaproxima.Web.Pages.CharacterListModel
-
-@{
-    ViewData["Title"] = "Karaktärslista";
-}
+@{ ViewData["Title"] = "Karaktärer"; }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/pages/characterList.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.stats.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.inventory.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/CharacterSheet.HP.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/components/dialog.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.skills.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/karaktarer.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 }
 
-<div class="page">
-    <div class="sheet sheet--list">
-        <header class="sheet-header">
-            <div>
-                <div class="label">Viaproxima</div>
-                <div class="value">Karaktärslista</div>
-            </div>
-        </header>
+<!-- Tab bar -->
+<div class="char-tab-bar" id="charTabBar">
+    <button class="char-tab char-tab--list char-tab--active" id="tabBtnList" data-panel="list">
+        ☰ Karaktärslista
+    </button>
+    <div class="char-tab-divider"></div>
+    <div id="charTabsContainer" style="display:contents"></div>
+    <button class="char-tab char-tab--new" id="newCharBtn" title="Nytt tomt ark">+</button>
+</div>
 
-        <section class="sheet-column">
-            <h2>Sparade karaktärer</h2>
-
-            @if (Model.Characters.Count == 0)
-            {
-                <p class="hint">Inga sparade karaktärer ännu. Skapa en ny och tryck Spara.</p>
-            }
-            else
-            {
-                <ul style="margin:0; padding-left:0; list-style:none;">
+<!-- List panel -->
+<div id="panel-list" class="char-panel kl-page">
+    <div class="kl-card">
+        <div class="kl-card-header">
+            <span class="kl-card-header__title">Sparade karaktärer</span>
+        </div>
+        <div class="kl-card-body">
+            <div class="kl-list-col">
+                @if (Model.Characters.Count == 0)
+                {
+                    <p class="hint" style="padding:1rem;">Inga sparade karaktärer ännu. Tryck + för att skapa en ny.</p>
+                }
+                else
+                {
                     @foreach (var c in Model.Characters)
                     {
                         var name = string.IsNullOrWhiteSpace(c.Name) ? "Namnlös" : c.Name;
                         var race = string.IsNullOrWhiteSpace(c.Race) ? "Okänd" : c.Race;
-
-                        <li class="char-row">
-                            <a class="char-row__link"
-                               asp-page="/CharacterSheet"
-                               asp-route-id="@c.Id"
-                               target="_blank"
-                               rel="noopener">
-                                @name <span class="char-row__race">· @race</span>
-                            </a>
-
+                        <div class="kl-row"
+                             data-char-id="@c.Id"
+                             data-char-name="@name"
+                             data-char-race="@race">
+                            <span class="kl-row__name">@name</span>
+                            <span class="kl-row__race">@race</span>
+                            <span class="kl-row__id">#@c.Id</span>
                             @if (User.Identity?.IsAuthenticated == true)
                             {
                                 <form method="post"
                                       asp-page-handler="Delete"
                                       asp-route-id="@c.Id"
-                                      style="margin:0;">
+                                      style="margin:0;"
+                                      onclick="event.stopPropagation();">
                                     @Html.AntiForgeryToken()
                                     <button type="submit"
-                                            class="btn-delete"
+                                            class="kl-btn-delete"
                                             onclick="return confirm('Ta bort den här karaktären?');">
-                                        Ta bort
+                                        ×
                                     </button>
                                 </form>
                             }
-                        </li>
+                        </div>
                     }
-                </ul>
+                }
+            </div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <div class="kl-actions-col">
+                    <button type="button" class="btn-gold" id="newCharBtnList">+ Ny karaktär</button>
+                </div>
             }
-        </section>
-
-        @if (User.Identity?.IsAuthenticated == true)
-        {
-            <section class="sheet-column">
-                <h2>Ny karaktär</h2>
-                <a class="btn-small" asp-page="/CharacterSheet" target="_blank" rel="noopener">
-                    Öppna tomt ark
-                </a>
-            </section>
-        }
+        </div>
     </div>
 </div>
+
+<!-- Character sheet panel (single shared, initially hidden) -->
+<div id="panel-sheet" class="char-panel" style="display:none">
+    <div class="page">
+        <div class="sheet">
+            <!-- Header -->
+            <header class="sheet-header">
+                <div>
+                    <div class="label">Namn</div>
+                    <input id="nameInput" class="header-input" type="text" value="" />
+                </div>
+                <div>
+                    <div class="label">Ras</div>
+                    <input id="raceInput" class="header-input" type="text" value="" />
+                </div>
+                <div>
+                    <div class="label">Erfarenhetspoäng</div>
+                    <input id="xpInput" class="header-input" type="number" min="0" value="" />
+                </div>
+                <div class="header-actions">
+                    <button id="saveBtn" type="button" class="btn-small">Save</button>
+                    <span id="saveStatus" class="save-status"></span>
+                </div>
+            </header>
+
+            <div class="sheet-sections">
+                <main class="sheet-main">
+                    <!-- Left column – stats -->
+                    <section class="sheet-column">
+                        <h2>Grundegenskaper</h2>
+                        <div class="stats-table">
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Styrka</span>
+                                    <input id="strengthInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Genomslag</span><input id="genomslagInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Bärförmåga</span><input id="barformagaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Förflytta</span><input id="forflyttaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Brottas</span><input id="brottasInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Skicklighet</span>
+                                    <input id="skicklighetInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Skytte</span><input id="skytteInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Fingerfärdighet</span><input id="fingerfardighetInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Träffsäkerhet</span><input id="traffsakerhetInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Akrobatik</span><input id="akrobatikInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Tålighet</span>
+                                    <input id="talighetInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Mental</span><input id="mentalInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Fysisk</span><input id="fysiskInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Blockera</span><input id="blockeraInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Uthållighet</span><input id="uthallighetInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Intelligens</span>
+                                    <input id="intelligensInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Allmänbildning</span><input id="allmanbildningInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Logiskt tänkande</span><input id="logisktTankandeInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Öga för detaljer</span><input id="ogaForDetaljerInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Uppfinningsrikedom</span><input id="uppfinningsrikedomInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Klokhet</span>
+                                    <input id="klokhetInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Snabbtänkthet</span><input id="snabbtankthetInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Känna av fara</span><input id="kannaAvFaraInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Se igenom lögner</span><input id="seIgenomLognerInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Magisk känsla</span><input id="magiskKanslaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                            <div class="stat-group">
+                                <div class="stat-main-row">
+                                    <span class="stat-main-label">Utstrålning</span>
+                                    <input id="utstralningInput" type="number" min="0" max="20" step="1" value="" class="stat-input stat-input--main" />
+                                </div>
+                                <div class="stat-sub-row"><span>Ljuga</span><input id="ljugaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Övertala</span><input id="overtalaInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Intryck</span><input id="intryckInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                                <div class="stat-sub-row"><span>Väcka känslor</span><input id="vackaKanslorInput" type="number" min="0" max="20" step="1" value="" class="stat-input" /></div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Center column – portrait & HP -->
+                    <section class="sheet-column sheet-column--center">
+                        <h2>Porträtt &amp; Anteckningar</h2>
+                        <div class="portrait-area" id="portraitArea" title="Lägg till bild på din karaktär">
+                            <input type="file" id="portraitFileInput" class="portrait-file-input" accept="image/png,image/jpeg,image/webp" />
+                            <img id="portraitImg" class="portrait-img" alt="Porträtt" />
+                            <div class="portrait-empty" id="portraitEmpty">
+                                <span class="portrait-empty-icon">+</span>
+                                <span class="portrait-empty-text">Lägg till bild på din karaktär</span>
+                            </div>
+                        </div>
+                        <div id="portraitError" class="portrait-error" style="display:none;"></div>
+
+                        <div class="hp-panel">
+                            <div class="hp-titlebar">Skada tagen/Max liv</div>
+                            <div class="hp-rows">
+                                <div class="hp-row">
+                                    <span class="hp-label">Huvud</span>
+                                    <input id="hpHeadCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                    <span class="hp-sep">/</span>
+                                    <span class="hp-max-wrap">
+                                        <span class="hp-sprite hp-sprite--head" aria-hidden="true"></span>
+                                        <span id="hpHeadMax" class="hp-max">0</span>
+                                    </span>
+                                </div>
+                                <div class="hp-row">
+                                    <span class="hp-label">Torso</span>
+                                    <input id="hpTorsoCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                    <span class="hp-sep">/</span>
+                                    <span class="hp-max-wrap">
+                                        <span class="hp-sprite hp-sprite--torso" aria-hidden="true"></span>
+                                        <span id="hpTorsoMax" class="hp-max">0</span>
+                                    </span>
+                                </div>
+                                <div class="hp-row">
+                                    <span class="hp-label">Armar</span>
+                                    <input id="hpArmsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                    <span class="hp-sep">/</span>
+                                    <span class="hp-max-wrap">
+                                        <span class="hp-sprite hp-sprite--arms" aria-hidden="true"></span>
+                                        <span id="hpArmsMax" class="hp-max">0</span>
+                                    </span>
+                                </div>
+                                <div class="hp-row">
+                                    <span class="hp-label">Ben</span>
+                                    <input id="hpLegsCurrent" class="hp-input hp-input--current" type="number" min="0" value="0" />
+                                    <span class="hp-sep">/</span>
+                                    <span class="hp-max-wrap">
+                                        <span class="hp-sprite hp-sprite--legs" aria-hidden="true"></span>
+                                        <span id="hpLegsMax" class="hp-max">0</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <small class="hint">Nuvarande / Max (max beräknas av stats)</small>
+                        </div>
+
+                        <label class="notes-block">
+                            <div class="label">Anteckningar</div>
+                            <textarea id="notesInput" class="stat-textarea" rows="10" placeholder="Skriv anteckningar..."></textarea>
+                        </label>
+                    </section>
+
+                    <!-- Right column – Lärdomar, Evolutioner, Pets -->
+                    <section class="sheet-column">
+                        <div class="skill-panel">
+                            <div class="skill-titlebar">
+                                <span>Lärdomar</span>
+                                <button type="button" class="btn-small skill-add-btn" id="addLardomBtn">+</button>
+                            </div>
+                            <div class="skill-header-row">
+                                <span class="skill-col-naam">Namn</span>
+                                <span class="skill-col-niva">Nivå</span>
+                                <span class="skill-col-beskr">Beskrivning</span>
+                            </div>
+                            <div class="skill-rows" id="lardomarRows"></div>
+                        </div>
+
+                        <div class="skill-panel">
+                            <div class="skill-titlebar">
+                                <span>Evolutioner</span>
+                                <button type="button" class="btn-small skill-add-btn" id="addEvolutionBtn">+</button>
+                            </div>
+                            <div class="skill-header-row">
+                                <span class="skill-col-naam">Namn</span>
+                                <span class="skill-col-niva">Nivå</span>
+                                <span class="skill-col-beskr">Beskrivning</span>
+                            </div>
+                            <div class="skill-rows" id="evolutionerRows"></div>
+                        </div>
+
+                        <div class="pet-panel">
+                            <div class="pet-panel-titlebar">
+                                <span>Tamdjur</span>
+                                <button id="addPetBtn" type="button" class="btn-small">+</button>
+                            </div>
+                            <div class="pet-panel-body">
+                                <div class="inventory-wrap">
+                                    <div id="petSlots" class="inventory-grid inventory-slots">
+                                        <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+                                        <div class="slot"></div><div class="slot"></div><div class="slot"></div><div class="slot"></div>
+                                    </div>
+                                    <div id="petItems" class="inventory-grid inventory-items"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+
+                <section class="sheet-inventory">
+                    <h2 class="inventory-title">Inventarie</h2>
+                    <div class="inventory-body">
+                        <div class="inventory-left">
+                            <div class="inventory-controls">
+                                <div class="inventory-barkraft">
+                                    <span class="inventory-barkraft-label">Bärkraft:</span>
+                                    <strong id="barkraftValue">0</strong>
+                                </div>
+                                <button id="addItemBtn" class="btn-small" type="button">+ Add item</button>
+                            </div>
+                            <div class="inventory-wrap">
+                                <div id="inventorySlots" class="inventory-grid inventory-slots"></div>
+                                <div id="inventoryItems" class="inventory-grid inventory-items"></div>
+                            </div>
+                        </div>
+                        <aside class="inventory-right">
+                            <div class="currency-panel">
+                                <div class="currency-titlebar">VALUTA</div>
+                                <div class="currency-rows">
+                                    <div class="currency-row">
+                                        <span class="currency-label">Cuppar</span>
+                                        <span class="currency-sprite currency-sprite--cuppar" aria-hidden="true"></span>
+                                        <input id="currencyCuppar" class="currency-input" type="number" min="0" value="0" />
+                                    </div>
+                                    <div class="currency-row">
+                                        <span class="currency-label">Ferrar</span>
+                                        <span class="currency-sprite currency-sprite--ferrar" aria-hidden="true"></span>
+                                        <input id="currencyFerrar" class="currency-input" type="number" min="0" value="0" />
+                                    </div>
+                                    <div class="currency-row">
+                                        <span class="currency-label">Aurar</span>
+                                        <span class="currency-sprite currency-sprite--aurar" aria-hidden="true"></span>
+                                        <input id="currencyAurar" class="currency-input" type="number" min="0" value="0" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pouch-panel">
+                                <div class="pouch-titlebar">
+                                    <span>Pouch</span>
+                                    <span class="pouch-sprite" aria-hidden="true"></span>
+                                </div>
+                                <div class="pouch-body">
+                                    <textarea id="pouchNotes" class="vp-textarea" placeholder="Småföremål, t.ex. papperslappar, kryddor, småsten, etc...."></textarea>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Row description dialog -->
+            <dialog id="rowDescDialog" class="item-dialog">
+                <form method="dialog" class="item-form">
+                    <h3 style="margin:0 0 0.75rem;">Beskrivning</h3>
+                    <label class="item-field">
+                        <span>Text</span>
+                        <textarea id="rowDescInput" rows="5" placeholder="Skriv beskrivning..."></textarea>
+                    </label>
+                    <div class="item-actions">
+                        <button type="button" id="rowDescCancelBtn" class="btn-small">Avbryt</button>
+                        <button type="button" id="rowDescSaveBtn" class="btn-small">Spara</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <!-- Pet dialog -->
+            <dialog id="petDialog" class="item-dialog">
+                <form method="dialog" class="item-form" id="petForm">
+                    <h3 style="margin:0 0 0.75rem;">Lägg till / redigera tamdjur</h3>
+                    <input type="hidden" id="petIdInput" value="" />
+                    <div class="item-form-grid">
+                        <label class="item-field item-field--wide">
+                            <span>Namn</span>
+                            <input id="petNameInput" type="text" maxlength="60" placeholder="T.ex. 'Lansen'..." />
+                        </label>
+                        <label class="item-field">
+                            <span>Tamdjurstyp</span>
+                            <select id="petTypeSelect"><option value="">– Välj typ –</option></select>
+                        </label>
+                        <label class="item-field">
+                            <span>Storlek</span>
+                            <select id="petSizeSelect">
+                                <option value="1x1">1x1</option>
+                                <option value="1x2">1x2</option>
+                                <option value="2x1">2x1</option>
+                                <option value="2x2">2x2</option>
+                                <option value="2x3">2x3</option>
+                                <option value="2x4">2x4</option>
+                            </select>
+                        </label>
+                        <label class="item-field item-field--wide">
+                            <span>Ikon</span>
+                            <input type="hidden" id="petIconFileInput" value="" />
+                            <div id="petIconGrid" class="icon-grid"></div>
+                            <div class="hint" style="margin-top:0.35rem;">Klicka på en ikon för att välja.</div>
+                            <div class="icon-preview-wrap">
+                                <img id="petIconPreview" alt="" class="icon-preview" style="display:none;" />
+                            </div>
+                        </label>
+                        <label class="item-field item-field--wide">
+                            <span>Beskrivning</span>
+                            <textarea id="petDescInput" rows="3" placeholder="Skriv djurbeskrivning här..."></textarea>
+                        </label>
+                    </div>
+                    <div class="item-actions">
+                        <button type="button" id="petCancelBtn" class="btn-small">Avbryt</button>
+                        <button type="button" id="petDeleteBtn" class="btn-small" style="display:none;">Ta bort</button>
+                        <button type="button" id="petSaveBtn" class="btn-small">Spara tamdjur</button>
+                    </div>
+                </form>
+            </dialog>
+
+            <!-- Item dialog -->
+            <dialog id="itemDialog" class="item-dialog">
+                <form method="dialog" class="item-form" id="itemForm">
+                    <h3 style="margin:0 0 0.75rem;">Add/Edit item</h3>
+                    <input type="hidden" id="itemIdInput" value="" />
+                    <div class="item-form-grid">
+                        <label class="item-field item-field--wide">
+                            <span>Namn</span>
+                            <input id="itemNameInput" type="text" maxlength="60" placeholder="T.ex. 'Benkniv'..." />
+                        </label>
+                        <label class="item-field">
+                            <span>Föremålstyp</span>
+                            <select id="primarySelect"><option value="">– Välj –</option></select>
+                        </label>
+                        <label class="item-field">
+                            <span>Subtyp</span>
+                            <select id="secondarySelect"><option value="">– Välj –</option></select>
+                        </label>
+                        <label class="item-field">
+                            <span>Vikt / Storlek</span>
+                            <select id="sizeSelect">
+                                <option value="1x1">1x1</option>
+                                <option value="1x2">1x2</option>
+                                <option value="2x1">2x1</option>
+                                <option value="2x2">2x2</option>
+                                <option value="3x2">3x2</option>
+                            </select>
+                        </label>
+                        <label class="item-field item-field--checkbox">
+                            <span>Magisk</span>
+                            <input id="magicCheck" type="checkbox" />
+                        </label>
+                        <div id="durabilityWrap" class="item-field">
+                            <span>Hållbarhet</span>
+                            <input id="durabilityInput" type="number" min="0" step="1" value="" />
+                            <small class="hint">Visas bara när JS väljer att aktivera den.</small>
+                        </div>
+                        <label class="item-field item-field--wide">
+                            <span>Ikon</span>
+                            <input type="hidden" id="iconFileInput" value="" />
+                            <div id="iconGrid" class="icon-grid"></div>
+                            <div class="hint" style="margin-top:0.35rem;">Klicka på en ikon för att välja.</div>
+                            <div class="icon-preview-wrap">
+                                <img id="iconPreview" alt="" class="icon-preview" style="display:none;" />
+                            </div>
+                        </label>
+                        <label class="item-field item-field--wide">
+                            <span>Beskrivning</span>
+                            <textarea id="descriptionInput" rows="4" placeholder="Skriv item-text här..."></textarea>
+                        </label>
+                    </div>
+                    <div class="item-actions">
+                        <button type="button" id="itemCancelBtn" class="btn-small">Cancel</button>
+                        <button type="button" id="itemDeleteBtn" class="btn-small" style="display:none;">Delete</button>
+                        <button type="button" id="itemSaveBtn" class="btn-small">Save item</button>
+                    </div>
+                </form>
+            </dialog>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/shared/vp.ns.js" asp-append-version="true"></script>
+    <script src="~/js/shared/http.js" asp-append-version="true"></script>
+    <script src="~/js/shared/csrf.js" asp-append-version="true"></script>
+    <script src="~/js/shared/auth.js" asp-append-version="true"></script>
+    <script src="~/js/shared/ui.js" asp-append-version="true"></script>
+
+    <script src="~/js/api/rules.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/characters.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/items.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/icons.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/pets.icons.api.js" asp-append-version="true"></script>
+    <script src="~/js/api/pets.api.js" asp-append-version="true"></script>
+
+    <script src="~/js/grid/placement.js" asp-append-version="true"></script>
+    <script src="~/js/grid/render.js" asp-append-version="true"></script>
+
+    <script src="~/js/inventory/dialog.js" asp-append-version="true"></script>
+    <script src="~/js/pages/characterSheet.page.js" asp-append-version="true"></script>
+    <script src="~/js/pages/characterSheet.skills.js" asp-append-version="true"></script>
+    <script src="~/js/pets/pets.js" asp-append-version="true"></script>
+    <script src="~/js/pages/karaktarer.page.js" asp-append-version="true"></script>
+}

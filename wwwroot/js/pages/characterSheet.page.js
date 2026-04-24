@@ -1,5 +1,7 @@
 ﻿// pages/characterSheet.page.js
 (() => {
+    VP.sheet = VP.sheet || {};
+
     function el(id) { return document.getElementById(id); }
 
     // DOM refs
@@ -284,6 +286,7 @@
                 url.searchParams.set("id", state.characterId);
                 window.history.replaceState({}, "", url.toString());
 
+                document.dispatchEvent(new CustomEvent('vp:characterSaved', { detail: { id: state.characterId } }));
                 setStatus(`Saved new (#${state.characterId})`);
                 return;
             }
@@ -377,13 +380,172 @@
         });
     }
 
+    // VP.sheet public API (used by karaktarer.page.js tab manager)
+    VP.sheet.load = async function(id) {
+        state.characterId = String(id);
+        characterId = state.characterId;
+        await loadCharacter(id);
+    };
+
+    VP.sheet.clear = function() {
+        nameInput.value = ""; raceInput.value = ""; xpInput.value = 0;
+        if (strengthInput)           strengthInput.value           = 0;
+        if (genomslagInput)          genomslagInput.value          = 0;
+        if (barformagaInput)         barformagaInput.value         = 0;
+        if (forflyttaInput)          forflyttaInput.value          = 0;
+        if (brottasInput)            brottasInput.value            = 0;
+        if (skicklighetInput)        skicklighetInput.value        = 0;
+        if (skytteInput)             skytteInput.value             = 0;
+        if (fingerfardighetInput)    fingerfardighetInput.value    = 0;
+        if (traffsakerhetInput)      traffsakerhetInput.value      = 0;
+        if (akrobatikInput)          akrobatikInput.value          = 0;
+        if (talighetInput)           talighetInput.value           = 0;
+        if (mentalInput)             mentalInput.value             = 0;
+        if (fysiskInput)             fysiskInput.value             = 0;
+        if (blockeraInput)           blockeraInput.value           = 0;
+        if (uthallighetInput)        uthallighetInput.value        = 0;
+        if (intelligensInput)        intelligensInput.value        = 0;
+        if (allmanbildningInput)     allmanbildningInput.value     = 0;
+        if (logisktTankandeInput)    logisktTankandeInput.value    = 0;
+        if (ogaForDetaljerInput)     ogaForDetaljerInput.value     = 0;
+        if (uppfinningsrikedomInput) uppfinningsrikedomInput.value = 0;
+        if (klokhetInput)            klokhetInput.value            = 0;
+        if (snabbtankthetInput)      snabbtankthetInput.value      = 0;
+        if (kannaAvFaraInput)        kannaAvFaraInput.value        = 0;
+        if (seIgenomLognerInput)     seIgenomLognerInput.value     = 0;
+        if (magiskKanslaInput)       magiskKanslaInput.value       = 0;
+        if (utstralningInput)        utstralningInput.value        = 0;
+        if (ljugaInput)              ljugaInput.value              = 0;
+        if (overtalaInput)           overtalaInput.value           = 0;
+        if (intryckInput)            intryckInput.value            = 0;
+        if (vackaKanslorInput)       vackaKanslorInput.value       = 0;
+        if (currencyCuppar)          currencyCuppar.value          = 0;
+        if (currencyFerrar)          currencyFerrar.value          = 0;
+        if (currencyAurar)           currencyAurar.value           = 0;
+        if (hpHeadCurrent)           hpHeadCurrent.value           = 0;
+        if (hpTorsoCurrent)          hpTorsoCurrent.value          = 0;
+        if (hpArmsCurrent)           hpArmsCurrent.value           = 0;
+        if (hpLegsCurrent)           hpLegsCurrent.value           = 0;
+        if (notesInput)              notesInput.value              = "";
+        if (pouchNotes)              pouchNotes.value              = "";
+        if (hpHeadMax)  hpHeadMax.textContent  = "0";
+        if (hpTorsoMax) hpTorsoMax.textContent = "0";
+        if (hpArmsMax)  hpArmsMax.textContent  = "0";
+        if (hpLegsMax)  hpLegsMax.textContent  = "0";
+        state.characterId = null; characterId = null;
+        state.itemsCache = [];
+        const img = el("portraitImg"); const empty = el("portraitEmpty");
+        if (img) { img.src = ""; img.style.display = "none"; }
+        if (empty) empty.style.display = "";
+    };
+
+    VP.sheet.getFieldState = function() {
+        return {
+            characterId: state.characterId,
+            name: nameInput.value, race: raceInput.value, xp: xpInput.value,
+            strength:           strengthInput?.value,
+            genomslag:          genomslagInput?.value,
+            barformaga:         barformagaInput?.value,
+            forflytta:          forflyttaInput?.value,
+            brottas:            brottasInput?.value,
+            skicklighet:        skicklighetInput?.value,
+            skytte:             skytteInput?.value,
+            fingerfardighet:    fingerfardighetInput?.value,
+            traffsakerhet:      traffsakerhetInput?.value,
+            akrobatik:          akrobatikInput?.value,
+            talighet:           talighetInput?.value,
+            mental:             mentalInput?.value,
+            fysisk:             fysiskInput?.value,
+            blockera:           blockeraInput?.value,
+            uthallighet:        uthallighetInput?.value,
+            intelligens:        intelligensInput?.value,
+            allmanbildning:     allmanbildningInput?.value,
+            logisktTankande:    logisktTankandeInput?.value,
+            ogaForDetaljer:     ogaForDetaljerInput?.value,
+            uppfinningsrikedom: uppfinningsrikedomInput?.value,
+            klokhet:            klokhetInput?.value,
+            snabbtankthet:      snabbtankthetInput?.value,
+            kannaAvFara:        kannaAvFaraInput?.value,
+            seIgenomLogner:     seIgenomLognerInput?.value,
+            magiskKansla:       magiskKanslaInput?.value,
+            utstralning:        utstralningInput?.value,
+            ljuga:              ljugaInput?.value,
+            overtala:           overtalaInput?.value,
+            intryck:            intryckInput?.value,
+            vackaKanslor:       vackaKanslorInput?.value,
+            cuppar:             currencyCuppar?.value,
+            ferrar:             currencyFerrar?.value,
+            aurar:              currencyAurar?.value,
+            skadaHuvud:         hpHeadCurrent?.value,
+            skadaTorso:         hpTorsoCurrent?.value,
+            skadaArmar:         hpArmsCurrent?.value,
+            skadaBen:           hpLegsCurrent?.value,
+            anteckningar:       notesInput?.value,
+            pouch:              pouchNotes?.value,
+            itemsCache:         [...state.itemsCache],
+            portraitSrc:        el("portraitImg")?.src ?? "",
+        };
+    };
+
+    VP.sheet.setFieldState = async function(s) {
+        state.characterId = s.characterId ?? null;
+        characterId = state.characterId;
+        nameInput.value = s.name ?? ""; raceInput.value = s.race ?? ""; xpInput.value = s.xp ?? 0;
+        if (strengthInput)           strengthInput.value           = s.strength           ?? 0;
+        if (genomslagInput)          genomslagInput.value          = s.genomslag          ?? 0;
+        if (barformagaInput)         barformagaInput.value         = s.barformaga         ?? 0;
+        if (forflyttaInput)          forflyttaInput.value          = s.forflytta          ?? 0;
+        if (brottasInput)            brottasInput.value            = s.brottas            ?? 0;
+        if (skicklighetInput)        skicklighetInput.value        = s.skicklighet        ?? 0;
+        if (skytteInput)             skytteInput.value             = s.skytte             ?? 0;
+        if (fingerfardighetInput)    fingerfardighetInput.value    = s.fingerfardighet    ?? 0;
+        if (traffsakerhetInput)      traffsakerhetInput.value      = s.traffsakerhet      ?? 0;
+        if (akrobatikInput)          akrobatikInput.value          = s.akrobatik          ?? 0;
+        if (talighetInput)           talighetInput.value           = s.talighet           ?? 0;
+        if (mentalInput)             mentalInput.value             = s.mental             ?? 0;
+        if (fysiskInput)             fysiskInput.value             = s.fysisk             ?? 0;
+        if (blockeraInput)           blockeraInput.value           = s.blockera           ?? 0;
+        if (uthallighetInput)        uthallighetInput.value        = s.uthallighet        ?? 0;
+        if (intelligensInput)        intelligensInput.value        = s.intelligens        ?? 0;
+        if (allmanbildningInput)     allmanbildningInput.value     = s.allmanbildning     ?? 0;
+        if (logisktTankandeInput)    logisktTankandeInput.value    = s.logisktTankande    ?? 0;
+        if (ogaForDetaljerInput)     ogaForDetaljerInput.value     = s.ogaForDetaljer     ?? 0;
+        if (uppfinningsrikedomInput) uppfinningsrikedomInput.value = s.uppfinningsrikedom ?? 0;
+        if (klokhetInput)            klokhetInput.value            = s.klokhet            ?? 0;
+        if (snabbtankthetInput)      snabbtankthetInput.value      = s.snabbtankthet      ?? 0;
+        if (kannaAvFaraInput)        kannaAvFaraInput.value        = s.kannaAvFara        ?? 0;
+        if (seIgenomLognerInput)     seIgenomLognerInput.value     = s.seIgenomLogner     ?? 0;
+        if (magiskKanslaInput)       magiskKanslaInput.value       = s.magiskKansla       ?? 0;
+        if (utstralningInput)        utstralningInput.value        = s.utstralning        ?? 0;
+        if (ljugaInput)              ljugaInput.value              = s.ljuga              ?? 0;
+        if (overtalaInput)           overtalaInput.value           = s.overtala           ?? 0;
+        if (intryckInput)            intryckInput.value            = s.intryck            ?? 0;
+        if (vackaKanslorInput)       vackaKanslorInput.value       = s.vackaKanslor       ?? 0;
+        if (currencyCuppar)          currencyCuppar.value          = s.cuppar             ?? 0;
+        if (currencyFerrar)          currencyFerrar.value          = s.ferrar             ?? 0;
+        if (currencyAurar)           currencyAurar.value           = s.aurar             ?? 0;
+        if (hpHeadCurrent)           hpHeadCurrent.value           = s.skadaHuvud         ?? 0;
+        if (hpTorsoCurrent)          hpTorsoCurrent.value          = s.skadaTorso         ?? 0;
+        if (hpArmsCurrent)           hpArmsCurrent.value           = s.skadaArmar         ?? 0;
+        if (hpLegsCurrent)           hpLegsCurrent.value           = s.skadaBen           ?? 0;
+        if (notesInput)              notesInput.value              = s.anteckningar       ?? "";
+        if (pouchNotes)              pouchNotes.value              = s.pouch              ?? "";
+        state.itemsCache = s.itemsCache ?? [];
+        const img = el("portraitImg"); const empty = el("portraitEmpty");
+        if (img && s.portraitSrc) { img.src = s.portraitSrc; img.style.display = "block"; if (empty) empty.style.display = "none"; }
+        else if (img) { img.src = ""; img.style.display = "none"; if (empty) empty.style.display = ""; }
+        await refreshRules();
+        await refreshHp();
+    };
+
     // Init
     (async () => {
         console.log("[CharacterSheet] loaded (modular)");
         await dialog.wire();
         await refreshRules();
         await refreshHp();
-        if (state.characterId) await loadCharacter(state.characterId);
+        const isMergedPage = !!document.getElementById('charTabBar');
+        if (!isMergedPage && state.characterId) await loadCharacter(state.characterId);
 
         // Hide write-only controls for unauthenticated viewers
         const auth = await VP.shared.getAuthState?.();

@@ -1,6 +1,6 @@
 // pages/characterSheet.skills.js
 (() => {
-    const characterId = new URL(window.location.href).searchParams.get("id");
+    let characterId = new URL(window.location.href).searchParams.get("id");
 
     // ---- DOM refs ----
     const lardomarRows     = document.getElementById("lardomarRows");
@@ -163,4 +163,12 @@
     }
 
     init();
+
+    VP.sheet = VP.sheet || {};
+    VP.sheet.skills = {
+        reload: async function(newId) {
+            characterId = String(newId);
+            await init();
+        }
+    };
 })();

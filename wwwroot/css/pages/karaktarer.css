@@ -1,0 +1,232 @@
+/* Merged Karaktärer page — tab bar + list panel + sheet overrides */
+
+/* ---- Tab bar ---- */
+.char-tab-bar {
+    background: #ede5d4;
+    border-bottom: 2px solid #b8a882;
+    display: flex;
+    align-items: flex-end;
+    padding: 0 16px;
+    min-height: 46px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 2px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0;
+}
+
+.char-tab-bar::-webkit-scrollbar { display: none; }
+
+.char-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    border: 1px solid #b8a882;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    background: #ddd3bb;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #3a2e1e;
+    cursor: pointer;
+    white-space: nowrap;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: background 0.1s;
+    flex-shrink: 0;
+    margin-bottom: -1px;
+}
+
+.char-tab:hover { background: #cfc5ae; }
+
+.char-tab.char-tab--active {
+    background: #f5f0e8;
+    border-bottom: 2px solid #f5f0e8;
+    font-weight: 600;
+    color: #2a1f0e;
+}
+
+.char-tab--list {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: #c9b990;
+    font-weight: 400;
+}
+
+.char-tab--list:hover { background: #bfaf88; }
+.char-tab--list.char-tab--active { background: #f5f0e8; }
+
+.char-tab-divider {
+    width: 1px;
+    height: 28px;
+    background: #b8a882;
+    margin: 0 6px 8px;
+    flex-shrink: 0;
+    align-self: flex-end;
+}
+
+.char-tab__close {
+    font-style: normal;
+    font-size: 12px;
+    opacity: 0.55;
+    line-height: 1;
+    padding: 0 2px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+.char-tab__close:hover { opacity: 1; }
+
+.char-tab--new {
+    border: 1px dashed #a89060;
+    background: transparent;
+    font-size: 18px;
+    font-style: normal;
+    opacity: 0.6;
+    padding: 4px 12px;
+    margin-left: 4px;
+}
+
+.char-tab--new:hover { opacity: 1; background: transparent; }
+
+/* ---- Panels ---- */
+.char-panel { width: 100%; }
+
+/* ---- List card ---- */
+.kl-page {
+    padding: 1.25rem 0;
+}
+
+.kl-card {
+    background: var(--panel-1, #fdf9f3);
+    border: 1px solid var(--border, #d6c9ae);
+    border-radius: var(--radius-md, 6px);
+    overflow: hidden;
+}
+
+.kl-card-header {
+    background: #e8dfc9;
+    border-bottom: 1px solid #d0c3a5;
+    padding: 0.6rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.kl-card-header__title {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #3a2e1e;
+    text-transform: uppercase;
+    flex: 1;
+}
+
+.kl-card-body {
+    display: flex;
+    gap: 0;
+}
+
+.kl-list-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.kl-actions-col {
+    width: 180px;
+    border-left: 1px solid #ddd3be;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: stretch;
+}
+
+.kl-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 1rem;
+    border-bottom: 1px solid #ede5d0;
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.kl-row:last-child { border-bottom: none; }
+.kl-row:hover { background: #f5efe2; }
+
+.kl-row__name {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2a1f0e;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kl-row__race {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: #7a6a52;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.kl-row__id {
+    font-size: 11px;
+    color: #aaa;
+    width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.kl-btn-delete {
+    background: none;
+    border: none;
+    color: #c0392b;
+    font-size: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 0 4px;
+    flex-shrink: 0;
+}
+
+.kl-btn-delete:hover { opacity: 1; }
+
+/* ---- Gold button ---- */
+.btn-gold {
+    background: #c9b990;
+    border: 1px solid #a8935e;
+    color: #2e2418;
+    padding: 7px 14px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.btn-gold:hover { background: #d4c59e; }
+
+/* ---- Sheet panel top tweak ---- */
+#panel-sheet .page {
+    padding-top: 0.75rem;
+}
