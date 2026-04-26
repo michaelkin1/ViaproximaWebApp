@@ -51,3 +51,15 @@ Public-facing app. Protect all write endpoints. Validate all inputs. Secure cook
 - All JS lives in wwwroot/js/ — modular files per feature
 - EF Core + SQLite via app.db — swap to postgres when hosted if needed
 - Icon discovery is folder-driven — adding icons requires no code changes
+- New pages get their own CSS and JS files in wwwroot/css/ and wwwroot/js/
+- No npm, no bundlers, no build step — vanilla JS only, loaded via @section Scripts
+
+## Äventyrsdagbok (Adventure Log)
+- Razor Page: `Pages/Aventyrsdagbok/Index.cshtml` (PageModel has `[Authorize]`)
+- CSS: `wwwroot/css/aventyrsdagbok.css`
+- JS: `wwwroot/js/aventyrsdagbok.js`
+- All state is currently in-memory JS only — no DB persistence yet
+- Images are stored as `URL.createObjectURL()` object URLs (local/session only) — no upload endpoint yet
+- Image links are stored inline in chapter `body_html` as `<span class="img-link" data-src="..." data-filename="...">word</span>`
+- `body_html` is the single source of truth for both text content and image link metadata
+- Layout uses `position: fixed; top: 56px` to escape the Bootstrap `.container` wrapper and fill the full viewport below the navbar

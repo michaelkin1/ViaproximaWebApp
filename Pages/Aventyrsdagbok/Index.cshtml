@@ -1,0 +1,72 @@
+@page
+@model Viaproxima.Web.Pages.Aventyrsdagbok.IndexModel
+@{ ViewData["Title"] = "Äventyrsdagbok"; }
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/aventyrsdagbok.css" asp-append-version="true" />
+}
+
+<div class="vp-dagbok">
+
+    <aside class="vp-dagbok__sidebar">
+        <div class="vp-dagbok__sidebar-header">
+            <span class="vp-dagbok__brand">VIAPROXIMA</span>
+            <span class="vp-dagbok__sidebar-title">Äventyrsdagbok</span>
+        </div>
+        <ul class="vp-dagbok__adventure-list" id="adventureList"></ul>
+        <div class="vp-dagbok__sidebar-footer">
+            <button class="vp-dagbok__new-btn" id="newAdventureBtn">+ NYTT ÄVENTYR</button>
+            <div class="vp-dagbok__inline-create" id="newAdventureInput" hidden>
+                <input type="text" id="newAdventureTitle" placeholder="Äventyrets namn…" autocomplete="off" />
+                <div class="vp-dagbok__inline-create-actions">
+                    <button id="createAdventureBtn" class="vp-dagbok__create-btn">Skapa</button>
+                    <button id="cancelAdventureBtn" class="vp-dagbok__cancel-btn">Avbryt</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="vp-dagbok__center">
+        <div class="vp-dagbok__adventure-header" id="adventureHeader">
+            <div class="vp-dagbok__header-title-row">
+                <span class="vp-dagbok__adv-title" id="adventureTitle">—</span>
+                <span class="vp-dagbok__adv-session" id="adventureSession"></span>
+            </div>
+            <div class="vp-dagbok__toolbar" id="toolbar">
+                <button class="vp-dagbok__tb-btn" id="tbBold" title="Fet"><b>B</b></button>
+                <button class="vp-dagbok__tb-btn" id="tbItalic" title="Kursiv"><i>I</i></button>
+                <button class="vp-dagbok__tb-btn" id="tbFontUp" title="Större text">A+</button>
+                <button class="vp-dagbok__tb-btn" id="tbFontDown" title="Mindre text">A−</button>
+                <button class="vp-dagbok__tb-btn vp-dagbok__tb-btn--image" id="tbLinkImage" title="Länka bild till markerad text">🖼 LÄNKA BILD</button>
+            </div>
+            <div class="vp-dagbok__toolbar-sep"></div>
+        </div>
+        <div class="vp-dagbok__chapters-area" id="chaptersArea">
+            <div class="vp-dagbok__empty" id="emptyState">Välj ett äventyr i sidopanelen.</div>
+        </div>
+        <div class="vp-dagbok__new-chapter-wrap" id="newChapterWrap" hidden>
+            <button class="vp-dagbok__new-btn vp-dagbok__new-btn--light" id="newChapterBtn">+ Nytt kapitel</button>
+        </div>
+    </div>
+
+    <aside class="vp-dagbok__image-panel" id="imagePanel" hidden>
+        <div class="vp-dagbok__panel-header">
+            <span class="vp-dagbok__panel-label">BILDLÄNKAR</span>
+            <div class="vp-dagbok__scope-toggle">
+                <button class="vp-dagbok__scope-btn active" id="scopeAdventure">Äventyr</button>
+                <span class="vp-dagbok__scope-sep">|</span>
+                <button class="vp-dagbok__scope-btn" id="scopeChapter">Kapitel</button>
+            </div>
+            <button class="vp-dagbok__panel-close" id="closePanelBtn" title="Stäng">×</button>
+        </div>
+        <div class="vp-dagbok__image-cards" id="imageCards"></div>
+    </aside>
+
+</div>
+
+<input type="file" id="imgFileInput" accept="image/*" style="display:none" />
+
+@section Scripts {
+    <script src="~/js/aventyrsdagbok.js" asp-append-version="true"></script>
+}
