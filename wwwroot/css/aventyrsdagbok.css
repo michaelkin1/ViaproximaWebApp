@@ -704,3 +704,47 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* ═══════════════════════════════════════════════════
+   UI POLISH — appended overrides, existing rules untouched
+   ═══════════════════════════════════════════════════ */
+
+/* Change 1 — sidebar header */
+.vp-dagbok__brand { display: none; }
+
+.vp-dagbok__sidebar-title {
+    font-size: 17px;
+    text-align: center;
+    letter-spacing: 0.08em;
+}
+
+/* Change 2 — adventure entries */
+.vp-dagbok__adv-session-tag { display: none; }
+.vp-dagbok__adv-session     { display: none; }
+
+.vp-dagbok__adv-name { font-size: 17px; }
+
+/* Change 3 — image panel chapter-group headers */
+.vp-dagbok__chapter-group-label {
+    font-size: 12px;
+    text-align: center;
+    letter-spacing: 0.14em;
+}
+
+/* Change 4 — new-adventure button (dark sidebar) */
+.vp-dagbok__new-btn {
+    border-style: solid;
+    border-color: var(--vp-gold-dark);
+    color: var(--vp-gold-dark);
+    font-weight: 600;
+    background: rgba(201, 185, 144, 0.06);
+}
+
+/* Change 4 — new-chapter button (light area) */
+.vp-dagbok__new-btn--light {
+    border-style: solid;
+    border-color: var(--vp-text-mid);
+    color: var(--vp-text);
+    font-weight: 600;
+    background: rgba(90, 64, 32, 0.07);
+}
