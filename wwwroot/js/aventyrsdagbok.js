@@ -29,6 +29,11 @@
         return state.adventures.find(a => a.id === state.activeAdventureId) || null;
     }
 
+    // Strip zero-width spaces used as cursor anchors after img-link insertion
+    function stripZwsp(html) {
+        return html ? html.replace(/​/g, '') : html;
+    }
+
     // ── API HELPERS ───────────────────────────────────────
     async function fetchXsrfToken() {
         try {
@@ -266,11 +271,73 @@
         });
 
         body.addEventListener('blur', () => {
-            ch.bodyHtml = body.innerHTML;
+            ch.bodyHtml = stripZwsp(body.innerHTML);
         });
 
         body.addEventListener('input', () => {
-            ch.bodyHtml = body.innerHTML;
+            ch.bodyHtml = stripZwsp(body.innerHTML);
+            scheduleAutosave(ch, body);
+        });
+
+        body.addEventListener('keydown', e => {
+            if (e.key !== ' ' && e.key !== 'Enter') return;
+
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0) return;
+            const anchor = sel.anchorNode;
+            if (!anchor) return;
+
+            const anchorEl = anchor.nodeType === Node.TEXT_NODE ? anchor.parentElement : anchor;
+            let parentSpan = anchorEl?.closest?.('.img-link');
+
+            // Boundary case: caret at offset 0 of a text node directly after an
+            // .img-link span. Visually outside, but Chrome re-adopts typed
+            // characters back into the span — treat as "inside" too.
+            if (!parentSpan && anchor.nodeType === Node.TEXT_NODE && sel.anchorOffset === 0) {
+                const prev = anchor.previousSibling;
+                if (prev?.nodeType === Node.ELEMENT_NODE && prev.classList?.contains('img-link')) {
+                    parentSpan = prev;
+                }
+            }
+            if (!parentSpan) return;
+
+            e.preventDefault();
+
+            // Place the caret between two ZWSPs in a fresh (or reused) text
+            // node after the span. Length >= 2 with caret in the middle keeps
+            // the position unambiguously inside the anchor, away from any
+            // boundary the browser could re-adopt into the span.
+            let anchorText = parentSpan.nextSibling;
+            const isZwspAnchor = anchorText
+                && anchorText.nodeType === Node.TEXT_NODE
+                && anchorText.data.length >= 2
+                && anchorText.data.charCodeAt(0) === 0x200B
+                && anchorText.data.charCodeAt(1) === 0x200B;
+            if (!isZwspAnchor) {
+                anchorText = document.createTextNode('​​');
+                parentSpan.parentNode.insertBefore(anchorText, parentSpan.nextSibling);
+            }
+
+            const r = document.createRange();
+            r.setStart(anchorText, 1);
+            r.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(r);
+
+            if (e.key === ' ') {
+                anchorText.insertData(1, ' ');
+                const r2 = document.createRange();
+                r2.setStart(anchorText, 2);
+                r2.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(r2);
+            } else if (e.shiftKey) {
+                document.execCommand('insertLineBreak');
+            } else {
+                document.execCommand('insertParagraph');
+            }
+
+            ch.bodyHtml = stripZwsp(body.innerHTML);
             scheduleAutosave(ch, body);
         });
 
@@ -359,10 +426,10 @@
             const bodyEl = chEl.querySelector('.vp-dagbok__chapter-body');
             if (titleInput) ch.title = titleInput.value;
             if (dateInput) ch.date = dateInput.value;
-            if (bodyEl) ch.bodyHtml = bodyEl.innerHTML;
+            if (bodyEl) ch.bodyHtml = stripZwsp(bodyEl.innerHTML);
             ch.collapsed = chEl.classList.contains('collapsed');
         } else if (editorEl && document.contains(editorEl)) {
-            ch.bodyHtml = editorEl.innerHTML;
+            ch.bodyHtml = stripZwsp(editorEl.innerHTML);
         }
         console.log('[autosave] PUT /api/chapters/' + ch.id, { bodyHtml: ch.bodyHtml });
         try {
@@ -522,10 +589,22 @@
             range.insertNode(span);
         }
 
+        // Place caret between two ZWSPs in a text node after the span. A
+        // length-1 anchor leaves the caret at a boundary that Chrome re-adopts
+        // into the span on Space / Shift+Enter; placing it in the middle of a
+        // 2-char anchor keeps it unambiguously outside. ZWSPs are stripped on
+        // save by stripZwsp().
+        const afterSpan = document.createTextNode('​​');
+        span.parentNode.insertBefore(afterSpan, span.nextSibling);
+
+        const cursorRange = document.createRange();
+        cursorRange.setStart(afterSpan, 1);
+        cursorRange.collapse(true);
         sel.removeAllRanges();
+        sel.addRange(cursorRange);
 
         // Sync bodyHtml and immediately save
-        ch.bodyHtml = editorEl.innerHTML;
+        ch.bodyHtml = stripZwsp(editorEl.innerHTML);
         state.lastFocusedChapterId = chId;
         clearTimeout(autosaveTimers[ch.id]);
         doAutosave(ch, editorEl);
@@ -681,7 +760,7 @@
         tmp.innerHTML = ch.bodyHtml;
         const span = tmp.querySelector(`.img-link[data-image-id="${imageId}"]`);
         if (span) span.replaceWith(document.createTextNode(span.textContent));
-        ch.bodyHtml = tmp.innerHTML;
+        ch.bodyHtml = stripZwsp(tmp.innerHTML);
 
         // Update live editor
         const editorEl = chaptersArea.querySelector(`.vp-dagbok__chapter-body[data-chapter-id="${chapterId}"]`);
