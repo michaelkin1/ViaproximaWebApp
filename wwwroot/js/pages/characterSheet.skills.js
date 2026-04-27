@@ -167,7 +167,12 @@
     VP.sheet = VP.sheet || {};
     VP.sheet.skills = {
         reload: async function(newId) {
-            characterId = String(newId);
+            characterId = newId ? String(newId) : null;
+            if (!characterId) {
+                lardomarRows.innerHTML = "";
+                evolutionerRows.innerHTML = "";
+                return;
+            }
             await init();
         }
     };

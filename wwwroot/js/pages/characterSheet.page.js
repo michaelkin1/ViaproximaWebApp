@@ -434,6 +434,8 @@
         if (hpLegsMax)  hpLegsMax.textContent  = "0";
         state.characterId = null; characterId = null;
         state.itemsCache = [];
+        VP.grid.render.renderSlots(slotsGrid, itemsGrid, state, 0, 0);
+        if (barkraftValue) barkraftValue.textContent = "0";
         const img = el("portraitImg"); const empty = el("portraitEmpty");
         if (img) { img.src = ""; img.style.display = "none"; }
         if (empty) empty.style.display = "";
