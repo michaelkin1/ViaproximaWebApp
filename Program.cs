@@ -703,6 +703,228 @@ public class Program
             return Results.Ok(new { url = $"/portraits/{id}{ext}" });
         }).RequireAuthorization("CanWrite");
 
+        // =========================
+        // Adventure Log API
+        // =========================
+
+        app.MapGet("/api/adventures", async (ApplicationDbContext db, HttpContext context) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var adventures = await db.Adventures
+                .Where(a => a.UserId == username)
+                .OrderBy(a => a.SortOrder)
+                .Select(a => new { a.Id, a.UserId, a.Title, a.Session, a.SortOrder, a.CreatedAt })
+                .ToListAsync();
+            return Results.Ok(adventures);
+        }).RequireAuthorization();
+
+        app.MapPost("/api/adventures", async (ApplicationDbContext db, HttpContext context, AdventureCreateDto dto) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var maxSort = await db.Adventures
+                .Where(a => a.UserId == username)
+                .MaxAsync(a => (int?)a.SortOrder) ?? 0;
+            var adv = new Adventure
+            {
+                UserId = username,
+                Title = dto.Title,
+                Session = dto.Session,
+                SortOrder = maxSort + 1,
+                CreatedAt = DateTime.UtcNow,
+            };
+            db.Adventures.Add(adv);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { adv.Id, adv.UserId, adv.Title, adv.Session, adv.SortOrder, adv.CreatedAt });
+        }).RequireAuthorization("CanWrite");
+
+        app.MapDelete("/api/adventures/{id:int}", async (ApplicationDbContext db, HttpContext context, IWebHostEnvironment env, int id) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var adv = await db.Adventures.FindAsync(id);
+            if (adv is null) return Results.NotFound();
+            if (adv.UserId != username) return Results.StatusCode(403);
+
+            try
+            {
+                var folder = Path.Combine(env.WebRootPath, "AdventureImages", id.ToString());
+                if (Directory.Exists(folder)) Directory.Delete(folder, recursive: true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[delete-adventure] Skipped folder for adventure {id}: {ex.Message}");
+            }
+
+            db.Adventures.Remove(adv);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        }).RequireAuthorization("CanWrite");
+
+        app.MapGet("/api/adventures/{id:int}/chapters", async (ApplicationDbContext db, HttpContext context, int id) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var adv = await db.Adventures.FindAsync(id);
+            if (adv is null) return Results.NotFound();
+            if (adv.UserId != username) return Results.StatusCode(403);
+
+            var chapters = await db.Chapters
+                .Where(c => c.AdventureId == id)
+                .OrderBy(c => c.SortOrder)
+                .Select(c => new { c.Id, c.AdventureId, c.Title, c.Date, c.BodyHtml, c.SortOrder, c.Collapsed })
+                .ToListAsync();
+            return Results.Ok(chapters);
+        }).RequireAuthorization();
+
+        app.MapPost("/api/adventures/{id:int}/chapters", async (ApplicationDbContext db, HttpContext context, int id, ChapterCreateDto dto) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var adv = await db.Adventures.FindAsync(id);
+            if (adv is null) return Results.NotFound();
+            if (adv.UserId != username) return Results.StatusCode(403);
+
+            var maxSort = await db.Chapters
+                .Where(c => c.AdventureId == id)
+                .MaxAsync(c => (int?)c.SortOrder) ?? 0;
+            var ch = new Chapter
+            {
+                AdventureId = id,
+                Title = dto.Title,
+                Date = dto.Date,
+                BodyHtml = "",
+                SortOrder = maxSort + 1,
+                Collapsed = false,
+            };
+            db.Chapters.Add(ch);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { ch.Id, ch.AdventureId, ch.Title, ch.Date, ch.BodyHtml, ch.SortOrder, ch.Collapsed });
+        }).RequireAuthorization("CanWrite");
+
+        app.MapPut("/api/chapters/{id:int}", async (ApplicationDbContext db, HttpContext context, int id, ChapterUpdateDto dto) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var ch = await db.Chapters
+                .Include(c => c.Adventure)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (ch is null) return Results.NotFound();
+            if (ch.Adventure.UserId != username) return Results.StatusCode(403);
+
+            ch.Title = dto.Title;
+            ch.Date = dto.Date;
+            ch.BodyHtml = dto.BodyHtml;
+            ch.Collapsed = dto.Collapsed;
+            await db.SaveChangesAsync();
+            return Results.Ok();
+        }).RequireAuthorization("CanWrite");
+
+        app.MapDelete("/api/chapters/{id:int}", async (ApplicationDbContext db, HttpContext context, IWebHostEnvironment env, int id) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var ch = await db.Chapters
+                .Include(c => c.Adventure)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (ch is null) return Results.NotFound();
+            if (ch.Adventure.UserId != username) return Results.StatusCode(403);
+
+            var imageLinks = await db.ImageLinks
+                .Where(il => il.ChapterId == id)
+                .ToListAsync();
+
+            foreach (var link in imageLinks)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(link.ImagePath) ||
+                        link.ImagePath.StartsWith("blob:") ||
+                        link.ImagePath.StartsWith("http"))
+                        continue;
+
+                    var fullPath = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        link.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
+                    );
+
+                    if (File.Exists(fullPath)) File.Delete(fullPath);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[delete-chapter] Skipped file {link.ImagePath}: {ex.Message}");
+                }
+            }
+
+            db.Chapters.Remove(ch);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        }).RequireAuthorization("CanWrite");
+
+        app.MapPost("/api/chapters/{id:int}/images", async (ApplicationDbContext db, HttpContext context, IWebHostEnvironment env, int id, IFormFile file) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var ch = await db.Chapters
+                .Include(c => c.Adventure)
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (ch is null) return Results.NotFound();
+            if (ch.Adventure.UserId != username) return Results.StatusCode(403);
+
+            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
+            if (ext is not (".png" or ".jpg" or ".jpeg" or ".webp" or ".gif"))
+                return Results.BadRequest("Unsupported file type.");
+
+            var folder = Path.Combine(env.WebRootPath, "AdventureImages", ch.AdventureId.ToString());
+            Directory.CreateDirectory(folder);
+
+            var savedName = $"{Guid.NewGuid():N}_{file.FileName}";
+            var dest = Path.Combine(folder, savedName);
+            await using var stream = File.Create(dest);
+            await file.CopyToAsync(stream);
+
+            var imagePath = $"/AdventureImages/{ch.AdventureId}/{savedName}";
+            var imageLink = new ImageLink
+            {
+                ChapterId = id,
+                AnchorText = file.FileName,
+                ImagePath = imagePath,
+                FileName = file.FileName,
+            };
+            db.ImageLinks.Add(imageLink);
+            await db.SaveChangesAsync();
+
+            return Results.Ok(new { id = imageLink.Id, imagePath, fileName = file.FileName });
+        }).RequireAuthorization("CanWrite").DisableAntiforgery();
+
+        app.MapDelete("/api/images/{id:int}", async (ApplicationDbContext db, HttpContext context, IWebHostEnvironment env, int id) =>
+        {
+            var username = context.User.Identity!.Name!;
+            var link = await db.ImageLinks
+                .Include(il => il.Chapter)
+                    .ThenInclude(c => c.Adventure)
+                .FirstOrDefaultAsync(il => il.Id == id);
+            if (link is null) return Results.NotFound();
+            if (link.Chapter.Adventure.UserId != username) return Results.StatusCode(403);
+
+            try
+            {
+                if (!string.IsNullOrEmpty(link.ImagePath) &&
+                    !link.ImagePath.StartsWith("blob:") &&
+                    !link.ImagePath.StartsWith("http"))
+                {
+                    var fullPath = Path.Combine(
+                        Directory.GetCurrentDirectory(),
+                        "wwwroot",
+                        link.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
+                    );
+                    if (File.Exists(fullPath)) File.Delete(fullPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[delete-image] Skipped file {link.ImagePath}: {ex.Message}");
+            }
+
+            db.ImageLinks.Remove(link);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        }).RequireAuthorization("CanWrite");
+
         app.MapRazorPages();
 
         app.Run();

@@ -55,11 +55,26 @@ Public-facing app. Protect all write endpoints. Validate all inputs. Secure cook
 - No npm, no bundlers, no build step — vanilla JS only, loaded via @section Scripts
 
 ## Äventyrsdagbok (Adventure Log)
-- Razor Page: `Pages/Aventyrsdagbok/Index.cshtml` (PageModel has `[Authorize]`)
-- CSS: `wwwroot/css/aventyrsdagbok.css`
-- JS: `wwwroot/js/aventyrsdagbok.js`
-- All state is currently in-memory JS only — no DB persistence yet
-- Images are stored as `URL.createObjectURL()` object URLs (local/session only) — no upload endpoint yet
-- Image links are stored inline in chapter `body_html` as `<span class="img-link" data-src="..." data-filename="...">word</span>`
-- `body_html` is the single source of truth for both text content and image link metadata
-- Layout uses `position: fixed; top: 56px` to escape the Bootstrap `.container` wrapper and fill the full viewport below the navbar
+Files: `Pages/Aventyrsdagbok/Index.cshtml`, `wwwroot/css/aventyrsdagbok.css`, `wwwroot/js/aventyrsdagbok.js`, `Data/Adventure.cs`, `Data/Chapter.cs`, `Data/ImageLink.cs`
+
+**DB:** Three tables via `AdventureLog` migration. `Adventures.UserId` stores username string (not FK). Cascade delete configured explicitly in `OnModelCreating` for Chapter→Adventure and ImageLink→Chapter.
+
+**API endpoints:**
+```
+GET/POST   /api/adventures
+DELETE     /api/adventures/{id}          → deletes wwwroot/AdventureImages/{id}/
+GET/POST   /api/adventures/{id}/chapters
+PUT/DELETE /api/chapters/{id}            → DELETE also deletes physical image files
+POST       /api/chapters/{id}/images     → multipart; returns { id, imagePath, fileName }
+DELETE     /api/images/{id}              → also deletes physical file
+```
+All endpoints require auth and verify ownership via `chapter → adventure → user`.
+
+**Autosave:** 10s debounce per chapter; resets on every keystroke in body/title; fires immediately on collapse/expand and adventure switch. Shows "Sparad ✓" on success.
+
+**Image-linked words:** Stored as `<span class="img-link" data-src="..." data-image-id="..." data-filename="...">word</span>` inline in `BodyHtml`. `data-image-id` connects DOM spans to `ImageLink` rows for delete. Image URLs are real `/AdventureImages/...` paths — never `createObjectURL()` blobs.
+
+**Critical conventions:**
+- Always project EF entities to anonymous objects before returning from endpoints — navigation properties on both sides cause JSON object cycles (HTTP 500). Use `.Select(x => new { x.Id, … })` and omit nav props.
+- Physical-file lifecycle must match DB lifecycle: deleting a parent entity must also delete its files on disk.
+- During development: wrap new endpoints in `try/catch` returning `Results.Problem(ex.Message)` so 500s surface the actual error.

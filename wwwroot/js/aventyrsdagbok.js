@@ -13,100 +13,70 @@
         savedRange: null,
     };
 
-    // ── UTILS ─────────────────────────────────────────────
-    function uid() {
-        return Date.now().toString(36) + Math.random().toString(36).slice(2);
-    }
+    // ── XSRF TOKEN ────────────────────────────────────────
+    let xsrfToken = null;
 
+    // ── AUTOSAVE TIMERS ───────────────────────────────────
+    const autosaveTimers = {};
+
+    // ── UTILS ─────────────────────────────────────────────
     function todayStr() {
         const d = new Date();
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    }
-
-    function escapeHtml(str) {
-        return String(str)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;');
     }
 
     function getActiveAdventure() {
         return state.adventures.find(a => a.id === state.activeAdventureId) || null;
     }
 
-    // ── SEED DATA ─────────────────────────────────────────
-    function seedData() {
-        state.adventures = [
-            {
-                id: 'adv1',
-                title: 'Askens Dal',
-                session: 'Session 1–4',
-                chapters: [
-                    {
-                        id: 'ch1',
-                        title: 'Ankomsten till byn',
-                        date: '2026-03-12',
-                        body_html: '<p>Sällskapet anlände till <strong>Grenholm</strong> vid skymningens fall. Byborna stirrade misstänksamt, men krögaren <em>Halvdan den Röde</em> välkomnade dem med ett skummigt ölkrus och ett varnande ord om skogen i norr.</p><p>Natten var orolig. Någon knackade på luckan tre gånger – sedan tystnad.</p>',
-                        collapsed: false,
-                    },
-                    {
-                        id: 'ch2',
-                        title: 'Skogen talar',
-                        date: '2026-03-19',
-                        body_html: '<p>Djupt in bland <strong>Silverbjörkarna</strong> fann de runstenen som ingen vågat röra på generationer. Inskriptionen löd: <em>"Den som vaknar elden, bär askan."</em></p>',
-                        collapsed: false,
-                    },
-                ],
-            },
-            {
-                id: 'adv2',
-                title: 'Handelsskrånets Hemlighet',
-                session: 'Session 5–6',
-                chapters: [
-                    {
-                        id: 'ch3',
-                        title: 'Mötet i källaren',
-                        date: '2026-04-02',
-                        body_html: '<p>Skrånmästare <strong>Aldric Vann</strong> hävdade sin oskuld med en övertygelse som nästan var trovärdig. Men handen skakade när han signerade dokumentet.</p>',
-                        collapsed: false,
-                    },
-                    {
-                        id: 'ch4',
-                        title: 'Falska räkenskaper',
-                        date: '2026-04-09',
-                        body_html: '<p>Tre uppsättningar av räkenskapsboken — en för skrånet, en för stadens fogde, och en för <em>den tredje köparen</em> vars namn aldrig nämns högt.</p>',
-                        collapsed: true,
-                    },
-                ],
-            },
-        ];
+    // ── API HELPERS ───────────────────────────────────────
+    async function fetchXsrfToken() {
+        try {
+            const resp = await fetch('/antiforgery/token');
+            if (resp.ok) {
+                const data = await resp.json();
+                xsrfToken = data.token;
+            }
+        } catch (e) {
+            console.error('Failed to fetch XSRF token', e);
+        }
+    }
+
+    async function apiFetch(url, opts = {}) {
+        const isGet = !opts.method || opts.method.toUpperCase() === 'GET';
+        const headers = {};
+        if (!isGet && xsrfToken) headers['X-XSRF-TOKEN'] = xsrfToken;
+        if (!isGet && !(opts.body instanceof FormData)) headers['Content-Type'] = 'application/json';
+        Object.assign(headers, opts.headers || {});
+        const resp = await fetch(url, { ...opts, headers });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        return resp;
     }
 
     // ── ELEMENTS ──────────────────────────────────────────
-    const adventureList         = document.getElementById('adventureList');
-    const adventureTitle        = document.getElementById('adventureTitle');
-    const adventureSession      = document.getElementById('adventureSession');
-    const chaptersArea          = document.getElementById('chaptersArea');
-    const emptyState            = document.getElementById('emptyState');
-    const newChapterWrap        = document.getElementById('newChapterWrap');
-    const newAdventureBtn       = document.getElementById('newAdventureBtn');
-    const newAdventureInput     = document.getElementById('newAdventureInput');
-    const newAdventureTitleInp  = document.getElementById('newAdventureTitle');
-    const createAdventureBtn    = document.getElementById('createAdventureBtn');
-    const cancelAdventureBtn    = document.getElementById('cancelAdventureBtn');
-    const newChapterBtn         = document.getElementById('newChapterBtn');
-    const tbBold                = document.getElementById('tbBold');
-    const tbItalic              = document.getElementById('tbItalic');
-    const tbFontUp              = document.getElementById('tbFontUp');
-    const tbFontDown            = document.getElementById('tbFontDown');
-    const tbLinkImage           = document.getElementById('tbLinkImage');
-    const imagePanel            = document.getElementById('imagePanel');
-    const imageCards            = document.getElementById('imageCards');
-    const closePanelBtn         = document.getElementById('closePanelBtn');
-    const scopeAdventureBtn     = document.getElementById('scopeAdventure');
-    const scopeChapterBtn       = document.getElementById('scopeChapter');
-    const imgFileInput          = document.getElementById('imgFileInput');
+    const adventureList        = document.getElementById('adventureList');
+    const adventureTitle       = document.getElementById('adventureTitle');
+    const adventureSession     = document.getElementById('adventureSession');
+    const chaptersArea         = document.getElementById('chaptersArea');
+    const emptyState           = document.getElementById('emptyState');
+    const newChapterWrap       = document.getElementById('newChapterWrap');
+    const newAdventureBtn      = document.getElementById('newAdventureBtn');
+    const newAdventureInput    = document.getElementById('newAdventureInput');
+    const newAdventureTitleInp = document.getElementById('newAdventureTitle');
+    const createAdventureBtn   = document.getElementById('createAdventureBtn');
+    const cancelAdventureBtn   = document.getElementById('cancelAdventureBtn');
+    const newChapterBtn        = document.getElementById('newChapterBtn');
+    const tbBold               = document.getElementById('tbBold');
+    const tbItalic             = document.getElementById('tbItalic');
+    const tbFontUp             = document.getElementById('tbFontUp');
+    const tbFontDown           = document.getElementById('tbFontDown');
+    const tbLinkImage          = document.getElementById('tbLinkImage');
+    const imagePanel           = document.getElementById('imagePanel');
+    const imageCards           = document.getElementById('imageCards');
+    const closePanelBtn        = document.getElementById('closePanelBtn');
+    const scopeAdventureBtn    = document.getElementById('scopeAdventure');
+    const scopeChapterBtn      = document.getElementById('scopeChapter');
+    const imgFileInput         = document.getElementById('imgFileInput');
 
     // ── ADVENTURE LIST ────────────────────────────────────
     function renderAdventureList() {
@@ -128,9 +98,9 @@
             deleteBtn.className = 'vp-dagbok__adv-delete';
             deleteBtn.textContent = '×';
             deleteBtn.title = 'Radera äventyr';
-            deleteBtn.addEventListener('click', e => {
+            deleteBtn.addEventListener('click', async e => {
                 e.stopPropagation();
-                deleteAdventure(adv.id, adv.title);
+                await deleteAdventure(adv.id, adv.title);
             });
 
             li.appendChild(nameEl);
@@ -141,7 +111,10 @@
         });
     }
 
-    function selectAdventure(id) {
+    async function selectAdventure(id) {
+        if (state.activeAdventureId !== null && state.activeAdventureId !== id) {
+            await flushPendingSaves();
+        }
         state.activeAdventureId = id;
         state.lastFocusedChapterId = null;
         state.lastFocusedEditor = null;
@@ -154,26 +127,44 @@
         emptyState.hidden = true;
         newChapterWrap.hidden = false;
 
+        try {
+            const resp = await apiFetch(`/api/adventures/${id}/chapters`);
+            adv.chapters = await resp.json();
+        } catch (e) {
+            console.error('Failed to load chapters', e);
+            adv.chapters = [];
+        }
+
         renderAdventureList();
         renderChapters();
         renderImagePanel();
     }
 
-    function createAdventure(title) {
+    async function createAdventure(title) {
         if (!title.trim()) return;
-        const adv = {
-            id: uid(),
-            title: title.trim(),
-            session: 'Session 1',
-            chapters: [],
-        };
-        state.adventures.push(adv);
-        renderAdventureList();
-        selectAdventure(adv.id);
+        try {
+            const resp = await apiFetch('/api/adventures', {
+                method: 'POST',
+                body: JSON.stringify({ title: title.trim(), session: 'Session 1' }),
+            });
+            const adv = await resp.json();
+            adv.chapters = [];
+            state.adventures.push(adv);
+            renderAdventureList();
+            await selectAdventure(adv.id);
+        } catch (e) {
+            console.error('Failed to create adventure', e);
+        }
     }
 
-    function deleteAdventure(id, title) {
+    async function deleteAdventure(id, title) {
         if (!confirm(`Vill du verkligen radera äventyret '${title}'? Detta går inte att ångra.`)) return;
+        try {
+            await apiFetch(`/api/adventures/${id}`, { method: 'DELETE' });
+        } catch (e) {
+            console.error('Failed to delete adventure', e);
+            return;
+        }
         state.adventures = state.adventures.filter(a => a.id !== id);
         if (state.activeAdventureId === id) {
             state.activeAdventureId = null;
@@ -183,6 +174,9 @@
             adventureTitle.textContent = '—';
             adventureSession.textContent = '';
             emptyState.hidden = false;
+            emptyState.textContent = state.adventures.length === 0
+                ? 'Inga äventyr ännu — skapa ett i sidopanelen.'
+                : 'Välj ett äventyr i sidopanelen.';
             newChapterWrap.hidden = true;
             Array.from(chaptersArea.querySelectorAll('.vp-dagbok__chapter')).forEach(el => el.remove());
             imageCards.innerHTML = '';
@@ -201,7 +195,7 @@
             const el = buildChapterEl(ch, i + 1);
             chaptersArea.appendChild(el);
             const body = el.querySelector('.vp-dagbok__chapter-body');
-            if (ch.body_html) body.innerHTML = ch.body_html;
+            if (ch.bodyHtml) body.innerHTML = ch.bodyHtml;
         });
     }
 
@@ -214,6 +208,15 @@
         const header = document.createElement('div');
         header.className = 'vp-dagbok__chapter-header';
 
+        const chDeleteBtn = document.createElement('button');
+        chDeleteBtn.className = 'vp-dagbok__chapter-delete';
+        chDeleteBtn.textContent = '×';
+        chDeleteBtn.title = 'Radera kapitel';
+        chDeleteBtn.addEventListener('click', async e => {
+            e.stopPropagation();
+            await deleteChapter(ch, el);
+        });
+
         const badge = document.createElement('span');
         badge.className = 'vp-dagbok__chapter-badge';
         badge.textContent = `Kap. ${n}`;
@@ -223,32 +226,27 @@
         titleInput.className = 'vp-dagbok__chapter-title-input';
         titleInput.value = ch.title;
         titleInput.addEventListener('click', e => e.stopPropagation());
-        titleInput.addEventListener('change', () => { ch.title = titleInput.value; });
 
         const dateInput = document.createElement('input');
         dateInput.type = 'text';
         dateInput.className = 'vp-dagbok__chapter-date-input';
         dateInput.value = ch.date;
         dateInput.addEventListener('click', e => e.stopPropagation());
-        dateInput.addEventListener('change', () => { ch.date = dateInput.value; });
 
         const chevron = document.createElement('span');
         chevron.className = 'vp-dagbok__chapter-chevron';
         chevron.textContent = '▾';
 
-        const chDeleteBtn = document.createElement('button');
-        chDeleteBtn.className = 'vp-dagbok__chapter-delete';
-        chDeleteBtn.textContent = '×';
-        chDeleteBtn.title = 'Radera kapitel';
-        chDeleteBtn.addEventListener('click', e => {
-            e.stopPropagation();
-            deleteChapter(ch, el);
-        });
+        const savedIndicator = document.createElement('span');
+        savedIndicator.className = 'vp-dagbok__chapter-saved';
+        savedIndicator.textContent = 'Sparad ✓';
+        savedIndicator.style.cssText = 'font-family:var(--font-display);font-size:8px;letter-spacing:0.08em;color:var(--vp-text-muted);opacity:0;transition:opacity 0.4s;flex-shrink:0;';
 
         header.appendChild(chDeleteBtn);
         header.appendChild(badge);
         header.appendChild(titleInput);
         header.appendChild(dateInput);
+        header.appendChild(savedIndicator);
         header.appendChild(chevron);
         header.addEventListener('click', () => toggleChapter(ch, el));
 
@@ -268,7 +266,22 @@
         });
 
         body.addEventListener('blur', () => {
-            ch.body_html = body.innerHTML;
+            ch.bodyHtml = body.innerHTML;
+        });
+
+        body.addEventListener('input', () => {
+            ch.bodyHtml = body.innerHTML;
+            scheduleAutosave(ch, body);
+        });
+
+        titleInput.addEventListener('input', () => {
+            ch.title = titleInput.value;
+            scheduleAutosave(ch, body);
+        });
+
+        dateInput.addEventListener('input', () => {
+            ch.date = dateInput.value;
+            scheduleAutosave(ch, body);
         });
 
         bodyWrap.appendChild(body);
@@ -281,39 +294,47 @@
     function toggleChapter(ch, el) {
         ch.collapsed = !ch.collapsed;
         el.classList.toggle('collapsed', ch.collapsed);
+        const body = el.querySelector('.vp-dagbok__chapter-body');
+        clearTimeout(autosaveTimers[ch.id]);
+        doAutosave(ch, body);
     }
 
-    function createChapter() {
+    async function createChapter() {
         const adv = getActiveAdventure();
         if (!adv) return;
-        const ch = {
-            id: uid(),
-            title: 'Nytt kapitel',
-            date: todayStr(),
-            body_html: '',
-            collapsed: false,
-        };
-        adv.chapters.push(ch);
-        renderChapters();
-        // Scroll to and focus new chapter
-        chaptersArea.scrollTop = chaptersArea.scrollHeight;
-        const newEl = chaptersArea.querySelector(`[data-chapter-id="${ch.id}"]`);
-        if (newEl) {
-            const chapterEl = newEl.closest('.vp-dagbok__chapter');
-            const titleInput = chapterEl && chapterEl.querySelector('.vp-dagbok__chapter-title-input');
-            if (titleInput) {
-                titleInput.select();
-                titleInput.focus();
+        try {
+            const resp = await apiFetch(`/api/adventures/${adv.id}/chapters`, {
+                method: 'POST',
+                body: JSON.stringify({ title: 'Nytt kapitel', date: todayStr() }),
+            });
+            const ch = await resp.json();
+            adv.chapters.push(ch);
+            renderChapters();
+            chaptersArea.scrollTop = chaptersArea.scrollHeight;
+            const bodyEl = chaptersArea.querySelector(`.vp-dagbok__chapter-body[data-chapter-id="${ch.id}"]`);
+            if (bodyEl) {
+                const chapterEl = bodyEl.closest('.vp-dagbok__chapter');
+                const titleInput = chapterEl && chapterEl.querySelector('.vp-dagbok__chapter-title-input');
+                if (titleInput) { titleInput.select(); titleInput.focus(); }
             }
+        } catch (e) {
+            console.error('Failed to create chapter', e);
         }
     }
 
-    function deleteChapter(ch, el) {
+    async function deleteChapter(ch, el) {
         if (!confirm(`Vill du verkligen radera kapitlet '${ch.title}'? Detta går inte att ångra.`)) return;
+        try {
+            await apiFetch(`/api/chapters/${ch.id}`, { method: 'DELETE' });
+        } catch (e) {
+            console.error('Failed to delete chapter', e);
+            return;
+        }
         const adv = getActiveAdventure();
-        if (!adv) return;
-        adv.chapters = adv.chapters.filter(c => c.id !== ch.id);
+        if (adv) adv.chapters = adv.chapters.filter(c => c.id !== ch.id);
         el.remove();
+        clearTimeout(autosaveTimers[ch.id]);
+        delete autosaveTimers[ch.id];
         if (state.lastFocusedChapterId === ch.id) {
             state.lastFocusedChapterId = null;
             state.lastFocusedEditor = null;
@@ -322,6 +343,71 @@
             state.activeImageLinkEl = null;
         }
         renderImagePanel();
+    }
+
+    // ── AUTOSAVE ──────────────────────────────────────────
+    function scheduleAutosave(ch, editorEl) {
+        clearTimeout(autosaveTimers[ch.id]);
+        autosaveTimers[ch.id] = setTimeout(() => doAutosave(ch, editorEl), 10000);
+    }
+
+    async function doAutosave(ch, editorEl) {
+        const chEl = chaptersArea.querySelector(`.vp-dagbok__chapter[data-chapter-id="${ch.id}"]`);
+        if (chEl) {
+            const titleInput = chEl.querySelector('.vp-dagbok__chapter-title-input');
+            const dateInput = chEl.querySelector('.vp-dagbok__chapter-date-input');
+            const bodyEl = chEl.querySelector('.vp-dagbok__chapter-body');
+            if (titleInput) ch.title = titleInput.value;
+            if (dateInput) ch.date = dateInput.value;
+            if (bodyEl) ch.bodyHtml = bodyEl.innerHTML;
+            ch.collapsed = chEl.classList.contains('collapsed');
+        } else if (editorEl && document.contains(editorEl)) {
+            ch.bodyHtml = editorEl.innerHTML;
+        }
+        console.log('[autosave] PUT /api/chapters/' + ch.id, { bodyHtml: ch.bodyHtml });
+        try {
+            await apiFetch(`/api/chapters/${ch.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    title: ch.title,
+                    date: ch.date,
+                    bodyHtml: ch.bodyHtml,
+                    collapsed: ch.collapsed,
+                }),
+            });
+            showSavedIndicator(ch.id);
+        } catch (e) {
+            console.error('Autosave failed', e);
+        }
+    }
+
+    async function flushPendingSaves() {
+        const promises = [];
+        for (const id of Object.keys(autosaveTimers)) {
+            clearTimeout(autosaveTimers[id]);
+            delete autosaveTimers[id];
+            const chId = parseInt(id, 10);
+            let ch = null;
+            for (const adv of state.adventures) {
+                const found = (adv.chapters || []).find(c => c.id === chId);
+                if (found) { ch = found; break; }
+            }
+            if (ch) {
+                const editorEl = chaptersArea.querySelector(`.vp-dagbok__chapter-body[data-chapter-id="${chId}"]`);
+                promises.push(doAutosave(ch, editorEl));
+            }
+        }
+        await Promise.all(promises);
+    }
+
+    function showSavedIndicator(chapterId) {
+        const chEl = chaptersArea.querySelector(`.vp-dagbok__chapter[data-chapter-id="${chapterId}"]`);
+        if (!chEl) return;
+        const indicator = chEl.querySelector('.vp-dagbok__chapter-saved');
+        if (!indicator) return;
+        indicator.style.opacity = '1';
+        clearTimeout(indicator._fadeTimer);
+        indicator._fadeTimer = setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
     }
 
     // ── TOOLBAR ───────────────────────────────────────────
@@ -388,53 +474,64 @@
         imgFileInput.click();
     }
 
-    imgFileInput.addEventListener('change', function () {
+    imgFileInput.addEventListener('change', async function () {
         const file = this.files[0];
-        if (!file || !state.savedRange) {
-            this.value = '';
-            return;
-        }
+        if (!file || !state.savedRange) { this.value = ''; return; }
 
-        const objectUrl = URL.createObjectURL(file);
-        const filename = file.name;
         const range = state.savedRange;
         const editorEl = editorFromNode(range.commonAncestorContainer);
+        if (!editorEl) { this.value = ''; state.savedRange = null; return; }
 
-        // Restore selection so execCommand-based ops still work if needed
+        const chId = parseInt(editorEl.dataset.chapterId, 10);
+        const adv = getActiveAdventure();
+        const ch = adv?.chapters.find(c => c.id === chId);
+        if (!ch) { this.value = ''; state.savedRange = null; return; }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        let uploadResult;
+        try {
+            const resp = await apiFetch(`/api/chapters/${chId}/images`, {
+                method: 'POST',
+                body: formData,
+            });
+            uploadResult = await resp.json();
+        } catch (e) {
+            console.error('Image upload failed', e);
+            alert('Kunde inte ladda upp bilden. Försök igen.');
+            this.value = ''; state.savedRange = null; return;
+        }
+
+        // Restore selection and wrap in img-link span
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
 
-        // Wrap the selected range in an img-link span
         const span = document.createElement('span');
         span.className = 'img-link';
-        span.dataset.src = objectUrl;
-        span.dataset.filename = filename;
+        span.dataset.src = uploadResult.imagePath;
+        span.dataset.filename = uploadResult.fileName;
+        span.dataset.imageId = String(uploadResult.id);
 
         try {
             range.surroundContents(span);
         } catch (_) {
-            // Cross-element selection: extract, wrap, re-insert
             const fragment = range.extractContents();
             span.appendChild(fragment);
             range.insertNode(span);
         }
 
-        // Sync body_html
-        if (editorEl) {
-            const chId = editorEl.dataset.chapterId;
-            const adv = getActiveAdventure();
-            if (adv) {
-                const ch = adv.chapters.find(c => c.id === chId);
-                if (ch) ch.body_html = editorEl.innerHTML;
-            }
-            state.lastFocusedChapterId = chId;
-        }
-
         sel.removeAllRanges();
+
+        // Sync bodyHtml and immediately save
+        ch.bodyHtml = editorEl.innerHTML;
+        state.lastFocusedChapterId = chId;
+        clearTimeout(autosaveTimers[ch.id]);
+        doAutosave(ch, editorEl);
+
         state.savedRange = null;
         this.value = '';
-
         renderImagePanel();
     });
 
@@ -448,7 +545,7 @@
         span.classList.add('highlighted');
 
         const bodyEl = span.closest('.vp-dagbok__chapter-body');
-        if (bodyEl) state.lastFocusedChapterId = bodyEl.dataset.chapterId;
+        if (bodyEl) state.lastFocusedChapterId = parseInt(bodyEl.dataset.chapterId, 10);
 
         openImagePanel();
         renderImagePanel();
@@ -473,7 +570,8 @@
             src: el.dataset.src || '',
             filename: el.dataset.filename || '',
             word: el.textContent,
-            chapterId: chapterId || null,
+            chapterId: chapterId,
+            imageId: el.dataset.imageId ? parseInt(el.dataset.imageId, 10) : null,
         }));
     }
 
@@ -484,7 +582,7 @@
 
         if (state.activePanelScope === 'adventure') {
             adv.chapters.forEach(ch => {
-                const links = extractLinksFromHtml(ch.body_html, ch.id);
+                const links = extractLinksFromHtml(ch.bodyHtml, ch.id);
                 if (links.length === 0) return;
 
                 const group = document.createElement('div');
@@ -502,7 +600,7 @@
             const chId = state.lastFocusedChapterId;
             const ch = adv.chapters.find(c => c.id === chId);
             if (ch) {
-                extractLinksFromHtml(ch.body_html, chId).forEach(link => {
+                extractLinksFromHtml(ch.bodyHtml, chId).forEach(link => {
                     imageCards.appendChild(buildImageCard(link));
                 });
             }
@@ -516,10 +614,15 @@
         card.className = 'vp-dagbok__image-card';
         card.dataset.src = link.src;
         card.dataset.chapterId = link.chapterId || '';
+        if (link.imageId) card.dataset.imageId = String(link.imageId);
 
-        if (state.activeImageLinkEl && state.activeImageLinkEl.dataset.src === link.src) {
-            card.classList.add('active');
-        }
+        const activeEl = state.activeImageLinkEl;
+        const isActive = activeEl && (
+            link.imageId
+                ? activeEl.dataset.imageId === String(link.imageId)
+                : activeEl.dataset.src === link.src
+        );
+        if (isActive) card.classList.add('active');
 
         const unlinkBtn = document.createElement('button');
         unlinkBtn.className = 'vp-dagbok__image-card-unlink';
@@ -527,7 +630,7 @@
         unlinkBtn.title = 'Ta bort bildlänk';
         unlinkBtn.addEventListener('click', e => {
             e.stopPropagation();
-            unlinkImage(link.src, link.chapterId);
+            if (link.imageId) unlinkImage(link.imageId, link.chapterId);
         });
 
         const img = document.createElement('img');
@@ -557,32 +660,40 @@
     function scrollPanelToActiveCard() {
         const active = imageCards.querySelector('.vp-dagbok__image-card.active');
         if (!active) return;
-        // Use offsetTop arithmetic instead of scrollIntoView
-        const cardTop = active.offsetTop;
-        imageCards.scrollTop = Math.max(0, cardTop - 16);
+        imageCards.scrollTop = Math.max(0, active.offsetTop - 16);
     }
 
-    function unlinkImage(src, chapterId) {
+    async function unlinkImage(imageId, chapterId) {
         const adv = getActiveAdventure();
         if (!adv) return;
         const ch = adv.chapters.find(c => c.id === chapterId);
         if (!ch) return;
 
-        // Parse body_html, replace the matching span with plain text
+        try {
+            await apiFetch(`/api/images/${imageId}`, { method: 'DELETE' });
+        } catch (e) {
+            console.error('Unlink failed', e);
+            return;
+        }
+
+        // Remove span from bodyHtml
         const tmp = document.createElement('div');
-        tmp.innerHTML = ch.body_html;
-        const span = Array.from(tmp.querySelectorAll('.img-link')).find(el => el.dataset.src === src);
+        tmp.innerHTML = ch.bodyHtml;
+        const span = tmp.querySelector(`.img-link[data-image-id="${imageId}"]`);
         if (span) span.replaceWith(document.createTextNode(span.textContent));
-        ch.body_html = tmp.innerHTML;
+        ch.bodyHtml = tmp.innerHTML;
 
-        // Update the live editor if this chapter is currently rendered
+        // Update live editor
         const editorEl = chaptersArea.querySelector(`.vp-dagbok__chapter-body[data-chapter-id="${chapterId}"]`);
-        if (editorEl) editorEl.innerHTML = ch.body_html;
+        if (editorEl) editorEl.innerHTML = ch.bodyHtml;
 
-        // Clear active image link ref if it matched
-        if (state.activeImageLinkEl && state.activeImageLinkEl.dataset.src === src) {
+        if (state.activeImageLinkEl &&
+            state.activeImageLinkEl.dataset.imageId === String(imageId)) {
             state.activeImageLinkEl = null;
         }
+
+        // Immediately save the chapter after unlink
+        doAutosave(ch, editorEl);
         renderImagePanel();
     }
 
@@ -594,8 +705,8 @@
         newAdventureTitleInp.focus();
     });
 
-    function confirmCreateAdventure() {
-        createAdventure(newAdventureTitleInp.value);
+    async function confirmCreateAdventure() {
+        await createAdventure(newAdventureTitleInp.value);
         resetNewAdventureUI();
     }
 
@@ -608,13 +719,12 @@
     createAdventureBtn.addEventListener('click', confirmCreateAdventure);
     cancelAdventureBtn.addEventListener('click', resetNewAdventureUI);
 
-    newAdventureTitleInp.addEventListener('keydown', e => {
-        if (e.key === 'Enter') confirmCreateAdventure();
+    newAdventureTitleInp.addEventListener('keydown', async e => {
+        if (e.key === 'Enter') await confirmCreateAdventure();
         if (e.key === 'Escape') resetNewAdventureUI();
     });
 
     // ── TOOLBAR EVENTS ────────────────────────────────────
-    // mousedown + preventDefault so editor doesn't lose focus on button click
     tbBold.addEventListener('mousedown', e => { e.preventDefault(); applyBold(); });
     tbItalic.addEventListener('mousedown', e => { e.preventDefault(); applyItalic(); });
     tbFontUp.addEventListener('mousedown', e => { e.preventDefault(); increaseFontSize(); });
@@ -624,7 +734,7 @@
     document.addEventListener('selectionchange', updateToolbarState);
 
     // ── NEW CHAPTER ───────────────────────────────────────
-    newChapterBtn.addEventListener('click', createChapter);
+    newChapterBtn.addEventListener('click', () => createChapter());
 
     // ── IMAGE PANEL CONTROLS ──────────────────────────────
     closePanelBtn.addEventListener('click', closeImagePanel);
@@ -644,8 +754,32 @@
     });
 
     // ── INIT ──────────────────────────────────────────────
-    seedData();
-    renderAdventureList();
-    if (state.adventures.length > 0) selectAdventure(state.adventures[0].id);
+    async function loadAdventures() {
+        try {
+            const resp = await apiFetch('/api/adventures');
+            const adventures = await resp.json();
+            adventures.forEach(a => { a.chapters = []; });
+            state.adventures = adventures;
+        } catch (e) {
+            console.error('Failed to load adventures', e);
+            state.adventures = [];
+        }
+
+        renderAdventureList();
+
+        if (state.adventures.length === 0) {
+            emptyState.hidden = false;
+            emptyState.textContent = 'Inga äventyr ännu — skapa ett i sidopanelen.';
+        } else {
+            await selectAdventure(state.adventures[0].id);
+        }
+    }
+
+    async function init() {
+        await fetchXsrfToken();
+        await loadAdventures();
+    }
+
+    init();
 
 })();

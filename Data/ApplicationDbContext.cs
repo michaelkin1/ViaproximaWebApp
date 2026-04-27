@@ -17,6 +17,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Evolution> Evolutioner => Set<Evolution>();
     public DbSet<Pet> Pets => Set<Pet>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Adventure> Adventures => Set<Adventure>();
+    public DbSet<Chapter> Chapters => Set<Chapter>();
+    public DbSet<ImageLink> ImageLinks => Set<ImageLink>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,5 +27,17 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasIndex(u => u.Username)
             .IsUnique();
+
+        modelBuilder.Entity<Chapter>()
+            .HasOne(c => c.Adventure)
+            .WithMany(a => a.Chapters)
+            .HasForeignKey(c => c.AdventureId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<ImageLink>()
+            .HasOne(il => il.Chapter)
+            .WithMany(c => c.ImageLinks)
+            .HasForeignKey(il => il.ChapterId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }
