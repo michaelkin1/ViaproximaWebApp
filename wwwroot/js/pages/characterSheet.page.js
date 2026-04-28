@@ -439,6 +439,8 @@
         const img = el("portraitImg"); const empty = el("portraitEmpty");
         if (img) { img.src = ""; img.style.display = "none"; }
         if (empty) empty.style.display = "";
+        if (VP.sheet.skills?.reload) VP.sheet.skills.reload(null);
+        if (VP.pets?.ctrl) { VP.pets.ctrl.setCharacterId(null); VP.pets.ctrl.loadPets(); }
     };
 
     VP.sheet.getFieldState = function() {

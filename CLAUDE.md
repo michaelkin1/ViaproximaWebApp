@@ -78,3 +78,13 @@ All endpoints require auth and verify ownership via `chapter → adventure → u
 - Always project EF entities to anonymous objects before returning from endpoints — navigation properties on both sides cause JSON object cycles (HTTP 500). Use `.Select(x => new { x.Id, … })` and omit nav props.
 - Physical-file lifecycle must match DB lifecycle: deleting a parent entity must also delete its files on disk.
 - During development: wrap new endpoints in `try/catch` returning `Results.Problem(ex.Message)` so 500s surface the actual error.
+
+**contenteditable img-link caret bleeding:** After `range.insertNode(span)`, the browser keeps inserting typed text inside the span. Fix: insert a real space text node after the span and move the caret to position 1 inside it — `setStartAfter(span)` is unreliable. A `keydown` guard on each chapter editor must intercept Space, Enter, and Shift+Enter when `selection.anchorNode.parentElement?.closest('.img-link')` is non-null: `preventDefault`, insert a sibling text node after the span, move the caret there before the browser inserts the character. Note: `closest` must be called on `parentElement`, not the text node itself. Strip `​` (zero-width space) from `editor.innerHTML` at every `ch.bodyHtml =` assignment site before persisting to state or DB.
+
+## Character Sheet — Shared DOM Panel
+- One `#panel-sheet` is reused for all character tabs. Every domain must be explicitly reset on tab switch — nothing clears itself.
+- `VP.sheet.clear()` is the single orchestrator and must be fully self-contained. When new sub-modules are added to the sheet, add their clear-on-null call to the end of `clear()`.
+- Sub-module null guard pattern: never `if (!characterId) return` — always clear state and re-render before returning. Applies to `loadPets()`, `skills.reload(null)`, and any future modules.
+- `String(null) === "null"` is truthy — always use `characterId = newId ? String(newId) : null` when passing ids to sub-modules.
+- Zeroing `state.itemsCache = []` does not clear the visual grid — must call `VP.grid.render.renderSlots(slotsGrid, itemsGrid, state, 0, 0)`.
+- Tab manager Path 2 (return visit, `tab.fieldState` set) must call `VP.sheet.clear()` before `setFieldState` when `!tab.id`, otherwise skills and pets are never cleared on return to a blank tab.

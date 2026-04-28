@@ -91,6 +91,7 @@
                 if (VP.sheet.skills?.reload) await VP.sheet.skills.reload(null);
             }
         } else if (tab.fieldState) {
+            if (!tab.id) VP.sheet.clear();
             await VP.sheet.setFieldState(tab.fieldState);
             if (tab.id) {
                 await VP.sheet.skills?.reload(tab.id);

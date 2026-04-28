@@ -234,7 +234,11 @@ VP.pets = VP.pets || {};
         }
 
         async function loadPets() {
-            if (!characterId) return;
+            if (!characterId) {
+                state.pets = [];
+                renderGrid();
+                return;
+            }
             try {
                 const dtos = await VP.api.pets.getPetsForCharacter(characterId);
                 state.pets = (dtos || []).map(fromDto);
