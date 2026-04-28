@@ -20,6 +20,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Adventure> Adventures => Set<Adventure>();
     public DbSet<Chapter> Chapters => Set<Chapter>();
     public DbSet<ImageLink> ImageLinks => Set<ImageLink>();
+    public DbSet<CharacterGroup> CharacterGroups => Set<CharacterGroup>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -39,5 +40,11 @@ public class ApplicationDbContext : DbContext
             .WithMany(c => c.ImageLinks)
             .HasForeignKey(il => il.ChapterId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Character>()
+            .HasOne(c => c.Group)
+            .WithMany(g => g.Characters)
+            .HasForeignKey(c => c.GroupId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

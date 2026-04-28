@@ -70,6 +70,10 @@ public class Character
     public string? Pouch { get; set; }
     public string? Anteckningar { get; set; }
 
+    // ===== Gruppering =====
+    public int? GroupId { get; set; }
+    public CharacterGroup? Group { get; set; }
+
     // ===== Lärdomar & Evolutioner =====
     public ICollection<Lardom> Lardomar { get; set; } = new List<Lardom>();
     public ICollection<Evolution> Evolutioner { get; set; } = new List<Evolution>();

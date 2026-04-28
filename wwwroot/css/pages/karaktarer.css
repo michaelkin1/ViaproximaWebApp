@@ -230,3 +230,60 @@
 #panel-sheet .page {
     padding-top: 0.75rem;
 }
+
+/* ---- Group sections ---- */
+.kl-section + .kl-section {
+    border-top: 2px solid #b8a882;
+    margin-top: 0.75rem;
+}
+
+.kl-section-banner {
+    background: #d8c9aa;
+    padding: 0.35rem 0.55rem;
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #2a1f0e;
+    border-bottom: 1px solid #c9b890;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kl-group-delete-btn {
+    background: none;
+    border: none;
+    color: #9a7a50;
+    opacity: 0.5;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.kl-group-delete-btn:hover { opacity: 1; }
+
+/* ---- Group assign dropdown ---- */
+.kl-group-select {
+    background: #c9b990;
+    border: 1px solid #a8935e;
+    color: #2e2418;
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    padding: 3px 6px;
+    border-radius: 2px;
+    cursor: pointer;
+    flex-shrink: 0;
+    max-width: 130px;
+}
+
+/* ---- Ny gruppering button variant ---- */
+.btn-gold--group {
+    background: #b8a472;
+    border-color: #8a7548;
+}
+
+.btn-gold--group:hover { background: #c4b07e; }

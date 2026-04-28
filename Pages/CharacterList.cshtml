@@ -32,23 +32,40 @@
             <span class="kl-card-header__title">Sparade karaktärer</span>
         </div>
         <div class="kl-card-body">
-            <div class="kl-list-col">
-                @if (Model.Characters.Count == 0)
-                {
-                    <p class="hint" style="padding:1rem;">Inga sparade karaktärer ännu. Tryck + för att skapa en ny.</p>
+            <div class="kl-list-col" id="charSections">
+                @{
+                    var ungrouped = Model.Characters.Where(c => c.GroupId == null).ToList();
                 }
-                else
-                {
-                    @foreach (var c in Model.Characters)
+                <!-- Main section (ungrouped) -->
+                <div class="kl-section" id="section-main" data-section-group-id="">
+                    <div class="kl-section-banner">
+                        <span>Main</span>
+                    </div>
+                    @if (Model.Characters.Count == 0)
+                    {
+                        <p class="hint" style="padding:1rem;">Inga sparade karaktärer ännu. Tryck + för att skapa en ny.</p>
+                    }
+                    @foreach (var c in ungrouped)
                     {
                         var name = string.IsNullOrWhiteSpace(c.Name) ? "Namnlös" : c.Name;
                         var race = string.IsNullOrWhiteSpace(c.Race) ? "Okänd" : c.Race;
                         <div class="kl-row"
                              data-char-id="@c.Id"
                              data-char-name="@name"
-                             data-char-race="@race">
+                             data-char-race="@race"
+                             data-group-id="">
                             <span class="kl-row__name">@name</span>
                             <span class="kl-row__race">@race</span>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <select class="kl-group-select" onclick="event.stopPropagation();">
+                                    <option value="">Main</option>
+                                    @foreach (var g in Model.Groups)
+                                    {
+                                        <option value="@g.Id">@g.Name</option>
+                                    }
+                                </select>
+                            }
                             <span class="kl-row__id">#@c.Id</span>
                             @if (User.Identity?.IsAuthenticated == true)
                             {
@@ -67,12 +84,77 @@
                             }
                         </div>
                     }
+                </div>
+
+                @foreach (var g in Model.Groups)
+                {
+                    var inGroup = Model.Characters.Where(c => c.GroupId == g.Id).ToList();
+                    <div class="kl-section" id="section-@g.Id" data-section-group-id="@g.Id">
+                        <div class="kl-section-banner">
+                            <span>@g.Name</span>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <button type="button"
+                                        class="kl-group-delete-btn"
+                                        data-group-id="@g.Id"
+                                        data-group-name="@g.Name"
+                                        onclick="event.stopPropagation();">×</button>
+                            }
+                        </div>
+                        @foreach (var c in inGroup)
+                        {
+                            var name = string.IsNullOrWhiteSpace(c.Name) ? "Namnlös" : c.Name;
+                            var race = string.IsNullOrWhiteSpace(c.Race) ? "Okänd" : c.Race;
+                            <div class="kl-row"
+                                 data-char-id="@c.Id"
+                                 data-char-name="@name"
+                                 data-char-race="@race"
+                                 data-group-id="@g.Id">
+                                <span class="kl-row__name">@name</span>
+                                <span class="kl-row__race">@race</span>
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <select class="kl-group-select" onclick="event.stopPropagation();">
+                                        <option value="">Main</option>
+                                        @foreach (var gg in Model.Groups)
+                                        {
+                                            if (c.GroupId == gg.Id)
+                                            {
+                                                <option value="@gg.Id" selected="selected">@gg.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@gg.Id">@gg.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                }
+                                <span class="kl-row__id">#@c.Id</span>
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <form method="post"
+                                          asp-page-handler="Delete"
+                                          asp-route-id="@c.Id"
+                                          style="margin:0;"
+                                          onclick="event.stopPropagation();">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit"
+                                                class="kl-btn-delete"
+                                                onclick="return confirm('Ta bort den här karaktären?');">
+                                            ×
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        }
+                    </div>
                 }
             </div>
             @if (User.Identity?.IsAuthenticated == true)
             {
                 <div class="kl-actions-col">
                     <button type="button" class="btn-gold" id="newCharBtnList">+ Ny karaktär</button>
+                    <button type="button" class="btn-gold btn-gold--group" id="newGroupBtn">+ Ny gruppering</button>
                 </div>
             }
         </div>
@@ -454,6 +536,10 @@
         </div>
     </div>
 </div>
+
+<script>
+window._initialGroups = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.Groups.Select(g => new { id = g.Id, name = g.Name, sortOrder = g.SortOrder })));
+</script>
 
 @section Scripts {
     <script src="~/js/shared/vp.ns.js" asp-append-version="true"></script>

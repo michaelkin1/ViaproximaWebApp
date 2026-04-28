@@ -925,6 +925,49 @@ public class Program
             return Results.NoContent();
         }).RequireAuthorization("CanWrite");
 
+        // =========================
+        // Groups API
+        // =========================
+
+        app.MapGet("/api/groups", async (ApplicationDbContext db) =>
+        {
+            var groups = await db.CharacterGroups
+                .OrderBy(g => g.SortOrder).ThenBy(g => g.Id)
+                .Select(g => new { g.Id, g.Name, g.SortOrder })
+                .ToListAsync();
+            return Results.Ok(groups);
+        });
+
+        app.MapPost("/api/groups", async (ApplicationDbContext db, CharacterGroup dto) =>
+        {
+            dto.Id = 0;
+            dto.Name = dto.Name?.Trim() ?? "";
+            if (string.IsNullOrEmpty(dto.Name)) return Results.BadRequest("Name required");
+            db.CharacterGroups.Add(dto);
+            await db.SaveChangesAsync();
+            return Results.Ok(new { id = dto.Id, name = dto.Name, sortOrder = dto.SortOrder });
+        }).RequireAuthorization("CanWrite");
+
+        app.MapDelete("/api/groups/{id:int}", async (ApplicationDbContext db, int id) =>
+        {
+            var group = await db.CharacterGroups.FindAsync(id);
+            if (group is null) return Results.NotFound();
+            await db.Characters.Where(c => c.GroupId == id)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.GroupId, (int?)null));
+            db.CharacterGroups.Remove(group);
+            await db.SaveChangesAsync();
+            return Results.NoContent();
+        }).RequireAuthorization("CanWrite");
+
+        app.MapPut("/api/characters/{id:int}/group", async (ApplicationDbContext db, int id, GroupAssignDto dto) =>
+        {
+            var c = await db.Characters.FindAsync(id);
+            if (c is null) return Results.NotFound();
+            c.GroupId = dto.GroupId;
+            await db.SaveChangesAsync();
+            return Results.Ok();
+        }).RequireAuthorization("CanWrite");
+
         app.MapRazorPages();
 
         app.Run();

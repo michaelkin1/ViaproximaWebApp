@@ -15,11 +15,15 @@ public class CharacterListModel : PageModel
     }
 
     public List<Character> Characters { get; private set; } = new();
+    public List<CharacterGroup> Groups { get; private set; } = new();
 
     public async Task OnGetAsync()
     {
         Characters = await _db.Characters
             .OrderByDescending(c => c.Id)
+            .ToListAsync();
+        Groups = await _db.CharacterGroups
+            .OrderBy(g => g.SortOrder).ThenBy(g => g.Id)
             .ToListAsync();
     }
 

@@ -1,4 +1,4 @@
-// karaktarer.page.js — tab manager for merged Karaktärer page
+// karaktarer.page.js — tab manager + group management for merged Karaktärer page
 (() => {
     const tabBar          = document.getElementById('charTabBar');
     const tabsContainer   = document.getElementById('charTabsContainer');
@@ -13,6 +13,9 @@
     // openTabs: key → { id (null for new), name, race, fieldState (null = not yet cached), loaded }
     const openTabs = {};
     let activeTabKey = 'list';
+
+    // ---- groups state ----
+    let groups = (window._initialGroups || []).slice();
 
     // ---- storage ----
     function saveToStorage() {
@@ -141,6 +144,112 @@
         }
     }
 
+    // ---- group management ----
+
+    function refreshAllDropdowns() {
+        panelList.querySelectorAll('.kl-group-select').forEach(sel => {
+            const row = sel.closest('.kl-row');
+            const currentGroupId = row ? row.dataset.groupId : '';
+            sel.innerHTML = '<option value="">Main</option>';
+            groups.forEach(g => {
+                const opt = document.createElement('option');
+                opt.value = String(g.id);
+                opt.textContent = g.name;
+                if (String(g.id) === currentGroupId) opt.selected = true;
+                sel.appendChild(opt);
+            });
+        });
+    }
+
+    function moveRowToSection(row, groupId) {
+        const sectionId = groupId ? `section-${groupId}` : 'section-main';
+        const section = document.getElementById(sectionId);
+        if (!section) return;
+        row.dataset.groupId = groupId ? String(groupId) : '';
+        section.appendChild(row);
+    }
+
+    function wireGroupSelect(sel) {
+        sel.addEventListener('change', async () => {
+            const row = sel.closest('.kl-row');
+            if (!row) return;
+            const charId = row.dataset.charId;
+            const groupId = sel.value ? parseInt(sel.value, 10) : null;
+            const prevGroupId = row.dataset.groupId;
+            try {
+                await VP.shared.requestJson(`/api/characters/${charId}/group`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ groupId }),
+                });
+                moveRowToSection(row, groupId);
+            } catch (err) {
+                console.error('Failed to set character group', err);
+                sel.value = prevGroupId || '';
+            }
+        });
+    }
+
+    function wireGroupDeleteBtn(btn) {
+        btn.addEventListener('click', async () => {
+            const groupId = parseInt(btn.dataset.groupId, 10);
+            const groupName = btn.dataset.groupName;
+            if (!confirm(`Ta bort grupperingen '${groupName}'? Karaktärerna flyttas till Main.`)) return;
+            try {
+                await VP.shared.requestJson(`/api/groups/${groupId}`, { method: 'DELETE' });
+                removeGroupSection(groupId);
+            } catch (err) {
+                console.error('Failed to delete group', err);
+            }
+        });
+    }
+
+    function addGroupSection(group) {
+        const section = document.createElement('div');
+        section.className = 'kl-section';
+        section.id = `section-${group.id}`;
+        section.dataset.sectionGroupId = String(group.id);
+
+        const banner = document.createElement('div');
+        banner.className = 'kl-section-banner';
+
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = group.name;
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = 'kl-group-delete-btn';
+        deleteBtn.dataset.groupId = String(group.id);
+        deleteBtn.dataset.groupName = group.name;
+        deleteBtn.textContent = '×';
+        wireGroupDeleteBtn(deleteBtn);
+
+        banner.append(nameSpan, deleteBtn);
+        section.appendChild(banner);
+
+        const charSections = document.getElementById('charSections');
+        charSections.appendChild(section);
+
+        groups.push(group);
+        refreshAllDropdowns();
+    }
+
+    function removeGroupSection(groupId) {
+        const section = document.getElementById(`section-${groupId}`);
+        const mainSection = document.getElementById('section-main');
+        if (section && mainSection) {
+            section.querySelectorAll('.kl-row').forEach(row => {
+                const sel = row.querySelector('.kl-group-select');
+                if (sel) sel.value = '';
+                row.dataset.groupId = '';
+                mainSection.appendChild(row);
+            });
+            section.remove();
+        }
+        groups = groups.filter(g => g.id !== groupId);
+        refreshAllDropdowns();
+    }
+
     // ---- init ----
     function init() {
         // Wire list-row clicks
@@ -152,6 +261,31 @@
                 if (id) openCharacter(id, name, race);
             });
         });
+
+        // Wire group selects
+        panelList.querySelectorAll('.kl-group-select').forEach(wireGroupSelect);
+
+        // Wire group delete buttons
+        panelList.querySelectorAll('.kl-group-delete-btn').forEach(wireGroupDeleteBtn);
+
+        // New group button
+        const newGroupBtn = document.getElementById('newGroupBtn');
+        if (newGroupBtn) {
+            newGroupBtn.addEventListener('click', async () => {
+                const name = prompt('Gruppens namn:');
+                if (!name?.trim()) return;
+                try {
+                    const data = await VP.shared.requestJson('/api/groups', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name: name.trim(), sortOrder: groups.length }),
+                    });
+                    addGroupSection({ id: data.id, name: data.name, sortOrder: data.sortOrder });
+                } catch (err) {
+                    console.error('Failed to create group', err);
+                }
+            });
+        }
 
         // New char buttons
         newCharBtn.addEventListener('click', openNewCharacter);
@@ -174,7 +308,6 @@
         if (urlId) {
             const key = `char-${urlId}`;
             if (!openTabs[key]) {
-                // Find name/race from list rows if available
                 const row = panelList.querySelector(`.kl-row[data-char-id="${urlId}"]`);
                 const name = row?.dataset.charName || `#${urlId}`;
                 const race = row?.dataset.charRace || '';
