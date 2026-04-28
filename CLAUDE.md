@@ -51,7 +51,8 @@ Public-facing app. Protect all write endpoints. Validate all inputs. Secure cook
 - All JS lives in wwwroot/js/ — modular files per feature
 - EF Core + SQLite via app.db — swap to postgres when hosted if needed
 - Icon discovery is folder-driven — adding icons requires no code changes
-- New pages get their own CSS and JS files in wwwroot/css/ and wwwroot/js/
+<<<<<<< Updated upstream
+markdown- New pages get their own CSS and JS files in wwwroot/css/ and wwwroot/js/
 - No npm, no bundlers, no build step — vanilla JS only, loaded via @section Scripts
 
 ## Äventyrsdagbok (Adventure Log)
@@ -60,14 +61,12 @@ Files: `Pages/Aventyrsdagbok/Index.cshtml`, `wwwroot/css/aventyrsdagbok.css`, `w
 **DB:** Three tables via `AdventureLog` migration. `Adventures.UserId` stores username string (not FK). Cascade delete configured explicitly in `OnModelCreating` for Chapter→Adventure and ImageLink→Chapter.
 
 **API endpoints:**
-```
 GET/POST   /api/adventures
 DELETE     /api/adventures/{id}          → deletes wwwroot/AdventureImages/{id}/
 GET/POST   /api/adventures/{id}/chapters
 PUT/DELETE /api/chapters/{id}            → DELETE also deletes physical image files
 POST       /api/chapters/{id}/images     → multipart; returns { id, imagePath, fileName }
 DELETE     /api/images/{id}              → also deletes physical file
-```
 All endpoints require auth and verify ownership via `chapter → adventure → user`.
 
 **Autosave:** 10s debounce per chapter; resets on every keystroke in body/title; fires immediately on collapse/expand and adventure switch. Shows "Sparad ✓" on success.
@@ -79,7 +78,7 @@ All endpoints require auth and verify ownership via `chapter → adventure → u
 - Physical-file lifecycle must match DB lifecycle: deleting a parent entity must also delete its files on disk.
 - During development: wrap new endpoints in `try/catch` returning `Results.Problem(ex.Message)` so 500s surface the actual error.
 
-**contenteditable img-link caret bleeding:** After `range.insertNode(span)`, the browser keeps inserting typed text inside the span. Fix: insert a real space text node after the span and move the caret to position 1 inside it — `setStartAfter(span)` is unreliable. A `keydown` guard on each chapter editor must intercept Space, Enter, and Shift+Enter when `selection.anchorNode.parentElement?.closest('.img-link')` is non-null: `preventDefault`, insert a sibling text node after the span, move the caret there before the browser inserts the character. Note: `closest` must be called on `parentElement`, not the text node itself. Strip `​` (zero-width space) from `editor.innerHTML` at every `ch.bodyHtml =` assignment site before persisting to state or DB.
+**contenteditable img-link caret bleeding:** After `range.insertNode(span)`, the browser keeps inserting typed text inside the span. Fix: insert a real space text node after the span and move the caret to position 1 inside it — `setStartAfter(span)` is unreliable. A `keydown` guard on each chapter editor must intercept Space, Enter, and Shift+Enter when `selection.anchorNode.parentElement?.closest('.img-link')` is non-null: `preventDefault`, insert a sibling text node after the span, move the caret there before the browser inserts the character. Note: `closest` must be called on `parentElement`, not the text node itself. Strip zero-width spaces from `editor.innerHTML` at every `ch.bodyHtml =` assignment site before persisting to state or DB.
 
 ## Character Sheet — Shared DOM Panel
 - One `#panel-sheet` is reused for all character tabs. Every domain must be explicitly reset on tab switch — nothing clears itself.
@@ -88,3 +87,33 @@ All endpoints require auth and verify ownership via `chapter → adventure → u
 - `String(null) === "null"` is truthy — always use `characterId = newId ? String(newId) : null` when passing ids to sub-modules.
 - Zeroing `state.itemsCache = []` does not clear the visual grid — must call `VP.grid.render.renderSlots(slotsGrid, itemsGrid, state, 0, 0)`.
 - Tab manager Path 2 (return visit, `tab.fieldState` set) must call `VP.sheet.clear()` before `setFieldState` when `!tab.id`, otherwise skills and pets are never cleared on return to a blank tab.
+
+## Data Model
+
+### CharacterGroup
+- `Id` (int, PK), `Name` (string, max 100), `SortOrder` (int, default 0)
+
+### Character (additions)
+- `GroupId` (int?, nullable FK → CharacterGroup) — null means Main / ungrouped
+- Deleting a group nulls `GroupId` on its characters; characters are never cascade-deleted with a group
+
+## API Endpoints (Character Groupings)
+- `GET    /api/groups`                → list all groups ordered by SortOrder, then Id
+- `POST   /api/groups`                → body `{ name }` → create new group
+- `DELETE /api/groups/{id}`           → null out `GroupId` on member characters, then delete group
+- `PUT    /api/characters/{id}/group` → body `{ groupId }` (nullable) → reassign character to group or Main
+- The existing character list `GET` endpoint also returns `GroupId` per character
+
+## Character List UI Patterns
+- Page is section-based: Main (ungrouped, `GroupId == null`) renders first; custom groups follow ordered by SortOrder then Id
+- Section headers reuse the existing brown section-banner style — do not introduce a new banner style
+- Custom group headers have a delete button on the far right; Main has no delete button
+- Each character row has a themed dropdown for moving the character between Main and custom groups; changes `PUT` immediately and the row moves in the DOM without a full reload
+- Two stacked buttons at the top: "+ Ny karaktär" (existing) and "+ Ny gruppering" (darker variant)
+
+## Conventions
+- Group / character operations follow the established flow: UI event → `fetch()` → Minimal API → EF Core → SQLite → DOM update. No full page reloads.
+- New themed UI controls derive from the existing gold button palette rather than introducing new colors.
+
+## Tooling — Windows
+- Do not pipe `dotnet` CLI commands through `2>&1` — can cause stdout-buffering hangs on Windows. Run dotnet commands plain.
