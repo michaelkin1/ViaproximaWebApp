@@ -19,6 +19,60 @@
     // ── AUTOSAVE TIMERS ───────────────────────────────────
     const autosaveTimers = {};
 
+    // ── POLLING (live updates) ────────────────────────────
+    let pollingInterval = null;
+
+    function startPolling(adventureId) {
+        stopPolling();
+        pollingInterval = setInterval(() => pollChapters(adventureId), 10000);
+    }
+
+    function stopPolling() {
+        if (pollingInterval) {
+            clearInterval(pollingInterval);
+            pollingInterval = null;
+        }
+    }
+
+    async function pollChapters(adventureId) {
+        try {
+            const resp = await apiFetch(`/api/adventures/${adventureId}/chapters`);
+            const chapters = await resp.json();
+            const adventure = state.adventures.find(a => a.id === adventureId);
+            if (!adventure || !adventure.chapters) return;
+
+            for (const remote of chapters) {
+                const local = adventure.chapters.find(c => c.id === remote.id);
+                if (!local) continue;
+
+                const editor = document.querySelector(
+                    `.vp-dagbok__chapter-body[data-chapter-id="${remote.id}"]`
+                );
+                if (editor && document.activeElement === editor) continue;
+
+                if (local.bodyHtml === remote.bodyHtml &&
+                    local.title === remote.title &&
+                    local.date === remote.date) continue;
+
+                local.bodyHtml = remote.bodyHtml;
+                local.title = remote.title;
+                local.date = remote.date;
+                local.collapsed = remote.collapsed;
+
+                if (editor) editor.innerHTML = remote.bodyHtml;
+
+                const titleInput = document.querySelector(
+                    `.vp-dagbok__chapter[data-chapter-id="${remote.id}"] .vp-dagbok__chapter-title-input`
+                );
+                if (titleInput && document.activeElement !== titleInput) {
+                    titleInput.value = remote.title;
+                }
+            }
+        } catch (err) {
+            console.warn('[polling] Failed to poll chapters:', err);
+        }
+    }
+
     // ── UTILS ─────────────────────────────────────────────
     function todayStr() {
         const d = new Date();
@@ -120,6 +174,7 @@
         if (state.activeAdventureId !== null && state.activeAdventureId !== id) {
             await flushPendingSaves();
         }
+        stopPolling();
         state.activeAdventureId = id;
         state.lastFocusedChapterId = null;
         state.lastFocusedEditor = null;
@@ -143,6 +198,7 @@
         renderAdventureList();
         renderChapters();
         renderImagePanel();
+        startPolling(id);
     }
 
     async function createAdventure(title) {
@@ -415,7 +471,7 @@
     // ── AUTOSAVE ──────────────────────────────────────────
     function scheduleAutosave(ch, editorEl) {
         clearTimeout(autosaveTimers[ch.id]);
-        autosaveTimers[ch.id] = setTimeout(() => doAutosave(ch, editorEl), 10000);
+        autosaveTimers[ch.id] = setTimeout(() => doAutosave(ch, editorEl), 5000);
     }
 
     async function doAutosave(ch, editorEl) {
@@ -858,6 +914,8 @@
         await fetchXsrfToken();
         await loadAdventures();
     }
+
+    window.addEventListener('beforeunload', () => { stopPolling(); });
 
     init();
 
