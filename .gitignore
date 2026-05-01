@@ -489,3 +489,7 @@ appsettings.Secrets.json
 
 ClaudeChangeTracker.txt
 ItemIconColors.txt
+
+# User-uploaded content — never commit binary blobs from runtime uploads
+wwwroot/AdventureImages/
+wwwroot/portraits/
