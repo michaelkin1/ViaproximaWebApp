@@ -744,6 +744,9 @@ public class Program
             if (adv is null) return Results.NotFound();
             if (adv.UserId != username) return Results.StatusCode(403);
 
+            db.Adventures.Remove(adv);
+            await db.SaveChangesAsync();
+
             try
             {
                 var folder = Path.Combine(env.WebRootPath, "AdventureImages", id.ToString());
@@ -754,8 +757,6 @@ public class Program
                 Console.WriteLine($"[delete-adventure] Skipped folder for adventure {id}: {ex.Message}");
             }
 
-            db.Adventures.Remove(adv);
-            await db.SaveChangesAsync();
             return Results.NoContent();
         }).RequireAuthorization("CanWrite");
 
@@ -824,35 +825,36 @@ public class Program
             if (ch is null) return Results.NotFound();
             if (ch.Adventure.UserId != username) return Results.StatusCode(403);
 
-            var imageLinks = await db.ImageLinks
+            var imagePaths = await db.ImageLinks
                 .Where(il => il.ChapterId == id)
+                .Select(il => il.ImagePath)
                 .ToListAsync();
 
-            foreach (var link in imageLinks)
+            db.Chapters.Remove(ch);
+            await db.SaveChangesAsync();
+
+            foreach (var imagePath in imagePaths)
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(link.ImagePath) ||
-                        link.ImagePath.StartsWith("blob:") ||
-                        link.ImagePath.StartsWith("http"))
+                    if (string.IsNullOrEmpty(imagePath) ||
+                        imagePath.StartsWith("blob:") ||
+                        imagePath.StartsWith("http"))
                         continue;
 
                     var fullPath = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        link.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
+                        env.WebRootPath,
+                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
                     );
 
                     if (File.Exists(fullPath)) File.Delete(fullPath);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[delete-chapter] Skipped file {link.ImagePath}: {ex.Message}");
+                    Console.WriteLine($"[delete-chapter] Skipped file {imagePath}: {ex.Message}");
                 }
             }
 
-            db.Chapters.Remove(ch);
-            await db.SaveChangesAsync();
             return Results.NoContent();
         }).RequireAuthorization("CanWrite");
 
@@ -901,27 +903,29 @@ public class Program
             if (link is null) return Results.NotFound();
             if (link.Chapter.Adventure.UserId != username) return Results.StatusCode(403);
 
+            var imagePath = link.ImagePath;
+
+            db.ImageLinks.Remove(link);
+            await db.SaveChangesAsync();
+
             try
             {
-                if (!string.IsNullOrEmpty(link.ImagePath) &&
-                    !link.ImagePath.StartsWith("blob:") &&
-                    !link.ImagePath.StartsWith("http"))
+                if (!string.IsNullOrEmpty(imagePath) &&
+                    !imagePath.StartsWith("blob:") &&
+                    !imagePath.StartsWith("http"))
                 {
                     var fullPath = Path.Combine(
-                        Directory.GetCurrentDirectory(),
-                        "wwwroot",
-                        link.ImagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
+                        env.WebRootPath,
+                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
                     );
                     if (File.Exists(fullPath)) File.Delete(fullPath);
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[delete-image] Skipped file {link.ImagePath}: {ex.Message}");
+                Console.WriteLine($"[delete-image] Skipped file {imagePath}: {ex.Message}");
             }
 
-            db.ImageLinks.Remove(link);
-            await db.SaveChangesAsync();
             return Results.NoContent();
         }).RequireAuthorization("CanWrite");
 
