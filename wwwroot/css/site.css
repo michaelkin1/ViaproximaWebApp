@@ -2,29 +2,60 @@ html {
   font-size: 14px;
 }
 
-.navbar {
-  background: #ede7d9 !important;
-  min-height: 56px;
-}
-
-.navbar-nav {
+.top-nav {
+  background: #f5f0e8;
+  border-bottom: 2px solid #c4b89a;
   display: flex;
-  justify-content: center;
-  gap: 3px;
+  align-items: center;
+  padding: 3px 6px;
+  gap: 0;
 }
 
-.nav-link {
-  font-family: "Libre Baskerville", "Baskerville", serif;
-  font-size: 1.26rem;
-  font-weight: bold;
-  border: 1px solid #c7b89d;
-  border-radius: 0 !important;
-  padding: 0.48rem 1.02rem !important;
-  background: #f6edde;
+.top-nav a,
+.top-nav button {
+  font-family: 'EB Garamond', serif;
+  font-size: 25px;
+  color: #2e2418;
+  text-decoration: none;
+  padding: 7px 20px;
+  border: none;
+  border-right: 1px solid #c4b89a;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  line-height: 1.4;
+  background: transparent;
+  cursor: pointer;
 }
 
-.nav-link:hover {
-  background: #ece3d0;
+.top-nav a:first-child {
+  border-left: 1px solid #c4b89a;
+}
+
+
+.top-nav a:hover,
+.top-nav button:hover {
+  background: #ede6d8;
+}
+
+.top-nav a.active {
+  background: #c9b990;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.top-nav .spacer {
+  flex: 1;
+  border: none;
+  margin: 0;
+}
+
+/* auth link/button sits after the spacer — leading left border only */
+.top-nav .spacer ~ a,
+.top-nav .spacer ~ button {
+  border-left: 1px solid #c4b89a;
+  border-right: none;
 }
 
 @media (min-width: 768px) {

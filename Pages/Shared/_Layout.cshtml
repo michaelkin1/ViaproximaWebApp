@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="~/Viaproxima.Web.styles.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
 
     @await RenderSectionAsync("Styles", required: false)
 
@@ -19,53 +19,22 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
-                    <ul class="navbar-nav justify-content-center flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/CharacterList">Karaktärer</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Aventyrsdagbok/Index">Äventyrsdagbok</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Rules">Rules</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/FloraFauna">The World</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/MerchantGenerator">Prompts &amp; Tools</a>
-                        </li>
-                    </ul>
-                    <div style="flex:1"></div>
-                    <ul class="navbar-nav ms-auto">
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <li class="nav-item">
-                                <button type="button" id="logoutBtn" class="nav-link text-dark"
-                                        style="background:none;border:1px solid #c7b89d;cursor:pointer;">
-                                    Log Out (@User.Identity.Name)
-                                </button>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-page="/Login">Log In</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
+        <nav class="top-nav">
+            <a asp-area="" asp-page="/Index">Hem</a>
+            <a asp-page="/CharacterList">Karaktärer</a>
+            <a asp-page="/Aventyrsdagbok/Index">Äventyrsdagbok</a>
+            <a asp-page="/Rules">Regler</a>
+            <a asp-page="/FloraFauna">Världen</a>
+            <a asp-page="/MerchantGenerator">Verktyg</a>
+            <div class="spacer"></div>
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <button type="button" id="logoutBtn">Logga ut (@User.Identity.Name)</button>
+            }
+            else
+            {
+                <a asp-page="/Login">Log In</a>
+            }
         </nav>
     </header>
 
