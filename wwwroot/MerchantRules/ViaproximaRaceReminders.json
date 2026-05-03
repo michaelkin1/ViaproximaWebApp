@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "description": "Per-race reminder text injected into the RACE block as {{RACE_ONE_LINE}} and {{RACE_BODY_FEATURES}}.",
+  "races": {
+    "VIVEER": {
+      "one_line": "The most humanoid race — varied in size, build, skin markings, eye color, and tribal expression.",
+      "body_features": "Ritual markings on skin or clothing, layered fiber garments, bone or carved-wood ornamentation. Balanced humanoid silhouette, earthy materials, expressive posture. May look almost human, but should still feel rooted in Viaproxima's stone-age ritual culture."
+    },
+    "FAAMER": {
+      "one_line": "Anthropomorphic mammal hybrids — fur, claws, tails, horns, tusks, hooves, muzzles, or heavy animal posture depending on species.",
+      "body_features": "May be compared to a real mammal that fits the merchant: wolf, bear, fox, goat, deer, boar, otter, cat, dog, hare, bison, or similar. Dense fur or hide, visible claws or hooves, animal head structure, strong physical silhouette. Clothing and gear should adapt to the animal body."
+    },
+    "VOLAMER": {
+      "one_line": "Anthropomorphic bird hybrids — feathered, light-framed, beaked or beak-jawed, sometimes crested, plumed, long-necked, or taloned.",
+      "body_features": "May be compared to a real bird that fits the merchant: raven, owl, hawk, gull, crane, dodo, parrot, vulture, heron, duck, or similar. Feathers cover much of the body, with bird-like feet, partial wings or wing-like arms, ornamental plumage, and a light or angular frame."
+    },
+    "FLEGAMER": {
+      "one_line": "Anthropomorphic amphibian and reptile hybrids — smooth, scaled, damp, cold-skinned, large-eyed, quiet, watchful, or slow-moving.",
+      "body_features": "May be compared to a real amphibian or reptile that fits the merchant: frog, toad, salamander, axolotl, newt, turtle, lizard, gecko, snake, crocodile, or similar. Smooth or fine-scaled skin, large eyes, webbed or clawed hands and feet, shell or tail where appropriate. Ornamentation often uses shells, reeds, wetland fiber, bone, or polished stone."
+    },
+    "KALLUER": {
+      "one_line": "Anthropomorphic arthropods — insects, crustaceans, arachnids, myriapods, or mixed chitinous forms with segmented bodies and hard plating.",
+      "body_features": "May be compared to a real arthropod that fits the merchant: beetle, scarab, crab, lobster, mantis, moth, spider, scorpion, ant, wasp, shrimp, centipede, or similar. Chitinous exoskeleton, mandibles, compound-eye facets, antennae, claws, pincers, extra arms, or segmented limbs. Silhouette should feel structural and non-mammalian."
+    },
+    "CRESEER": {
+      "one_line": "Elemental nature humanoids — bodies formed from living or nonliving natural matter. Not only forest spirits or dryads.",
+      "body_features": "Body may be composed of wood, bark, root, moss, fungus, stone, crystal, clay, ash, fire, lightning-scored mineral, water, ice, sand, bone-like coral, or mixed elemental matter. Irregular asymmetrical anatomy, visible material transitions, rough surfaces, growths, cracks, glowing seams, embers, mineral veins, wet surfaces, or storm-like marks depending on element."
+    },
+    "SKOTONER": {
+      "one_line": "Malformed, uncanny, monstrous humanoids with a strange horror cast — not simply undead and not only sickly.",
+      "body_features": "Asymmetrical bodies, extra eyes, wrong joints, stretched mouths, exposed cords, worm-like growths, mask-like faces, patchy fur or skin, lesions, fused features, impossible proportions, or eldritch details. They can be grotesque, eerie, or absurdly unsettling while still being people. Gear is rough, dark, scavenged, fiber-bound, bone-pinned, or hide-wrapped."
+    },
+    "VETTUER": {
+      "one_line": "An animated object given purpose by magic — not an animal hybrid. An object that became a person-like being.",
+      "body_features": "Origin form remains visible: a loom-vettu has thread hair and frame limbs, a tool-vettu has handle-grip hands, a shield-vettu has a broad torso, a cart-vettu has wheel or axle logic, a vessel-vettu has hollow-body structure. Object-logic anatomy, worn surfaces, functional components as body parts. Not soft, mammalian, or organic unless the original object was organic material."
+    }
+  }
+}

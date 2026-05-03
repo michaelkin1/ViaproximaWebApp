@@ -1,0 +1,263 @@
+{
+  "version": "3.0",
+  "global_rules": {
+    "hv": "HV (Handlingsvärde) = action value. Bonuses expressed as +1 HV, +2 HV etc. on specific actions or sub-stats.",
+    "cv": "CV = casting value used in crystal magic.",
+    "kv": "KV = ritual power value used in shaman rituals.",
+    "grid_weight": "Weight always expressed as AxB grid squares (e.g. 1x1, 2x2, 3x2).",
+    "magical_cost": "Magical items with powerful effects require a cost that is specific and tied to the item's identity. Choose one: bodily toll | usage condition | social/legal risk | limited frequency | ritual dependency | binding to a power | public marking | moral cost.",
+    "misc_rule": "Use MISC when an item genuinely does not fit a rule-backed category. It is a last resort, not a default.",
+    "effect_rule": "Effects must be self-explanatory. Trigger and outcome must be explicit. Forbidden verbs: påverkar, vägleder, resonerar, kan avslöja, fungerar konstigt, influences, guides, resonates.",
+    "cost_rule": "Do not generate magical costs. Only generate limitation (when/how the item cannot be used) or drawback (negative consequence directly tied to the function) when they are inseparable from the item's identity.",
+    "naming_rule": "Item names must be Swedish compounds built from function, behavior, consequence, or material truth. Short and direct. No decorative or atmospheric names that only describe mood."
+  },
+  "damage_scale": {
+    "LOW": "D4",
+    "MID": "D4+4",
+    "HIGH": "D4+8",
+    "EXTREME": "D4+12",
+    "spans": {
+      "LOW-MID": "2D4",
+      "LOW-HIGH": "3D4",
+      "MID-HIGH": "2D4+4",
+      "MID-EXTREME": "2D4+8"
+    },
+    "note": "A span weapon rolls with greater variance — minimum damage is the lower tier, maximum approaches the higher tier. EXTREME alone or in a span is rare and reserved for the most powerful weapons."
+  },
+  "type_rules": {
+    "MELEE": {
+      "swedish_name": "Närstridsvapen",
+      "profile_format": "A/An [adjective] [material+weapon type] that deals [damage] and weighs [AxB]. Also [effect]. However [drawback if warranted].",
+      "hit_formula": "(Accuracy + Strike) / 2",
+      "requirements": [
+        "Damage level or span from damage_scale",
+        "Grid weight in AxB",
+        "At least one functional advantage"
+      ],
+      "categories": {
+        "Hackvapen": "Bladed or edged. Axes, toothed blades, obsidian knives, stone-age glaives. Cuts and cleaves.",
+        "Trubbvapen": "Blunt impact. Clubs, staves, bone clubs. Crushes and stuns.",
+        "Repvapen": "Flexible component. Whips, flails, sinew-linked weapons. Difficult to block.",
+        "Stickvapen": "Piercing point. Spears, bone daggers, jabbing implements. Reach and precision."
+      },
+      "subtype_required": true,
+      "subtype_field": "Hackvapen | Trubbvapen | Repvapen | Stickvapen"
+    },
+    "RANGED": {
+      "swedish_name": "Avståndsvapen",
+      "profile_format": "Same as MELEE.",
+      "hit_formula": "Skytte (Ranged skill)",
+      "requirements": [
+        "Damage level or span from damage_scale",
+        "Grid weight in AxB",
+        "Specify if ammunition required — if yes, weapon is unusable without it"
+      ],
+      "categories": {
+        "Kastvapen": "Thrown axes, spears, knives. Often usable in melee as well.",
+        "Pilbågar": "Requires arrows. High range and precision.",
+        "Slungor": "Requires projectiles (stone, bone). Simple but powerful.",
+        "Blåsvapen": "Requires projectiles (darts, thorns). Silent, often poisoned."
+      },
+      "subtype_required": true,
+      "subtype_field": "Kastvapen | Pilbågar | Slungor | Blåsvapen"
+    },
+    "AMMO": {
+      "swedish_name": "Ammunition",
+      "requirements": [
+        "Consumption rule — number of uses or single-use effect"
+      ],
+      "guidelines": [
+        "Modifies weapon damage or function situationally",
+        "Cannot permanently alter weapon base profile"
+      ]
+    },
+    "ARMOR": {
+      "swedish_name": "Rustning",
+      "types": {
+        "Light": {
+          "blocks": ["LOW"],
+          "durability": 6,
+          "weight": "2x1",
+          "example_materials": ["bast", "leather", "thin wood", "plant fiber"]
+        },
+        "Medium": {
+          "blocks": ["LOW", "MID"],
+          "durability": 9,
+          "weight": "2x2",
+          "example_materials": ["hardened hide", "bone plates", "thick wood"]
+        },
+        "Heavy": {
+          "blocks": ["LOW", "MID", "HIGH"],
+          "durability": 12,
+          "weight": "3x2",
+          "example_materials": ["fossil shell", "stone plates", "solid wood"]
+        }
+      },
+      "block_system": {
+        "roll": "1D6 when hit",
+        "success": "5 or 6",
+        "effect": "Damage reduced one level",
+        "durability_loss": {
+          "LOW": -1,
+          "MID": -2,
+          "HIGH": -3,
+          "EXTREME": "armor destroyed immediately"
+        },
+        "cannot_block": ["EXTREME", "damage above armor design level"]
+      }
+    },
+    "SHIELD": {
+      "swedish_name": "Sköld",
+      "types": {
+        "Small": {
+          "hv_bonus": "+1 HV",
+          "durability": 6,
+          "weight": "2x1",
+          "notes": "No drawbacks."
+        },
+        "Medium": {
+          "hv_bonus": "+2 HV",
+          "durability": 9,
+          "weight": "2x2",
+          "notes": "Difficult to combine with two-handed weapons."
+        },
+        "Heavy": {
+          "hv_bonus": "+2 HV",
+          "durability": 12,
+          "weight": "3x2",
+          "notes": "Reduced mobility. Allows shield bash."
+        }
+      },
+      "shield_bash": "On a successful block of +2 HV or more — push target back, brief stun (lose next reaction)."
+    },
+    "KRISTALLSEJDARE": {
+      "swedish_name": "Kristallsejdarföremål",
+      "description": "Focus items for crystal mages. Almost always incorporate colored crystals in some form — set into the object, inscribed, or carried loose. Color corresponds to lore.",
+      "effect_directions": [
+        "CV bonuses on spellcasting",
+        "Spell dice — extra dice from the mana pool",
+        "Mana pool — store dice for future use, borrow from upcoming pool",
+        "Miscast — dampen, delay, or redirect miscast effects",
+        "Strengthen a specific lore's expression, range, or targets",
+        "Temporarily swap or borrow spells from another lore",
+        "Bind a specific spell to the item — faster or cheaper to cast",
+        "Store a successfully cast spell for later use"
+      ],
+      "note": "Magical items carry a cost tied to the lore's emotional character — a wrath-lore item might cost calm, a sorrow-lore item might demand a memory.",
+      "miscast_rule": "Miscast: when two sixes are rolled during a spellcasting check, roll on the miscast table.",
+      "religion_rule": "Crystal magic (Kristallsejdare) is emotional and elemental, never religious. No prayers, offerings, or divine invocations belong in crystal magic."
+    },
+    "SHAMAN": {
+      "swedish_name": "Shamanföremål",
+      "description": "Ritual tools for shamans. Natural and organic — bone, roots, dried animal parts, stone, bark, fungus. Worn and personal, bearing the marks of many rituals.",
+      "effect_directions": [
+        "KV modifications situationally",
+        "Stabilize a ritual on KV shortfall — reduce risk of backlash",
+        "Strengthen a specific ritual type (healing, divination, binding, weather, blood ritual)",
+        "Bind a ritual to a place so it can be repeated",
+        "Help find, attract, or identify specific ingredients",
+        "Count as an ingredient type without being consumed",
+        "Extend a ritual's effect to additional targets",
+        "Remember a successful ritual and make it easier to repeat"
+      ],
+      "note": "Magical items carry a concrete natural cost — must be buried after use, requires blood, functions only in specific terrain."
+    },
+    "SHAMAN_INGREDIENT": {
+      "swedish_name": "Shamaningrediens",
+      "description": "Consumable ingredient cards for shaman rituals. Each ingredient contributes its die value to KV when used in a ritual.",
+      "structure": {
+        "ingredient_type": "Fungi | Animal parts | Essence | Minerals | Plants",
+        "rarity": "Common | Uncommon | Rare | Mythic",
+        "die_value": {
+          "Common": ["D3", "D6"],
+          "Uncommon": ["D8", "D10"],
+          "Rare": ["D12", "D20"],
+          "Mythic": ["D30", "D60"]
+        },
+        "consumed_on_use": true
+      },
+      "ingredient_types": {
+        "Fungi": "Visions, poison, dreams, divination",
+        "Animal parts": "Enhancement, heightened senses, blood rituals",
+        "Essence": "Elemental rituals, natural attunement, sensing the world",
+        "Minerals": "Protection, sealing, focus, barriers",
+        "Plants": "Healing, purification, growth, dampening"
+      },
+      "note": "Rare and Mythic ingredients may carry an additional situational effect beyond their KV contribution."
+    },
+    "LYÅDSKAPARE": {
+      "swedish_name": "Lyådskaparföremål",
+      "description": "Items for sound mages. Focused on sound, trance, and music magic — not limited to instruments. Includes anything that interacts with how sound moves, how trance is entered, or how music affects the world.",
+      "effect_directions": [
+        "Instruments — protect, strengthen, store melodies",
+        "Trance — shorten, stabilize, protect during vulnerable phase",
+        "Range and targets for music spells",
+        "Allow sound to travel through unusual media — stone, water, bone",
+        "Strengthen music's morale effect on listeners",
+        "Store a specific melody or tone for later release",
+        "Items that already vibrate at the right frequency — ease entry into trance",
+        "Disrupt or block another sound mage's magic"
+      ],
+      "note": "Magical items carry a cost tied to sound or instrument — the item may not be able to fall silent, or it binds the bearer to a specific direction of magic."
+    },
+    "ORAKEL": {
+      "swedish_name": "Orakelföremål",
+      "description": "Relics and sacred objects for oracles. Old and carried — inscribed stones, fossils, sacred bones, offering vessels. What matters is that they have belonged to something — a place, an event, a previous negotiation.",
+      "effect_directions": [
+        "Improve negotiation position before an emissary",
+        "Reduce offering requirement or make a simpler offering more meaningful",
+        "Soften consequences of a poor negotiation outcome",
+        "Store a blessing for a specific future moment",
+        "Make signs and omens clearer — but not easier to interpret",
+        "Strengthen a specific god's or aspect's inclination to respond",
+        "Protect against divine wrath without eliminating it"
+      ],
+      "note": "Magical items carry a cost tied to the divine — must be returned to a sacred place after use, or loses power if the oracle breaks their god's code."
+    },
+    "ADVENIRE": {
+      "swedish_name": "Advenireföremål",
+      "description": "Items shaped by contact with Advenire through one of the four lore traditions. Requires no lore knowledge to use — the effect belongs to the item itself, not the bearer.",
+      "lore_origin_field": "Specify lore_origin: KRISTALLSEJDARE | SHAMAN | LYÅDSKAPARE | ORAKEL",
+      "lore_origins": {
+        "KRISTALLSEJDARE": {
+          "description": "Item imbued with one of the six lores and its feeling, color, and element.",
+          "lores": {
+            "Red / Wrath": "Fire and smoke. Explosive, destructive, aggressively controlled.",
+            "Green / Shame": "Plants and animals. Ensnaring, judging force of nature.",
+            "Yellow / Joy": "Light and healing. Warm, hopeful, protective.",
+            "Purple / Pride": "Lightning and necromancy. Arrogant, dominant, hard.",
+            "Orange / Love": "Stone and sand. Heavy, stable, sheltering.",
+            "Blue / Sorrow": "Water and wind. Melancholic, still, suddenly storming."
+          }
+        },
+        "SHAMAN": {
+          "description": "Item blessed in rituals or with shamanic ingredients incorporated into it. Nature's force channeled into an object — gives unique effects rooted in the ingredient's nature and the ritual's intention."
+        },
+        "LYÅDSKAPARE": {
+          "description": "A sound mage's soul or tone locked into an object. The item carries the nature of music magic permanently and gives unexpected properties tied to sound, vibration, or movement."
+        },
+        "ORAKEL": {
+          "description": "Item tied to divine emissaries or powerful religious events. Carries a god's or aspect's nature and gives unexpected effects related to that god's domain."
+        }
+      }
+    },
+    "PETS": {
+      "swedish_name": "Tamdjur",
+      "description": "All animals are hybrids of two real animals. Specify size and 1–2 evolutions.",
+      "sizes": {
+        "Pocket": "Mouse-sized. Fits in pocket or bag.",
+        "Foot": "Cat or dog-sized. Follows on foot.",
+        "Ride": "Horse-sized. Can be ridden.",
+        "Trample": "Hippo or elephant-sized. Imposing presence."
+      },
+      "evolutions": "Innate abilities tied to the animal's nature. Max 2 at purchase. More can be bought with experience points.",
+      "note": "Pets do not replace player character core roles."
+    },
+    "MISC": {
+      "swedish_name": "Övrigt",
+      "description": "Everything that does not fit a rule-backed category. Jewelry, clothing, tools, contracts, maps, organic objects, relics, carrying equipment, instruments without lore connection, and anything else creative.",
+      "type_field_instruction": "Describe what the item is in the type field — 'contract', 'amulet', 'cloak', 'map', 'herb bundle', 'carved idol', etc.",
+      "note": "No mechanical restrictions beyond global rules. Use MISC when nothing else fits — not as a default."
+    }
+  }
+}

@@ -14,3 +14,13 @@ public record GuildsData(
     [property: JsonPropertyName("version")] string? Version,
     [property: JsonPropertyName("guilds")] List<ViaproximaGuild> Guilds
 );
+
+public record GuildMechanicSignature(
+    [property: JsonPropertyName("prompt_block")] string PromptBlock
+);
+
+public record GuildMechanicData(
+    [property: JsonPropertyName("version")] string? Version,
+    [property: JsonPropertyName("description")] string? Description,
+    [property: JsonPropertyName("guilds")] Dictionary<string, GuildMechanicSignature> Guilds
+);

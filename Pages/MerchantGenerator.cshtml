@@ -45,7 +45,9 @@
                                     </td>
                                     <td>
                                         <input type="number" class="item-count-input form-control form-control-sm"
-                                               name="ItemTypeCounts[@code]" min="0" max="12" value="0" style="max-width: 80px;" />
+                                               name="ItemTypeCounts[@code]"
+                                               data-type-code="@code"
+                                               min="0" max="12" value="0" style="max-width: 80px;" />
                                     </td>
                                 </tr>
                             }
@@ -59,6 +61,19 @@
             </div>
         </div>
 
+        <!-- Randomizer -->
+        <div class="card mb-4">
+            <div class="card-body d-flex align-items-center gap-3 flex-wrap">
+                <label for="randomize-count" class="mb-0">Antal föremål att slumpa</label>
+                <input type="number" id="randomize-count" min="1" max="12" value="8"
+                       class="form-control form-control-sm" style="max-width: 80px;" />
+                <button type="button" id="randomize-btn" class="btn btn-secondary">Slumpa layout</button>
+                <small class="text-muted w-100 mt-1">
+                    Slumpa följer regler för kategorimax. Manuella val har inga sådana begränsningar.
+                </small>
+            </div>
+        </div>
+
         <!-- Error Message -->
         @if (!string.IsNullOrEmpty(Model.ErrorMessage))
         {
@@ -68,7 +83,7 @@
         }
 
         <!-- Submit Button -->
-        <button type="submit" id="submit-btn" class="btn btn-primary">Generera prompt</button>
+        <button type="submit" id="submit-btn" class="btn btn-primary" disabled>Generera prompt</button>
     </form>
 </div>
 
@@ -100,21 +115,91 @@
     </script>
 }
 
-<!-- Item Counter Script -->
+<!-- Item Counter + Randomizer Script -->
 <script>
-    (function() {
-        const inputs = document.querySelectorAll('.item-count-input');
-        const totalEl = document.getElementById('item-total');
-        const submitBtn = document.getElementById('submit-btn');
+(function () {
+    // Category pool — server-rendered so SHAMAN_INGREDIENT is always included.
+    const categoryIds = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+        Model.ItemTypes.Select(t => t.Code).ToList()
+    ));
 
-        function updateTotal() {
-            const sum = Array.from(inputs).reduce((s, i) => s + (parseInt(i.value) || 0), 0);
-            totalEl.textContent = sum;
-            submitBtn.disabled = sum === 0 || sum > 12;
-            totalEl.parentElement.classList.toggle('text-danger', sum > 12);
+    const inputs = document.querySelectorAll('.item-count-input');
+    const totalEl = document.getElementById('item-total');
+    const submitBtn = document.getElementById('submit-btn');
+    const randomizeBtn = document.getElementById('randomize-btn');
+    const randomizeCountEl = document.getElementById('randomize-count');
+    const guildEl = document.getElementById('GuildId');
+
+    // Tracked state — updated by updateTotal() on every Antal change.
+    let item_count = 0;
+
+    function updateTotal() {
+        item_count = Array.from(inputs).reduce((s, i) => s + (parseInt(i.value) || 0), 0);
+        totalEl.textContent = item_count;
+        submitBtn.disabled = item_count < 1 || item_count > 12;
+        totalEl.parentElement.classList.toggle('text-danger', item_count > 12);
+    }
+
+    // Pure function — no guild-specific guarantees applied.
+    // guild param accepted for future extension only.
+    function randomizeLayout(totalItems, guild) {
+        const pool = [...categoryIds];
+
+        // Fisher-Yates shuffle
+        for (let i = pool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pool[i], pool[j]] = [pool[j], pool[i]];
         }
 
-        inputs.forEach(i => i.addEventListener('input', updateTotal));
+        const maxCats = Math.min(5, totalItems);
+        const minCats = totalItems >= 2 ? 2 : 1;
+        const numCats = minCats + Math.floor(Math.random() * (maxCats - minCats + 1));
+
+        const selected = pool.slice(0, numCats);
+        const remainingPool = pool.slice(numCats);
+
+        const result = {};
+        selected.forEach(id => { result[id] = 1; });
+        let remaining = totalItems - numCats;
+
+        while (remaining > 0) {
+            const underCap = selected.filter(id => result[id] < 5);
+            if (underCap.length === 0) {
+                // All selected categories at cap — add a new one if possible.
+                if (selected.length < 5 && remainingPool.length > 0) {
+                    const idx = Math.floor(Math.random() * remainingPool.length);
+                    const newCat = remainingPool.splice(idx, 1)[0];
+                    selected.push(newCat);
+                    result[newCat] = 1;
+                    remaining--;
+                } else {
+                    break;
+                }
+            } else {
+                const chosen = underCap[Math.floor(Math.random() * underCap.length)];
+                result[chosen]++;
+                remaining--;
+            }
+        }
+
+        return result;
+    }
+
+    randomizeBtn.addEventListener('click', function () {
+        const total = Math.min(12, Math.max(1, parseInt(randomizeCountEl.value) || 8));
+        randomizeCountEl.value = total;
+
+        const layout = randomizeLayout(total, guildEl ? guildEl.value : null);
+
+        inputs.forEach(input => {
+            const code = input.dataset.typeCode;
+            input.value = layout[code] || 0;
+        });
+
         updateTotal();
-    })();
+    });
+
+    inputs.forEach(i => i.addEventListener('input', updateTotal));
+    updateTotal();
+}());
 </script>

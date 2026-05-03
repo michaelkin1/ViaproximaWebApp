@@ -107,8 +107,8 @@ public class Program
             var twistTags = JsonSerializer.Deserialize<TwistTagsData>(
                 File.ReadAllText(Path.Combine(root, "ViaproximaTwistTags.json")), opts)!.TwistTags;
 
-            var worldContext = File.ReadAllText(Path.Combine(root, "world_context.txt"));
-            var promptTemplate = File.ReadAllText(Path.Combine(root, "PromptTemplate.md"));
+            var worldContext = File.ReadAllText(Path.Combine(root, "world_context_v2_5.txt"));
+            var promptTemplate = File.ReadAllText(Path.Combine(root, "PromptTemplate_v2_5_compressed.md"));
 
             // Flatten inspiration tags per guild: guild.Id → flat list of all InspirationTagEntry
             var inspirationDir = Path.Combine(root, "InspirationTags");
@@ -127,8 +127,19 @@ public class Program
                 }
             }
 
+            // Load guild mechanic signatures
+            var guildMechanicData = JsonSerializer.Deserialize<GuildMechanicData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaGuildMechanicSignatures.json")), opts)!;
+            var guildMechanicSignatures = guildMechanicData.Guilds
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.PromptBlock);
+
+            // Load race reminders
+            var raceRemindersData = JsonSerializer.Deserialize<RaceRemindersData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaRaceReminders.json")), opts)!;
+            var raceReminders = raceRemindersData.Races;
+
             return new PromptAssembler(races, guilds, typeRules, funcTags, twistTags,
-                guildInspirationTags, worldContext, promptTemplate);
+                guildInspirationTags, worldContext, promptTemplate, guildMechanicSignatures, raceReminders);
         });
 
         var app = builder.Build();

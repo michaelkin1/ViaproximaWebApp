@@ -160,7 +160,7 @@ All write endpoints require `.RequireAuthorization("CanWrite")`. Adventure endpo
 Layout = `_Layout`. Navbar lives there.
 
 ## Services
-- **`IPromptAssembler`** (singleton) — loads JSON rule files (`ViaproximaRaces`, `ViaproximaGuildsLore`, `ViaproximaItemRules`, `ViaproximaFunctionalTags`, `ViaproximaTwistTags`, per-guild `InspirationTags`, `world_context.txt`, `PromptTemplate.md`). `BuildPrompt(PromptParams)` → `(Prompt, LayoutId)`. Used by `MerchantGenerator` only.
+- **`IPromptAssembler`** (singleton) — loads JSON rule files (`ViaproximaRaces`, `ViaproximaGuildsLore`, `ViaproximaItemRules`, `ViaproximaFunctionalTags`, `ViaproximaTwistTags`, `ViaproximaGuildMechanicSignatures`, `ViaproximaRaceReminders`, per-guild `InspirationTags`, `world_context.txt`, `PromptTemplate_v2_5_compressed.md`). `BuildPrompt(PromptParams)` → `(Prompt, LayoutId)`. Used by `MerchantGenerator` only.
 
 ## JS Architecture
 Single global namespace `window.VP`, defined in `wwwroot/js/shared/vp.ns.js`:
@@ -326,3 +326,160 @@ Short transitions (`0.05s–0.15s`), no `@keyframes`. Hover patterns: `filter: b
 
 ## Tooling — Windows
 - Do not pipe `dotnet` CLI through `2>&1` — causes stdout-buffering hangs on Windows. Run plain.
+
+## Merchant Generator (Verktyg) — item_count + randomizer
+
+**Files**: `Pages/MerchantGenerator.cshtml` / `Pages/MerchantGenerator.cshtml.cs` (the navbar's "Verktyg" link points here — `_Layout.cshtml:28`).
+
+Inline `<script>` at the bottom of the page handles state and the randomizer. No separate JS file.
+
+### item_count
+- Outer-scoped `let item_count = 0;` updated by `updateTotal()` on every Antal input event.
+- "Totalt: X / 12" counter is backed by this variable.
+- Submit button disabled when `item_count < 1` or `item_count > 12` (initial render: `disabled`).
+- `{{ITEM_COUNT}}` is substituted in `PromptAssembler.cs:124` — no assembler changes needed.
+
+### Randomizer
+- UI: number input `#randomize-count` (default 8, min 1, max 12) + button `#randomize-btn` + helper text.
+- `randomizeLayout(totalItems, guild)` — pure function returning `{ category_id: count }`.
+- Rules: max 5 categories selected, max 5 items per category, min 1 item, respects UI max 12.
+- `SHAMAN_INGREDIENT` is included in the randomizer pool — never excluded.
+- Guild guarantees are intentionally not implemented. The `guild` param exists for future extension only.
+- Category pool is server-rendered as a JS array (`Model.ItemTypes.Select(t => t.Code)`) so it always reflects the live item type list.
+- Manual edits after randomizing are unconstrained — no cap enforcement on user input.
+
+### OUTPUT_TYPE_RULES filtering
+Already implemented in `Services/PromptAssembler.cs` (`BuildPrompt()`, lines 93–107). Only types with count > 0 get a rule block injected.
+
+## Prompt Template v2.5
+
+**File**: `wwwroot/MerchantRules/PromptTemplate_v2_5.md` (alongside the original `PromptTemplate.md` — original is NOT overwritten and is still what the assembler currently loads).
+
+### Placeholders
+**New in v2.5:**
+- `{{GUILD_MECHANIC_SIGNATURE}}` — assembler must inject the active guild's `prompt_block` from `ViaproximaGuildMechanicSignatures.json` (file produced by Task 4).
+- `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}` — assembler must inject from `ViaproximaRaceReminders.json` (Task 4).
+
+**Removed in v2.5:**
+- `{{GUILD_REFERENCE}}` — replaced by a static guild-id table in the affinities block.
+
+**Still used:** `{{ITEM_COUNT}}`, `{{OUTPUT_TYPE_RULES}}`, `{{WORLD_CONTEXT}}`, `{{GUILD_NAME}}`, `{{GUILD_THEME_KEYWORDS}}`, `{{GUILD_VIBE_FEELING}}`, `{{GUILD_LORE}}`, `{{GUILD_FUNCTION_SPECTRUM}}`, `{{RACE_NAME}}`, `{{ITEM_SLOTS}}`, `{{LAYOUT_ID}}`.
+
+### Content rules
+- No price/cost/currency fields anywhere in output schema. Cuppar/Ferrar/Aurar references removed.
+- World context comment instructs assembler to strip the currency line before injection.
+- `SHAMAN_INGREDIENT` is valid in standard merchant layouts; conditional schema fields `ingredient_type`, `rarity`, `die_value` appear after `tag`.
+- Guild mechanic identity must appear in the `effect` field for at least half the items.
+- New `## HARD RULES` block consolidates damage scale, subtypes, HV bounds, no-currency, etc.
+- New `## RACE` block — race shapes appearance only.
+
+### Functional tags compatibility (Tasks 2j + 6)
+**Code matches JSON shape — no code changes needed (verified twice).**
+
+**File**: `wwwroot/MerchantRules/ViaproximaFunctionalTags.json` — already overhauled. Do NOT regenerate.
+
+**Current JSON structure (v3.0)**:
+- Top-level: `{ version, description, design_principle, functional_tags: [...] }` — 156 tags total
+- Each tag: `{ id, tag, category, note }` — flat array, not keyed objects
+- 10 categories: `control_and_constraint`, `craft_and_trade`, `force_and_energy`, `identity_and_influence`, `memory_and_knowledge`, `movement_and_access`, `nature_and_environment`, `perception_and_awareness`, `protection_and_resilience`, `ritual_and_magic`
+- Extra top-level fields (`description`, `design_principle`) ignored by deserialization — harmless
+
+**Code access paths**:
+- `Models/Merchant/TagModels.cs`: `FunctionalTag(Id, Tag, Category, Note?)` and `FunctionalTagsData(Version, FunctionalTags)` — all field names match
+- `Program.cs:104-105`: deserializes via `FunctionalTagsData`, passes flat `List<FunctionalTag>` to assembler
+- `PromptAssembler.cs:73`: picks random tag by index (`_functionalTags[Random.Shared.Next(...)]`)
+- `PromptAssembler.cs:80`: uses `funcTag.Tag` (the tag text string) for the slot line
+- Widget JS: no direct functional tag access — selection is entirely server-side
+
+**Compatibility check results (Task 6)**:
+- JSON valid ✓ (confirmed via Python parse)
+- Array structure: OK ✓
+- Field names (`id`, `tag`, `category`, `note`): OK ✓
+- File path unchanged: OK ✓
+- Category names not depended on by code: OK ✓
+- Tag count not hardcoded anywhere: OK ✓
+- No code fixes required.
+
+### Assembler wiring (Task 4)
+Task 4 completed: assembler now loads `PromptTemplate_v2_5_compressed.md` and injects all three new placeholders. See **Guild Mechanic Signatures** and **Race Reminders** sections below.
+
+## Prompt Template v2.5 — Compressed
+
+**File**: `wwwroot/MerchantRules/PromptTemplate_v2_5_compressed.md` (alongside originals — original `PromptTemplate.md` and `PromptTemplate_v2_5.md` are NOT overwritten).
+
+### Assembler change (Task 3)
+`Services/PromptAssembler.cs` now injects `{{OUTPUT_TYPE_RULES}}` as compressed prose paragraphs instead of JSON blocks. `FormatTypeRuleCompressed(typeCode, rule)` method at the bottom of `PromptAssembler.cs` maps each of the 13 type codes to a single dense prose line. The JSON element parameter is kept for signature consistency; the prose strings are derived from (and consistent with) the JSON data. Separator changed from `"\n"` to `"\n\n"` between type blocks for readability.
+
+**Token impact**: Old JSON format ~150 tokens/type × up to 13 types ≈ ~1950 tokens for OUTPUT_TYPE_RULES. New prose format ~60 tokens/type × 13 types ≈ ~780 tokens — roughly 60% reduction in the injected type rules. Static template ~200 lines vs v2.5's 262 lines.
+
+### Compressions applied (3b)
+- GUILD block: merged Theme/Feeling/Lore/Functions onto one line with `·` separators.
+- TYPE DISAMBIGUATION: flattened to prose paragraphs + inline test list.
+- SHAMAN vs SHAMAN_INGREDIENT: merged into two tighter paragraphs.
+- WEAPON PROFILE: collapsed to single prose block.
+- DRAWBACKS: tiers flattened from bulleted lists to semicolon-separated prose.
+- POWER LEVELS: three definitions collapsed to one paragraph.
+- OUTPUT SCHEMA: field comments trimmed to minimum per plan examples.
+- No duplicate "Race defines only the merchant's appearance" phrase (was already absent in v2.5).
+
+### Rule-preservation check (3c) — ALL PRESENT
+Swedish-only, damage levels/dice, MELEE/RANGED subtypes, weapon profile format, no religion in KRISTALLSEJDARE/SHAMAN/LYÅDSKAPARE, ADVENIRE vs lore disambiguation + examples, SHAMAN vs SHAMAN_INGREDIENT, SHAMAN_INGREDIENT valid in standard layouts, heavy shield bash, PET evolution format, HV bounds, CV/KV tilt-not-replace, drawback tiers A/B/C, power level definitions + distribution, stone age exclusions, final pass rejection, `{{GUILD_MECHANIC_SIGNATURE}}` placeholder, guild mechanic in effect for ≥50% items, race placeholders, static affinity table, SHAMAN_INGREDIENT conditional schema fields, no price/cost fields, `{{ITEM_COUNT}}` instruction. No missing rules.
+
+### Template quality additions
+- **LÄRDOM ITEM PATTERNS** (new section, after TYPE DISAMBIGUATION): per-lore valid mechanics for KRISTALLSEJDARE / SHAMAN / LYÅDSKAPARE / ORAKEL in semicolon-separated prose; priority order rule (type rules → lore mechanic → guild signature → tag/twist → flavor).
+- **EFFECT CLARITY RULE** (new section, after WEAPON PROFILE): trigger→actor→outcome→target→duration→frequency order; forbidden metaphor-as-mechanics words (påverkar, kryper, smitar, renas, etc.); Swedish BAD/GOOD examples.
+- **FINAL PASS Q1** expanded: "would a player buy this" now backed by 11 named buy-reason categories (damage, survival, information, movement, non-combat solve, check reliability, ally protection, pre-encounter advantage, failure recovery, social outcome, identity).
+
+## Guild Mechanic Signatures (Task 4)
+
+**File**: `wwwroot/MerchantRules/ViaproximaGuildMechanicSignatures.json`
+
+Per-guild mechanic fingerprints injected as `{{GUILD_MECHANIC_SIGNATURE}}` in the GUILD section of the prompt template. Each guild has a `prompt_block` string listing 5 mechanic patterns the AI must express in item effect fields for at least half the items.
+
+**Guilds covered**: ADVEOKATERNA, MORTOKATERNA, ZOOKATERNA, FLOROKATERNA, EKOKATERNA, KARTOKATERNA, FABROKATERNA, MATROKATERNA.
+
+**Model**: `GuildMechanicSignature(PromptBlock)` and `GuildMechanicData(Version, Description, Guilds)` — added to `Models/Merchant/GuildModels.cs`. Guilds are a `Dictionary<string, GuildMechanicSignature>` (keyed by guild ID).
+
+**Assembler**: `_guildMechanicSignatures` field (`Dictionary<string, string>`) injected in `BuildPrompt()` as `{{GUILD_MECHANIC_SIGNATURE}}`. Fallback: empty string if guild ID not found.
+
+## Race Reminders (Task 4)
+
+**File**: `wwwroot/MerchantRules/ViaproximaRaceReminders.json`
+
+Per-race appearance reminders injected as `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}` in the RACE block. Race shapes merchant appearance only — never item function.
+
+**Races covered**: VIVEER, FAAMER, VOLAMER, FLEGAMER, KALLUER, CRESEER, SKOTONER, VETTUER. IDs match `ViaproximaRaces.json`.
+
+**Model**: `RaceReminder(OneLine, BodyFeatures)` and `RaceRemindersData(Version, Description, Races)` — added to `Models/Merchant/RaceModels.cs`. Races are a `Dictionary<string, RaceReminder>` (keyed by race ID).
+
+**Assembler**: `_raceReminders` field (`Dictionary<string, RaceReminder>`) injected in `BuildPrompt()` as `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}`. Fallback: empty strings if race ID not found.
+
+## Active Prompt Template (Task 4)
+
+`Program.cs` now loads `PromptTemplate_v2_5_compressed.md` instead of `PromptTemplate.md`. Original `PromptTemplate.md` is preserved and not deleted. `PromptTemplate_v2_5.md` is also preserved alongside.
+
+## ViaproximaItemRules v2.5 (Task 5)
+
+**File**: `wwwroot/MerchantRules/ViaproximaItemRules_v2_5.json` — do not overwrite original `ViaproximaItemRules.json`.
+
+**Single change**: SHAMAN_INGREDIENT `note` field — removed the exclusion sentence "Generated in separate ingredient layouts, never in standard merchant layouts." New note: "Rare and Mythic ingredients may carry an additional situational effect beyond their KV contribution."
+
+**Consistency check**: No exclusion language present in `ViaproximaItemRules_v2_5.json`. No exclusion language found in assembler or widget code. `FormatTypeRuleCompressed` in `PromptAssembler.cs` already uses "Valid in standard merchant layouts" for SHAMAN_INGREDIENT independently of the JSON note field.
+
+**Note**: `Program.cs` still loads `ViaproximaItemRules.json` (the original). If a future task requires the assembler to use the v2_5 rules, update the filename at `Program.cs:96`.
+
+## World Context — Currency Removal
+
+**Original**: `wwwroot/MerchantRules/world_context.txt` — preserved, not overwritten.
+
+**Active**: `wwwroot/MerchantRules/world_context_v2_5.txt` — identical to original with one line removed:
+`Currency: Cuppar (common) → Ferrar (mid) → Aurar (rare, powerful magic only).`
+
+**Assembler**: `Program.cs` now loads `world_context_v2_5.txt`. The singleton is built at startup so no runtime stripping is needed.
+
+**Templates updated**:
+- `PromptTemplate_v2_5.md` — `#` comment updated; no longer names Cuppar/Ferrar/Aurar.
+- `PromptTemplate_v2_5_compressed.md` — `#` comment updated to match.
+- `PromptTemplate.md` (original) — untouched.
+
+**Remaining C# mentions**: `Data/Character.cs`, `Program.cs` character endpoint, and all EF Core migrations reference `Cuppar`/`Ferrar`/`Aurar` as character sheet currency entity fields. These are the in-game currency tracking system and are unrelated to the merchant prompt pipeline — do not remove.

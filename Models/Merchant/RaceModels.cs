@@ -15,3 +15,14 @@ public record RacesData(
     [property: JsonPropertyName("version")] string? Version,
     [property: JsonPropertyName("races")] List<ViaproximaRace> Races
 );
+
+public record RaceReminder(
+    [property: JsonPropertyName("one_line")] string OneLine,
+    [property: JsonPropertyName("body_features")] string BodyFeatures
+);
+
+public record RaceRemindersData(
+    [property: JsonPropertyName("version")] string? Version,
+    [property: JsonPropertyName("description")] string? Description,
+    [property: JsonPropertyName("races")] Dictionary<string, RaceReminder> Races
+);
