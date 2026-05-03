@@ -5,115 +5,171 @@
     ViewData["Title"] = "Handlargenerator";
 }
 
-<h1>Handlargenerator</h1>
-
-<div class="container mt-4">
-    <form method="post">
-        <!-- Guild and Race Selection -->
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="GuildId">Skrå</label>
-                <select id="GuildId" asp-for="GuildId" asp-items="Model.Guilds" class="form-control"></select>
-            </div>
-            <div class="col-md-6 mb-3">
-                <label for="RaceId">Ras</label>
-                <select id="RaceId" asp-for="RaceId" asp-items="Model.Races" class="form-control"></select>
-            </div>
-        </div>
-
-        <!-- Item Type Counts -->
-        <div class="card mt-4 mb-4">
-            <div class="card-header bg-light">
-                <h5 class="mb-0">Välj föremål</h5>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
-                        <thead>
-                            <tr>
-                                <th>Föremålstyp</th>
-                                <th>Antal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var (code, swedish) in Model.ItemTypes)
-                            {
-                                <tr>
-                                    <td>
-                                        @swedish
-                                        <span class="badge bg-secondary">@code</span>
-                                    </td>
-                                    <td>
-                                        <input type="number" class="item-count-input form-control form-control-sm"
-                                               name="ItemTypeCounts[@code]"
-                                               data-type-code="@code"
-                                               min="0" max="12" value="0" style="max-width: 80px;" />
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="mt-3 alert alert-info d-inline-block">
-                    <strong>Totalt:</strong> <span id="item-total">0</span> / 12
-                </div>
-            </div>
-        </div>
-
-        <!-- Randomizer -->
-        <div class="card mb-4">
-            <div class="card-body d-flex align-items-center gap-3 flex-wrap">
-                <label for="randomize-count" class="mb-0">Antal föremål att slumpa</label>
-                <input type="number" id="randomize-count" min="1" max="12" value="8"
-                       class="form-control form-control-sm" style="max-width: 80px;" />
-                <button type="button" id="randomize-btn" class="btn btn-secondary">Slumpa layout</button>
-                <small class="text-muted w-100 mt-1">
-                    Slumpa följer regler för kategorimax. Manuella val har inga sådana begränsningar.
-                </small>
-            </div>
-        </div>
-
-        <!-- Error Message -->
-        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
-        {
-            <div class="alert alert-danger" role="alert">
-                @Model.ErrorMessage
-            </div>
-        }
-
-        <!-- Submit Button -->
-        <button type="submit" id="submit-btn" class="btn btn-primary" disabled>Generera prompt</button>
-    </form>
-</div>
-
-<!-- Result Section -->
-@if (!string.IsNullOrEmpty(Model.GeneratedPrompt))
-{
-    <div class="container mt-5">
-        <h3>Resultat</h3>
-        <p><strong>Layout:</strong> @Model.LayoutId</p>
-
-        <div class="form-group">
-            <label for="prompt-output">Genererad prompt:</label>
-            <textarea id="prompt-output" class="form-control" rows="40" readonly>@Model.GeneratedPrompt</textarea>
-        </div>
-
-        <button type="button" class="btn btn-secondary" onclick="copyPrompt()">Kopiera prompt</button>
-    </div>
-
-    <script>
-        function copyPrompt() {
-            const textarea = document.getElementById('prompt-output');
-            navigator.clipboard.writeText(textarea.value).then(() => {
-                alert('Prompt kopierad till urklipp!');
-            }).catch(err => {
-                console.error('Failed to copy:', err);
-                alert('Kunde inte kopiera prompt.');
-            });
-        }
-    </script>
+@section Styles {
+    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/merchant-generator.css" asp-append-version="true" />
 }
+
+<div class="page">
+    <div class="sheet sheet--list">
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value">Handlargenerator</div>
+            </div>
+        </header>
+
+        <section class="sheet-column">
+            <!-- Main tab bar -->
+            <div class="tab-bar">
+                <button class="tab-btn" data-tab="guide">Prompt Guide</button>
+                <button class="tab-btn tab-btn--active" data-tab="generera">Generera Handelsman</button>
+            </div>
+
+            <!-- Tab: Prompt Guide -->
+            <div class="mg-tab-content" id="mg-tab-guide" style="display:none">
+                <p>Guideinnehåll kommer snart.</p>
+            </div>
+
+            <!-- Tab: Generera Handelsman -->
+            <div class="mg-tab-content" id="mg-tab-generera">
+                <!-- Sub-tab bar -->
+                <div class="mg-sub-bar">
+                    <button class="mg-sub-btn mg-sub-btn--active" data-subtab="prompt">Generera Prompt för AI</button>
+                    <button class="mg-sub-btn" data-subtab="output">Generera handelsman med output</button>
+                    <button class="mg-sub-btn" data-subtab="sparade">Sparade handelsmän &amp; Items</button>
+                </div>
+
+                <!-- Sub-tab: Generera Prompt för AI — full widget -->
+                <div class="mg-sub-content" id="mg-sub-prompt">
+                    <div class="container mt-4 mg-widget">
+                        <form method="post">
+                            <!-- Guild and Race Selection -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="GuildId">Skrå</label>
+                                    <select id="GuildId" asp-for="GuildId" asp-items="Model.Guilds" class="form-control"></select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="RaceId">Ras</label>
+                                    <select id="RaceId" asp-for="RaceId" asp-items="Model.Races" class="form-control"></select>
+                                </div>
+                            </div>
+
+                            <!-- Item Type Counts -->
+                            <div class="card mt-4 mb-4">
+                                <div class="card-header bg-light">
+                                    <h5 class="mb-0">Välj föremål</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Föremålstyp</th>
+                                                    <th>Antal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var (code, swedish) in Model.ItemTypes)
+                                                {
+                                                    <tr>
+                                                        <td>
+                                                            <span class="badge bg-secondary" data-type="@code">@swedish</span>
+                                                        </td>
+                                                        <td>
+                                                            <input type="number" class="item-count-input form-control form-control-sm"
+                                                                   name="ItemTypeCounts[@code]"
+                                                                   data-type-code="@code"
+                                                                   min="0" max="12" value="0" style="max-width: 80px;" />
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div class="mt-3 alert alert-info d-inline-block">
+                                        <strong>Totalt:</strong> <span id="item-total">0</span> / 12
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Randomizer -->
+                            <div class="card mb-4">
+                                <div class="card-body d-flex align-items-center gap-3 flex-wrap">
+                                    <label for="randomize-count" class="mb-0">Antal föremål att slumpa</label>
+                                    <input type="number" id="randomize-count" min="1" max="12" value="8"
+                                           class="form-control form-control-sm" style="max-width: 80px;" />
+                                    <button type="button" id="randomize-btn" class="btn btn-secondary">Slumpa layout</button>
+                                    <small class="text-muted w-100 mt-1">
+                                        Slumpa följer regler för kategorimax. Manuella val har inga sådana begränsningar.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!-- Error Message -->
+                            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @Model.ErrorMessage
+                                </div>
+                            }
+
+                            <!-- Submit Button -->
+                            <button type="submit" id="submit-btn" class="btn btn-primary" disabled>Generera prompt</button>
+                        </form>
+                    </div>
+
+                    <!-- Result Section -->
+                    @if (!string.IsNullOrEmpty(Model.GeneratedPrompt))
+                    {
+                        <div class="container mt-5 mg-widget mg-result">
+                            <h3>Resultat</h3>
+                            <p><strong>Layout:</strong> @Model.LayoutId</p>
+
+                            <div class="form-group">
+                                <label for="prompt-output">Genererad prompt:</label>
+                                <textarea id="prompt-output" class="form-control" rows="40" readonly>@Model.GeneratedPrompt</textarea>
+                            </div>
+
+                            <button type="button" class="btn btn-secondary mt-2" onclick="copyPrompt()">Kopiera prompt</button>
+                        </div>
+
+                        <script>
+                            function copyPrompt() {
+                                const textarea = document.getElementById('prompt-output');
+                                navigator.clipboard.writeText(textarea.value).then(() => {
+                                    alert('Prompt kopierad till urklipp!');
+                                }).catch(err => {
+                                    console.error('Failed to copy:', err);
+                                    alert('Kunde inte kopiera prompt.');
+                                });
+                            }
+                        </script>
+                    }
+                </div>
+
+                <!-- Sub-tab: Generera handelsman med output -->
+                <div class="mg-sub-content" id="mg-sub-output" style="display:none">
+                    <div class="mg-viewer-controls">
+                        <textarea id="mg-json-input" class="mg-json-input" rows="10"
+                                  placeholder="Klistra in handlar-JSON här..."></textarea>
+                        <button type="button" id="mg-parse-btn" class="mg-btn-gold">Visa handelsman</button>
+                    </div>
+                    <div id="merchant-viewer"></div>
+                </div>
+
+                <!-- Sub-tab: Sparade handelsmän & Items -->
+                <div class="mg-sub-content" id="mg-sub-sparade" style="display:none">
+                    <p>Kommer snart.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
 <!-- Item Counter + Randomizer Script -->
 <script>
@@ -203,3 +259,179 @@
     updateTotal();
 }());
 </script>
+
+@section Scripts {
+    <script>
+    (function () {
+        const mainBtns   = document.querySelectorAll('.tab-btn[data-tab]');
+        const mainPanels = document.querySelectorAll('.mg-tab-content');
+        const subBtns    = document.querySelectorAll('.mg-sub-btn');
+        const subPanels  = document.querySelectorAll('.mg-sub-content');
+
+        function activateMain(tab) {
+            mainBtns.forEach(b => b.classList.toggle('tab-btn--active', b.dataset.tab === tab));
+            mainPanels.forEach(p => { p.style.display = p.id === 'mg-tab-' + tab ? '' : 'none'; });
+        }
+
+        function activateSub(tab) {
+            subBtns.forEach(b => b.classList.toggle('mg-sub-btn--active', b.dataset.subtab === tab));
+            subPanels.forEach(p => { p.style.display = p.id === 'mg-sub-' + tab ? '' : 'none'; });
+        }
+
+        mainBtns.forEach(b => b.addEventListener('click', () => activateMain(b.dataset.tab)));
+        subBtns.forEach(b => b.addEventListener('click', () => activateSub(b.dataset.subtab)));
+    }());
+    </script>
+
+    <script>
+    (function () {
+        const TYPE_COLORS = {
+            'MELEE':             '#8b1a1a',
+            'RANGED':            '#c0392b',
+            'AMMO':              '#2c2c2c',
+            'ARMOR':             '#7a7a7a',
+            'SHIELD':            '#9e9e9e',
+            'KRISTALLSEJDARE':   '#b05080',
+            'SHAMAN':            '#2d5a27',
+            'SHAMAN_INGREDIENT': '#4a7c59',
+            'LYÅDSKAPARE':       '#c0511a',
+            'ORAKEL':            '#9a7a1a',
+            'ADVENIRE':          '#5c3278',
+            'PETS':              '#6a9a6a',
+            'MISC':              '#8a7a62'
+        };
+
+        const jsonInput = document.getElementById('mg-json-input');
+        const parseBtn  = document.getElementById('mg-parse-btn');
+        const viewer    = document.getElementById('merchant-viewer');
+
+        if (!parseBtn) return;
+
+        function getTypeColor(type_id) {
+            return TYPE_COLORS[type_id] || '#8a7a62';
+        }
+
+        function powerBadgeClass(power_level) {
+            switch ((power_level || '').toLowerCase()) {
+                case 'unique':  return 'mv-power-badge mv-power-badge--unique';
+                case 'magical': return 'mv-power-badge mv-power-badge--magical';
+                default:        return 'mv-power-badge mv-power-badge--common';
+            }
+        }
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function hexToRgb(hex) {
+            const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return m ? { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) } : null;
+        }
+
+        function parseMerchantJson(rawText) {
+            try { return JSON.parse(rawText.trim()); } catch (e) { return null; }
+        }
+
+        function renderMerchantHeader(merchant) {
+            const name       = merchant.name       || '';
+            const race       = merchant.race       || '';
+            const guild      = merchant.guild      || '';
+            const backstory  = merchant.backstory  || '';
+            const appearance = merchant.appearance || '';
+            const transport  = merchant.transport  || '';
+
+            return '<div class="mv-merchant-header">'
+                + '<div class="mv-merchant-name-row">'
+                + '<h2 class="mv-merchant-name">' + escapeHtml(name || '–') + '</h2>'
+                + '<div class="mv-header-chips">'
+                + (race  ? '<span class="mv-chip">' + escapeHtml(race)  + '</span>' : '')
+                + (guild ? '<span class="mv-chip">' + escapeHtml(guild) + '</span>' : '')
+                + '</div></div>'
+                + '<div class="mv-merchant-bio">'
+                + (backstory  ? '<div class="mv-bio-col"><div class="mv-bio-label">Bakgrund</div><p>'  + escapeHtml(backstory)  + '</p></div>' : '')
+                + (appearance ? '<div class="mv-bio-col"><div class="mv-bio-label">Utseende</div><p>'  + escapeHtml(appearance) + '</p></div>' : '')
+                + '</div>'
+                + (transport ? '<div class="mv-transport"><span class="mv-transport-label">Transport</span> ' + escapeHtml(transport) + '</div>' : '')
+                + '</div>';
+        }
+
+        function renderItemCard(item) {
+            const typeId  = item.type_id || item.type || '';
+            const color   = getTypeColor(typeId);
+            const rgb     = hexToRgb(color);
+            const tint    = rgb ? 'rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',0.08)' : 'transparent';
+            const name    = item.name        || '–';
+            const subtype = item.subtype     || '';
+            const power   = item.power_level || 'Common';
+            const desc    = item.description || '';
+            const effect  = item.effect      || '';
+            const limit   = item.limitation  || '';
+            const draw    = item.drawback    || '';
+            const affs    = item.affinities  || item.tags || [];
+            const isSI    = typeId === 'SHAMAN_INGREDIENT';
+            const isAdv   = typeId === 'ADVENIRE';
+
+            const typeChipStyle = 'color:' + color + ';border-color:' + color + ';background:' + tint;
+
+            let chips = '<span class="mv-type-chip" style="' + typeChipStyle + '">' + escapeHtml(typeId) + '</span>';
+            if (subtype) chips += '<span class="mv-chip mv-chip--small">' + escapeHtml(subtype) + '</span>';
+            if (isSI && item.die_value)       chips += '<span class="mv-die-chip">'           + escapeHtml(item.die_value)       + '</span>';
+            if (isSI && item.rarity)          chips += '<span class="mv-chip mv-chip--small">' + escapeHtml(item.rarity)          + '</span>';
+            if (isSI && item.ingredient_type) chips += '<span class="mv-chip mv-chip--small">' + escapeHtml(item.ingredient_type) + '</span>';
+            if (isAdv && item.advenire_lore_origin)
+                chips += '<span class="mv-type-chip" style="' + typeChipStyle + '">' + escapeHtml(item.advenire_lore_origin) + '</span>';
+
+            let body = '';
+            if (desc)   body += '<p class="mv-description">' + escapeHtml(desc) + '</p>';
+            if (effect) body += '<p class="mv-effect">'      + escapeHtml(effect) + '</p>';
+            if (limit)  body += '<div class="mv-limitation"><span class="mv-block-label">Begr.</span> '   + escapeHtml(limit) + '</div>';
+            if (draw)   body += '<div class="mv-drawback"><span class="mv-block-label">Nackdel</span> '   + escapeHtml(draw)  + '</div>';
+
+            let affHtml = '';
+            if (affs.length) {
+                affHtml = '<hr class="mv-divider"><div class="mv-affinities"><span class="mv-aff-label">Affinitet</span>'
+                    + affs.map(function(a) { return '<span class="mv-aff-chip">' + escapeHtml(a) + '</span>'; }).join('')
+                    + '</div>';
+            }
+
+            return '<div class="mv-item-card" style="border-top:3px solid ' + color + '">'
+                + '<div class="mv-item-header">'
+                + '<span class="mv-item-name">' + escapeHtml(name) + '</span>'
+                + '<span class="' + powerBadgeClass(power) + '">' + escapeHtml(power) + '</span>'
+                + '</div>'
+                + '<div class="mv-item-chips">' + chips + '</div>'
+                + (body ? '<hr class="mv-divider">' + body : '')
+                + affHtml
+                + '</div>';
+        }
+
+        function renderMerchant(data, target) {
+            const merchant = data.merchant || data;
+            const items    = data.items    || data.varor || [];
+            const banner   = '<div class="mv-items-banner">Varor <span class="mv-items-count">&middot; '
+                           + items.length + ' föremål</span></div>';
+            const grid     = '<div class="mv-items-grid">'
+                           + items.map(renderItemCard).join('')
+                           + '</div>';
+            target.innerHTML = renderMerchantHeader(merchant) + banner + grid;
+        }
+
+        parseBtn.addEventListener('click', function () {
+            viewer.innerHTML = '';
+            const raw = jsonInput.value.trim();
+            if (!raw) return;
+            const data = parseMerchantJson(raw);
+            if (!data) {
+                viewer.innerHTML = '<p class="mv-error">Ogiltig JSON — kontrollera att du klistrade in hela objektet.</p>';
+                return;
+            }
+            renderMerchant(data, viewer);
+        });
+    }());
+    </script>
+}

@@ -351,6 +351,48 @@ Inline `<script>` at the bottom of the page handles state and the randomizer. No
 ### OUTPUT_TYPE_RULES filtering
 Already implemented in `Services/PromptAssembler.cs` (`BuildPrompt()`, lines 93–107). Only types with count > 0 get a rule block injected.
 
+## Merchant JSON Viewer (subtab "Generera handelsman med output")
+
+**Location**: `#mg-sub-output` — second sub-tab under "Generera Handelsman" in `Pages/MerchantGenerator.cshtml`.
+
+**How it works**: Fully client-side. User pastes AI-generated JSON into `#mg-json-input` textarea and clicks "Visa handelsman". An inline IIFE in `@section Scripts` parses, validates, and renders a merchant header card + item grid into `#merchant-viewer`. No server call, no new endpoint.
+
+**`TYPE_COLORS`**: Derived directly from the per-type `data-type` badge color rules in `merchant-generator.css`. Do not diverge from those values.
+
+**CSS classes**: All viewer classes prefixed `mv-*` (merchant viewer), defined at the bottom of `wwwroot/css/pages/merchant-generator.css`. No new color variables introduced — uses existing CSS vars and the same hex values already on the page.
+
+**Power badge styles**: Common = muted/border-only; Unique = gold (reuses btn-gold palette #c9b990/#a8935e); Magical = muted purple (reuses ADVENIRE color `#5c3278`). Drawback accent reuses LYÅDSKAPARE color `#c0511a`.
+
+**Expected JSON structure** (top-level fields, or nested under `"merchant"` key):
+```json
+{
+  "name": "string",
+  "race": "string",
+  "guild": "string",
+  "backstory": "string",
+  "appearance": "string",
+  "transport": "string",
+  "items": [
+    {
+      "name": "string",
+      "type_id": "MELEE|RANGED|AMMO|ARMOR|SHIELD|KRISTALLSEJDARE|SHAMAN|SHAMAN_INGREDIENT|LYÅDSKAPARE|ORAKEL|ADVENIRE|PETS|MISC",
+      "subtype": "string (optional)",
+      "power_level": "Common|Unique|Magical",
+      "description": "string (optional, italic)",
+      "effect": "string",
+      "limitation": "string (optional)",
+      "drawback": "string (optional)",
+      "affinities": ["string"],
+      "die_value": "D8 (SHAMAN_INGREDIENT only)",
+      "rarity": "Common|Uncommon|Rare|Mythic (SHAMAN_INGREDIENT only)",
+      "ingredient_type": "Fungi|... (SHAMAN_INGREDIENT only)",
+      "advenire_lore_origin": "KRISTALLSEJDARE|... (ADVENIRE only)"
+    }
+  ]
+}
+```
+`affinities` is also accepted as `tags`. `items` is also accepted as `varor`.
+
 ## Prompt Template v2.5
 
 **File**: `wwwroot/MerchantRules/PromptTemplate_v2_5.md` (alongside the original `PromptTemplate.md` — original is NOT overwritten and is still what the assembler currently loads).

@@ -26,7 +26,7 @@
   },
   "type_rules": {
     "MELEE": {
-      "swedish_name": "Närstridsvapen",
+      "swedish_name": "Närstrid",
       "profile_format": "A/An [adjective] [material+weapon type] that deals [damage] and weighs [AxB]. Also [effect]. However [drawback if warranted].",
       "hit_formula": "(Accuracy + Strike) / 2",
       "requirements": [
@@ -44,7 +44,7 @@
       "subtype_field": "Hackvapen | Trubbvapen | Repvapen | Stickvapen"
     },
     "RANGED": {
-      "swedish_name": "Avståndsvapen",
+      "swedish_name": "Avstånd",
       "profile_format": "Same as MELEE.",
       "hit_formula": "Skytte (Ranged skill)",
       "requirements": [
@@ -131,7 +131,7 @@
       "shield_bash": "On a successful block of +2 HV or more — push target back, brief stun (lose next reaction)."
     },
     "KRISTALLSEJDARE": {
-      "swedish_name": "Kristallsejdarföremål",
+      "swedish_name": "Kristallsejdare",
       "description": "Focus items for crystal mages. Almost always incorporate colored crystals in some form — set into the object, inscribed, or carried loose. Color corresponds to lore.",
       "effect_directions": [
         "CV bonuses on spellcasting",
@@ -148,7 +148,7 @@
       "religion_rule": "Crystal magic (Kristallsejdare) is emotional and elemental, never religious. No prayers, offerings, or divine invocations belong in crystal magic."
     },
     "SHAMAN": {
-      "swedish_name": "Shamanföremål",
+      "swedish_name": "Shaman",
       "description": "Ritual tools for shamans. Natural and organic — bone, roots, dried animal parts, stone, bark, fungus. Worn and personal, bearing the marks of many rituals.",
       "effect_directions": [
         "KV modifications situationally",
@@ -186,7 +186,7 @@
       "note": "Rare and Mythic ingredients may carry an additional situational effect beyond their KV contribution. Generated in separate ingredient layouts, never in standard merchant layouts."
     },
     "LYÅDSKAPARE": {
-      "swedish_name": "Lyådskaparföremål",
+      "swedish_name": "Lyådskapare",
       "description": "Items for sound mages. Focused on sound, trance, and music magic — not limited to instruments. Includes anything that interacts with how sound moves, how trance is entered, or how music affects the world.",
       "effect_directions": [
         "Instruments — protect, strengthen, store melodies",
@@ -201,7 +201,7 @@
       "note": "Magical items carry a cost tied to sound or instrument — the item may not be able to fall silent, or it binds the bearer to a specific direction of magic."
     },
     "ORAKEL": {
-      "swedish_name": "Orakelföremål",
+      "swedish_name": "Orakel",
       "description": "Relics and sacred objects for oracles. Old and carried — inscribed stones, fossils, sacred bones, offering vessels. What matters is that they have belonged to something — a place, an event, a previous negotiation.",
       "effect_directions": [
         "Improve negotiation position before an emissary",
@@ -215,7 +215,7 @@
       "note": "Magical items carry a cost tied to the divine — must be returned to a sacred place after use, or loses power if the oracle breaks their god's code."
     },
     "ADVENIRE": {
-      "swedish_name": "Advenireföremål",
+      "swedish_name": "Advenire",
       "description": "Items shaped by contact with Advenire through one of the four lore traditions. Requires no lore knowledge to use — the effect belongs to the item itself, not the bearer.",
       "lore_origin_field": "Specify lore_origin: KRISTALLSEJDARE | SHAMAN | LYÅDSKAPARE | ORAKEL",
       "lore_origins": {
