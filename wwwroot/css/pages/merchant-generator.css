@@ -611,3 +611,113 @@
     .mv-merchant-bio { grid-template-columns: 1fr; }
     .mv-items-grid   { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   Prompt Guide — guide section and prompt box
+   ============================================================ */
+
+.mg-guide-section {
+    margin-bottom: 2rem;
+}
+
+.mg-guide-section:last-child {
+    margin-bottom: 0;
+}
+
+/* Banner — same visual as .mv-items-banner / .kl-section-banner */
+.mg-guide-banner {
+    background: #d8c9aa;
+    border: 1px solid #c0ae91;
+    border-radius: var(--radius-sm);
+    color: #2a1f0e;
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.45rem 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.mg-guide-instructions {
+    padding: 0 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.mg-guide-instructions p {
+    color: var(--muted);
+    font-family: var(--font);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 0.45rem;
+}
+
+.mg-guide-instructions p:last-child {
+    margin-bottom: 0;
+}
+
+/* Prompt box container */
+.mg-prompt-box {
+    background: var(--paper);
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+
+/* Header row inside the prompt box */
+.mg-prompt-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.35rem 0.6rem 0.35rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel-2);
+}
+
+.mg-prompt-label {
+    font-family: var(--font);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted-2);
+}
+
+/* Small gold copy button */
+.mg-copy-btn {
+    padding: 0.18rem 0.6rem;
+    font-size: 0.78rem;
+    background: #c9b990;
+    border: 1px solid #a8935e;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.mg-copy-btn:hover {
+    background: #d4c59e;
+}
+
+/* Read-only prompt textarea */
+.mg-prompt-text {
+    display: block;
+    width: 100%;
+    min-height: 7em;
+    padding: 0.65rem 0.75rem;
+    background: var(--panel);
+    border: none;
+    font-family: var(--font);
+    font-size: 0.88rem;
+    color: var(--ink);
+    line-height: 1.55;
+    resize: vertical;
+    box-sizing: border-box;
+    cursor: text;
+}
+
+.mg-prompt-text:focus {
+    outline: none;
+}

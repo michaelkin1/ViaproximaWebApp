@@ -30,7 +30,39 @@
 
             <!-- Tab: Prompt Guide -->
             <div class="mg-tab-content" id="mg-tab-guide" style="display:none">
-                <p>Guideinnehåll kommer snart.</p>
+                <!-- Section 1: Fantasy-stil -->
+                <div class="mg-guide-section">
+                    <div class="mg-guide-banner">Fantasy-stil</div>
+                    <div class="mg-guide-instructions">
+                        <p><strong>Används för:</strong> Karaktärer, varelser, byar, föremål, scener, strider och annan vanlig fantasykonst i Viaproxima.</p>
+                        <p><strong>Hur man använder den:</strong> Börja med fantasy-starten och skriv sedan motivet efteråt. Den här stilen är till för svartvit/monokrom stenåldersfantasy, med tydlig silhuett, fina linjer och naturliga material. Den passar bäst när du vill ha något som känns som en illustration ur själva världen.</p>
+                        <p><strong>Exempel:</strong> ["fantasy-starten"] + En lång Faamer-jägare med benmask, pälsmantel och spjut, stående i en dimmig skogsglänta.</p>
+                    </div>
+                    <div class="mg-prompt-box">
+                        <div class="mg-prompt-header">
+                            <span class="mg-prompt-label">Prompt</span>
+                            <button class="mg-copy-btn" data-target="prompt-fantasy">Kopiera</button>
+                        </div>
+                        <textarea id="prompt-fantasy" class="mg-prompt-text" readonly>black and white gritty fantasy illustration, Viaproxima fantasy style, refined old DeviantArt-inspired fantasy art, illustrated not photorealistic, not glossy cinematic realism. Grounded stone-age fantasy design with only primitive natural materials: wood, stone, bone, clay, leather, hide, fur, plant fiber, bark, reeds, resin, tar, sinew, gut, horn, antler, teeth, feathers, shells, fossils, chitin, crystals, charcoal, ash, pigments, fungi. No metal, no modern objects, no firearms, no industrial technology. Strong readable silhouette, controlled linework, rich grayscale midtones, soft shading, atmospheric depth, detailed but not overly dark.</textarea>
+                    </div>
+                </div>
+
+                <!-- Section 2: Floral-stil -->
+                <div class="mg-guide-section">
+                    <div class="mg-guide-banner">Floral-stil</div>
+                    <div class="mg-guide-instructions">
+                        <p><strong>Används för:</strong> Växter, svampar, örter, rötter, naturfenomen och alkemiska/florala motiv i Viaproxima.</p>
+                        <p><strong>Hur man använder den:</strong> Börja med floral-starten och skriv sedan vilken växt eller svamp du vill visa. Den här stilen är till för botaniska manuskriptbilder, alltså en central växtstudie på pergament med bläcklinjer, mild akvarell, anteckningar runtom och en liten namnscroll längst ner. Den är inte svartvit, utan använder dämpade naturliga färger.</p>
+                        <p><strong>Exempel:</strong> ["floral-starten"] + En högrest blå blomma med tunna flikiga blad och svag statisk energi, med namnet "Åskskälvande Näva" på scrollen.</p>
+                    </div>
+                    <div class="mg-prompt-box">
+                        <div class="mg-prompt-header">
+                            <span class="mg-prompt-label">Prompt</span>
+                            <button class="mg-copy-btn" data-target="prompt-floral">Kopiera</button>
+                        </div>
+                        <textarea id="prompt-floral" class="mg-prompt-text" readonly>Viaproxima floral style, dark medieval botanical manuscript aesthetic, a sacred herbal-study illustration on aged parchment. A central specimen as the clear focus, shown like a hand-drawn study from an ancient herbal compendium. Fine black ink linework, subtle pencil underdrawing, delicate shading, muted natural watercolor washes, and aged parchment texture. Use sparse, subdued colors such as moss green, umber brown, ash blue, pale silver-green, ochre, faded red, or faint magical accent colors where appropriate. Naturalistic but slightly mystical anatomy, with roots, stem, leaves, caps, flowers, spores, bark, or structure clearly visible. Surround the specimen with subtle handwritten notes, alchemical marginalia, tiny runes, small field-sketch details, and faded manuscript marks. Include a hand-drawn parchment scroll banner at the bottom with the subject's name. Mysterious, old, still, reverent, and archival. Not black and white, not tarot-card framing, not modern fantasy concept art, not anime, not cartoon.</textarea>
+                    </div>
+                </div>
             </div>
 
             <!-- Tab: Generera Handelsman -->
@@ -431,6 +463,24 @@
                 return;
             }
             renderMerchant(data, viewer);
+        });
+    }());
+    </script>
+
+    <script>
+    (function () {
+        document.querySelectorAll('.mg-copy-btn').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var el = document.getElementById(btn.dataset.target);
+                if (!el) return;
+                navigator.clipboard.writeText(el.value).then(function () {
+                    btn.textContent = 'Kopierad ✓';
+                    setTimeout(function () { btn.textContent = 'Kopiera'; }, 1500);
+                }).catch(function () {
+                    btn.textContent = 'Fel';
+                    setTimeout(function () { btn.textContent = 'Kopiera'; }, 1500);
+                });
+            });
         });
     }());
     </script>
