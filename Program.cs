@@ -93,7 +93,7 @@ public class Program
 
             // type_rules has heterogeneous shape per entry — clone each JsonElement before doc is disposed
             Dictionary<string, JsonElement> typeRules;
-            using (var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "ViaproximaItemRules.json"))))
+            using (var doc = JsonDocument.Parse(File.ReadAllText(Path.Combine(root, "ViaproximaItemRules_v2_6.json"))))
             {
                 typeRules = doc.RootElement
                     .GetProperty("type_rules")
@@ -101,14 +101,16 @@ public class Program
                     .ToDictionary(p => p.Name, p => p.Value.Clone());
             }
 
-            var funcTags = JsonSerializer.Deserialize<FunctionalTagsData>(
-                File.ReadAllText(Path.Combine(root, "ViaproximaFunctionalTags.json")), opts)!.FunctionalTags;
+            var archetypesData = JsonSerializer.Deserialize<ArchetypesData>(
+                File.ReadAllText(Path.Combine(root, "ViaproximaArchetypes_v1.json")), opts)
+                ?? throw new InvalidOperationException("Failed to load ViaproximaArchetypes_v1.json");
 
-            var twistTags = JsonSerializer.Deserialize<TwistTagsData>(
-                File.ReadAllText(Path.Combine(root, "ViaproximaTwistTags.json")), opts)!.TwistTags;
+            var lardomRulesData = JsonSerializer.Deserialize<LardomRulesData>(
+                File.ReadAllText(Path.Combine(root, "Adveniriska_Lardomar_Rules_v1.json")), opts)
+                ?? throw new InvalidOperationException("Failed to load Adveniriska_Lardomar_Rules_v1.json");
 
-            var worldContext = File.ReadAllText(Path.Combine(root, "world_context_v2_5.txt"));
-            var promptTemplate = File.ReadAllText(Path.Combine(root, "PromptTemplate_v2_5_compressed.md"));
+            var worldContext = File.ReadAllText(Path.Combine(root, "world_context_v2_6.txt"));
+            var promptTemplate = File.ReadAllText(Path.Combine(root, "PromptTemplate_v2_7.md"));
 
             // Flatten inspiration tags per guild: guild.Id → flat list of all InspirationTagEntry
             var inspirationDir = Path.Combine(root, "InspirationTags");
@@ -138,7 +140,7 @@ public class Program
                 File.ReadAllText(Path.Combine(root, "ViaproximaRaceReminders.json")), opts)!;
             var raceReminders = raceRemindersData.Races;
 
-            return new PromptAssembler(races, guilds, typeRules, funcTags, twistTags,
+            return new PromptAssembler(races, guilds, typeRules, archetypesData, lardomRulesData,
                 guildInspirationTags, worldContext, promptTemplate, guildMechanicSignatures, raceReminders);
         });
 

@@ -160,7 +160,7 @@ All write endpoints require `.RequireAuthorization("CanWrite")`. Adventure endpo
 Layout = `_Layout`. Navbar lives there.
 
 ## Services
-- **`IPromptAssembler`** (singleton) — loads JSON rule files (`ViaproximaRaces`, `ViaproximaGuildsLore`, `ViaproximaItemRules`, `ViaproximaFunctionalTags`, `ViaproximaTwistTags`, `ViaproximaGuildMechanicSignatures`, `ViaproximaRaceReminders`, per-guild `InspirationTags`, `world_context.txt`, `PromptTemplate_v2_5_compressed.md`). `BuildPrompt(PromptParams)` → `(Prompt, LayoutId)`. Used by `MerchantGenerator` only.
+- **`IPromptAssembler`** (singleton) — loads JSON rule files (`ViaproximaRaces`, `ViaproximaGuildsLore`, `ViaproximaItemRules`, `ViaproximaArchetypes_v1`, `Adveniriska_Lardomar_Rules_v1`, `ViaproximaGuildMechanicSignatures`, `ViaproximaRaceReminders`, per-guild `InspirationTags`, `world_context_v2_6.txt`, `PromptTemplate_v2_7.md`). `BuildPrompt(PromptParams)` → `(Prompt, LayoutId)`. Used by `MerchantGenerator` only.
 
 ## JS Architecture
 Single global namespace `window.VP`, defined in `wwwroot/js/shared/vp.ns.js`:
@@ -525,3 +525,57 @@ Per-race appearance reminders injected as `{{RACE_ONE_LINE}}` and `{{RACE_BODY_F
 - `PromptTemplate.md` (original) — untouched.
 
 **Remaining C# mentions**: `Data/Character.cs`, `Program.cs` character endpoint, and all EF Core migrations reference `Cuppar`/`Ferrar`/`Aurar` as character sheet currency entity fields. These are the in-game currency tracking system and are unrelated to the merchant prompt pipeline — do not remove.
+
+## Prompt Template v2.6 — Active Files and Fixes
+
+**Active files** (all three wired in `Program.cs` lines 96, 110–111):
+- Template: `wwwroot/MerchantRules/PromptTemplate_v2_6.md`
+- Item rules: `wwwroot/MerchantRules/ViaproximaItemRules_v2_6.json`
+- World context: `wwwroot/MerchantRules/world_context_v2_6.txt`
+
+Prior versions (`PromptTemplate_v2_5_compressed.md`, `ViaproximaItemRules_v2_5.json`, `world_context_v2_5.txt`) are preserved but no longer loaded.
+
+### Fix 1 — SHAMAN_INGREDIENT die system (`PromptTemplate_v2_6.md`, `## SHAMAN vs SHAMAN_INGREDIENT`)
+Replaced the v2.5 D3–D60 single-die system with the v2.6 rarity-based dice + type_trait system. SHAMAN_INGREDIENT now uses 1D6/2D6/3D6/4D6 by rarity (Common/Uncommon/Rare/Mythic). Each ingredient_type carries a named type_trait: Fungi → Drömrök (reroll one die), Animal parts → Blodskraft (+1 to one die, max 6), Essence → Resonans (two matching dice = +2 KV), Minerals → Stadga (fail by ≤4 KV softens backlash one step), Plants → Återväxt (a rolled 1 counts as 3). Mythic doubles its trait; max one Mythic doubled per ritual. SHAMAN paragraph (focus tool) untouched.
+
+### Fix 2 — `lore_mechanic_choice` schema examples (`PromptTemplate_v2_6.md`, `## OUTPUT SCHEMA`)
+Added concrete examples to the `lore_mechanic_choice` comment: `'4 — Dice control (lock/reroll)'`, `'7 — Ritual trigger on defined outcome'`, `'3 — Negotiation aid (emissary attitude)'`. Required field for KRISTALLSEJDARE/SHAMAN/LYÅDSKAPARE/ORAKEL items.
+
+### Fix 3 — `FormatTypeRuleCompressed` SHAMAN_INGREDIENT case (`Services/PromptAssembler.cs`)
+Updated the compressed prose string to match the v2.6 trait system. Old system referenced D3-D6/D8-D10/D12-D20/D30-D60 ranges and generic ingredient flavors. New string names each type_trait by its Swedish name and mechanic, uses 1D6–4D6 rarity tiers, and notes the Mythic-doubling rule. The Swedish ingredient type names (Drömrök, Blodskraft, Resonans, Stadga, Återväxt) are consistent between template and assembler.
+
+## Prompt Template v2.7
+
+**Active files**:
+- Template: `wwwroot/MerchantRules/PromptTemplate_v2_7.md`
+- Item rules: `wwwroot/MerchantRules/ViaproximaItemRules_v2_6.json` (unchanged from v2.6)
+- World context: `wwwroot/MerchantRules/world_context_v2_6.txt` (unchanged from v2.6)
+
+Prior template (`PromptTemplate_v2_6.md`) is preserved but no longer loaded.
+
+**Retired to `wwwroot/MerchantRules/outdated_files/`**:
+- `ViaproximaFunctionalTags.json` — replaced by archetype system
+- `ViaproximaTwistTags.json` — replaced by archetype system
+
+### Archetype injection system
+**File**: `wwwroot/MerchantRules/ViaproximaArchetypes_v1.json`
+
+94 named archetypes, each with a `description` and a `compatible_types` list. The assembler calls `PickArchetype(typeId, usedArchetypes)` per slot — picks randomly from compatible archetypes that haven't been used yet in this merchant, then falls back to allow reuse if all compatible archetypes are exhausted. Each slot receives an `archetype:` line in `{{ITEM_SLOTS}}` output.
+
+**Model**: `ArchetypeEntry(Description, CompatibleTypes)` and `ArchetypesData(Version, Description, UsageRule, ItemTypes, Archetypes)` in `Models/Merchant/TagModels.cs`.
+
+### Lärdom rule pre-assignment
+**File**: `wwwroot/MerchantRules/Adveniriska_Lardomar_Rules_v1.json`
+
+Per-lore rule sets for the four practitioner types: KRISTALLSEJDARE (13 rules), SHAMAN (12 rules), LYÅDSKAPARE (12 rules), ORAKEL (11 rules). The assembler calls `PickLardomRule(typeId, usedRuleIds)` per slot — picks randomly from unused rules for that lore type, falls back to allow reuse if exhausted. Only lore-type slots receive an `assigned_mechanic:` line. The template instructs the model to execute the assigned mechanic — it may not substitute another.
+
+**Model**: `LardomRule(Id, Name, Rule)`, `LardomLoreRules(Rules)`, and `LardomRulesData(Version, Description, LoreTypes)` in `Models/Merchant/TagModels.cs`.
+
+### Key template changes from v2.6
+- ITEM LAYOUT section: replaced (archetype + assigned_mechanic instructions replace tag/twist instructions)
+- LÄRDOM ITEM PATTERNS section: removed (replaced by per-slot `assigned_mechanic` injection)
+- GOD SELECTION RULE section: added (after TYPE DISAMBIGUATION)
+- EFFECT LENGTH RULE section: added (after EFFECT CLARITY RULE; description max 200 chars, effect max 400 chars)
+- DRAWBACK RULES: opening paragraph updated; TIER A menu revised (added item-change-after-use option, removed visible-mark and public-knowledge); visible-mark downgraded to TIER B
+- FINAL PASS verb set: removed `mark`, `summon`; added `swap`, `distort`
+- OUTPUT SCHEMA: `"tag"` field replaced by `"archetype"` + `"assigned_mechanic"`; `lore_mechanic_choice` comment updated

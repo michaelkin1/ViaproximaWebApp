@@ -6,7 +6,7 @@
     const lorePanels = document.querySelectorAll('.lore-panel');
     const cardTitle  = document.getElementById('cardTitle');
 
-    const titleMap = { spelarbok: 'Rules', poangkostnader: 'Poängkostnader', laror: 'Läror' };
+    const titleMap = { spelarbok: 'Rules', poangkostnader: 'Poängkostnader', laror: 'Läror', shamaner: 'Shamaner', kristallsejdare: 'Kristallsejdare' };
     const loreBgMap = {
         roda:    "url('/Images/Lores/RedFS.png')",
         grona:   "url('/Images/Lores/GreenPA.png')",

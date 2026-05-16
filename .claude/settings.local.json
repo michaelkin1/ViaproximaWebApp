@@ -32,7 +32,8 @@
       "Bash(mv pouch-with-beads.svg Pouch_With_Beads.svg)",
       "Bash(mv HeavyShield_Normal.svg Heavy_Shield.svg)",
       "Bash(mv LightShield_Normal.svg Light_Shield.svg)",
-      "Bash(mv MediumShield_Normal.svg Medium_Shield.svg)"
+      "Bash(mv MediumShield_Normal.svg Medium_Shield.svg)",
+      "Bash(powershell *)"
     ]
   }
 }

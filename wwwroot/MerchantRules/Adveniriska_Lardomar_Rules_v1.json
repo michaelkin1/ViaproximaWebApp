@@ -1,0 +1,262 @@
+{
+  "version": "1.0",
+  "description": "Pre-selectable rules for the four lore item types. The assembler picks one rule per lore slot and injects it as a hard assignment. The model executes the assigned rule — it does not choose from the list.",
+  "lore_types": {
+    "KRISTALLSEJDARE": {
+      "rules": [
+        {
+          "id": 1,
+          "name": "Extra spell die",
+          "rule": "The item grants one additional die when casting a specific lore or under a defined condition. The extra die is rolled alongside the normal cast. The effect must name which lore or condition triggers this."
+        },
+        {
+          "id": 2,
+          "name": "Store spell dice",
+          "rule": "The item stores one or more dice from a cast for use in a later casting. The effect must state how many dice can be stored, how long they are held, and what releases them."
+        },
+        {
+          "id": 3,
+          "name": "Dice control",
+          "rule": "The bearer may lock one die result before casting, reroll one die and keep the new result, swap two dice, or split one die into two lower dice. The effect must name exactly which operation the item performs."
+        },
+        {
+          "id": 4,
+          "name": "Risk trade",
+          "rule": "The bearer accepts a higher miscast risk in exchange for a concrete benefit: extra die, more targets, longer duration, or extended range. The effect must state the exact trade and how much miscast risk increases."
+        },
+        {
+          "id": 5,
+          "name": "Reduce or redirect miscast",
+          "rule": "On a miscast, the item softens severity one step, delays it to end of scene, or redirects it to a chosen target within range. The effect must name which operation and how often."
+        },
+        {
+          "id": 6,
+          "name": "Bind spell",
+          "rule": "The bearer binds one known spell into the item. A named condition or person can later trigger it without casting. The effect must name the lore, the release condition, and the frequency."
+        },
+        {
+          "id": 7,
+          "name": "Shape spell",
+          "rule": "The item changes one physical property of a cast spell: range, area, target count, duration, or physical form. The effect must name which property and how much it changes."
+        },
+        {
+          "id": 8,
+          "name": "Spell selection control",
+          "rule": "Instead of rolling for a spell, the bearer chooses one known spell from their lore. Alternatively, the bearer rerolls a spell selection once and takes either result. The effect must name which operation."
+        },
+        {
+          "id": 9,
+          "name": "Emotional catalyst",
+          "rule": "The item gives a casting benefit only when the bearer genuinely expresses, conceals, or risks the lore's emotional state. The effect must name the emotional state and the concrete benefit."
+        },
+        {
+          "id": 10,
+          "name": "Lore swap",
+          "rule": "The item treats a rolled spell result as a different number within the same lore, as the lore's signature spell, or as the same number in a different lore. The effect must name the swap direction and how often."
+        },
+        {
+          "id": 11,
+          "name": "Spell echo",
+          "rule": "After a spell fires, the item produces a weakened second cast of the same spell on the following round at half effect, without a new roll. The effect must state the frequency and whether the echo can be redirected to a different target."
+        },
+        {
+          "id": 12,
+          "name": "Crystal capture",
+          "rule": "When a lore effect hits the bearer or a chosen nearby area, the item absorbs it as one charge. The bearer may release it as a bonus die on the next cast, or throw it back at a target within range. Maximum one charge at a time."
+        },
+        {
+          "id": 13,
+          "name": "Targeted miscast",
+          "rule": "When the bearer miscasts, they choose where the miscast lands instead of rolling randomly. The bearer names the target or area within spell range before the effect resolves. The effect must state the frequency."
+        }
+      ]
+    },
+    "SHAMAN": {
+      "rules": [
+        {
+          "id": 1,
+          "name": "Upgrade die",
+          "rule": "The item upgrades one ritual die one step under a defined condition (D6 to D10, D10 to D12, etc.). The upgrade applies to the roll, not the ingredient permanently. The effect must state the condition and frequency."
+        },
+        {
+          "id": 2,
+          "name": "Backlash control",
+          "rule": "The item softens backlash one step, weakens a severe backlash to moderate, or protects one ingredient from destruction on a near-miss. The effect must name which operation and how often."
+        },
+        {
+          "id": 3,
+          "name": "Ritual trigger",
+          "rule": "The item activates automatically when the ritual produces a defined outcome: a success margin of 5 or more, three 1s rolled, a near-miss by 4 or less, or a specific ingredient type used. The effect must name the trigger and the exact result."
+        },
+        {
+          "id": 4,
+          "name": "Trait amplifier",
+          "rule": "The item strengthens one ingredient type's type_trait: Fungi rerolls an extra die, Animal parts raise more dice by +1, Essence adds +2 KV on matching dice, Minerals soften two backlash steps, Plants convert all 1s to 3s. The effect must name the type."
+        },
+        {
+          "id": 5,
+          "name": "Ingredient converter",
+          "rule": "The item swaps one ingredient type for another during a ritual, downgrades rarity by one step for safer use, or combines two Common ingredients into one Uncommon. The effect must name the conversion."
+        },
+        {
+          "id": 6,
+          "name": "Ritual storage",
+          "rule": "The item stores unused KV after a successful ritual, a ritual echo, a failed ritual remnant, or a preserved type_trait. The effect must state what is stored, how long it lasts, and what releases it."
+        },
+        {
+          "id": 7,
+          "name": "Set bonus interaction",
+          "rule": "The item lets one ingredient count as a different type for set-bonus purposes, completes a 3-of-a-kind with only two matching ingredients, or lets one ingredient act as a wildcard for any set. The effect must name the operation."
+        },
+        {
+          "id": 8,
+          "name": "Ritual shaper",
+          "rule": "The item changes one property of a ritual's effect: target count, area, duration, delay before activation, or anchor point. The effect must name which property and how much it changes."
+        },
+        {
+          "id": 9,
+          "name": "Find or reveal ingredients",
+          "rule": "The item detects, produces, or preserves one specific ingredient type. The effect must name the type and exactly what the item does: a tool that reacts physically near the ingredient, a vessel that extends freshness, or a surface that yields a small quantity. One type only."
+        },
+        {
+          "id": 10,
+          "name": "Backlash redirect",
+          "rule": "When a ritual fails, the backlash damages the item instead of the shaman. The item takes a durability hit and cannot be used until reconsecrated. The effect must state what reconsecration requires."
+        },
+        {
+          "id": 11,
+          "name": "Failed ritual harvest",
+          "rule": "When a ritual fails, the shaman recovers either one die's worth of KV from the attempt, or retrieves one ingredient that would otherwise be destroyed. Not both. The effect must state which and under what condition."
+        },
+        {
+          "id": 12,
+          "name": "Double-or-nothing",
+          "rule": "Once per ritual, after rolling, the shaman picks one die and pushes it. Roll a separate D6: on 4 to 6 the pushed die becomes 6, on 1 to 3 it becomes 1. No partial results."
+        }
+      ]
+    },
+    "LYÅDSKAPARE": {
+      "rules": [
+        {
+          "id": 1,
+          "name": "Trance protection",
+          "rule": "The item shields one element during trance projection: the physical body, the voice, the instrument, or the projected soul. The effect must name what is protected and what specific threat is blocked."
+        },
+        {
+          "id": 2,
+          "name": "Sound medium",
+          "rule": "The item lets the lyåd travel through one material it normally cannot pass through: stone, still water, bone, packed earth, or fog. The effect must name the material and the maximum range."
+        },
+        {
+          "id": 3,
+          "name": "Stored melody",
+          "rule": "The item stores one song, rhythm, command fragment, or trance pattern. The stored content replays once without the Lyådskapare being present or in trance. The effect must name what triggers replay and who receives it."
+        },
+        {
+          "id": 4,
+          "name": "Soul tether",
+          "rule": "The item anchors the projected soul during trance, preventing drift, entrapment, misdirection, or seizure by an opposing force. The effect must state whether it is passive or requires activation and how long it holds."
+        },
+        {
+          "id": 5,
+          "name": "Risk trade",
+          "rule": "The item makes trance stronger in exchange for concrete physical danger: harder awakening, body fully exposed to attack, audible sound revealing position, or soul drift on interruption. The effect must name the exact trade."
+        },
+        {
+          "id": 6,
+          "name": "Counter-lyåd",
+          "rule": "The item disrupts another Lyådskapare's active trance, rhythm, or mental projection. The disrupted Lyådskapare must make a stability check or exit trance immediately. The effect must state the range and frequency."
+        },
+        {
+          "id": 7,
+          "name": "Mind focus",
+          "rule": "The item sharpens one aspect of mental influence during trance: clearer thought-reading, stronger command, more confused target, or more precise memory-touch. The effect must name which aspect and how it improves."
+        },
+        {
+          "id": 8,
+          "name": "Object control",
+          "rule": "The item gives finer physical control over an object being moved during trance: grip, twist, press, open, close, carry, or strike with precision. The effect must name which operation and the size limit."
+        },
+        {
+          "id": 9,
+          "name": "Object size",
+          "rule": "The item raises the maximum size or weight of objects the Lyådskapare can move, steer, or teleport during trance. The effect must state the new limit and whether this demands greater concentration."
+        },
+        {
+          "id": 10,
+          "name": "Sound trap",
+          "rule": "The item stores a lyåd at a location tied to a named trigger: a specific sound, footsteps, a spoken word, or silence breaking. When triggered, the stored effect fires without the Lyådskapare being present. The effect must state what can be stored and how long it persists."
+        },
+        {
+          "id": 11,
+          "name": "Borrowed voice",
+          "rule": "During trance, the Lyådskapare speaks through one nearby object or animal within range. The object or animal does not move — only the voice emerges from it. The effect must state the range and duration."
+        },
+        {
+          "id": 12,
+          "name": "Echo location",
+          "rule": "The Lyådskapare sends a lyåd pulse through the environment, revealing the shape, distance, and density of solid objects within a stated range, including through walls and in darkness. The effect must state the range and frequency."
+        }
+      ]
+    },
+    "ORAKEL": {
+      "rules": [
+        {
+          "id": 1,
+          "name": "Offering vessel",
+          "rule": "The item holds, improves, preserves, transforms, or formalizes an offering before prayer. The effect must state what the vessel does to the offering and whether it changes emissary attitude, offering cost, or blessing quality."
+        },
+        {
+          "id": 2,
+          "name": "Substitute offering",
+          "rule": "The item counts as a valid offering in place of a standard one, replacing the cost with something non-material: blood, a memory, warmth, sleep, pain, a name, a secret, or a promise. The effect must name the substitute and what it replaces."
+        },
+        {
+          "id": 3,
+          "name": "Negotiation aid",
+          "rule": "The item shifts the emissary's starting attitude: less hostile, more patient, cheaper, or more bound to answer honestly. The effect must state the shift and how often."
+        },
+        {
+          "id": 4,
+          "name": "Blessing storage",
+          "rule": "The item stores one negotiated blessing for later use. The blessing fires when the orakel declares a defined condition. The effect must state what kinds of blessing can be stored and what releases it."
+        },
+        {
+          "id": 5,
+          "name": "Divine condition",
+          "rule": "The item adds one binding rule to a blessing: it holds only if a promise is kept, a target is named, an offering is accepted, or a location is sacred. The effect must name the condition and what happens if it is broken."
+        },
+        {
+          "id": 6,
+          "name": "Omen clarifier",
+          "rule": "After receiving an omen, the orakel may ask one follow-up question and the emissary must clarify. The item does not make omens favorable — only less ambiguous. The effect must state the frequency."
+        },
+        {
+          "id": 7,
+          "name": "God focus",
+          "rule": "The item improves negotiation with one named god and complicates it with another. The effect must name both gods and state the mechanical shift for each."
+        },
+        {
+          "id": 8,
+          "name": "Consumable offering",
+          "rule": "The item is used as an offering. If accepted by the emissary, it produces a specific divine effect tied to the god's domain. The effect must name the god, the divine effect, and what acceptance requires."
+        },
+        {
+          "id": 9,
+          "name": "Emissary takeover",
+          "rule": "The emissary inhabits the orakel's own body for one scene or one named task, granting one divine capability tied to that god's domain: sensing lies (Mitriki), speaking with the dead (Mortmori), walking unharmed through water (Ebba), or equivalent. The orakel remains conscious but cannot refuse the emissary's terms during the takeover. The effect must name the god and the capability."
+        },
+        {
+          "id": 10,
+          "name": "Witnessed oath vessel",
+          "rule": "Two parties speak a promise into the item. If broken, the emissary is notified and the breaker suffers a named concrete penalty for a stated duration. The effect must name the penalty and whether the orakel must be present for the oath to bind."
+        },
+        {
+          "id": 11,
+          "name": "Forced answer",
+          "rule": "The orakel demands a yes-or-no answer from an emissary at a stated cost. The emissary must answer truthfully but may interpret the question literally. The effect must name the cost and state whether the emissary can refuse if no cost is paid."
+        }
+      ]
+    }
+  }
+}

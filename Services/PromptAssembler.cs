@@ -1,3 +1,4 @@
+using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using Viaproxima.Web.Models.Merchant;
@@ -9,20 +10,23 @@ public class PromptAssembler : IPromptAssembler
     private readonly List<ViaproximaRace> _races;
     private readonly List<ViaproximaGuild> _guilds;
     private readonly Dictionary<string, JsonElement> _itemTypeRules;
-    private readonly List<FunctionalTag> _functionalTags;
-    private readonly List<string> _twistTags;
+    private readonly Dictionary<string, ArchetypeEntry> _archetypes;
+    private readonly Dictionary<string, LardomLoreRules> _lardomRules;
     private readonly Dictionary<string, List<InspirationTagEntry>> _guildInspirationTags;
     private readonly string _worldContext;
     private readonly string _promptTemplate;
     private readonly Dictionary<string, string> _guildMechanicSignatures;
     private readonly Dictionary<string, RaceReminder> _raceReminders;
 
+    private static readonly HashSet<string> LardomTypes =
+        new() { "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL" };
+
     public PromptAssembler(
         List<ViaproximaRace> races,
         List<ViaproximaGuild> guilds,
         Dictionary<string, JsonElement> itemTypeRules,
-        List<FunctionalTag> functionalTags,
-        List<string> twistTags,
+        ArchetypesData archetypesData,
+        LardomRulesData lardomRulesData,
         Dictionary<string, List<InspirationTagEntry>> guildInspirationTags,
         string worldContext,
         string promptTemplate,
@@ -32,8 +36,8 @@ public class PromptAssembler : IPromptAssembler
         _races = races;
         _guilds = guilds;
         _itemTypeRules = itemTypeRules;
-        _functionalTags = functionalTags;
-        _twistTags = twistTags;
+        _archetypes = archetypesData.Archetypes;
+        _lardomRules = lardomRulesData.LoreTypes;
         _guildInspirationTags = guildInspirationTags;
         _worldContext = worldContext;
         _promptTemplate = promptTemplate;
@@ -64,33 +68,36 @@ public class PromptAssembler : IPromptAssembler
             : new List<InspirationTagEntry>();
 
         // Build slot list
+        var usedInspirations = new HashSet<string>();
         var slots = new List<ItemSlot>();
-        var slotNumber = 1;
         foreach (var (typeCode, count) in parameters.ItemTypeCounts.Where(kvp => kvp.Value > 0))
         {
             for (int i = 0; i < count; i++)
             {
-                var funcTag = _functionalTags[Random.Shared.Next(_functionalTags.Count)];
-                var inspTag = inspirationPool.Any()
-                    ? inspirationPool[Random.Shared.Next(inspirationPool.Count)].Tag
-                    : "No inspiration available";
-                var twistTag = _twistTags[Random.Shared.Next(_twistTags.Count)];
+                var inspTag = PickInspiration(inspirationPool, usedInspirations);
                 var swedishName = GetSwedishTypeName(typeCode);
 
-                slots.Add(new ItemSlot(typeCode, swedishName, funcTag.Tag, inspTag, twistTag));
-                slotNumber++;
+                slots.Add(new ItemSlot(typeCode, swedishName, inspTag));
             }
         }
 
         // Format item slots for template
+        var usedArchetypes = new HashSet<string>();
+        var usedLardomRuleIds = new Dictionary<string, HashSet<int>>();
+
         var slotLines = new List<string>();
         int num = 1;
         foreach (var slot in slots)
         {
+            var archetype = PickArchetype(slot.TypeCode, usedArchetypes);
+            var assignedMechanic = PickLardomRule(slot.TypeCode, usedLardomRuleIds);
+
             slotLines.Add($"Slot {num} — {slot.SwedishTypeName} ({slot.TypeCode})");
-            slotLines.Add($"  Tag: {slot.FunctionalTag}");
-            slotLines.Add($"  Inspiration: {slot.InspirationTag}");
-            slotLines.Add($"  Twist: {slot.TwistTag}");
+            if (!string.IsNullOrEmpty(assignedMechanic))
+                slotLines.Add($"  assigned_mechanic: {assignedMechanic}");
+            if (!string.IsNullOrEmpty(archetype))
+                slotLines.Add($"  archetype: {archetype}");
+            slotLines.Add($"  inspiration: {slot.InspirationTag}");
             num++;
         }
         var itemSlotsFormatted = string.Join("\n", slotLines);
@@ -157,6 +164,70 @@ public class PromptAssembler : IPromptAssembler
         return typeCode;
     }
 
+    private static string PickInspiration(List<InspirationTagEntry> pool, HashSet<string> usedInspirations)
+    {
+        if (pool.Count == 0)
+            return "No inspiration available";
+
+        var candidates = pool
+            .Where(e => !usedInspirations.Contains(e.Tag))
+            .ToList();
+
+        // Fallback: allow reuse if all inspiration tags already used
+        if (candidates.Count == 0)
+            candidates = pool;
+
+        var chosen = candidates[Random.Shared.Next(candidates.Count)];
+        usedInspirations.Add(chosen.Tag);
+        return chosen.Tag;
+    }
+
+    private string PickArchetype(string typeId, HashSet<string> usedArchetypes)
+    {
+        var candidates = _archetypes
+            .Where(kvp => kvp.Value.CompatibleTypes.Contains(typeId)
+                       && !usedArchetypes.Contains(kvp.Key))
+            .ToList();
+
+        // Fallback: if all compatible archetypes already used, allow reuse
+        if (candidates.Count == 0)
+        {
+            candidates = _archetypes
+                .Where(kvp => kvp.Value.CompatibleTypes.Contains(typeId))
+                .ToList();
+        }
+
+        if (candidates.Count == 0)
+            return string.Empty;
+
+        var chosen = candidates[Random.Shared.Next(candidates.Count)];
+        usedArchetypes.Add(chosen.Key);
+        return $"{chosen.Key} — {chosen.Value.Description}";
+    }
+
+    private string PickLardomRule(string typeId, Dictionary<string, HashSet<int>> usedRuleIds)
+    {
+        if (!LardomTypes.Contains(typeId)) return string.Empty;
+        if (!_lardomRules.TryGetValue(typeId, out var loreRules)) return string.Empty;
+
+        if (!usedRuleIds.ContainsKey(typeId))
+            usedRuleIds[typeId] = new HashSet<int>();
+
+        var candidates = loreRules.Rules
+            .Where(r => !usedRuleIds[typeId].Contains(r.Id))
+            .ToList();
+
+        // Fallback: allow reuse if all rules exhausted for this lore type
+        if (candidates.Count == 0)
+            candidates = loreRules.Rules;
+
+        if (candidates.Count == 0) return string.Empty;
+
+        var chosen = candidates[Random.Shared.Next(candidates.Count)];
+        usedRuleIds[typeId].Add(chosen.Id);
+        return $"{chosen.Id} — {chosen.Name}: {chosen.Rule}";
+    }
+
     private string FormatTypeRuleCompressed(string typeCode, JsonElement rule)
     {
         var sw = GetSwedishTypeName(typeCode);
@@ -199,9 +270,9 @@ public class PromptAssembler : IPromptAssembler
                 $"Cost tied to natural use condition.",
 
             "SHAMAN_INGREDIENT" =>
-                $"SHAMAN_INGREDIENT ({sw}). Consumable ritual cards. Valid in standard merchant layouts. Contributes die value to KV, then destroyed. " +
-                $"ingredient_type: Fungi (visions/poison/dreams/divination) | Animal parts (enhancement/senses/blood) | Essence (elemental/attunement/sensing) | Minerals (protection/sealing/focus) | Plants (healing/purification/growth/dampening). " +
-                $"Rarity/die: Common D3-D6, Uncommon D8-D10, Rare D12-D20, Mythic D30-D60. Rare/Mythic may add one situational effect beyond KV.",
+                $"SHAMAN_INGREDIENT ({sw}). Consumable ritual ingredient. Contributes dice to KV, then destroyed. " +
+                $"ingredient_type: Fungi (Drömrök — reroll one die, keep new result) | Animal parts (Blodskraft — raise one die by +1, max 6) | Essence (Resonans — two matching dice = +2 KV) | Minerals (Stadga — fail by ≤4 KV softens backlash one step) | Plants (Återväxt — a rolled 1 counts as 3). " +
+                $"Rarity/dice: Common 1D6, Uncommon 2D6, Rare 3D6, Mythic 4D6. Mythic doubles its trait; max one Mythic doubled per ritual. Rare/Mythic may add one concrete ritual effect beyond KV. Valid in standard merchant layouts.",
 
             "LYÅDSKAPARE" =>
                 $"LYÅDSKAPARE ({sw}). Sound mage items — instruments, trance tools, sound-manipulation objects. " +

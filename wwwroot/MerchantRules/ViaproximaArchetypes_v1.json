@@ -1,0 +1,384 @@
+{
+  "version": "1.0",
+  "description": "Archetypes are creative seeds the assembler assigns one per item slot. Each archetype has a compatible_types list filtering it to item types where it produces concrete, table-usable mechanics. The model executes the archetype as a mechanic, not as flavor.",
+  "usage_rule": "An archetype is a creative seed, not a literal instruction. The item must execute the archetype as a concrete table-usable mechanic — a trigger, an outcome, a target, a duration, a frequency. If the archetype could be removed from the item and the effect would still function the same way, the archetype is failing. Do not name the archetype in the item text. Do not treat the archetype as atmosphere, theme, or aesthetic. The archetype shapes what the item DOES, not what it FEELS like.",
+  "item_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"],
+  "archetypes": {
+    "PORTABLE_SPACE": {
+      "description": "Creates unusual storage, shelter, passage, hiding, containment, or escape.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "MOVEMENT_TRICK": {
+      "description": "Creates new ways to cross, climb, fall, cling, leap, return, drag, or reposition.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "IMPOSSIBLE_ANCHOR": {
+      "description": "Fixes, holds, suspends, braces, pins, blocks, or stabilizes something beyond mundane possibility.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "TEMPORARY_CREATION": {
+      "description": "Creates temporary object, terrain, helper, opening, tool, material, or structure.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "STORED_POWER": {
+      "description": "Stores magic, force, voice, memory, wound, creature, weather, ritual, or consequence for later release.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "BORROWED_POWER": {
+      "description": "Lets the user attempt power outside normal limits with risk, debt, distortion, or partial control.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "CONTROLLED_CHAOS": {
+      "description": "The player chooses when to trigger it, but not the exact result.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "RANDOM_TABLE": {
+      "description": "Predictable activation, unpredictable rolled or table-driven outcome.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "ESCALATING_ROLL": {
+      "description": "Repeated use, low rolls, high rolls, doubles, failures, or streaks change what happens next.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "LUCK_DISTORTION": {
+      "description": "Changes rerolls, bad rolls, good rolls, criticals, fumbles, doubles, or who suffers the consequence.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "MISFIRE_USEFUL": {
+      "description": "Misfires still create playable problems, openings, or complications instead of just failing.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "QUESTIONABLE_ORACLE": {
+      "description": "Gives imperfect information shaped by roll, offering, context, or mood.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "FALSE_INFORMATION": {
+      "description": "Good results inform, low results obscure, very low results lie.",
+      "compatible_types": ["AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "LIVING_HELPER": {
+      "description": "Simple creature, swarm, plant, fungus, spirit, construct, or living tool performs a task. Limited obedience, duration, or usefulness.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "RESOURCE_SOURCE": {
+      "description": "Produces limited useful substance, signal, charge, tool, shelter, heat, light, scent, creature, or material.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "WEIRD_SUPPLY": {
+      "description": "Reliably creates mundane-but-strange useful materials players can abuse creatively.",
+      "compatible_types": ["SHAMAN", "PETS", "MISC"]
+    },
+    "CONSUMABLE_BATCH": {
+      "description": "Several limited uses that can be spent, mixed, wasted, shared, or prepared.",
+      "compatible_types": ["AMMO", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "RECHARGE_RITUAL": {
+      "description": "Recharges through specific care, feeding, rest, place, witness, offering, material, or risk.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "DELAYED_TRIGGER": {
+      "description": "Planted, declared, hidden, charged, or prepared effect triggers later when a defined condition is met. Setup now creates payoff later.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "CONSEQUENCE_REDIRECT": {
+      "description": "Moves, delays, splits, stores, transforms, or redirects a consequence instead of cancelling it.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "PRICELESS_COST": {
+      "description": "Costs something non-monetary: memory, name, warmth, shadow, sleep, smell, voice, luck, pride, or promise.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DEBT_MARKER": {
+      "description": "Creates, transfers, stores, proves, hides, collects, or settles obligation.",
+      "compatible_types": ["KRISTALLSEJDARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "EXCHANGE_OR_STAKE": {
+      "description": "Effect depends on what is offered, risked, traded, promised, owed, wagered, lost, or transferred. Useful effect achieved by moving or transforming cost, blame, attention, debt, harm, exposure, or obligation.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "SPLIT_CHOICE": {
+      "description": "Forces a choice between two good outcomes, two bad costs, or helping one thing while hurting another.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "MORAL_CHOICE": {
+      "description": "Works best when the player accepts an uncomfortable obligation, truth, sacrifice, mercy, cruelty, exposure, or debt.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DANGEROUS_HELP": {
+      "description": "Solves the immediate problem but creates a new tactical, social, environmental, or narrative complication.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "ENEMY_OPPORTUNITY": {
+      "description": "Use also gives enemies a clue, opening, route, resource, attention, or timing window.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "SOCIAL_LEVERAGE": {
+      "description": "Changes status, trust, fear, permission, accusation, authority, or how others read the bearer.",
+      "compatible_types": ["ARMOR", "SHIELD", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "PUBLIC_CLAIM": {
+      "description": "Makes a visible claim over place, object, person, route, role, promise, or right.",
+      "compatible_types": ["ARMOR", "SHIELD", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "MISDIRECTION": {
+      "description": "Changes attention, blame, scent, sound, tracks, target priority, or what observers think matters.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "DECOY_OR_LURE": {
+      "description": "Creates bait, false trail, false signal, false safety, false prey, false authority, or false opportunity.",
+      "compatible_types": ["AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "SIMPLE_RULE_EXCEPTION": {
+      "description": "One simple impossible rule becomes true while the item is active.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "LITERAL_MAGIC": {
+      "description": "Obeys exact words, gestures, drawings, symbols, knots, marks, or declared conditions too literally.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "BOUNDARY_RULE": {
+      "description": "Cares about crossing, entering, leaving, touching, naming, opening, closing, seeing, hearing, or being witnessed.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "THRESHOLD_TOOL": {
+      "description": "Effect changes at a threshold: too much, too little, first time, third time, blood drawn, nightfall, silence, wetness, etc.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "REVERSAL_TOOL": {
+      "description": "Turns one expected relationship backward: falling lifts, hiding reveals, wounds open doors, silence carries sound, fire cools.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "BODY_TOOL": {
+      "description": "Body, garment, weapon, shield, mask, pack, instrument, or tool becomes a new interface to a capability the bearer otherwise lacks.",
+      "compatible_types": ["MELEE", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "REPLACEMENT_LIMB": {
+      "description": "Temporary limb, sense, organ, hand, eye, claw, wing, tail, shell, root, or tool-body the bearer can use.",
+      "compatible_types": ["ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DETACHABLE_PART": {
+      "description": "Part of item or bearer can detach, act, scout, carry, bite, grip, listen, return, or refuse.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "TOOL_COMPANION": {
+      "description": "A tool behaves like a creature or companion: useful, stubborn, hungry, afraid, loyal, or literal.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "ITEM_POSSESSION": {
+      "description": "Item borrows the bearer, steers a hand, speaks through them, dreams for them, or acts when neglected.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "MEMORY_OBJECT": {
+      "description": "Stores, replays, transfers, or returns a specific event, conversation, song, route, face, or wound for concrete mechanical use at the table. Storage alone is not enough — the item must do something with what it stores.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "FUTURE_CONDITION": {
+      "description": "A future action, place, promise, mistake, or condition matters because of the item — the item watches for it and reacts when it occurs.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "TIME_SKIP_SMALL": {
+      "description": "Skips, repeats, stretches, freezes, hastens, or delays a tiny moment, not a whole scene.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "LAST_CHANCE": {
+      "description": "Works when something is broken, failed, dying, lost, spent, cornered, falling, or already too late.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "FAILURE_CONVERSION": {
+      "description": "Turns failed rolls, missed attacks, broken tools, spent resources, or bad outcomes into a different opportunity.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "VOLATILE_POWER": {
+      "description": "Strong effect with unstable output, collateral change, wrong target, overreach, overgrowth, or side-effect.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "CHAIN_REACTION": {
+      "description": "One small trigger spreads, jumps, echoes, grows, repeats, or causes secondary effects.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "TRANSFER_EFFECT": {
+      "description": "Moves effect, mark, spell, wound, smell, blame, protection, heat, debt, sound, or attention between targets.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "SHARED_STATE": {
+      "description": "Two creatures, objects, places, or tools share harm, senses, position, luck, sound, warmth, burden, or condition.",
+      "compatible_types": ["MELEE", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "LINKED_PAIR": {
+      "description": "Works through a pair: two stones, masks, bones, knots, pets, shadows, names, tools, or marks. Affecting one linked thing affects the other.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "CONTAINER_OF_WRONGNESS": {
+      "description": "A container holds something it should not: weather, animal, silence, doorway, hunger, flame, shadow, scream, road.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "SEAL_OR_RELEASE": {
+      "description": "Seals something in, keeps something out, or releases what was stored, trapped, promised, hidden, or delayed.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "OPEN_CLOSE_TOOL": {
+      "description": "Opens, closes, forbids passage, grants passage, or changes what counts as an entrance.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "KEYLESS_ACCESS": {
+      "description": "Creates access without keys: permission, invitation, scent, mark, posture, offering, shadow, sound, or name.",
+      "compatible_types": ["ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "BARRIER_OR_COVER": {
+      "description": "Creates temporary cover, screen, curtain, wall, shell, fog, swarm, thorns, crowd, silence, smell, or darkness.",
+      "compatible_types": ["AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "TERRAIN_SHIFT": {
+      "description": "Changes footing, slope, density, softness, wetness, friction, visibility, sound, route, or local hazard.",
+      "compatible_types": ["AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "ANCHOR_POINT": {
+      "description": "Creates a temporary point to tie, climb, swing, brace, pull, hang, pivot, aim, or stop from.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "BRIDGE_OR_PATH": {
+      "description": "Creates crossing, route, stepping line, safe strip, crawlspace, tunnel, ladder, handhold, or path marker.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "SHELTER_OR_NEST": {
+      "description": "Creates rest, concealment, insulation, breathing room, safety, cover, warmth, coolness, dryness, or stillness.",
+      "compatible_types": ["ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "WEATHER_IN_A_BOTTLE": {
+      "description": "Stores, releases, redirects, predicts, attracts, or repels weather.",
+      "compatible_types": ["AMMO", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "LIGHT_DARK_TOOL": {
+      "description": "Creates, stores, bends, hides, reveals, softens, blinds, guides, or trades light and darkness.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "SOUND_TOOL": {
+      "description": "Stores, carries, mutes, echoes, delays, distorts, amplifies, silences, redirects, or imitates sound.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "SMELL_TASTE_TOOL": {
+      "description": "Creates, hides, stores, follows, repels, attracts, transfers, or falsifies scent or taste.",
+      "compatible_types": ["AMMO", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "HEAT_COLD_TOOL": {
+      "description": "Stores, moves, releases, hides, consumes, protects from, or weaponizes warmth or cold.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "WEIGHT_TOOL": {
+      "description": "Changes weight, burden, balance, pull, floating, sinking, dragging, anchoring, carrying, or falling.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "SIZE_SHAPE_TOOL": {
+      "description": "Changes size, compression, folding, unfolding, swelling, shrinking, flattening, hollowing, or fitting.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DURABILITY_TOOL": {
+      "description": "Hardens, softens, repairs, preserves, weakens, cracks, reinforces, braces, dulls, sharpens, or exhausts material.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "REPAIR_OR_RESTORE": {
+      "description": "Gives one more use, restores function temporarily, remembers original form, patches damage, or stabilizes failure.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "BREAK_TO_USE": {
+      "description": "Must be cracked, cut, burned, eaten, planted, drowned, buried, torn, or sacrificed to activate.",
+      "compatible_types": ["AMMO", "SHAMAN_INGREDIENT", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "SCENE_EDIT": {
+      "description": "Once per use, the player adds one concrete physical detail that was already there but unnoticed: a handhold on a smooth wall, a small object in a pocket, a third witness in a crowd, a crack in a sealed jar. The detail must be physically plausible and constrained by the item's logic.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DRAWING_BECOMES_REAL": {
+      "description": "Drawing, carving, painting, knotting, weaving, sculpting, or marking creates a temporary real thing.",
+      "compatible_types": ["KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "NAME_OR_WORD_POWER": {
+      "description": "Naming, misnaming, refusing to name, repeating, whispering, singing, or declaring changes what is possible.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "OATH_OR_CONDITION": {
+      "description": "Effect depends on promise, rule, witness, declared condition, formal phrase, or broken term.",
+      "compatible_types": ["ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "WITNESS_OR_RECORD": {
+      "description": "Observes, stores, proves, disputes, repeats, preserves, or weaponizes something that happened.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "VERDICT_OR_FINALITY": {
+      "description": "Ends, closes, settles, seals, executes, captures, dismisses, or makes something impossible to reopen.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "PURSUIT_OR_ESCAPE": {
+      "description": "Tracks, flees, misleads, delays pursuit, preserves trail, destroys trail, swaps trail, or creates escape route.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "RESTRAINT_OR_RELEASE": {
+      "description": "Binds, pins, slows, cages, snares, restrains, loosens, frees, opens, or removes binding.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "CROWD_OR_GROUP_TOOL": {
+      "description": "Gathers, scatters, queues, directs, calms, panics, distracts, hides within, separates, or moves groups.",
+      "compatible_types": ["AMMO", "ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "PERFORMANCE_TOOL": {
+      "description": "Creates spectacle, attention, misdirection, rhythm, applause, fear, silence, staged danger, or audience reaction.",
+      "compatible_types": ["ARMOR", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "PETS", "MISC"]
+    },
+    "ANIMAL_PARTNER": {
+      "description": "Animal carries, warns, distracts, bites, fetches, blocks, herds, mimics, comforts, or scouts.",
+      "compatible_types": ["ADVENIRE", "PETS", "MISC"]
+    },
+    "PLANT_ALCHEMY": {
+      "description": "Roots, bark, sap, spores, flowers, fungi, seeds, thorns, pollen, venom, or insects become practical tools.",
+      "compatible_types": ["AMMO", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "GROWTH_TIMER": {
+      "description": "Growth, bloom, rot, fermentation, hatching, drying, swelling, cooling, or ripening controls timing.",
+      "compatible_types": ["SHAMAN", "SHAMAN_INGREDIENT", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "INFUSION_OR_MIXTURE": {
+      "description": "Mixing, soaking, feeding, burning, watering, drying, or staining changes behavior.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHAMAN", "SHAMAN_INGREDIENT", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "DOSE_THRESHOLD": {
+      "description": "Same substance helps, harms, reveals, numbs, preserves, attracts, repels, or transforms depending on dose.",
+      "compatible_types": ["AMMO", "SHAMAN", "SHAMAN_INGREDIENT", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "CRAFT_MODULARITY": {
+      "description": "Attaches, detaches, replaces, combines, reinforces, adapts, extends, or reconfigures another tool.",
+      "compatible_types": ["MELEE", "RANGED", "ARMOR", "SHIELD", "MISC"]
+    },
+    "LOAD_BEARING": {
+      "description": "Holds, carries, drags, braces, lifts, distributes, supports, suspends, or survives strain.",
+      "compatible_types": ["MELEE", "ARMOR", "SHIELD", "MISC"]
+    },
+    "ROUTE_MEMORY": {
+      "description": "Remembers path, distance, landmark, return, lost place, crossed boundary, terrain, or direction.",
+      "compatible_types": ["ARMOR", "PETS", "MISC"]
+    },
+    "MAP_OR_MARKER": {
+      "description": "Maps, marks, updates, erases, folds, hides, falsifies, or compares places.",
+      "compatible_types": ["ARMOR", "MISC"]
+    },
+    "VALUE_DISTORTION": {
+      "description": "Changes perceived worth, urgency, scarcity, ownership, debt, usefulness, or who thinks something matters.",
+      "compatible_types": ["ARMOR", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "IDENTITY_SHIFT": {
+      "description": "Changes how the bearer is categorized: ally, threat, owner, guest, criminal, dead, noble, protected, cursed, mourner, hunter, child, elder, witness, priest, debtor, or outsider.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "GARMENT_CLAIM": {
+      "description": "Wearing it asserts right, role, permission, mourning, shame, kinship, rank, protection, or taboo.",
+      "compatible_types": ["ARMOR", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "BORROWED_FLAW": {
+      "description": "Effect requires the bearer to temporarily inherit a target's weakness, fear, or condition: a coward's hesitation, a poisoned enemy's nausea, a blind person's darkness. The borrowed flaw is mechanically tracked and ends with the effect.",
+      "compatible_types": ["ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    },
+    "WAGER_PROPOSITION": {
+      "description": "Item presents a stated wager before activation: stake something specific (an HV point, an item charge, a future roll, a memory) and roll for a defined outcome. The wager terms are written on the item — stake X, roll, get Y or lose X.",
+      "compatible_types": ["MELEE", "RANGED", "AMMO", "ARMOR", "SHIELD", "KRISTALLSEJDARE", "SHAMAN", "SHAMAN_INGREDIENT", "LYÅDSKAPARE", "ORAKEL", "ADVENIRE", "MISC"]
+    }
+  }
+}

@@ -3,9 +3,7 @@ namespace Viaproxima.Web.Models.Merchant;
 public record ItemSlot(
     string TypeCode,
     string SwedishTypeName,
-    string FunctionalTag,
-    string InspirationTag,
-    string TwistTag
+    string InspirationTag
 );
 
 public record PromptParams(

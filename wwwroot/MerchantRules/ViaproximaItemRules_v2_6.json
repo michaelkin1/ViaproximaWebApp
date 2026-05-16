@@ -1,0 +1,371 @@
+{
+  "version": "3.0",
+  "global_rules": {
+    "hv": "HV (Handlingsvärde) = action value. Bonuses expressed as +1 HV, +2 HV etc. on specific actions or sub-stats.",
+    "cv": "CV = casting value used in crystal magic.",
+    "kv": "KV = ritual power value used in shaman rituals.",
+    "grid_weight": "Weight always expressed as AxB grid squares (e.g. 1x1, 2x2, 3x2).",
+    "magical_cost": "Magical items with powerful effects require a cost that is specific and tied to the item's identity. Choose one: bodily toll | usage condition | social/legal risk | limited frequency | ritual dependency | binding to a power | public marking | moral cost.",
+    "misc_rule": "Use MISC when an item genuinely does not fit a rule-backed category. It is a last resort, not a default.",
+    "effect_rule": "Effects must be self-explanatory. Trigger and outcome must be explicit. Forbidden verbs: påverkar, vägleder, resonerar, kan avslöja, fungerar konstigt, influences, guides, resonates.",
+    "cost_rule": "Do not generate magical costs. Only generate limitation (when/how the item cannot be used) or drawback (negative consequence directly tied to the function) when they are inseparable from the item's identity.",
+    "naming_rule": "Item names must be Swedish compounds built from function, behavior, consequence, or material truth. Short and direct. No decorative or atmospheric names that only describe mood."
+  },
+  "hard_type_boundary": {
+    "purpose": "Disambiguates between practitioner lore types and ADVENIRE. The same flavor (fire, trance, blessing) can belong to either depending on whether the item helps a practitioner perform their craft, or whether the item performs the magic itself.",
+    "tests": {
+      "KRISTALLSEJDARE": "Helps a Kristallsejdare cast spells. Modifies CV, dice, miscast, spell selection, or spell shaping. If a non-practitioner picks it up, it does nothing useful.",
+      "SHAMAN": "Helps a Shaman perform rituals. Modifies KV, backlash, dice size, ingredient handling, ritual shape, place-binding, or ritual storage. If a non-practitioner picks it up, it does nothing useful.",
+      "LYÅDSKAPARE": "Helps a Lyådskapare create lyåder, enter trance, and project the soul. Modifies trance entry, stability, protection, range, targets, object size, mental focus, teleport anchoring, or stored melody. If a non-practitioner picks it up, it does nothing useful.",
+      "ORAKEL": "Helps an Orakel pray and negotiate with divine emissaries. Modifies offering, prayer, negotiation, relationship, blessing storage, omen clarity, or divine consequence. If a non-practitioner picks it up, it does nothing useful.",
+      "ADVENIRE": "Magical item that performs the effect itself. Takes flavor from one lore tradition (specify advenire_lore_origin) but the effect is self-contained and works for anyone. Does NOT touch CV, KV, trance mechanics, or negotiation."
+    },
+    "decision_order": [
+      "1. Does the effect only work if the bearer is a practitioner of a specific lore? → lore type (KRISTALLSEJDARE / SHAMAN / LYÅDSKAPARE / ORAKEL).",
+      "2. Does the bearer need no lore knowledge and the item just does the thing? → ADVENIRE (set advenire_lore_origin).",
+      "3. No lore flavor and doesn't fit weapon/armor/shield/pet? → MISC."
+    ],
+    "examples": {
+      "Staff giving +1 CV on red-lore spells": "KRISTALLSEJDARE",
+      "Red crystal projecting 3m of flame once per day": "ADVENIRE (lore_origin: KRISTALLSEJDARE)",
+      "Idol storing a divine blessing for later release": "ORAKEL",
+      "Blessed bone amulet making anyone harder to trick": "ADVENIRE (lore_origin: ORAKEL)",
+      "Drum that shortens trance entry by half": "LYÅDSKAPARE",
+      "Carved stone that hums and lets anyone hear distant conversations": "ADVENIRE (lore_origin: LYÅDSKAPARE)",
+      "Root bundle that adds +1 KV to growth rituals": "SHAMAN",
+      "Mummified frog that produces a healing salve when squeezed": "ADVENIRE (lore_origin: SHAMAN)"
+    }
+  },
+  "damage_scale": {
+    "LOW": "D4",
+    "MID": "D4+4",
+    "HIGH": "D4+8",
+    "EXTREME": "D4+12",
+    "spans": {
+      "LOW-MID": "2D4",
+      "LOW-HIGH": "3D4",
+      "MID-HIGH": "2D4+4",
+      "MID-EXTREME": "2D4+8"
+    },
+    "note": "A span weapon rolls with greater variance — minimum damage is the lower tier, maximum approaches the higher tier. EXTREME alone or in a span is rare and reserved for the most powerful weapons."
+  },
+  "type_rules": {
+    "MELEE": {
+      "swedish_name": "Närstrid",
+      "profile_format": "A/An [adjective] [material+weapon type] that deals [damage] and weighs [AxB]. Also [effect]. However [drawback if warranted].",
+      "hit_formula": "(Accuracy + Strike) / 2",
+      "requirements": [
+        "Damage level or span from damage_scale",
+        "Grid weight in AxB",
+        "At least one functional advantage"
+      ],
+      "categories": {
+        "Hackvapen": "Bladed or edged. Axes, toothed blades, obsidian knives, stone-age glaives. Cuts and cleaves.",
+        "Trubbvapen": "Blunt impact. Clubs, staves, bone clubs. Crushes and stuns.",
+        "Repvapen": "Flexible component. Whips, flails, sinew-linked weapons. Difficult to block.",
+        "Stickvapen": "Piercing point. Spears, bone daggers, jabbing implements. Reach and precision."
+      },
+      "subtype_required": true,
+      "subtype_field": "Hackvapen | Trubbvapen | Repvapen | Stickvapen"
+    },
+    "RANGED": {
+      "swedish_name": "Avstånd",
+      "profile_format": "Same as MELEE.",
+      "hit_formula": "Skytte (Ranged skill)",
+      "requirements": [
+        "Damage level or span from damage_scale",
+        "Grid weight in AxB",
+        "Specify if ammunition required — if yes, weapon is unusable without it"
+      ],
+      "categories": {
+        "Kastvapen": "Thrown axes, spears, knives. Often usable in melee as well.",
+        "Pilbågar": "Requires arrows. High range and precision.",
+        "Slungor": "Requires projectiles (stone, bone). Simple but powerful.",
+        "Blåsvapen": "Requires projectiles (darts, thorns). Silent, often poisoned."
+      },
+      "subtype_required": true,
+      "subtype_field": "Kastvapen | Pilbågar | Slungor | Blåsvapen"
+    },
+    "AMMO": {
+      "swedish_name": "Ammunition",
+      "requirements": [
+        "Consumption rule — number of uses or single-use effect"
+      ],
+      "guidelines": [
+        "Modifies weapon damage or function situationally",
+        "Cannot permanently alter weapon base profile"
+      ]
+    },
+    "ARMOR": {
+      "swedish_name": "Rustning",
+      "types": {
+        "Light": {
+          "blocks": ["LOW"],
+          "durability": 6,
+          "weight": "2x1",
+          "example_materials": ["bast", "leather", "thin wood", "plant fiber"]
+        },
+        "Medium": {
+          "blocks": ["LOW", "MID"],
+          "durability": 9,
+          "weight": "2x2",
+          "example_materials": ["hardened hide", "bone plates", "thick wood"]
+        },
+        "Heavy": {
+          "blocks": ["LOW", "MID", "HIGH"],
+          "durability": 12,
+          "weight": "3x2",
+          "example_materials": ["fossil shell", "stone plates", "solid wood"]
+        }
+      },
+      "block_system": {
+        "roll": "1D6 when hit",
+        "success": "5 or 6",
+        "effect": "Damage reduced one level",
+        "durability_loss": {
+          "LOW": -1,
+          "MID": -2,
+          "HIGH": -3,
+          "EXTREME": "armor destroyed immediately"
+        },
+        "cannot_block": ["EXTREME", "damage above armor design level"]
+      }
+    },
+    "SHIELD": {
+      "swedish_name": "Sköld",
+      "types": {
+        "Small": {
+          "hv_bonus": "+1 HV",
+          "durability": 6,
+          "weight": "2x1",
+          "notes": "No drawbacks."
+        },
+        "Medium": {
+          "hv_bonus": "+2 HV",
+          "durability": 9,
+          "weight": "2x2",
+          "notes": "Difficult to combine with two-handed weapons."
+        },
+        "Heavy": {
+          "hv_bonus": "+2 HV",
+          "durability": 12,
+          "weight": "3x2",
+          "notes": "Reduced mobility. Allows shield bash."
+        }
+      },
+      "shield_bash": "On a successful block of +2 HV or more — push target back, brief stun (lose next reaction)."
+    },
+    "KRISTALLSEJDARE": {
+      "swedish_name": "Kristallsejdarföremål",
+      "description": "Focus items for Kristallsejdare who cast spells (besvärjelser) through colored crystals and emotional lores. Almost always incorporate crystals in some form — set, inscribed, or carried loose. Color corresponds to lore.",
+      "rule": "A KRISTALLSEJDARE item only works for a Kristallsejdare and must modify spellcasting mechanics. If the item produces magic on its own and anyone can use it, it is ADVENIRE, not KRISTALLSEJDARE.",
+      "lores": {
+        "Röd vrede": "Fire, smoke, explosion, destruction, pressure.",
+        "Grön skam": "Plants, animals, roots, growth, nature.",
+        "Gul glädje": "Light, warmth, healing, comfort, protection.",
+        "Lila stolthet": "Lightning, necromancy, dominance, death-force.",
+        "Orange kärlek": "Stone, sand, weight, shelter, endurance.",
+        "Blå sorg": "Water, wind, stillness, storm, loss, movement."
+      },
+      "function_menu": {
+        "1": "CV bonus — +1 to +3 CV for a specific lore, spell type, target type, emotional state, risk, or situation. +3 requires Magical power level and a drawback.",
+        "2": "Store spell dice — stores one or more dice for later casting.",
+        "3": "Extra spell die — grants one additional die for a specific lore, spell type, or condition.",
+        "4": "Dice control — lets the Kristallsejdare lock, reroll, swap, split, lower, raise, or preserve a spell die.",
+        "5": "Reduce miscast — softens, delays, redirects, or weakens a miscast.",
+        "6": "Risk trade — increases miscast risk in exchange for a stronger spell, extra die, higher CV, additional targets, longer duration, or stronger form.",
+        "7": "Extra spell access — lets the Kristallsejdare temporarily gain, prepare, choose, or stabilize an additional spell.",
+        "8": "Spell selection — choose a spell instead of rolling, reroll a spell selection, or lock a known spell in place.",
+        "9": "Borrow from another lore — borrows a limited effect from a different lore. Must have a clear limitation, cost, or miscast risk.",
+        "10": "Bind spell — binds a spell into the item so it can be cast later, faster, cheaper, or under a specific condition.",
+        "11": "Shape spell — changes range, area, target count, duration, physical form, trigger, or a secondary physical detail.",
+        "12": "Emotional catalyst — requires the caster to express, acknowledge, conceal, or risk the lore's emotional state to gain the benefit."
+      },
+      "effect_must_state": [
+        "which lore, color, emotional state, or spell category is affected",
+        "which casting mechanic is changed (CV, dice, miscast, spell selection, spell shape)",
+        "when the Kristallsejdare activates the item",
+        "how often it can be used"
+      ],
+      "note": "Magical items carry a cost tied to the lore's emotional character — a wrath-lore item might cost calm; a sorrow-lore item might demand a memory."
+    },
+    "SHAMAN": {
+      "swedish_name": "Shamanföremål",
+      "description": "Reusable ritual tool for Shamaner who perform rituals (ritualer) with ingredients. Natural and organic — bone, roots, dried animal parts, stone, bark, fungus. Worn and personal, marked by many rituals. Not consumed as an ingredient.",
+      "rule": "A SHAMAN item only works for a Shaman and must modify how rituals are performed. If the item produces magic on its own and anyone can use it, it is ADVENIRE, not SHAMAN.",
+      "function_menu": {
+        "1": "Find ingredients — helps the shaman locate, identify, preserve, improve, or harvest ingredients.",
+        "2": "KV bonus — +1 to +3 KV under a specific ritual condition. +3 requires Magical power level and a drawback.",
+        "3": "Upgrade die — upgrades one or more ritual dice under a specific condition (example: one D6 becomes D10). Affects the roll, not the ingredient permanently.",
+        "4": "Backlash control — softens backlash, weakens severe backlash, protects an ingredient from being consumed on a near-miss.",
+        "5": "Set bonus interaction — counts an ingredient as a different type, completes a 3-set, strengthens three of the same type, or lets an ingredient count as a wildcard.",
+        "6": "Trait amplifier — improves a specific ingredient type: Fungi rerolls an extra die, Animal parts raise more dice, Essence adds more KV, Minerals soften more backlash, Plants convert more 1s.",
+        "7": "Ritual trigger — activates when a ritual is performed under a specific condition. Examples: on a successful ritual with 5+ margin, a ritual remnant is stored; on a miss by 4 or less, backlash is delayed; on three 1s, backlash redirects into the item.",
+        "8": "Place binder — binds a ritual to a location, allows a weak repeat at that place, improves rituals on prepared ground, or stores the location's ritual memory.",
+        "9": "Ritual shaper — changes target count, area, duration, physical form, delay, or anchor point.",
+        "10": "Ingredient converter — swaps one ingredient type for another, downgrades rarity for safety, combines weak ingredients, or splits a strong ingredient.",
+        "11": "Ritual storage — stores unused KV, a ritual echo, a failed ritual remnant, or a preserved type_trait."
+      },
+      "effect_must_state": [
+        "when the shaman uses the item",
+        "which part of the ritual is affected (KV, backlash, die size, ingredient type, set bonus, type_trait, ritual shape, place, or storage)",
+        "how often it can be used"
+      ],
+      "note": "Magical items carry a concrete natural cost — must be buried after use, requires blood, functions only in specific terrain."
+    },
+    "SHAMAN_INGREDIENT": {
+      "swedish_name": "Shamaningrediens",
+      "description": "Consumable ritual ingredient for Shamaner. Destroyed when used in a ritual. Contributes dice to KV.",
+      "structure": {
+        "ingredient_type": "Fungi | Animal parts | Essence | Minerals | Plants",
+        "rarity": "Common | Uncommon | Rare | Mythic",
+        "die_value": {
+          "Common": "1D6",
+          "Uncommon": "2D6",
+          "Rare": "3D6",
+          "Mythic": "4D6"
+        },
+        "consumed_on_use": true,
+        "type_trait": "see ingredient_types below"
+      },
+      "ingredient_types": {
+        "Fungi": {
+          "domain": "Mushroom, spores, rot, dream, hallucination, hidden growth.",
+          "trait": "Drömrök — after rolling, the shaman may reroll one die and must keep the new result."
+        },
+        "Animal parts": {
+          "domain": "Bone, blood, claw, horn, hide, tooth, organ, instinct.",
+          "trait": "Blodskraft — raise one die result by +1 after rolling, max 6."
+        },
+        "Essence": {
+          "domain": "Weather residue, emotional sediment, elemental trace, Advenire leakage, breath, shadow, light.",
+          "trait": "Resonans — if two dice show the same value after rolling, add +2 KV."
+        },
+        "Minerals": {
+          "domain": "Stone, crystal dust, clay, fossil, salt, ash, heavy earth.",
+          "trait": "Stadga — if the ritual fails by 4 KV or less, backlash is softened one step."
+        },
+        "Plants": {
+          "domain": "Roots, bark, seeds, sap, flowers, moss, thorns, living fibers.",
+          "trait": "Återväxt — a rolled 1 counts as 3."
+        }
+      },
+      "mythic_rule": "A Mythic ingredient contributes 4D6 and its type_trait is doubled. Only one Mythic trait may be doubled per ritual.",
+      "rare_mythic_bonus": "Rare and Mythic ingredients may have a concrete additional ritual effect beyond KV. The effect must modify what a shaman ritual can do, not produce standalone magic usable without a ritual.",
+      "note": "SHAMAN_INGREDIENT is valid in standard merchant layouts."
+    },
+    "LYÅDSKAPARE": {
+      "swedish_name": "Lyådskaparföremål",
+      "description": "Items for Lyådskapare who create songs and lyåder through instruments, song, rhythm, humming, breathing, vibration, silence, or repeated sound. Through the lyåd they enter trance (trans) and project their soul via Advenire.",
+      "trance_capabilities": [
+        "move objects",
+        "steer objects",
+        "teleport self or others",
+        "read thoughts",
+        "affect senses",
+        "command, calm, confuse, or distract",
+        "project presence or perception",
+        "carry sound through unusual media",
+        "affect larger objects or more targets through stronger trance"
+      ],
+      "rule": "A LYÅDSKAPARE item only works for a Lyådskapare and must help with trance, lyåd, soul projection, range, targets, object size, mental influence, or teleportation. If the effect works without trance, it is ADVENIRE.",
+      "function_menu": {
+        "1": "Trance entry — helps the Lyådskapare enter trance faster, more safely, more quietly, or under stress.",
+        "2": "Trance stability — helps maintain trance despite pain, sound, movement, fear, interruption, combat, or magical disruption.",
+        "3": "Trance protection — protects the body, voice, instrument, or projected soul during trance.",
+        "4": "Lyåd range — increases how far the sound, rhythm, song, or soul projection reaches.",
+        "5": "Sound medium — lets the lyåd pass through stone, bone, water, wood, smoke, skin, roots, wind, silence, or walls.",
+        "6": "Target count — lets the Lyådskapare affect more minds, bodies, objects, or listeners.",
+        "7": "Object size — lets the Lyådskapare move, steer, pull, push, hold, or teleport larger objects.",
+        "8": "Mind focus — improves mental influence: clearer thought-reading, stronger command, calmer target, better distraction, or more precise memory-touch.",
+        "9": "Object control — gives finer control over moved or steered objects: grip, twist, tie, open, close, carry, press, strike, or hold.",
+        "10": "Teleport anchor — creates a safer destination, return point, sound marker, or linked object for teleportation.",
+        "11": "Soul tether — prevents the projected soul from drifting, getting stuck, being misled, or being seized.",
+        "12": "Stored melody — stores a song, rhythm, command, thought-fragment, or trance pattern for later use.",
+        "13": "Counter-lyåd — disrupts another Lyådskapare's trance, rhythm, projection, or mental influence.",
+        "14": "Risk trade — makes trance stronger in exchange for greater danger: harder awakening, exposed body, louder sound, mental bleed, soul drift, or worse backlash."
+      },
+      "effect_must_state": [
+        "which sound, song, rhythm, instrument, silence, or vibration is used",
+        "which part of trance or soul projection is changed",
+        "whether it affects range, targets, object size, mind, teleportation, stability, protection, or storage",
+        "what can interrupt the effect",
+        "how often it can be used"
+      ],
+      "note": "Magical items carry a cost tied to sound or instrument — the item may be unable to fall silent, or it binds the bearer to a specific direction of magic."
+    },
+    "ORAKEL": {
+      "swedish_name": "Orakelföremål",
+      "description": "Items for Orakel who pray (ber böner) and negotiate with divine emissaries (sändebud) from the gods. The GM plays the emissary. The oracle's level and relationship with the god affects how friendly, demanding, costly, or clear the emissary is.",
+      "core_logic": "offergåva (offering) → prayer and negotiation → emissary → divine effect → cost, condition, or consequence.",
+      "oracle_levels": {
+        "1": "The emissary is demanding, costly, vague, or difficult. Effects are modest.",
+        "2": "Still difficult but more predictable. Small blessings become easier.",
+        "3": "The emissary begins to respect the oracle. Stronger blessings become possible.",
+        "4": "The emissary cooperates if the oracle respects the god's nature.",
+        "5": "The emissary is friendly or personally invested. Powerful prayers become cheaper and clearer."
+      },
+      "gods_reference": "Seven gods available: Mitriki (knowledge, memory, truth), Folgor (family, protection, blood), Sternine (freedom, defiance, curiosity), Ebba (sea, movement, change), Kung Kallus (earth, fertility, tribe), Viaträdet (life, connection, cycle), Mortmori (death, rebirth, decay). Full god descriptions in world_context. Only ORAKEL items use the offering/negotiation/emissary mechanic — other item types may reference gods as flavor only.",
+      "rule": "An ORAKEL item only works for an Orakel and must affect the offering (offergåva), prayer, negotiation, divine relationship, emissary attitude, blessing storage, omen, or divine consequence. If the effect works without prayer or negotiation, it is ADVENIRE.",
+      "function_menu": {
+        "1": "Offering vessel — holds, improves, preserves, transforms, or formalizes an offering.",
+        "2": "Substitute offering — counts as a special offering: blood, memory, warmth, sleep, pain, an object, a promise, food, a name, a secret.",
+        "3": "Negotiation aid — makes the emissary less hostile, clearer, cheaper, more patient, or more bound to answer honestly.",
+        "4": "Relationship marker — improves or measures standing with a god, stores favor, marks debt, or proves prior devotion.",
+        "5": "Cost reducer — lowers offering cost for a specific god, prayer type, or situation.",
+        "6": "Consequence softener — makes a poor negotiation outcome less punishing.",
+        "7": "Blessing storage — stores a negotiated blessing for later use under a specified condition.",
+        "8": "Omen clarifier — makes divine signs clearer, narrower, less misleading, or easier to interpret.",
+        "9": "Divine condition — adds a rule to a blessing: works if a promise is kept, a target is named, an offering is accepted, or a location is sacred.",
+        "10": "Wrath buffer — protects against divine wrath once, but does not remove the debt or offense.",
+        "11": "God focus — improves negotiation with one specific god but may complicate relations with another.",
+        "12": "Consumable offering item — used as an offering. Should produce a specific type of divine effect if accepted by the emissary."
+      },
+      "effect_must_state": [
+        "which god, emissary, offering type, or relationship is affected",
+        "which part of the prayer or negotiation is changed",
+        "what the oracle must sacrifice, risk, promise, lose, or maintain",
+        "how often it can be used"
+      ],
+      "note": "Magical items carry a cost tied to the divine — must be returned to a sacred place after use, or loses power if the oracle breaks their god's code."
+    },
+    "ADVENIRE": {
+      "swedish_name": "Advenire",
+      "description": "Items shaped by contact with Advenire through one of the four lore traditions. Requires no lore knowledge to use — the effect belongs to the item itself, not the bearer.",
+      "lore_origin_field": "Specify lore_origin: KRISTALLSEJDARE | SHAMAN | LYÅDSKAPARE | ORAKEL",
+      "lore_origins": {
+        "KRISTALLSEJDARE": {
+          "description": "Item shaped by one of the six lores through color, emotion, and element. Produces lore-colored effects — fire and smoke from wrath, roots and growth from shame, light and warmth from joy, lightning and death-force from pride, stone and sand from love, water and wind from sorrow. Often carries a visible crystal whose color reveals the lore. Does NOT modify CV, spell dice, spell selection, or miscast — those belong to KRISTALLSEJDARE items. Here the item performs the magic itself, for anyone.",
+          "lores_reference": "see KRISTALLSEJDARE.lores for the six lore definitions"
+        },
+        "SHAMAN": {
+          "description": "Item blessed in rituals or with shamanic ingredients woven into it. Nature's force channeled into an object — produces effects rooted in an ingredient's nature and a ritual's intention. May contain a preserved type_trait (Drömrök, Blodskraft, Resonans, Stadga, Återväxt) in fixed form, stored KV, or a ritual effect that triggers without the Shaman being present. Does NOT modify ongoing rituals — that belongs to SHAMAN items."
+        },
+        "LYÅDSKAPARE": {
+          "description": "A Lyådskapare's soul or tone locked into an object. Carries the nature of music magic permanently and gives properties tied to sound, vibration, or movement. May contain a trapped soul, failed trance, soul echo, enchanted instrument, stored voice, sound marker, thought echo, or teleport anchor. Lets anyone trigger a limited lyåd-like effect without trance. Does NOT help a Lyådskapare enter or maintain trance — that belongs to LYÅDSKAPARE items."
+        },
+        "ORAKEL": {
+          "description": "Religious artifact from the gods. May be blessed, cursed, sacred, taboo — a relic, fossil, sacred bone, vessel, idol, or god-fragment. Carries a god's or aspect's nature and gives effects tied to that god's domain. Works without an Orakel and without negotiation — the god's power is already in the object. Does NOT modify offering, prayer, or emissary relationship — those belong to ORAKEL items."
+        }
+      }
+    },
+    "PETS": {
+      "swedish_name": "Tamdjur",
+      "description": "All animals are hybrids of two real animals. Specify size and 1–2 evolutions.",
+      "sizes": {
+        "Pocket": "Mouse-sized. Fits in pocket or bag.",
+        "Foot": "Cat or dog-sized. Follows on foot.",
+        "Ride": "Horse-sized. Can be ridden.",
+        "Trample": "Hippo or elephant-sized. Imposing presence."
+      },
+      "evolutions": "Innate abilities tied to the animal's nature. Max 2 at purchase. More can be bought with experience points.",
+      "note": "Pets do not replace player character core roles."
+    },
+    "MISC": {
+      "swedish_name": "Övrigt",
+      "description": "Everything that does not fit a rule-backed category. Jewelry, clothing, tools, contracts, maps, organic objects, relics, carrying equipment, instruments without lore connection, and anything else creative.",
+      "type_field_instruction": "Describe what the item is in the type field — 'contract', 'amulet', 'cloak', 'map', 'herb bundle', 'carved idol', etc.",
+      "note": "No mechanical restrictions beyond global rules. Use MISC when nothing else fits — not as a default."
+    }
+  }
+}

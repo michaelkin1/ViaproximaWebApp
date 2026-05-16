@@ -493,3 +493,6 @@ ItemIconColors.txt
 # User-uploaded content — never commit binary blobs from runtime uploads
 wwwroot/AdventureImages/
 wwwroot/portraits/
+viaproxima_v2_6_implementation_plan.md
+wwwroot/MerchantRules/outdated_files/
+MerchantGeneratorV2_7_plan.md

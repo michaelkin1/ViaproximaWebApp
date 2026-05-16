@@ -48,7 +48,7 @@
                 const editor = document.querySelector(
                     `.vp-dagbok__chapter-body[data-chapter-id="${remote.id}"]`
                 );
-                if (editor && document.activeElement === editor) continue;
+                if (editor && (document.activeElement === editor || state.savedRange !== null)) continue;
 
                 if (local.bodyHtml === remote.bodyHtml &&
                     local.title === remote.title &&
@@ -599,7 +599,7 @@
 
     imgFileInput.addEventListener('change', async function () {
         const file = this.files[0];
-        if (!file || !state.savedRange) { this.value = ''; return; }
+        if (!file || !state.savedRange) { this.value = ''; state.savedRange = null; return; }
 
         const range = state.savedRange;
         const editorEl = editorFromNode(range.commonAncestorContainer);
@@ -643,6 +643,18 @@
             const fragment = range.extractContents();
             span.appendChild(fragment);
             range.insertNode(span);
+        }
+
+        // If the range was invalidated (e.g. by a poll replacing editor.innerHTML
+        // while the file dialog was open), the span ends up with no text. Remove
+        // it and abort — the uploaded image exists on the server but the link has
+        // no visible anchor.
+        if (!span.textContent.trim()) {
+            if (span.parentNode) span.parentNode.removeChild(span);
+            this.value = '';
+            state.savedRange = null;
+            renderImagePanel();
+            return;
         }
 
         // Place caret between two ZWSPs in a text node after the span. A

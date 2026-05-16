@@ -619,6 +619,7 @@
 
 /* Chapter group label inside adventure scope */
 .vp-dagbok__chapter-group {
+    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -636,6 +637,7 @@
 
 /* Image cards */
 .vp-dagbok__image-card {
+    flex-shrink: 0;
     position: relative;
     border: 1px solid var(--vp-border);
     border-radius: 3px;
