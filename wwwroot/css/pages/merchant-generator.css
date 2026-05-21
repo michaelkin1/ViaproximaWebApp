@@ -297,6 +297,14 @@
     background: #d4c59e;
 }
 
+.mg-output-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+}
+
 /* Viewer root */
 #merchant-viewer {
     margin-top: 1.25rem;
@@ -720,4 +728,51 @@
 
 .mg-prompt-text:focus {
     outline: none;
+}
+
+/* ============================================================
+   Print / Save as PDF
+   ============================================================ */
+@media print {
+    body.mg-printing-merchant * {
+        visibility: hidden !important;
+    }
+
+    body.mg-printing-merchant #merchant-viewer,
+    body.mg-printing-merchant #merchant-viewer * {
+        visibility: visible !important;
+    }
+
+    body.mg-printing-merchant #merchant-viewer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        max-width: none;
+        padding: 0;
+        margin: 0;
+        background: #fff;
+    }
+
+    body.mg-printing-merchant .mv-merchant-header {
+        box-shadow: none;
+        border: 1px solid #d5c7ad;
+    }
+
+    body.mg-printing-merchant .mv-item-card,
+    body.mg-printing-merchant .mv-merchant-header {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    body.mg-printing-merchant .mv-items-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    @page {
+        size: A4;
+        margin: 12mm;
+    }
 }

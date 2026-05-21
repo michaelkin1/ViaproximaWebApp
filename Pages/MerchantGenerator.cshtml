@@ -189,7 +189,10 @@
                     <div class="mg-viewer-controls">
                         <textarea id="mg-json-input" class="mg-json-input" rows="10"
                                   placeholder="Klistra in handlar-JSON här..."></textarea>
-                        <button type="button" id="mg-parse-btn" class="mg-btn-gold">Visa handelsman</button>
+                        <div class="mg-output-actions">
+                            <button type="button" id="mg-parse-btn" class="mg-btn-gold">Visa handelsman</button>
+                            <button type="button" id="mg-download-pdf-btn" class="mg-btn-gold" disabled>Ladda ned PDF</button>
+                        </div>
                     </div>
                     <div id="merchant-viewer"></div>
                 </div>
@@ -335,6 +338,7 @@
 
         const jsonInput = document.getElementById('mg-json-input');
         const parseBtn  = document.getElementById('mg-parse-btn');
+        const pdfBtn    = document.getElementById('mg-download-pdf-btn');
         const viewer    = document.getElementById('merchant-viewer');
 
         if (!parseBtn) return;
@@ -455,6 +459,7 @@
 
         parseBtn.addEventListener('click', function () {
             viewer.innerHTML = '';
+            if (pdfBtn) pdfBtn.disabled = true;
             const raw = jsonInput.value.trim();
             if (!raw) return;
             const data = parseMerchantJson(raw);
@@ -463,7 +468,25 @@
                 return;
             }
             renderMerchant(data, viewer);
+            if (pdfBtn) pdfBtn.disabled = false;
         });
+
+        if (pdfBtn) {
+            pdfBtn.addEventListener('click', function () {
+                if (!viewer || !viewer.children.length) return;
+                var cleaned = false;
+                var cleanup = function () {
+                    if (cleaned) return;
+                    cleaned = true;
+                    document.body.classList.remove('mg-printing-merchant');
+                    window.removeEventListener('afterprint', cleanup);
+                };
+                document.body.classList.add('mg-printing-merchant');
+                window.addEventListener('afterprint', cleanup);
+                window.print();
+                setTimeout(cleanup, 1000);
+            });
+        }
     }());
     </script>
 

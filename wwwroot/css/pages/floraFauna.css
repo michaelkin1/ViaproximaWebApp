@@ -263,3 +263,40 @@ body.lore-bg-active::after {
 .ks-backlash-table td:nth-child(1) { width: 50px; text-align: center; font-weight: 600; }
 .ks-backlash-table td:nth-child(2) { min-width: 160px; font-weight: 600; }
 .ks-backlash-table td:nth-child(3) { min-width: 420px; }
+
+/* ── Shaman (2.0) tab ── */
+.sh-td-r { text-align: right; }
+.sh2-examples-table td:nth-child(1) { min-width: 140px; font-weight: 600; }
+.sh2-examples-table td:nth-child(2) { min-width: 120px; }
+.sh2-examples-table td:nth-child(3) { width: 55px; }
+.sh2-examples-table td:nth-child(4) { min-width: 200px; }
+
+/* ── Two-row tab bar ── */
+.tab-bar { flex-direction: column; gap: 0.35rem; }
+.tab-row { display: flex; gap: 0.5rem; }
+
+/* ── Liv & Strid: formula block ── */
+.sh-formula {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--panel-2);
+    border-left: 3px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    padding: 0.4rem 0.75rem;
+    margin: 0.5rem 0 0.65rem;
+    font-family: var(--font);
+}
+
+/* ── Liv & Strid: GM quote callout ── */
+.sh-quote {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--muted);
+    border-left: 3px solid var(--border-2);
+    background: var(--panel);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.9rem;
+    margin: 0.65rem 0 1rem;
+    line-height: 1.6;
+}
