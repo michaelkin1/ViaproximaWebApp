@@ -1,581 +1,226 @@
 # CLAUDE.md
 
-## Stack
-ASP.NET Core Razor Pages · Minimal APIs (`Program.cs`) · EF Core + SQLite (`app.db`) · Vanilla JS, no frameworks/bundlers.
+## Project
+ASP.NET Core Razor Pages + Minimal APIs in `Program.cs` + EF Core SQLite (`app.db`) + vanilla JS. No frameworks, no bundlers, no npm.
 
-## Commands
+Run:
 ```sh
 dotnet build
 dotnet run
 dotnet test
 ```
+On Windows, do not pipe `dotnet` through `2>&1`; it can hang.
 
-## Architecture
-UI → JS → Minimal API → EF Core → SQLite. Character Sheet is the main integration point. No full page reloads — UI events `fetch` and patch the DOM.
+## Working Rules
+- Reuse existing patterns. Avoid broad rewrites, unnecessary renames or new abstractions.
+- Inspect relevant files before non-trivial edits and propose a file-by-file plan.
+- Keep business logic in C#. JS is UI glue and must not duplicate backend rules.
+- All API calls from JS go through `VP.shared.requestJson()` so CSRF and auth behavior stay intact.
+- After edits, run build/tests when practical and summarize changed files + why.
 
-## Rules
-- Reuse existing patterns. No new frameworks, restructuring, or unnecessary renames.
-- Business logic in C# only. JS is UI glue — never duplicate logic across layers.
-- Inspect before non-trivial changes; propose a plan by file.
-- After edits: build, summarize changed files, explain why.
-- New pages get their own `wwwroot/css/pages/<page>.css` and `wwwroot/js/pages/<page>.page.js`, loaded via `@section Scripts`. No npm, no bundlers.
+## Security / Auth
+Public-facing app. Every write endpoint must use `.RequireAuthorization("CanWrite")` unless there is a very explicit existing exception.
 
-## Security
-Public-facing app. Every write endpoint must `.RequireAuthorization("CanWrite")`. Validate inputs at boundaries. Cookie/auth defaults are secure (see Auth). No hardcoded secrets — `appsettings.Secrets.json` is gitignored.
+Auth setup:
+- Cookie auth, roles `Writer` and `Admin` stored in `User.Role`.
+- Policy `CanWrite` = Writer or Admin.
+- `/api/*` unauthenticated requests return 401 JSON; non-API redirects to `/Login`.
+- No hardcoded secrets. `appsettings.Secrets.json` is gitignored.
+- Admin seeder runs only with `--seed-admin` and zero existing users.
 
-## Migration Rules (EF Core)
-- Never modify existing migrations — add new ones.
-- One migration per logical group.
-- Run `dotnet ef database update` and verify before proceeding.
-- Roll back with `dotnet ef database update <PreviousMigration>` on failure, then fix.
-- New columns must be nullable or have a default — never break existing rows.
-- Never store binary image data in DB — file paths/URLs only.
+CSRF:
+- Header is `X-XSRF-TOKEN`, not `X-CSRF-TOKEN`.
+- `GET /antiforgery/token` returns `{ token }`.
+- `VP.shared.requestJson()` injects CSRF for POST/PUT/DELETE.
+- Only these endpoints intentionally disable antiforgery:
+  - `POST /api/auth/login`
+  - `POST /api/chapters/{id}/images`
 
-## Image Storage
-- Save uploads to `wwwroot/uploads/`, `wwwroot/portraits/`, or `wwwroot/AdventureImages/{adventureId}/`. Store the relative path in DB.
-- Portraits → `wwwroot/portraits/{characterId}.{ext}` (overwrites prior file on upload).
-- Adventure images → `wwwroot/AdventureImages/{adventureId}/{guid:N}_{originalFileName}`.
-- Allowed extensions: portraits `.png .jpg .jpeg .webp`; adventure chapter images additionally `.gif`.
-- No server-side request-body cap. Frontend caps portraits at 2000×2000 px.
-- Pet/item icons: file path strings under `IconsPets/` or `IconsItems/`. Folder-driven discovery — adding icons requires no code change.
-- Future hosted: implement `IFileStorage` to swap to Azure Blob / Cloudflare R2. Never base64.
-- **Physical-file lifecycle = DB lifecycle**: capture paths before `SaveChangesAsync`, then delete files. Wrap file I/O in try/catch — file-cleanup failures must not fail the response.
+Rate limiting:
+- `LoginLimit`: 5/min fixed window, no queue. Applies only to `POST /api/auth/login`.
 
-## Auth & Authorization
-- Cookie auth: HttpOnly, `SecurePolicy.Always`, `SameSite=Lax`, 8h sliding (`Program.cs:34–42`).
-- 401 redirect: `/api/*` returns 401 JSON; non-API returns 303 to `/Login` (`Program.cs:43–52`).
-- Roles: `Writer` (default for new users), `Admin`. Stored in `User.Role`.
-- Policy `CanWrite` = `Writer` OR `Admin` (`Program.cs:55–59`). Apply to every write endpoint.
-- Claims: username on `ClaimTypes.Name`, role on `ClaimTypes.Role`.
-- Admin seeder (`Data/AdminSeeder.cs`): runs only with CLI `--seed-admin` AND zero existing users; reads `SeedAdmin:Username/Password` from `appsettings.Secrets.json`.
+Middleware order matters:
+`UseStaticFiles → UseRouting → UseRateLimiter → UseForwardedHeaders → UseAuthentication → UseAuthorization → UseAntiforgery`.
+`UseForwardedHeaders` is required behind Cloudflare Tunnel.
 
-## CSRF / Antiforgery
-- Custom header **`X-XSRF-TOKEN`** (not `X-CSRF-TOKEN`).
-- `GET /antiforgery/token` (auth-required) → `{token}`.
-- Frontend: `VP.shared.getCsrfToken()` (cached); `VP.shared.requestJson()` injects the header on POST/PUT/DELETE automatically.
-- Two endpoints intentionally `.DisableAntiforgery()` — do not copy elsewhere:
-  - `POST /api/auth/login` (rate-limit only)
-  - `POST /api/chapters/{id}/images` (multipart upload)
-
-## Rate Limiting
-`LoginLimit` policy: fixed window, 5/min, no queue. Returns 429 `Too many requests. Try again later.` Applied to `POST /api/auth/login` only (`Program.cs:68–78`).
-
-## Middleware Order (`Program.cs:154–163`)
-`UseStaticFiles → UseRouting → UseRateLimiter → UseForwardedHeaders → UseAuthentication → UseAuthorization → UseAntiforgery`. `UseForwardedHeaders` is required because the app runs behind Cloudflare Tunnel.
-
-## Startup Tasks
+## EF Core / Data Rules
+- Never edit existing migrations. Add a new migration per logical group.
+- Run `dotnet ef database update` after migration changes.
+- New columns must be nullable or have defaults.
+- Project entities to anonymous DTOs before returning JSON. Do not return EF navigation graphs, they cause object-cycle 500s.
 - `db.Database.Migrate()` runs on boot.
-- `appsettings.Secrets.json` loaded `optional: true, reloadOnChange: false`.
 
-## Cloudflare / SSE
-App runs behind a Cloudflare Tunnel that **kills SSE streams** ("stream canceled by remote, error code 0"). Do not introduce SSE anywhere. Adventure Log uses 5s polling instead.
+Important entities:
+- `User`: `Id`, `Username` unique, `PasswordHash`, `Role`.
+- `Character`: global, no owner. Contains stats, currency, HP, notes, nullable `GroupId`.
+- `CharacterGroup`: deleting a group nulls member `GroupId`; never cascade-delete characters.
+- `InventoryItem`: has `Cols`, `Rows`, optional `Weight` and legacy `Size` string.
+- `Pet`, `Lardom`, `Evolution`: FK to `Character`.
+- `Adventure`: user-owned via `UserId` username string, not FK.
+- `Chapter`: FK to `Adventure`, has many `ImageLink`.
+- `ImageLink`: `ImagePath` is authoritative.
 
-## Error Surfacing
-- Production: `/Error` page (`Program.cs:149`). No problem-details middleware.
-- Development: wrap new endpoints in `try/catch` returning `Results.Problem(ex.Message)` so 500s surface real errors.
-- File-deletion try/catches log to `Console.WriteLine` and never fail the response.
+Ownership:
+- Adventures, chapters and adventure images must verify `User.Identity.Name == Adventure.UserId`; otherwise 403.
+- Characters and groups are global. Writes only require `CanWrite`.
 
-## Ownership Model
-- **Adventures are user-owned**: `Adventure.UserId` is a username string (not FK). Every adventure/chapter/image endpoint must verify `User.Identity.Name == Adventure.UserId` and 403 on mismatch. Ownership chain: `chapter → adventure → user`.
-- **Characters and groups are global** — no `UserId` field. Access gated only by `CanWrite`.
+## File / Image Storage
+Never store binary image data or base64 in DB. Store relative paths only.
 
-## Implementation Order (remaining)
-1. Stats (remaining of 30), Valuta, Pouch, Anteckningar — new columns on Character
-2. HP / damage per body part — new columns on Character
-3. Lärdomar + Evolutioner — new tables FK to Character
-4. Pets DB persistence — new Pets table FK to Character, icon path string
-5. Character image upload — disk now, swappable `IFileStorage` later
-6. Pet grid icons — file path string on Pet entity
+Paths:
+- Portraits: `wwwroot/portraits/{characterId}.{ext}`, overwrite previous portrait.
+- Adventure images: `wwwroot/AdventureImages/{adventureId}/{guid:N}_{originalFileName}`.
+- Pet/item icons: path strings under `IconsPets/` or `IconsItems/`. Folder-driven discovery.
 
-## Data Model
-Defined in `Data/`. Cascade delete configured in `ApplicationDbContext.OnModelCreating`.
+Rules:
+- Allowed portrait extensions: `.png`, `.jpg`, `.jpeg`, `.webp`.
+- Adventure chapter images also allow `.gif`.
+- Frontend caps portraits at 2000×2000 px.
+- Physical file lifecycle follows DB lifecycle: capture paths before `SaveChangesAsync`, then delete files.
+- File cleanup failures must be caught/logged and must not fail the API response.
+- Future hosted storage should use `IFileStorage` for Azure Blob / Cloudflare R2.
 
-- **User**: `Id`, `Username` (unique index), `PasswordHash`, `Role` (string, default `"Writer"`).
-- **Character**: stats, currency, HP, notes, `GroupId` (`int?`, nullable FK → CharacterGroup; null = Main/ungrouped).
-- **CharacterGroup**: `Id`, `Name` (max 100), `SortOrder` (default 0). `OnDelete(Restrict)` — group delete nulls members' `GroupId`, never cascade-deletes characters.
-- **InventoryItem**: includes `Cols`, `Rows` (numeric grid dims), `Weight` (optional), plus existing `Size` string.
-- **Pet**, **Lardom**, **Evolution**: per-character entities (FK to Character).
-- **Adventure**: `Id`, `UserId` (string username, not FK), `Title`, `Session`, `SortOrder`, `CreatedAt` (UTC). Has many `Chapters` (cascade delete).
-- **Chapter**: `Id`, `AdventureId`, `Title`, `Date`, `BodyHtml`, `SortOrder`, `Collapsed` (bool). Has many `ImageLinks` (cascade delete).
-- **ImageLink**: `Id`, `ChapterId`, `AnchorText`, `ImagePath`, `FileName`. `ImagePath` is the authoritative path field.
+## Frontend Architecture
+Global namespace: `window.VP` in `wwwroot/js/shared/vp.ns.js`.
 
-**JSON object cycles** (HTTP 500): always project entities to anonymous objects before returning. Two-sided navigation properties cause cycles. Use `.Select(x => new { x.Id, … })` and omit nav props.
-
-## API Endpoints
-
-```
-Auth
-  POST   /api/auth/login                      [DisableAntiforgery + LoginLimit]
-  POST   /api/auth/logout
-  GET    /api/auth/me
-  GET    /antiforgery/token                   [auth]
-
-Characters
-  GET    /api/characters                      (returns GroupId)
-  GET    /api/characters/{id:int}
-  POST   /api/characters
-  PUT    /api/characters/{id:int}
-  DELETE /api/characters/{id:int}
-  POST   /api/characters/{id:int}/portrait    [multipart]
-  PUT    /api/characters/{id:int}/group       body: { groupId } (nullable)
-
-Groups
-  GET    /api/groups                          (ordered by SortOrder, then Id)
-  POST   /api/groups                          body: { name }
-  DELETE /api/groups/{id}                     (nulls GroupId on members, then deletes)
-
-Items / Pets / Lärdomar / Evolutioner
-  GET    /api/characters/{id}/items|pets|lardomar|evolutioner
-  POST/PUT/DELETE /api/items|pets|lardomar|evolutioner[/{id}]
-
-Adventure Log
-  GET/POST   /api/adventures
-  DELETE     /api/adventures/{id}             → also deletes wwwroot/AdventureImages/{id}/
-  GET/POST   /api/adventures/{id}/chapters
-  PUT/DELETE /api/chapters/{id}               → DELETE also deletes physical image files
-  POST       /api/chapters/{id}/images        [multipart, DisableAntiforgery]
-                                              → returns { id, imagePath, fileName }
-  DELETE     /api/images/{id}                 → also deletes physical file
-
-Icons / Rules
-  GET /api/icons/catalog
-  GET /api/pets/icons
-  GET /api/rules/inventory                    (strength/barformaga grid rules)
-  GET /api/rules/hp                           (talighet/fysisk HP rules)
+Main modules:
+```txt
+VP.shared    requestJson, getCsrfToken, getAuthState, UI helpers
+VP.api       characters, items, pets, icons, rules
+VP.grid      render, placement
+VP.inventory createDialogController
+VP.pets      createController
+VP.sheet     load, clear, field state, skills
+VP.pages     page controllers
 ```
 
-All write endpoints require `.RequireAuthorization("CanWrite")`. Adventure endpoints additionally enforce ownership.
+Script order:
+`vp.ns.js → shared/* → api/* → grid/* → inventory/* → pages/<page>.page.js`.
 
-## Page Inventory
-| Page | Auth | Notes |
-|---|---|---|
-| `Index` | public | landing |
-| `Login` | public-only | redirects auth'd users → `/CharacterList` |
-| `CharacterList` | implicit | loads characters + groups; `OnPostDeleteAsync` checks role |
-| `CharacterSheet` | redirect | → `/CharacterList?id={id}` |
-| `Aventyrsdagbok/Index` | `[Authorize]` | thin model |
-| `Rules`, `FloraFauna`, `Laror` | public | empty `OnGet` |
-| `MerchantGenerator` | public | uses `IPromptAssembler`; validates 1–12 items |
+Patterns:
+- IIFE per file. Attach to `VP`. Avoid random globals.
+- Controllers are factories. Pass DOM in; factories should not query the whole document.
+- Session caches exist for CSRF, auth state, icon catalog and pet icons. No invalidation.
+- New pages: `wwwroot/css/pages/<page>.css` + `wwwroot/js/pages/<page>.page.js`, loaded with `@section Scripts`.
 
-Layout = `_Layout`. Navbar lives there.
+## Character Sheet Gotchas
+The character sheet uses one shared `#panel-sheet` across tabs. State must be explicitly cleared on tab switches.
 
-## Services
-- **`IPromptAssembler`** (singleton) — loads JSON rule files (`ViaproximaRaces`, `ViaproximaGuildsLore`, `ViaproximaItemRules`, `ViaproximaArchetypes_v1`, `Adveniriska_Lardomar_Rules_v1`, `ViaproximaGuildMechanicSignatures`, `ViaproximaRaceReminders`, per-guild `InspirationTags`, `world_context_v2_6.txt`, `PromptTemplate_v2_7.md`). `BuildPrompt(PromptParams)` → `(Prompt, LayoutId)`. Used by `MerchantGenerator` only.
+Do not break these rules:
+- `VP.sheet.clear()` is the central reset orchestrator.
+- New submodules must add their clear-on-null behavior to `clear()`.
+- Never `if (!characterId) return` before clearing UI. Clear first, then return.
+- Use `characterId = newId ? String(newId) : null`; never allow truthy `"null"`.
+- Clearing `state.itemsCache = []` does not clear the grid. Call `VP.grid.render.renderSlots(...)`.
+- On return to a blank tab, call `VP.sheet.clear()` before restoring field state.
 
-## JS Architecture
-Single global namespace `window.VP`, defined in `wwwroot/js/shared/vp.ns.js`:
+Submodules include stats, HP/damage, currency, notes/pouch, portrait upload, inventory, pets and skills.
 
+## Adventure Log Gotchas
+Files: `Pages/Aventyrsdagbok/Index.cshtml`, `wwwroot/css/aventyrsdagbok.css`, `wwwroot/js/aventyrsdagbok.js`, `Data/Adventure.cs`, `Data/Chapter.cs`, `Data/ImageLink.cs`.
+
+Cloudflare Tunnel kills SSE. Do not introduce SSE. Use 5s polling:
+- `startPolling(adventureId)` after chapter load.
+- `stopPolling()` before switching adventure and on `beforeunload`.
+- Poll failures stay silent.
+- Never overwrite the editor where `document.activeElement === editor`.
+- Skip identical incoming content.
+
+Autosave:
+- 10s debounce per chapter.
+- Immediate save on collapse/expand and adventure switch.
+
+Image-linked words:
+```html
+<span class="img-link" data-src="..." data-image-id="..." data-filename="...">word</span>
 ```
-VP.shared    — requestJson, getCsrfToken, getAuthState, ui helpers
-VP.api       — characters, items, pets, petsIcons, icons, rules
-VP.grid      — render, placement
-VP.inventory — createDialogController
-VP.pets      — createController, ctrl
-VP.sheet     — load, clear, getFieldState, setFieldState, skills
-VP.pages     — page-level controllers
+Do not revert the caret fixes:
+- After inserting an img-link span, insert a real space text node after it and move caret into that node.
+- `setStartAfter(span)` alone is unreliable.
+- Keydown guard must intercept Space, Enter and Shift+Enter when inside `.img-link`.
+- Call `closest()` on `parentElement`, not text nodes.
+- Strip zero-width spaces (`U+200B`) before persisting `editor.innerHTML`.
+
+## Main APIs
+All writes require `CanWrite`. Adventure APIs also enforce ownership.
+
+```txt
+Auth:       POST /api/auth/login, POST /api/auth/logout, GET /api/auth/me, GET /antiforgery/token
+Characters: GET/POST /api/characters, GET/PUT/DELETE /api/characters/{id}, POST /api/characters/{id}/portrait, PUT /api/characters/{id}/group
+Groups:     GET/POST /api/groups, DELETE /api/groups/{id}
+Items:      GET /api/characters/{id}/items, POST/PUT/DELETE /api/items[/{id}]
+Pets:       GET /api/characters/{id}/pets, POST/PUT/DELETE /api/pets[/{id}]
+Lärdomar:   GET /api/characters/{id}/lardomar, POST/PUT/DELETE /api/lardomar[/{id}]
+Evolutioner:GET /api/characters/{id}/evolutioner, POST/PUT/DELETE /api/evolutioner[/{id}]
+Adventures: GET/POST /api/adventures, DELETE /api/adventures/{id}
+Chapters:   GET/POST /api/adventures/{id}/chapters, PUT/DELETE /api/chapters/{id}, POST /api/chapters/{id}/images
+Images:     DELETE /api/images/{id}
+Rules/icons: GET /api/icons/catalog, /api/pets/icons, /api/rules/inventory, /api/rules/hp
 ```
 
-- **All HTTP through `VP.shared.requestJson(url, options)`** (`shared/http.js`). Direct `fetch` loses CSRF injection and 401 redirect.
-- IIFE per file; attach to `VP`; no DOMContentLoaded boilerplate. Files run once on page load.
-- Script load order in `@section Scripts`: `vp.ns.js → shared/* → api/* → grid/* → inventory/* → pages/<page>.page.js`.
-- Controllers are factories (e.g. `VP.pets.createController(dom, charId)`). DOM is passed in — factories never query the document.
-
-## Frontend Caches (session-scoped, no invalidation)
-`getCsrfToken`, `getAuthState`, `VP.api.icons.catalog`, `VP.api.petsIcons`. Magic-tinted SVG blob URLs (`grid/render.js:5`) are never freed — minor leak risk over a long session. New icons added by admin won't appear without page refresh — by design.
-
-## Character Sheet — Shared DOM Panel
-- One `#panel-sheet` reused for all character tabs. Every domain must be explicitly reset on tab switch — nothing clears itself.
-- `VP.sheet.clear()` is the single orchestrator. When a new sub-module is added, append its clear-on-null call to the end of `clear()`.
-- Sub-module null guard: never `if (!characterId) return` — always clear state and re-render before returning. Applies to `loadPets()`, `skills.reload(null)`, and any future module.
-- `String(null) === "null"` (truthy). Always use `characterId = newId ? String(newId) : null`.
-- Zeroing `state.itemsCache = []` does NOT clear the visual grid — must call `VP.grid.render.renderSlots(slotsGrid, itemsGrid, state, 0, 0)`.
-- Tab manager Path 2 (return visit, `tab.fieldState` set): when `!tab.id`, must call `VP.sheet.clear()` before `setFieldState`, otherwise skills/pets are never cleared on return to a blank tab.
-
-**Sub-modules** (each cleared by `clear()`):
-
-| Sub-module | File |
-|---|---|
-| Stats (~28 attributes) | `pages/characterSheet.page.js:8–48` |
-| HP / damage by body part (`skadaHuvud/Torso/Armar/Ben`); max via `VP.api.rules.getHpRules()` | `pages/characterSheet.page.js:99–114` |
-| Currency (`cuppar/ferrar/aurar`) | `pages/characterSheet.page.js:200–202` |
-| Anteckningar + Pouch | `pages/characterSheet.page.js:48` |
-| Portrait upload (max 2000×2000 px; fire-and-forget `fetch().catch()`) | `pages/characterSheet.page.js:127–153, 334–381` |
-| Inventory grid (auto-place via `VP.grid.placement.findFirstFitColumnWise`) | `pages/characterSheet.page.js:289–676` + `inventory/dialog.js` |
-| Pets | `pets/pets.js` |
-| Skills (Lärdom + Evolution) | `pages/characterSheet.skills.js` |
-
-## Adventure Log (Äventyrsdagbok)
-**Files**: `Pages/Aventyrsdagbok/Index.cshtml`, `wwwroot/css/aventyrsdagbok.css`, `wwwroot/js/aventyrsdagbok.js`, `Data/Adventure.cs|Chapter.cs|ImageLink.cs`.
-
-**Schema**: three tables via `AdventureLog` migration. Cascade delete: Chapter→Adventure, ImageLink→Chapter. `Adventure.UserId` is a username string, not FK.
-
-**Autosave**: 10s debounce per chapter; resets on every keystroke in body/title; fires immediately on collapse/expand and adventure switch. Shows "Sparad ✓" on success.
-
-**Image-linked words**: stored inline in `BodyHtml` as
-`<span class="img-link" data-src="..." data-image-id="..." data-filename="...">word</span>`.
-`data-image-id` connects DOM spans to `ImageLink` rows for delete. Image URLs are real `/AdventureImages/...` paths — never `createObjectURL()` blobs.
-
-**contenteditable img-link caret bleeding** — DO NOT REVERT: after `range.insertNode(span)`, the browser keeps inserting typed text inside the span. Fix:
-- Insert a real space text node after the span and move caret to position 1 inside it. `setStartAfter(span)` is unreliable.
-- A `keydown` guard on each chapter editor must intercept Space, Enter, and Shift+Enter when `selection.anchorNode.parentElement?.closest('.img-link')` is non-null: `preventDefault`, insert a sibling text node after the span, move the caret there before the browser inserts the character.
-- `closest` must be called on `parentElement`, not on the text node.
-- Strip zero-width spaces (U+200B) from `editor.innerHTML` at every `ch.bodyHtml =` assignment site before persisting to state or DB.
-
-**Live updates — polling** — DO NOT REVERT TO SSE: SSE was rejected by Cloudflare Tunnel ("stream canceled by remote, error code 0"). Use 5s polling in `aventyrsdagbok.js`: `startPolling(adventureId)` / `stopPolling()` / `pollChapters(adventureId)`. `startPolling` is called after chapters load in `selectAdventure`. `stopPolling` is called at the start of `selectAdventure` and on `beforeunload`.
-- Poll failures must be silent — never surface to the user.
-- Never overwrite an editor where `document.activeElement === editor` — user's in-progress text is protected.
-- Skip identical content (same `bodyHtml`, `title`, `date`).
-
-## Character List UI
-- Section-based: Main (ungrouped, `GroupId == null`) renders first; custom groups follow ordered by SortOrder, then Id.
-- Section headers reuse `.kl-section-banner` — do not introduce a new banner style.
-- Custom group headers have a delete button on the far right; Main has none.
-- Each row has a themed dropdown to move the character between Main and a group; `PUT` immediately and move the row in the DOM — no full reload.
-- Two stacked top buttons: `+ Ny karaktär` (`.btn-gold`) and `+ Ny gruppering` (`.btn-gold--group`).
-
-## Frontend Gotchas
-- **JSON object cycles**: project to anonymous objects (see Data Model).
-- **Magic icon convention**: backend stores magic variants as separate files. Frontend strips `_magic` via `iconFile.replace(/_magic(\.[^.]+)$/i, "$1")` (`inventory/dialog.js:177`). Naming-only contract.
-- **SVG magic tinting**: `VP.grid.render.tintSvgToMagic(url)` checks `url.endsWith(".svg")` and stores `dataset.originalSrc` to avoid double-tinting on toggle.
-- **Portrait upload is fire-and-forget** — server failures swallowed.
-
-## UI Quick Reference
-
-### CSS Variables (`wwwroot/css/vp.theme.css`)
-| Variable | Value | Use |
-|---|---|---|
-| `--bg` | `#e9e3d7` | page background |
-| `--paper` | `#f6f0e4` | primary panel/sheet |
-| `--panel` | `#fdf8ee` | lighter panel |
-| `--panel-2` | `#f6edde` | secondary panel |
-| `--ink` | `#2b241c` | body text |
-| `--muted` | `#6b5b47` | secondary text |
-| `--muted-2` | `#8a7a62` | tertiary text |
-| `--border` | `#d5c7ad` | standard border |
-| `--border-2` | `#c7b89d` | secondary border |
-| `--shadow` | `0 4px 16px rgba(0,0,0,.15)` | box shadow |
-| `--radius-lg / md / sm` | `8 / 6 / 4 px` | border radii |
-| `--slot` | `64px` | inventory cell |
-| `--font` | `"Libre Baskerville", "Baskerville", "Garamond", serif` | body |
-| `--font-size-body` | `16px` | body |
-| `--stat-font-sub / main` | `0.95rem / 1.05rem` | stat boxes |
-
-Adventure Log scopes its own `:root` in `aventyrsdagbok.css` (`--vp-gold #c9b990`, `--vp-gold-dark #a8935e`, `--vp-sidebar-bg #181008`). Do not mix with global vars.
-
-### Fonts
-- Body: `Libre Baskerville` (serif fallback chain).
-- Display/headings: `Cinzel` (Google Fonts, loaded in `Homepage.css`).
-- Tabs/cards alt: `EB Garamond`.
-- Base: `html { font-size: 14px }`, scales to 16px at ≥768px.
-- Banners/labels: 13px, **uppercase**, letter-spacing 0.05–0.08em.
-
-### Buttons (canonical — derive new themed buttons from these, do not introduce new colors)
-| Class | File | Use |
-|---|---|---|
-| `.btn-gold` | `pages/karaktarer.css:214` | primary; bg `#c9b990`, border `#a8935e`, hover bg `#d4c59e` |
-| `.btn-gold--group` | `pages/karaktarer.css:284` | secondary; bg `#b8a472`, border `#8a7548` |
-| `.btn-small` | `vp.base.css:1` | compact utility |
-| `.btn-delete` | `pages/characterList.css:45` | destructive; low-opacity until hover; `#c0392b` |
-
-### Section Banner
-`.kl-section-banner` (`pages/karaktarer.css:240`): bg `#d8c9aa`, border `#c0ae91`, text `#2a1f0e`, uppercase 13px EB Garamond. Same look reused as `.tab-btn--active` (`floraFauna.css`) and `.world-map-banner` (`Homepage.css`).
-
-### Layout Primitives
-- Character sheet: `.page > .sheet` (paper bg, shadow, `--radius-lg`). `.sheet-main` 3-col grid `1.2fr 1.6fr 1.6fr`. Right `.inventory-body` is `1fr 300px`.
-- Inventory: `.slot` 64×64 px, dashed `#b3a795` border, bg `#f9f5ea`.
-- Character list: `.kl-card > .kl-card-header > .kl-row`.
-- Skill panel: `.skill-panel > .skill-titlebar > .skill-row`.
-- Adventure Log: `.vp-dagbok` fixed below 56px navbar; sidebar 256px, dark.
-
-### Form Inputs
-`.item-field` wrapper + nested `input/select/textarea`: border `var(--border-2)`, radius `var(--radius-sm)`, bg `var(--panel)`, padding `0.35rem 0.45rem`. Reuse for new dialogs.
-
-### Naming
-BEM-ish kebab + namespace prefix: `kl-*` (character list), `skill-*`, `stat-*`, `inventory-*`, `vp-dagbok__*` (BEM `__`). Modifiers use `--` (e.g. `.btn-gold--group`). No Tailwind, no SCSS — vanilla CSS only.
-
-### Per-Feature Stylesheets
-| File | Skins |
-|---|---|
-| `vp.theme.css` | global tokens |
-| `vp.base.css` | `.btn-small`, `.hint` |
-| `site.css` | Bootstrap overrides, navbar |
-| `pages/karaktarer.css` | character list, tabs, gold buttons, banners |
-| `pages/characterList.css` | list card, delete affordance |
-| `pages/characterSheet.layout.css` | sheet grid + columns |
-| `pages/characterSheet.stats.css` | stat boxes |
-| `pages/characterSheet.skills.css` | skill panels |
-| `pages/characterSheet.HP.css` | HP display |
-| `pages/characterSheet.inventory.css` | inventory grid |
-| `pages/floraFauna.css` | tabs + PDF/iframe |
-| `pages/laror.css` | lore tabs + iframe |
-| `pages/Homepage.css` | hero, world-map banner |
-| `pages/login.css` | login screen |
-| `aventyrsdagbok.css` | adventure log (own palette) |
-| `components/dialog.css` | icon picker grid |
-
-### Animations
-Short transitions (`0.05s–0.15s`), no `@keyframes`. Hover patterns: `filter: brightness(0.97)` (buttons), `opacity` (delete), `transform: scale(1.03)` (icon tiles). Match these for new interactive elements.
-
-### New-page checklist
-1. Add `wwwroot/css/pages/<page>.css`; pull in `--bg`, `--paper`, `--ink`, `--border`.
-2. Add `wwwroot/js/pages/<page>.page.js`; IIFE attaches to `VP.pages.<page>`.
-3. Wrap content in `.page > .sheet` (or full-bleed à la adventure log).
-4. Use `.btn-gold` / `.btn-gold--group` for actions; `.kl-section-banner` for headers.
-5. All API calls via `VP.shared.requestJson()`.
-6. Page writes? `[Authorize]` + endpoints `.RequireAuthorization("CanWrite")`.
-
-## Tooling — Windows
-- Do not pipe `dotnet` CLI through `2>&1` — causes stdout-buffering hangs on Windows. Run plain.
-
-## Merchant Generator (Verktyg) — item_count + randomizer
-
-**Files**: `Pages/MerchantGenerator.cshtml` / `Pages/MerchantGenerator.cshtml.cs` (the navbar's "Verktyg" link points here — `_Layout.cshtml:28`).
-
-Inline `<script>` at the bottom of the page handles state and the randomizer. No separate JS file.
-
-### item_count
-- Outer-scoped `let item_count = 0;` updated by `updateTotal()` on every Antal input event.
-- "Totalt: X / 12" counter is backed by this variable.
-- Submit button disabled when `item_count < 1` or `item_count > 12` (initial render: `disabled`).
-- `{{ITEM_COUNT}}` is substituted in `PromptAssembler.cs:124` — no assembler changes needed.
-
-### Randomizer
-- UI: number input `#randomize-count` (default 8, min 1, max 12) + button `#randomize-btn` + helper text.
-- `randomizeLayout(totalItems, guild)` — pure function returning `{ category_id: count }`.
-- Rules: max 5 categories selected, max 5 items per category, min 1 item, respects UI max 12.
-- `SHAMAN_INGREDIENT` is included in the randomizer pool — never excluded.
-- Guild guarantees are intentionally not implemented. The `guild` param exists for future extension only.
-- Category pool is server-rendered as a JS array (`Model.ItemTypes.Select(t => t.Code)`) so it always reflects the live item type list.
-- Manual edits after randomizing are unconstrained — no cap enforcement on user input.
-
-### OUTPUT_TYPE_RULES filtering
-Already implemented in `Services/PromptAssembler.cs` (`BuildPrompt()`, lines 93–107). Only types with count > 0 get a rule block injected.
-
-## Merchant JSON Viewer (subtab "Generera handelsman med output")
-
-**Location**: `#mg-sub-output` — second sub-tab under "Generera Handelsman" in `Pages/MerchantGenerator.cshtml`.
-
-**How it works**: Fully client-side. User pastes AI-generated JSON into `#mg-json-input` textarea and clicks "Visa handelsman". An inline IIFE in `@section Scripts` parses, validates, and renders a merchant header card + item grid into `#merchant-viewer`. No server call, no new endpoint.
-
-**`TYPE_COLORS`**: Derived directly from the per-type `data-type` badge color rules in `merchant-generator.css`. Do not diverge from those values.
-
-**CSS classes**: All viewer classes prefixed `mv-*` (merchant viewer), defined at the bottom of `wwwroot/css/pages/merchant-generator.css`. No new color variables introduced — uses existing CSS vars and the same hex values already on the page.
-
-**Power badge styles**: Common = muted/border-only; Unique = gold (reuses btn-gold palette #c9b990/#a8935e); Magical = muted purple (reuses ADVENIRE color `#5c3278`). Drawback accent reuses LYÅDSKAPARE color `#c0511a`.
-
-**Expected JSON structure** (top-level fields, or nested under `"merchant"` key):
-```json
-{
-  "name": "string",
-  "race": "string",
-  "guild": "string",
-  "backstory": "string",
-  "appearance": "string",
-  "transport": "string",
-  "items": [
-    {
-      "name": "string",
-      "type_id": "MELEE|RANGED|AMMO|ARMOR|SHIELD|KRISTALLSEJDARE|SHAMAN|SHAMAN_INGREDIENT|LYÅDSKAPARE|ORAKEL|ADVENIRE|PETS|MISC",
-      "subtype": "string (optional)",
-      "power_level": "Common|Unique|Magical",
-      "description": "string (optional, italic)",
-      "effect": "string",
-      "limitation": "string (optional)",
-      "drawback": "string (optional)",
-      "affinities": ["string"],
-      "die_value": "D8 (SHAMAN_INGREDIENT only)",
-      "rarity": "Common|Uncommon|Rare|Mythic (SHAMAN_INGREDIENT only)",
-      "ingredient_type": "Fungi|... (SHAMAN_INGREDIENT only)",
-      "advenire_lore_origin": "KRISTALLSEJDARE|... (ADVENIRE only)"
-    }
-  ]
-}
-```
-`affinities` is also accepted as `tags`. `items` is also accepted as `varor`.
-
-## Prompt Template v2.5
-
-**File**: `wwwroot/MerchantRules/PromptTemplate_v2_5.md` (alongside the original `PromptTemplate.md` — original is NOT overwritten and is still what the assembler currently loads).
-
-### Placeholders
-**New in v2.5:**
-- `{{GUILD_MECHANIC_SIGNATURE}}` — assembler must inject the active guild's `prompt_block` from `ViaproximaGuildMechanicSignatures.json` (file produced by Task 4).
-- `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}` — assembler must inject from `ViaproximaRaceReminders.json` (Task 4).
-
-**Removed in v2.5:**
-- `{{GUILD_REFERENCE}}` — replaced by a static guild-id table in the affinities block.
-
-**Still used:** `{{ITEM_COUNT}}`, `{{OUTPUT_TYPE_RULES}}`, `{{WORLD_CONTEXT}}`, `{{GUILD_NAME}}`, `{{GUILD_THEME_KEYWORDS}}`, `{{GUILD_VIBE_FEELING}}`, `{{GUILD_LORE}}`, `{{GUILD_FUNCTION_SPECTRUM}}`, `{{RACE_NAME}}`, `{{ITEM_SLOTS}}`, `{{LAYOUT_ID}}`.
-
-### Content rules
-- No price/cost/currency fields anywhere in output schema. Cuppar/Ferrar/Aurar references removed.
-- World context comment instructs assembler to strip the currency line before injection.
-- `SHAMAN_INGREDIENT` is valid in standard merchant layouts; conditional schema fields `ingredient_type`, `rarity`, `die_value` appear after `tag`.
-- Guild mechanic identity must appear in the `effect` field for at least half the items.
-- New `## HARD RULES` block consolidates damage scale, subtypes, HV bounds, no-currency, etc.
-- New `## RACE` block — race shapes appearance only.
-
-### Functional tags compatibility (Tasks 2j + 6)
-**Code matches JSON shape — no code changes needed (verified twice).**
-
-**File**: `wwwroot/MerchantRules/ViaproximaFunctionalTags.json` — already overhauled. Do NOT regenerate.
-
-**Current JSON structure (v3.0)**:
-- Top-level: `{ version, description, design_principle, functional_tags: [...] }` — 156 tags total
-- Each tag: `{ id, tag, category, note }` — flat array, not keyed objects
-- 10 categories: `control_and_constraint`, `craft_and_trade`, `force_and_energy`, `identity_and_influence`, `memory_and_knowledge`, `movement_and_access`, `nature_and_environment`, `perception_and_awareness`, `protection_and_resilience`, `ritual_and_magic`
-- Extra top-level fields (`description`, `design_principle`) ignored by deserialization — harmless
-
-**Code access paths**:
-- `Models/Merchant/TagModels.cs`: `FunctionalTag(Id, Tag, Category, Note?)` and `FunctionalTagsData(Version, FunctionalTags)` — all field names match
-- `Program.cs:104-105`: deserializes via `FunctionalTagsData`, passes flat `List<FunctionalTag>` to assembler
-- `PromptAssembler.cs:73`: picks random tag by index (`_functionalTags[Random.Shared.Next(...)]`)
-- `PromptAssembler.cs:80`: uses `funcTag.Tag` (the tag text string) for the slot line
-- Widget JS: no direct functional tag access — selection is entirely server-side
-
-**Compatibility check results (Task 6)**:
-- JSON valid ✓ (confirmed via Python parse)
-- Array structure: OK ✓
-- Field names (`id`, `tag`, `category`, `note`): OK ✓
-- File path unchanged: OK ✓
-- Category names not depended on by code: OK ✓
-- Tag count not hardcoded anywhere: OK ✓
-- No code fixes required.
-
-### Assembler wiring (Task 4)
-Task 4 completed: assembler now loads `PromptTemplate_v2_5_compressed.md` and injects all three new placeholders. See **Guild Mechanic Signatures** and **Race Reminders** sections below.
-
-## Prompt Template v2.5 — Compressed
-
-**File**: `wwwroot/MerchantRules/PromptTemplate_v2_5_compressed.md` (alongside originals — original `PromptTemplate.md` and `PromptTemplate_v2_5.md` are NOT overwritten).
-
-### Assembler change (Task 3)
-`Services/PromptAssembler.cs` now injects `{{OUTPUT_TYPE_RULES}}` as compressed prose paragraphs instead of JSON blocks. `FormatTypeRuleCompressed(typeCode, rule)` method at the bottom of `PromptAssembler.cs` maps each of the 13 type codes to a single dense prose line. The JSON element parameter is kept for signature consistency; the prose strings are derived from (and consistent with) the JSON data. Separator changed from `"\n"` to `"\n\n"` between type blocks for readability.
-
-**Token impact**: Old JSON format ~150 tokens/type × up to 13 types ≈ ~1950 tokens for OUTPUT_TYPE_RULES. New prose format ~60 tokens/type × 13 types ≈ ~780 tokens — roughly 60% reduction in the injected type rules. Static template ~200 lines vs v2.5's 262 lines.
-
-### Compressions applied (3b)
-- GUILD block: merged Theme/Feeling/Lore/Functions onto one line with `·` separators.
-- TYPE DISAMBIGUATION: flattened to prose paragraphs + inline test list.
-- SHAMAN vs SHAMAN_INGREDIENT: merged into two tighter paragraphs.
-- WEAPON PROFILE: collapsed to single prose block.
-- DRAWBACKS: tiers flattened from bulleted lists to semicolon-separated prose.
-- POWER LEVELS: three definitions collapsed to one paragraph.
-- OUTPUT SCHEMA: field comments trimmed to minimum per plan examples.
-- No duplicate "Race defines only the merchant's appearance" phrase (was already absent in v2.5).
-
-### Rule-preservation check (3c) — ALL PRESENT
-Swedish-only, damage levels/dice, MELEE/RANGED subtypes, weapon profile format, no religion in KRISTALLSEJDARE/SHAMAN/LYÅDSKAPARE, ADVENIRE vs lore disambiguation + examples, SHAMAN vs SHAMAN_INGREDIENT, SHAMAN_INGREDIENT valid in standard layouts, heavy shield bash, PET evolution format, HV bounds, CV/KV tilt-not-replace, drawback tiers A/B/C, power level definitions + distribution, stone age exclusions, final pass rejection, `{{GUILD_MECHANIC_SIGNATURE}}` placeholder, guild mechanic in effect for ≥50% items, race placeholders, static affinity table, SHAMAN_INGREDIENT conditional schema fields, no price/cost fields, `{{ITEM_COUNT}}` instruction. No missing rules.
-
-### Template quality additions
-- **LÄRDOM ITEM PATTERNS** (new section, after TYPE DISAMBIGUATION): per-lore valid mechanics for KRISTALLSEJDARE / SHAMAN / LYÅDSKAPARE / ORAKEL in semicolon-separated prose; priority order rule (type rules → lore mechanic → guild signature → tag/twist → flavor).
-- **EFFECT CLARITY RULE** (new section, after WEAPON PROFILE): trigger→actor→outcome→target→duration→frequency order; forbidden metaphor-as-mechanics words (påverkar, kryper, smitar, renas, etc.); Swedish BAD/GOOD examples.
-- **FINAL PASS Q1** expanded: "would a player buy this" now backed by 11 named buy-reason categories (damage, survival, information, movement, non-combat solve, check reliability, ally protection, pre-encounter advantage, failure recovery, social outcome, identity).
-
-## Guild Mechanic Signatures (Task 4)
-
-**File**: `wwwroot/MerchantRules/ViaproximaGuildMechanicSignatures.json`
-
-Per-guild mechanic fingerprints injected as `{{GUILD_MECHANIC_SIGNATURE}}` in the GUILD section of the prompt template. Each guild has a `prompt_block` string listing 5 mechanic patterns the AI must express in item effect fields for at least half the items.
-
-**Guilds covered**: ADVEOKATERNA, MORTOKATERNA, ZOOKATERNA, FLOROKATERNA, EKOKATERNA, KARTOKATERNA, FABROKATERNA, MATROKATERNA.
-
-**Model**: `GuildMechanicSignature(PromptBlock)` and `GuildMechanicData(Version, Description, Guilds)` — added to `Models/Merchant/GuildModels.cs`. Guilds are a `Dictionary<string, GuildMechanicSignature>` (keyed by guild ID).
-
-**Assembler**: `_guildMechanicSignatures` field (`Dictionary<string, string>`) injected in `BuildPrompt()` as `{{GUILD_MECHANIC_SIGNATURE}}`. Fallback: empty string if guild ID not found.
-
-## Race Reminders (Task 4)
-
-**File**: `wwwroot/MerchantRules/ViaproximaRaceReminders.json`
-
-Per-race appearance reminders injected as `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}` in the RACE block. Race shapes merchant appearance only — never item function.
-
-**Races covered**: VIVEER, FAAMER, VOLAMER, FLEGAMER, KALLUER, CRESEER, SKOTONER, VETTUER. IDs match `ViaproximaRaces.json`.
-
-**Model**: `RaceReminder(OneLine, BodyFeatures)` and `RaceRemindersData(Version, Description, Races)` — added to `Models/Merchant/RaceModels.cs`. Races are a `Dictionary<string, RaceReminder>` (keyed by race ID).
-
-**Assembler**: `_raceReminders` field (`Dictionary<string, RaceReminder>`) injected in `BuildPrompt()` as `{{RACE_ONE_LINE}}` and `{{RACE_BODY_FEATURES}}`. Fallback: empty strings if race ID not found.
-
-## Active Prompt Template (Task 4)
-
-`Program.cs` now loads `PromptTemplate_v2_5_compressed.md` instead of `PromptTemplate.md`. Original `PromptTemplate.md` is preserved and not deleted. `PromptTemplate_v2_5.md` is also preserved alongside.
-
-## ViaproximaItemRules v2.5 (Task 5)
-
-**File**: `wwwroot/MerchantRules/ViaproximaItemRules_v2_5.json` — do not overwrite original `ViaproximaItemRules.json`.
-
-**Single change**: SHAMAN_INGREDIENT `note` field — removed the exclusion sentence "Generated in separate ingredient layouts, never in standard merchant layouts." New note: "Rare and Mythic ingredients may carry an additional situational effect beyond their KV contribution."
-
-**Consistency check**: No exclusion language present in `ViaproximaItemRules_v2_5.json`. No exclusion language found in assembler or widget code. `FormatTypeRuleCompressed` in `PromptAssembler.cs` already uses "Valid in standard merchant layouts" for SHAMAN_INGREDIENT independently of the JSON note field.
-
-**Note**: `Program.cs` still loads `ViaproximaItemRules.json` (the original). If a future task requires the assembler to use the v2_5 rules, update the filename at `Program.cs:96`.
-
-## World Context — Currency Removal
-
-**Original**: `wwwroot/MerchantRules/world_context.txt` — preserved, not overwritten.
-
-**Active**: `wwwroot/MerchantRules/world_context_v2_5.txt` — identical to original with one line removed:
-`Currency: Cuppar (common) → Ferrar (mid) → Aurar (rare, powerful magic only).`
-
-**Assembler**: `Program.cs` now loads `world_context_v2_5.txt`. The singleton is built at startup so no runtime stripping is needed.
-
-**Templates updated**:
-- `PromptTemplate_v2_5.md` — `#` comment updated; no longer names Cuppar/Ferrar/Aurar.
-- `PromptTemplate_v2_5_compressed.md` — `#` comment updated to match.
-- `PromptTemplate.md` (original) — untouched.
-
-**Remaining C# mentions**: `Data/Character.cs`, `Program.cs` character endpoint, and all EF Core migrations reference `Cuppar`/`Ferrar`/`Aurar` as character sheet currency entity fields. These are the in-game currency tracking system and are unrelated to the merchant prompt pipeline — do not remove.
-
-## Prompt Template v2.6 — Active Files and Fixes
-
-**Active files** (all three wired in `Program.cs` lines 96, 110–111):
-- Template: `wwwroot/MerchantRules/PromptTemplate_v2_6.md`
+## Pages / Styling
+Layout is `_Layout.cshtml`; navbar lives there.
+
+Important pages:
+- `CharacterList`: characters + groups. Main group first. Group delete nulls character `GroupId`.
+- `CharacterSheet`: redirected via `/CharacterList?id={id}`.
+- `Aventyrsdagbok/Index`: `[Authorize]`, thin model.
+- `Rules`: thin shell with partials from `Pages/Shared/_Rules*.cshtml`.
+- `MerchantGenerator`: public, uses `IPromptAssembler`, validates 1–12 items.
+
+Styling rules:
+- Use existing CSS variables from `vp.theme.css`.
+- Use `.btn-gold`, `.btn-gold--group`, `.btn-small`, `.btn-delete` instead of inventing button colors.
+- Use `.kl-section-banner` for section headers.
+- Form fields use `.item-field` wrapper + nested input/select/textarea.
+- Vanilla CSS only. No Tailwind, SCSS or new design system.
+
+## Rules Page
+Files: `Pages/Rules.cshtml`, `wwwroot/js/pages/rules.page.js`, `wwwroot/css/pages/floraFauna.css`.
+
+Rules:
+- `Rules.cshtml` should stay thin: tab bar, wrapper divs and partial calls.
+- Tabs use `.tab-btn` with `data-tab`; JS finds all `.tab-btn` across both tab rows.
+- Add new tabs by adding button + panel + partial + `titleMap` entry in `rules.page.js`.
+- Shared content classes live in `floraFauna.css`: `.sh-panel`, `.sh-section-title`, `.sh-prose`, `.sh-table`, `.sh-list`, `.sh-wide-table-wrap`, `.sh-formula`, `.sh-quote`.
+
+## Merchant Generator / Prompt Pipeline
+`MerchantGenerator` uses `IPromptAssembler` singleton. Active pipeline:
+- Template: `wwwroot/MerchantRules/PromptTemplate_v2_7.md`
 - Item rules: `wwwroot/MerchantRules/ViaproximaItemRules_v2_6.json`
 - World context: `wwwroot/MerchantRules/world_context_v2_6.txt`
+- Archetypes: `ViaproximaArchetypes_v1.json`
+- Lärdom rules: `Adveniriska_Lardomar_Rules_v1.json`
+- Guild signatures: `ViaproximaGuildMechanicSignatures.json`
+- Race reminders: `ViaproximaRaceReminders.json`
 
-Prior versions (`PromptTemplate_v2_5_compressed.md`, `ViaproximaItemRules_v2_5.json`, `world_context_v2_5.txt`) are preserved but no longer loaded.
+Do not resurrect retired tag/twist systems from `outdated_files/`.
 
-### Fix 1 — SHAMAN_INGREDIENT die system (`PromptTemplate_v2_6.md`, `## SHAMAN vs SHAMAN_INGREDIENT`)
-Replaced the v2.5 D3–D60 single-die system with the v2.6 rarity-based dice + type_trait system. SHAMAN_INGREDIENT now uses 1D6/2D6/3D6/4D6 by rarity (Common/Uncommon/Rare/Mythic). Each ingredient_type carries a named type_trait: Fungi → Drömrök (reroll one die), Animal parts → Blodskraft (+1 to one die, max 6), Essence → Resonans (two matching dice = +2 KV), Minerals → Stadga (fail by ≤4 KV softens backlash one step), Plants → Återväxt (a rolled 1 counts as 3). Mythic doubles its trait; max one Mythic doubled per ritual. SHAMAN paragraph (focus tool) untouched.
+PromptAssembler behavior:
+- Injects compressed output type rules only for selected item types.
+- Assigns an `archetype:` per slot from compatible unused archetypes.
+- Assigns `assigned_mechanic:` only for KRISTALLSEJDARE, SHAMAN, LYÅDSKAPARE and ORAKEL.
+- Injects guild mechanic signature and race appearance reminders.
+- `SHAMAN_INGREDIENT` uses v2.6 dice/trait system: Common 1D6, Uncommon 2D6, Rare 3D6, Mythic 4D6. Traits: Fungi/Drömrök, Animal parts/Blodskraft, Essence/Resonans, Minerals/Stadga, Plants/Återväxt. Mythic doubles its trait, max one doubled Mythic per ritual.
 
-### Fix 2 — `lore_mechanic_choice` schema examples (`PromptTemplate_v2_6.md`, `## OUTPUT SCHEMA`)
-Added concrete examples to the `lore_mechanic_choice` comment: `'4 — Dice control (lock/reroll)'`, `'7 — Ritual trigger on defined outcome'`, `'3 — Negotiation aid (emissary attitude)'`. Required field for KRISTALLSEJDARE/SHAMAN/LYÅDSKAPARE/ORAKEL items.
+Merchant randomizer:
+- `item_count` is outer-scoped and updated by `updateTotal()`.
+- Total must be 1–12.
+- `randomizeLayout(totalItems, guild)` returns `{ category_id: count }`.
+- Max 5 categories, max 5 items/category.
+- `SHAMAN_INGREDIENT` is included in the standard pool.
+- Guild guarantees are not implemented.
 
-### Fix 3 — `FormatTypeRuleCompressed` SHAMAN_INGREDIENT case (`Services/PromptAssembler.cs`)
-Updated the compressed prose string to match the v2.6 trait system. Old system referenced D3-D6/D8-D10/D12-D20/D30-D60 ranges and generic ingredient flavors. New string names each type_trait by its Swedish name and mechanic, uses 1D6–4D6 rarity tiers, and notes the Mythic-doubling rule. The Swedish ingredient type names (Drömrök, Blodskraft, Resonans, Stadga, Återväxt) are consistent between template and assembler.
+Merchant JSON viewer:
+- Fully client-side in `#mg-sub-output`.
+- Accepts top-level merchant object or nested `{ "merchant": ... }`.
+- Accepts `items` or `varor`; accepts `affinities` or `tags`.
+- Viewer CSS uses `mv-*` classes in `merchant-generator.css`.
 
-## Prompt Template v2.7
-
-**Active files**:
-- Template: `wwwroot/MerchantRules/PromptTemplate_v2_7.md`
-- Item rules: `wwwroot/MerchantRules/ViaproximaItemRules_v2_6.json` (unchanged from v2.6)
-- World context: `wwwroot/MerchantRules/world_context_v2_6.txt` (unchanged from v2.6)
-
-Prior template (`PromptTemplate_v2_6.md`) is preserved but no longer loaded.
-
-**Retired to `wwwroot/MerchantRules/outdated_files/`**:
-- `ViaproximaFunctionalTags.json` — replaced by archetype system
-- `ViaproximaTwistTags.json` — replaced by archetype system
-
-### Archetype injection system
-**File**: `wwwroot/MerchantRules/ViaproximaArchetypes_v1.json`
-
-94 named archetypes, each with a `description` and a `compatible_types` list. The assembler calls `PickArchetype(typeId, usedArchetypes)` per slot — picks randomly from compatible archetypes that haven't been used yet in this merchant, then falls back to allow reuse if all compatible archetypes are exhausted. Each slot receives an `archetype:` line in `{{ITEM_SLOTS}}` output.
-
-**Model**: `ArchetypeEntry(Description, CompatibleTypes)` and `ArchetypesData(Version, Description, UsageRule, ItemTypes, Archetypes)` in `Models/Merchant/TagModels.cs`.
-
-### Lärdom rule pre-assignment
-**File**: `wwwroot/MerchantRules/Adveniriska_Lardomar_Rules_v1.json`
-
-Per-lore rule sets for the four practitioner types: KRISTALLSEJDARE (13 rules), SHAMAN (12 rules), LYÅDSKAPARE (12 rules), ORAKEL (11 rules). The assembler calls `PickLardomRule(typeId, usedRuleIds)` per slot — picks randomly from unused rules for that lore type, falls back to allow reuse if exhausted. Only lore-type slots receive an `assigned_mechanic:` line. The template instructs the model to execute the assigned mechanic — it may not substitute another.
-
-**Model**: `LardomRule(Id, Name, Rule)`, `LardomLoreRules(Rules)`, and `LardomRulesData(Version, Description, LoreTypes)` in `Models/Merchant/TagModels.cs`.
-
-### Key template changes from v2.6
-- ITEM LAYOUT section: replaced (archetype + assigned_mechanic instructions replace tag/twist instructions)
-- LÄRDOM ITEM PATTERNS section: removed (replaced by per-slot `assigned_mechanic` injection)
-- GOD SELECTION RULE section: added (after TYPE DISAMBIGUATION)
-- EFFECT LENGTH RULE section: added (after EFFECT CLARITY RULE; description max 200 chars, effect max 400 chars)
-- DRAWBACK RULES: opening paragraph updated; TIER A menu revised (added item-change-after-use option, removed visible-mark and public-knowledge); visible-mark downgraded to TIER B
-- FINAL PASS verb set: removed `mark`, `summon`; added `swap`, `distort`
-- OUTPUT SCHEMA: `"tag"` field replaced by `"archetype"` + `"assigned_mechanic"`; `lore_mechanic_choice` comment updated
+## Known Design Constraints
+- No SSE because Cloudflare Tunnel cancels streams. Use polling.
+- No binary/base64 images in DB.
+- No direct `fetch` for JSON APIs from frontend code.
+- No new UI palette unless absolutely necessary.
+- No full page reloads for normal Character Sheet interactions.
+- Avoid changing old prompt template files unless the active file is intentionally being changed.
