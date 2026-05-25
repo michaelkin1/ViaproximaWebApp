@@ -1,0 +1,59 @@
+<div aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <img src="/Images/Lores/RedFS.png" alt="">
+  <img src="/Images/Lores/GreenPA.png" alt="">
+  <img src="/Images/Lores/YellowLH.png" alt="">
+  <img src="/Images/Lores/PurpleNL.png" alt="">
+  <img src="/Images/Lores/OrangeSS.png" alt="">
+  <img src="/Images/Lores/BlueWW.png" alt="">
+</div>
+
+<div class="adv-sub-bar">
+  <button class="adv-sub-btn" data-adv="kristallsejdare">Kristallsejdare</button>
+  <button class="adv-sub-btn" data-adv="shamaner">Shamaner</button>
+  <button class="adv-sub-btn" data-adv="lyadskapare">Lyådskapare</button>
+  <button class="adv-sub-btn" data-adv="orakel">Orakel</button>
+</div>
+
+<div class="adv-lore-bar" id="advLoreBar" style="display:none">
+  <button class="adv-lore-btn" data-lore="rod">Läran om Röd Vrede</button>
+  <button class="adv-lore-btn" data-lore="gron">Läran om Grön Skam</button>
+  <button class="adv-lore-btn" data-lore="gul">Läran om Gul Lycka</button>
+  <button class="adv-lore-btn" data-lore="lila">Läran om Lila Stolthet</button>
+  <button class="adv-lore-btn" data-lore="orange">Läran om Orange Kärlek</button>
+  <button class="adv-lore-btn" data-lore="bla">Läran om Blå Sorg</button>
+</div>
+
+<div id="advKristallsejdareRegler" style="display:none">
+  @await Html.PartialAsync("_KristallsejdareRegler")
+</div>
+
+<div class="adv-lore-panel" data-lore-panel="rod" style="display:none">
+  @await Html.PartialAsync("_LoreRod")
+</div>
+<div class="adv-lore-panel" data-lore-panel="gron" style="display:none">
+  @await Html.PartialAsync("_LoreGron")
+</div>
+<div class="adv-lore-panel" data-lore-panel="gul" style="display:none">
+  @await Html.PartialAsync("_LoreGul")
+</div>
+<div class="adv-lore-panel" data-lore-panel="lila" style="display:none">
+  @await Html.PartialAsync("_LoreLila")
+</div>
+<div class="adv-lore-panel" data-lore-panel="orange" style="display:none">
+  @await Html.PartialAsync("_LoreOrange")
+</div>
+<div class="adv-lore-panel" data-lore-panel="bla" style="display:none">
+  @await Html.PartialAsync("_LoreBla")
+</div>
+
+<div class="adv-sub-panel" data-adv-panel="shamaner" style="display:none">
+  @await Html.PartialAsync("_RulesShamanerNy")
+</div>
+
+<div class="adv-sub-panel" data-adv-panel="lyadskapare" style="display:none">
+  @await Html.PartialAsync("_RulesLyadskapare")
+</div>
+
+<div class="adv-sub-panel" data-adv-panel="orakel" style="display:none">
+  @await Html.PartialAsync("_RulesOrakel")
+</div>

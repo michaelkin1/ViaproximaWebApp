@@ -1,161 +1,399 @@
-<div class="sh-panel">
-    <p class="sh-prose">I Viaproxima är skada inte bara en siffra. En träff kan vara ett ytligt jack, ett brutet revben, en sönderslagen sköldarm eller ett dödligt horn genom kroppen. Reglerna nedan används för att avgöra <strong>hur allvarlig en träff blir</strong>, samtidigt som spelledaren beskriver skadan utifrån situationen.</p>
-    <p class="sh-prose">Systemet bygger på att attack, försvar, HV och Liv redan används i strid, där Liv räknas från <strong>Tålighet + Fysisk tålighet</strong>.</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="vp-tome-filigree" viewBox="0 0 70 70">
+    <g fill="none" stroke="#a8935e" stroke-width="1.2" stroke-linecap="round">
+      <path d="M2 2 L2 36 Q2 18 16 16 Q34 14 36 2" />
+      <path d="M10 2 Q14 10 22 10 Q14 14 14 22 Q10 14 2 14" />
+      <circle cx="14" cy="14" r="1.6" fill="#a8935e" />
+      <path d="M22 2 L22 8" />
+      <path d="M2 22 L8 22" />
+      <path d="M28 4 Q30 8 28 12" />
+      <path d="M4 28 Q8 30 12 28" />
+    </g>
+  </symbol>
+</svg>
 
-    <h3 class="sh-section-title">Liv</h3>
-    <p class="sh-prose">En rollfigurs Liv visar hur mycket kroppen klarar innan skador blir allvarliga.</p>
-    <p class="sh-formula">Liv = Tålighet + Fysisk tålighet</p>
-    <p class="sh-prose">Liv används som en <strong>skadetröskel</strong>. Ju högre Liv du har, desto hårdare träffar krävs för att du ska bli svårt skadad.</p>
-    <p class="sh-prose">När slutlig skada har räknats fram jämförs den med rollfigurens Liv.</p>
-    <table class="sh-table">
-        <thead><tr><th>Slutlig skada jämfört med Liv</th><th>Skadegrad</th></tr></thead>
-        <tbody>
-            <tr><td>Under 1/3 Liv</td><td>Skråma</td></tr>
-            <tr><td>Minst 1/3 Liv</td><td>Sårad</td></tr>
-            <tr><td>Minst 2/3 Liv</td><td>Svårt sårad</td></tr>
-            <tr><td>Minst hela Liv</td><td>Kritiskt sårad</td></tr>
-            <tr><td>Minst 1,5 × Liv</td><td>Utslagen / dödligt läge</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose"><strong>Exempel: 10 Liv</strong> — En rollfigur med 10 Liv har följande trösklar:</p>
-    <table class="sh-table">
-        <thead><tr><th style="text-align:right">Slutlig skada</th><th>Skadegrad</th></tr></thead>
-        <tbody>
-            <tr><td style="text-align:right">1–3</td><td>Skråma</td></tr>
-            <tr><td style="text-align:right">4–6</td><td>Sårad</td></tr>
-            <tr><td style="text-align:right">7–9</td><td>Svårt sårad</td></tr>
-            <tr><td style="text-align:right">10–14</td><td>Kritiskt sårad</td></tr>
-            <tr><td style="text-align:right">15+</td><td>Utslagen / dödligt läge</td></tr>
-        </tbody>
-    </table>
+<div class="vp-tome">
 
-    <h3 class="sh-section-title">Skadegrader</h3>
-    <table class="sh-table">
-        <thead><tr><th>Skadegrad</th><th>Effekt</th></tr></thead>
-        <tbody>
-            <tr><td>Skråma</td><td>Synlig skada, smärta eller blod, men ingen regelpåverkan.</td></tr>
-            <tr><td>Sårad</td><td>−1 HV på handlingar där skadan rimligen stör.</td></tr>
-            <tr><td>Svårt sårad</td><td>−2 HV på handlingar där skadan stör, eller tydligt begränsad förmåga att agera.</td></tr>
-            <tr><td>Kritiskt sårad</td><td>Rollfiguren kan knappt fortsätta. Kräver hjälp, stabilisering eller en desperat insats.</td></tr>
-            <tr><td>Utslagen / dödligt läge</td><td>Rollfiguren kan inte agera normalt och riskerar att dö eller slås ut helt om ingen ingriper.</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">Spelledaren beskriver var skadan sitter utifrån situationen. Det finns ingen fast träffzonstabell.</p>
-    <p class="sh-prose">En Sårad arm kan påverka attacker, blockering och grepp. Ett Sårat ben kan påverka rörelse och balans. En skada i torso kan påverka andning och uthållighet. En huvudskada kan påverka fokus, syn, hörsel eller magi.</p>
-    <p class="sh-prose">Om skadans plats inte spelar någon tydlig roll används skadegraden allmänt tills scenen lugnat sig.</p>
+  <svg class="vp-tome__filigree vp-tome__filigree--tl"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--tr"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--bl"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--br"><use href="#vp-tome-filigree"/></svg>
 
-    <h3 class="sh-section-title">Attack och Försvar</h3>
-    <p class="sh-prose">När en rollfigur anfaller används:</p>
-    <p class="sh-formula">Attackvärde = Ackuratess + Genomslag</p>
-    <p class="sh-prose">När en rollfigur försvarar sig används:</p>
-    <p class="sh-formula">Försvarsvärde = Blockering + Akrobatik</p>
-    <p class="sh-prose">Både anfallaren och försvararen slår enligt de vanliga HV-reglerna. Därefter jämförs resultaten.</p>
-    <p class="sh-formula">Netto-HV = Anfallarens HV − Försvararens HV</p>
-    <p class="sh-prose">Om netto-HV är under 0 missar attacken eller stoppas helt. Om netto-HV är 0 eller högre träffar attacken.</p>
+  <header class="vp-tome__head">
+    <div class="vp-tome__eyebrow">— Viaproxima · Regler —</div>
+    <h1 class="vp-tome__title vp-tome__title--split">
+      <span>Liv</span>
+      <span class="vp-tome__title-amp">&amp;</span>
+      <span>Strid</span>
+    </h1>
+    <div class="vp-tome__tagline">Om kroppens skadetrösklar, träffkvalitet och dödens olika ansikten.</div>
+    <div class="vp-tome__divider">
+      <span></span><span class="vp-tome__divider-glyph">❖</span><span></span>
+    </div>
+  </header>
 
-    <h3 class="sh-section-title">Träffkvalitet</h3>
-    <p class="sh-prose">Träffkvaliteten avgör hur väl attacken träffar och påverkar skadan.</p>
-    <table class="sh-table">
-        <thead><tr><th style="text-align:right">Netto-HV</th><th>Träffkvalitet</th><th style="text-align:right">Skademodifiering</th></tr></thead>
-        <tbody>
-            <tr><td style="text-align:right">Under 0</td><td>Miss / stoppad</td><td style="text-align:right">Ingen skada</td></tr>
-            <tr><td style="text-align:right">0</td><td>Knapp träff</td><td style="text-align:right">−2 skada</td></tr>
-            <tr><td style="text-align:right">+1</td><td>Ren träff</td><td style="text-align:right">+0 skada</td></tr>
-            <tr><td style="text-align:right">+2 till +3</td><td>Bra träff</td><td style="text-align:right">+2 skada</td></tr>
-            <tr><td style="text-align:right">+4 eller mer</td><td>Brutal träff</td><td style="text-align:right">+4 skada</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">En knapp träff kan vara ett slag som bara river huden, en klo som skrapar sidan eller ett spjut som glider längs rustningen. En brutal träff är en fullträff med rätt kraft, rätt vinkel och dålig position för försvararen.</p>
+  <p>
+    <span class="vp-tome__dropcap">I</span>
+    Viaproxima är skada inte bara en siffra. En träff kan vara ett ytligt jack,
+    ett brutet revben, en sönderslagen sköldarm eller ett dödligt horn genom
+    kroppen. Reglerna nedan används för att avgöra
+    <strong>hur allvarlig en träff blir</strong>, samtidigt som spelledaren
+    beskriver skadan utifrån situationen.
+  </p>
 
-    <h3 class="sh-section-title">Skadenivåer</h3>
-    <p class="sh-prose">Alla vapen, varelser och faror har en skadenivå.</p>
-    <table class="sh-table">
-        <thead><tr><th>Skadenivå</th><th style="text-align:right">Skadevärde</th></tr></thead>
-        <tbody>
-            <tr><td>Låg</td><td style="text-align:right">2</td></tr>
-            <tr><td>Mellan</td><td style="text-align:right">4</td></tr>
-            <tr><td>Hög</td><td style="text-align:right">6</td></tr>
-            <tr><td>Extrem</td><td style="text-align:right">10</td></tr>
-        </tbody>
-    </table>
-    <table class="sh-table">
-        <thead><tr><th>Skadenivå</th><th>Exempel</th></tr></thead>
-        <tbody>
-            <tr><td>Låg</td><td>Kniv, liten klo, mindre bett, fall från låg höjd.</td></tr>
-            <tr><td>Mellan</td><td>Spjut, yxa, slunga, större bett, hårt fall.</td></tr>
-            <tr><td>Hög</td><td>Tung klubba, stort rovdjur, horn, krossande slag.</td></tr>
-            <tr><td>Extrem</td><td>Enorm best, rasande monsterattack, dödligt fall, magisk katastrof.</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">För att räkna ut slutlig skada:</p>
-    <p class="sh-formula">Skadevärde + träffmodifiering − rustning = slutlig skada</p>
-    <p class="sh-prose">Därefter jämförs slutlig skada med rollfigurens Liv.</p>
+  <p>Systemet bygger på att attack, försvar, HV och Liv redan används i strid, där Liv räknas från <strong>Tålighet + Fysisk tålighet</strong>.</p>
 
-    <h3 class="sh-section-title">Sköldar</h3>
-    <p class="sh-prose">Sköldar används aktivt för att stoppa, avleda eller förstöra en inkommande attack. De påverkar <strong>träffkvaliteten</strong>, inte skadevärdet direkt.</p>
-    <p class="sh-prose">En sköld ger bonus när rollfiguren försvarar sig genom blockering.</p>
-    <table class="sh-table">
-        <thead><tr><th>Sköld</th><th>Effekt</th><th style="text-align:right">Användningar per strid</th></tr></thead>
-        <tbody>
-            <tr><td>Liten sköld</td><td>+1 HV vid blockering</td><td style="text-align:right">2</td></tr>
-            <tr><td>Mellansköld</td><td>+2 HV vid blockering</td><td style="text-align:right">3</td></tr>
-            <tr><td>Tung sköld</td><td>+2 HV vid blockering, sköldstöt, klumpig</td><td style="text-align:right">4</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">När en sköld används för att rädda bäraren kan den sänka träffkvaliteten ett steg.</p>
-    <table class="sh-table">
-        <thead><tr><th>Före sköld</th><th>Efter sköld</th></tr></thead>
-        <tbody>
-            <tr><td>Brutal träff</td><td>Bra träff</td></tr>
-            <tr><td>Bra träff</td><td>Ren träff</td></tr>
-            <tr><td>Ren träff</td><td>Knapp träff</td></tr>
-            <tr><td>Knapp träff</td><td>Ingen skada eller endast press</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">En användning spenderas bara när skölden faktiskt sänker träffkvaliteten. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera skölden.</p>
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Liv</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
 
-    <h3 class="sh-section-title">Sköldstöt</h3>
-    <p class="sh-prose">En tung sköld kan användas för sköldstöt.</p>
-    <p class="sh-prose">Om en rollfigur med tung sköld blockerar en attack så väl att attacken missar, stoppas helt eller sänks till ingen skada, kan rollfiguren välja en av följande effekter:</p>
-    <table class="sh-table">
-        <thead><tr><th>Sköldstöt</th></tr></thead>
-        <tbody>
-            <tr><td>Knuffa fienden 1–2 meter.</td></tr>
-            <tr><td>Ge fienden −1 HV på nästa handling.</td></tr>
-            <tr><td>Skapa utrymme för att själv eller en allierad ska kunna backa undan.</td></tr>
-        </tbody>
-    </table>
+  <p>En rollfigurs Liv visar hur mycket kroppen klarar innan skador blir allvarliga.</p>
 
-    <h3 class="sh-section-title">Rustning</h3>
-    <p class="sh-prose">Rustning skyddar passivt när en attack faktiskt träffar. Den påverkar <strong>skadevärdet</strong>, inte träffkvaliteten.</p>
-    <table class="sh-table">
-        <thead><tr><th>Rustning</th><th style="text-align:right">Effekt</th><th style="text-align:right">Användningar per strid</th></tr></thead>
-        <tbody>
-            <tr><td>Lätt rustning</td><td style="text-align:right">−2 skada</td><td style="text-align:right">2</td></tr>
-            <tr><td>Mellanrustning</td><td style="text-align:right">−2 skada</td><td style="text-align:right">3</td></tr>
-            <tr><td>Tung rustning</td><td style="text-align:right">−3 skada, klumpig</td><td style="text-align:right">4</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">En rustningsanvändning spenderas bara när rustningen faktiskt minskar skadan. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera rustningen.</p>
-    <p class="sh-prose">Rustning kan beskrivas som att slaget fastnar i barkplåtar, att benlameller spricker, att päls och härdat läder dämpar kraften eller att en spets leds bort från kroppen.</p>
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">Liv = Tålighet + Fysisk tålighet</span>
+    </div>
+  </div>
 
-    <h3 class="sh-section-title">Klumpig utrustning</h3>
-    <p class="sh-prose">Vissa sköldar och rustningar är <strong>klumpiga</strong>.</p>
-    <table class="sh-table">
-        <thead><tr><th>Situation</th><th>Effekt</th></tr></thead>
-        <tbody>
-            <tr><td>Smidighet, smygande, klättring, simning, flykt eller snabba positionsbyten</td><td>−1 HV</td></tr>
-            <tr><td>Trånga utrymmen, svår terräng eller situationer där utrustningen tydligt är i vägen</td><td>−2 HV, om spelledaren bedömer det rimligt</td></tr>
-        </tbody>
-    </table>
-    <p class="sh-prose">Klumpig utrustning är stark i öppen strid men besvärlig när rollfiguren behöver vara snabb, tyst eller rörlig.</p>
+  <p>Liv används som en <strong>skadetröskel</strong>. Ju högre Liv du har, desto hårdare träffar krävs för att du ska bli svårt skadad.</p>
+  <p>När slutlig skada har räknats fram jämförs den med rollfigurens Liv.</p>
 
-    <h3 class="sh-section-title">Exempel på skada</h3>
-    <p class="sh-prose">En bjälg anfaller Bribbo med hornen.</p>
-    <p class="sh-prose">Bjälgens horn gör <strong>Extrem skada</strong>, alltså <strong>10 skadevärde</strong>.</p>
-    <p class="sh-prose">Bjälgen får <strong>+3 HV</strong> på sin attack. Bribbo får <strong>+2 HV</strong> på sitt försvar.</p>
-    <p class="sh-formula">Netto-HV = +1 → Ren träff (+0 skada)</p>
-    <p class="sh-prose">Bribbo använder sin mellansköld för att sänka träffkvaliteten: <strong>Ren träff → Knapp träff</strong> (−2 skada).</p>
-    <p class="sh-prose">Bribbo använder sin mellanrustning: <strong>10 − 2 − 2 = 6 slutlig skada</strong>. Bribbo har <strong>10 Liv</strong> — 6 innebär att Bribbo blir <strong>Sårad</strong>.</p>
-    <blockquote class="sh-quote">Hornet slår in i skölden och vrider Bribbo åt sidan. Kraften går ändå genom kroppen, men rustningen tar spetsen. Han kastas bakåt, får luften ur sig och blir Sårad, men står kvar.</blockquote>
+  <div class="vp-tome__threshold">
+    <div class="vp-tome__threshold-head">
+      <span>Slutlig skada jämfört med Liv</span>
+      <span>Skadegrad</span>
+    </div>
+
+    <div class="vp-tome__threshold-row">
+      <div class="vp-tome__threshold-bar-wrap">
+        <div class="vp-tome__threshold-range">Under 1/3 Liv</div>
+        <div class="vp-tome__threshold-bar">
+          <div class="vp-tome__threshold-fill" style="width:22%; background:var(--tone-1)"></div>
+        </div>
+      </div>
+      <div class="vp-tome__threshold-grade">
+        <span class="vp-tome__marker" style="background:var(--tone-1)"></span>Skråma
+      </div>
+    </div>
+
+    <div class="vp-tome__threshold-row">
+      <div class="vp-tome__threshold-bar-wrap">
+        <div class="vp-tome__threshold-range">Minst 1/3 Liv</div>
+        <div class="vp-tome__threshold-bar">
+          <div class="vp-tome__threshold-fill" style="width:42%; background:var(--tone-2)"></div>
+        </div>
+      </div>
+      <div class="vp-tome__threshold-grade">
+        <span class="vp-tome__marker" style="background:var(--tone-2)"></span>Sårad
+      </div>
+    </div>
+
+    <div class="vp-tome__threshold-row">
+      <div class="vp-tome__threshold-bar-wrap">
+        <div class="vp-tome__threshold-range">Minst 2/3 Liv</div>
+        <div class="vp-tome__threshold-bar">
+          <div class="vp-tome__threshold-fill" style="width:65%; background:var(--tone-3)"></div>
+        </div>
+      </div>
+      <div class="vp-tome__threshold-grade">
+        <span class="vp-tome__marker" style="background:var(--tone-3)"></span>Svårt sårad
+      </div>
+    </div>
+
+    <div class="vp-tome__threshold-row">
+      <div class="vp-tome__threshold-bar-wrap">
+        <div class="vp-tome__threshold-range">Minst hela Liv</div>
+        <div class="vp-tome__threshold-bar">
+          <div class="vp-tome__threshold-fill" style="width:92%; background:var(--tone-4)"></div>
+        </div>
+      </div>
+      <div class="vp-tome__threshold-grade">
+        <span class="vp-tome__marker" style="background:var(--tone-4)"></span>Kritiskt sårad
+      </div>
+    </div>
+
+    <div class="vp-tome__threshold-row">
+      <div class="vp-tome__threshold-bar-wrap">
+        <div class="vp-tome__threshold-range">Minst 1,5 × Liv</div>
+        <div class="vp-tome__threshold-bar">
+          <div class="vp-tome__threshold-fill" style="width:100%; background:var(--tone-5)"></div>
+        </div>
+      </div>
+      <div class="vp-tome__threshold-grade">
+        <span class="vp-tome__marker" style="background:var(--tone-5)"></span>Utslagen / dödligt läge
+      </div>
+    </div>
+  </div>
+
+  <div class="vp-tome__card">
+    <div class="vp-tome__card-title">
+      <span class="vp-tome__card-title-glyph">❦</span>
+      <span><strong>Exempel: 10 Liv</strong> — En rollfigur med 10 Liv har följande trösklar:</span>
+    </div>
+    <table class="vp-tome__pair-table">
+      <tbody>
+        <tr>
+          <td class="vp-tome__pair-key">1–3</td>
+          <td class="vp-tome__pair-arrow">→</td>
+          <td><span class="vp-tome__marker" style="background:var(--tone-1)"></span>Skråma</td>
+        </tr>
+        <tr>
+          <td class="vp-tome__pair-key">4–6</td>
+          <td class="vp-tome__pair-arrow">→</td>
+          <td><span class="vp-tome__marker" style="background:var(--tone-2)"></span>Sårad</td>
+        </tr>
+        <tr>
+          <td class="vp-tome__pair-key">7–9</td>
+          <td class="vp-tome__pair-arrow">→</td>
+          <td><span class="vp-tome__marker" style="background:var(--tone-3)"></span>Svårt sårad</td>
+        </tr>
+        <tr>
+          <td class="vp-tome__pair-key">10–14</td>
+          <td class="vp-tome__pair-arrow">→</td>
+          <td><span class="vp-tome__marker" style="background:var(--tone-4)"></span>Kritiskt sårad</td>
+        </tr>
+        <tr>
+          <td class="vp-tome__pair-key">15+</td>
+          <td class="vp-tome__pair-arrow">→</td>
+          <td><span class="vp-tome__marker" style="background:var(--tone-5)"></span>Utslagen / dödligt läge</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Skadegrader</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <div class="vp-tome__list">
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-1)"></span>
+      </div>
+      <div class="vp-tome__list-name">Skråma</div>
+      <div class="vp-tome__list-body">Synlig skada, smärta eller blod, men ingen regelpåverkan.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Sårad</div>
+      <div class="vp-tome__list-body">−1 HV på handlingar där skadan rimligen stör.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-3)"></span>
+      </div>
+      <div class="vp-tome__list-name">Svårt sårad</div>
+      <div class="vp-tome__list-body">−2 HV på handlingar där skadan stör, eller tydligt begränsad förmåga att agera.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-4)"></span>
+      </div>
+      <div class="vp-tome__list-name">Kritiskt sårad</div>
+      <div class="vp-tome__list-body">Rollfiguren kan knappt fortsätta. Kräver hjälp, stabilisering eller en desperat insats.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-5)"></span>
+      </div>
+      <div class="vp-tome__list-name">Utslagen / dödligt läge</div>
+      <div class="vp-tome__list-body">Rollfiguren kan inte agera normalt och riskerar att dö eller slås ut helt om ingen ingriper.</div>
+    </div>
+  </div>
+
+  <p>Spelledaren beskriver var skadan sitter utifrån situationen. Det finns ingen fast träffzonstabell.</p>
+  <p>En Sårad arm kan påverka attacker, blockering och grepp. Ett Sårat ben kan påverka rörelse och balans. En skada i torso kan påverka andning och uthållighet. En huvudskada kan påverka fokus, syn, hörsel eller magi.</p>
+  <p>Om skadans plats inte spelar någon tydlig roll används skadegraden allmänt tills scenen lugnat sig.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Attack och Försvar</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>När en rollfigur anfaller används: <strong>Attackvärde = Ackuratess + Genomslag</strong></p>
+  <p>När en rollfigur försvarar sig används: <strong>Försvarsvärde = Blockering + Akrobatik</strong></p>
+  <p>Både anfallaren och försvararen slår enligt de vanliga HV-reglerna. Därefter jämförs resultaten.</p>
+
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">Netto-HV = Anfallarens HV − Försvararens HV</span>
+    </div>
+  </div>
+
+  <p>Om netto-HV är under 0 missar attacken eller stoppas helt. Om netto-HV är 0 eller högre träffar attacken.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Träffkvalitet</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Träffkvaliteten avgör hur väl attacken träffar och påverkar skadan.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Netto-HV</th><th>Träffkvalitet</th><th>Skademodifiering</th></tr></thead>
+    <tbody>
+      <tr><td>Under 0</td><td>Miss / stoppad</td><td>Ingen skada</td></tr>
+      <tr><td>0</td><td>Knapp träff</td><td>−2 skada</td></tr>
+      <tr><td>+1</td><td>Ren träff</td><td>+0 skada</td></tr>
+      <tr><td>+2 till +3</td><td>Bra träff</td><td>+2 skada</td></tr>
+      <tr><td>+4 eller mer</td><td>Brutal träff</td><td>+4 skada</td></tr>
+    </tbody>
+  </table>
+
+  <p>En knapp träff kan vara ett slag som bara river huden, en klo som skrapar sidan eller ett spjut som glider längs rustningen. En brutal träff är en fullträff med rätt kraft, rätt vinkel och dålig position för försvararen.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Skadenivåer</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Alla vapen, varelser och faror har en skadenivå.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Skadenivå</th><th>Skadevärde</th></tr></thead>
+    <tbody>
+      <tr><td>Låg</td><td>2</td></tr>
+      <tr><td>Mellan</td><td>4</td></tr>
+      <tr><td>Hög</td><td>6</td></tr>
+      <tr><td>Extrem</td><td>10</td></tr>
+    </tbody>
+  </table>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Skadenivå</th><th>Exempel</th></tr></thead>
+    <tbody>
+      <tr><td>Låg</td><td>Kniv, liten klo, mindre bett, fall från låg höjd.</td></tr>
+      <tr><td>Mellan</td><td>Spjut, yxa, slunga, större bett, hårt fall.</td></tr>
+      <tr><td>Hög</td><td>Tung klubba, stort rovdjur, horn, krossande slag.</td></tr>
+      <tr><td>Extrem</td><td>Enorm best, rasande monsterattack, dödligt fall, magisk katastrof.</td></tr>
+    </tbody>
+  </table>
+
+  <p>För att räkna ut slutlig skada:</p>
+
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">Skadevärde + träffmodifiering − rustning = slutlig skada</span>
+    </div>
+  </div>
+
+  <p>Därefter jämförs slutlig skada med rollfigurens Liv.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Sköldar</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Sköldar används aktivt för att stoppa, avleda eller förstöra en inkommande attack. De påverkar <strong>träffkvaliteten</strong>, inte skadevärdet direkt.</p>
+  <p>En sköld ger bonus när rollfiguren försvarar sig genom blockering.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Sköld</th><th>Effekt</th><th>Användningar per strid</th></tr></thead>
+    <tbody>
+      <tr><td>Liten sköld</td><td>+1 HV vid blockering</td><td>2</td></tr>
+      <tr><td>Mellansköld</td><td>+2 HV vid blockering</td><td>3</td></tr>
+      <tr><td>Tung sköld</td><td>+2 HV vid blockering, sköldstöt, klumpig</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <p>När en sköld används för att rädda bäraren kan den sänka träffkvaliteten ett steg.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Före sköld</th><th>Efter sköld</th></tr></thead>
+    <tbody>
+      <tr><td>Brutal träff</td><td>Bra träff</td></tr>
+      <tr><td>Bra träff</td><td>Ren träff</td></tr>
+      <tr><td>Ren träff</td><td>Knapp träff</td></tr>
+      <tr><td>Knapp träff</td><td>Ingen skada eller endast press</td></tr>
+    </tbody>
+  </table>
+
+  <p>En användning spenderas bara när skölden faktiskt sänker träffkvaliteten. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera skölden.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Sköldstöt</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>En tung sköld kan användas för sköldstöt.</p>
+  <p>Om en rollfigur med tung sköld blockerar en attack så väl att attacken missar, stoppas helt eller sänks till ingen skada, kan rollfiguren välja en av följande effekter:</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Sköldstöt</th></tr></thead>
+    <tbody>
+      <tr><td>Knuffa fienden 1–2 meter.</td></tr>
+      <tr><td>Ge fienden −1 HV på nästa handling.</td></tr>
+      <tr><td>Skapa utrymme för att själv eller en allierad ska kunna backa undan.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Rustning</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Rustning skyddar passivt när en attack faktiskt träffar. Den påverkar <strong>skadevärdet</strong>, inte träffkvaliteten.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Rustning</th><th>Effekt</th><th>Användningar per strid</th></tr></thead>
+    <tbody>
+      <tr><td>Lätt rustning</td><td>−2 skada</td><td>2</td></tr>
+      <tr><td>Mellanrustning</td><td>−2 skada</td><td>3</td></tr>
+      <tr><td>Tung rustning</td><td>−3 skada, klumpig</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <p>En rustningsanvändning spenderas bara när rustningen faktiskt minskar skadan. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera rustningen.</p>
+  <p>Rustning kan beskrivas som att slaget fastnar i barkplåtar, att benlameller spricker, att päls och härdat läder dämpar kraften eller att en spets leds bort från kroppen.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Klumpig utrustning</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Vissa sköldar och rustningar är <strong>klumpiga</strong>.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Situation</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Smidighet, smygande, klättring, simning, flykt eller snabba positionsbyten</td><td>−1 HV</td></tr>
+      <tr><td>Trånga utrymmen, svår terräng eller situationer där utrustningen tydligt är i vägen</td><td>−2 HV, om spelledaren bedömer det rimligt</td></tr>
+    </tbody>
+  </table>
+
+  <p>Klumpig utrustning är stark i öppen strid men besvärlig när rollfiguren behöver vara snabb, tyst eller rörlig.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Exempel på skada</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>En bjälg anfaller Bribbo med hornen.</p>
+  <p>Bjälgens horn gör <strong>Extrem skada</strong>, alltså <strong>10 skadevärde</strong>.</p>
+  <p>Bjälgen får <strong>+3 HV</strong> på sin attack. Bribbo får <strong>+2 HV</strong> på sitt försvar.</p>
+  <p><strong>Netto-HV = +1 → Ren träff (+0 skada)</strong></p>
+  <p>Bribbo använder sin mellansköld för att sänka träffkvaliteten: <strong>Ren träff → Knapp träff</strong> (−2 skada).</p>
+  <p>Bribbo använder sin mellanrustning: <strong>10 − 2 − 2 = 6 slutlig skada</strong>. Bribbo har <strong>10 Liv</strong> — 6 innebär att Bribbo blir <strong>Sårad</strong>.</p>
+
+  <div class="vp-tome__card">
+    <div class="vp-tome__card-title">
+      <span class="vp-tome__card-title-glyph">❦</span>
+      <span><em>Hornet slår in i skölden och vrider Bribbo åt sidan. Kraften går ändå genom kroppen, men rustningen tar spetsen. Han kastas bakåt, får luften ur sig och blir Sårad, men står kvar.</em></span>
+    </div>
+  </div>
+
 </div>

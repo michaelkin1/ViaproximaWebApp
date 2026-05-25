@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/floraFauna.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp-tome.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp-tome-lore.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/adveniriska.css" asp-append-version="true" />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 }
 
@@ -24,29 +27,11 @@
                 <div class="tab-row">
                     <button class="tab-btn tab-btn--active" data-tab="spelarbok">Spelarbok</button>
                     <button class="tab-btn" data-tab="poangkostnader">Poängkostnader</button>
-                    <button class="tab-btn" data-tab="laror">Läror</button>
-                    <button class="tab-btn" data-tab="shamaner">Shamaner</button>
-                    <button class="tab-btn" data-tab="shaman20">Shaman (2.0)</button>
+                    <button class="tab-btn" data-tab="adveniriska">De fyra Adveniriska lärdomarna</button>
                 </div>
                 <div class="tab-row">
-                    <button class="tab-btn" data-tab="kristallsejdare">Kristallsejdare</button>
                     <button class="tab-btn" data-tab="livstrid">Liv &amp; Strid</button>
                 </div>
-            </div>
-
-            <div class="lore-sub-bar" id="loreSubBar" style="display:none">
-                <button class="lore-sub-btn" data-lore="roda"
-                    style="--lore-color:#c0392b;--lore-active-bg:#fdf0ee">Röda Vreden</button>
-                <button class="lore-sub-btn" data-lore="grona"
-                    style="--lore-color:#27ae60;--lore-active-bg:#edfaf1">Gröna Skammen</button>
-                <button class="lore-sub-btn" data-lore="gula"
-                    style="--lore-color:#d4a017;--lore-active-bg:#fefae9">Gula Lyckan</button>
-                <button class="lore-sub-btn" data-lore="lila"
-                    style="--lore-color:#7d3c98;--lore-active-bg:#f5eeff">Lila Stoltheten</button>
-                <button class="lore-sub-btn" data-lore="orangea"
-                    style="--lore-color:#ca6f1e;--lore-active-bg:#fef4ea">Orangea Kärleken</button>
-                <button class="lore-sub-btn" data-lore="blaa"
-                    style="--lore-color:#2471a3;--lore-active-bg:#eaf4fd">Blåa Sorgen</button>
             </div>
 
             <div class="tab-content" id="tab-spelarbok">
@@ -57,20 +42,8 @@
                 @await Html.PartialAsync("_RulesPoangkostnader")
             </div>
 
-            <div class="tab-content" id="tab-laror" style="display:none;">
-                @await Html.PartialAsync("_RulesLaror")
-            </div>
-
-            <div class="tab-content" id="tab-shamaner" style="display:none;">
-                @await Html.PartialAsync("_RulesShamaner")
-            </div>
-
-            <div class="tab-content" id="tab-shaman20" style="display:none;">
-                @await Html.PartialAsync("_RulesShaman2")
-            </div>
-
-            <div class="tab-content" id="tab-kristallsejdare" style="display:none;">
-                @await Html.PartialAsync("_RulesKristallsejdare")
+            <div class="tab-content" id="tab-adveniriska" style="display:none;">
+                @await Html.PartialAsync("_RulesAdveniriska")
             </div>
 
             <div class="tab-content" id="tab-livstrid" style="display:none;">
@@ -82,4 +55,5 @@
 
 @section Scripts {
     <script src="~/js/pages/rules.page.js" asp-append-version="true"></script>
+    <script src="~/js/pages/adveniriska.subtabs.js" asp-append-version="true"></script>
 }

@@ -1,0 +1,199 @@
+<div class="vp-tome">
+  <h1 class="vp-tome__title">Shamaner</h1>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Blackjackritualer</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Shamaner utför ritualer genom att tolka ritualkort. En shaman använder i grunden en vanlig kortlek med <strong>54 kort</strong>: Ess till Kung i fyra färger samt två Jokrar. Varje kort har ett <strong>ritualord</strong> som anger vad ritualen kan göra.</p>
+  <p class="vp-tome__prose">Särskilda kort med egen specialtext kan förekomma genom handel, belöningar eller ovanliga fynd, men 54-kortsleken är basen.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ritualkort</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Del</th><th>Betydelse</th></tr></thead>
+    <tbody>
+      <tr><td>Valör</td><td>Kortets blackjackvärde</td></tr>
+      <tr><td>Bild</td><td>Kortets symbol, ingrediensmotiv eller ritualtecken</td></tr>
+      <tr><td>Ritualord</td><td>Vad kortet kan bidra med till ritualen</td></tr>
+      <tr><td>Specialtext</td><td>Endast på särskilda kort</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Att utföra en ritual</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">När shamanen utför en ritual spelar hen blackjack mot 21:</p>
+  <ol style="margin:0 0 14px 1.5rem;padding:0;font-size:15px;line-height:1.8;max-width:64ch;">
+    <li>Dra två kort.</li>
+    <li>Välj om du vill dra fler kort eller stanna.</li>
+    <li>Om summan är <strong>21 eller lägre</strong> lyckas ritualen.</li>
+    <li>Om summan är <strong>över 21</strong> får ritualen bakslag.</li>
+    <li>Ritualorden på de dragna korten avgör vad ritualen kan göra.</li>
+    <li>Specialkort kan lägga till extra effekter enligt sin specialtext.</li>
+    <li>När ritualen är färdig läggs de dragna korten i kasthögen.</li>
+  </ol>
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <p class="vp-tome__stone-text" style="font-size:14px;text-align:center;">Shamanen kan avbryta ritualen när som helst. Då sker ingen effekt och dragna kort läggs i kasthögen.</p>
+    </div>
+  </div>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Kortvärden</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Kort</th><th>Värde</th></tr></thead>
+    <tbody>
+      <tr><td>2–10</td><td>Kortets värde</td></tr>
+      <tr><td>Knekt</td><td>10</td></tr>
+      <tr><td>Dam</td><td>10</td></tr>
+      <tr><td>Kung</td><td>10</td></tr>
+      <tr><td>Ess</td><td>1 eller 11</td></tr>
+      <tr><td>Joker</td><td>Valfri valör</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ess, klädda kort och Joker</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Kort</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Ess</td><td>Räknas som 1 eller 11.</td></tr>
+      <tr><td>Knekt</td><td>Om ritualen lyckas minskar tidsåtgången ett steg.</td></tr>
+      <tr><td>Dam</td><td>Om shamanen går över 21 med högst 2 poäng blir det inte bakslag. Ritualen misslyckas bara.</td></tr>
+      <tr><td>Kung</td><td>Om ritualen lyckas räknas ritualen som en nivå högre, upp till högsta tillåtna nivå.</td></tr>
+      <tr><td>Joker</td><td>Räknas som valfri valör och valfritt ritualord.</td></tr>
+    </tbody>
+  </table>
+  <p class="vp-tome__prose">Specialkort kan ha egna regler som ersätter eller lägger till effekter.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ritualtempo</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Slutvärdet avgör hur snabbt ritualen blir klar.</p>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Slutvärde</th><th>I strid</th><th>Utanför strid</th></tr></thead>
+    <tbody>
+      <tr><td>21</td><td>Omedelbart</td><td>Omedelbart</td></tr>
+      <tr><td>18–20</td><td>1 runda</td><td>Några sekunder</td></tr>
+      <tr><td>15–17</td><td>2 rundor</td><td>Ca 30 sekunder</td></tr>
+      <tr><td>12–14</td><td>3 rundor</td><td>Ca 1 minut</td></tr>
+      <tr><td>9–11</td><td>4 rundor</td><td>Ca 5 minuter</td></tr>
+      <tr><td>4–8</td><td>5 rundor</td><td>Ca 10 minuter</td></tr>
+      <tr><td>22+</td><td>Bakslag</td><td>Bakslag</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ritualstyrka</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Shamannivån avgör hur stark ritualens effekt får vara. Kung kan höja ritualens nivå med 1, men aldrig över högsta tillåtna nivå.</p>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Shamannivå</th><th>Typisk ritualstyrka</th></tr></thead>
+    <tbody>
+      <tr><td>Nivå 1</td><td>Liten effekt, ett mål, kort varaktighet</td></tr>
+      <tr><td>Nivå 2</td><td>Tydlig effekt med praktisk nytta i scenen</td></tr>
+      <tr><td>Nivå 3</td><td>Stark sceneffekt, flera mål eller mindre zon</td></tr>
+      <tr><td>Nivå 4</td><td>Stor effekt, tydlig terrängpåverkan eller kraftig kontroll</td></tr>
+      <tr><td>Nivå 5</td><td>Mycket stark effekt som kan vända eller forma en scen</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ritualord</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Ritualorden anger ritualens funktion. En ritual kan använda de ritualord som finns bland de dragna korten. Om flera ritualord används måste de kunna kombineras till en tydlig effekt.</p>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Ritualord</th><th>Användning</th></tr></thead>
+    <tbody>
+      <tr><td>Binda</td><td>Snärja, hålla fast, låsa, stänga</td></tr>
+      <tr><td>Läka</td><td>Stabilisera, återställa, lindra</td></tr>
+      <tr><td>Skydda</td><td>Barriär, hård hud, skyddszon</td></tr>
+      <tr><td>Dölja</td><td>Rök, dimma, kamouflage, luktmaskering</td></tr>
+      <tr><td>Förvandla</td><td>Ändra form, mutation, väderbrott, avvikelse</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Ritualform</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Shamanen får föreslå ritualens form, men formen måste passa ritualorden och situationen.</p>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Form</th><th>Användning</th></tr></thead>
+    <tbody>
+      <tr><td>Brygd</td><td>Läkande, gift, kroppslig förändring</td></tr>
+      <tr><td>Salva</td><td>Sår, hud, föremål, skydd</td></tr>
+      <tr><td>Rök</td><td>Dimma, dölja, förvirra, sprida</td></tr>
+      <tr><td>Knyte</td><td>Snärja, binda, kasta, placera</td></tr>
+      <tr><td>Märke</td><td>Förbannelse, skydd, spårning, läsning</td></tr>
+      <tr><td>Cirkel</td><td>Platsritual, zon, barriär, väder</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Pågående ritualer</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Om en ritual tar flera rundor kan shamanen röra sig relativt fritt, tala, bära föremål och ta enklare försvarande handlingar.</p>
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <p class="vp-tome__stone-text" style="font-size:13px;text-align:center;max-width:60ch;margin:0 auto;">Shamanen kan inte anfalla, kasta sig undan, sprinta, tackla någon, utföra annan magi eller använda avancerade föremål under pågående ritual.</p>
+    </div>
+  </div>
+  <p class="vp-tome__prose">Shamanen kan när som helst välja att avbryta ritualen. Då sker ingen effekt och de dragna korten läggs i kasthögen.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Bakslag</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Om shamanen går över 21 får ritualen bakslag. Slå <strong>1D6</strong>. Bakslag ska skapa en spelbar komplikation, inte bara skada.</p>
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>1D6</th><th>Bakslag</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Fel mottagare</td><td>Ritualen påverkar fel mål, närmaste rimliga mål eller något shamanen inte tänkte på.</td></tr>
+      <tr><td>2</td><td>Fel form</td><td>Ritualen sker, men i fel form: brygd blir rök, rök blir märke, märke blir knyte, eller liknande. Effekten är användbar men svårkontrollerad.</td></tr>
+      <tr><td>3</td><td>Överväxt</td><td>Ritualen blir för mycket. Den skapar extra rötter, sporer, ben, lukt, dimma, vätska eller märken som gör platsen svår, farlig eller avslöjande.</td></tr>
+      <tr><td>4</td><td>Levande rest</td><td>En liten rest av ritualen får egen vilja under scenen: en rot kryper, en rök följer någon, en salva vägrar släppa, ett märke flyttar sig.</td></tr>
+      <tr><td>5</td><td>Bytt pris</td><td>Ritualen tar något oväntat i betalning: ett föremål spricker, en doft fastnar, ett minne grumlas, ett djur lockas dit, eller platsen märks.</td></tr>
+      <tr><td>6</td><td>Sann men skev</td><td>Ritualen lyckas delvis, men med en vridning. Den hjälper mot problemet men skapar ett nytt problem, en ny ledtråd eller en farlig öppning.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Kasthög och omblandning</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Dragna kort läggs i kasthögen efter ritualen, oavsett om ritualen lyckades, avbröts eller gav bakslag.</p>
+  <p class="vp-tome__prose">När leken är tom blandas kasthögen till en ny lek. Efter full vila får shamanen blanda ihop hela leken igen.</p>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">◆</span>
+    <span class="vp-tome__section-label">Nya kort</span>
+    <span class="vp-tome__section-mark">◆</span>
+  </div>
+  <p class="vp-tome__prose">Shamaner kan få nya kort genom handel, belöningar, särskilda platser eller ovanliga fynd. Ett nytt kort ersätter normalt ett befintligt kort i shamanens lek, så leken fortfarande utgår från 54 kort.</p>
+  <p class="vp-tome__prose">Specialkort kan ha egna ritualord, blankt ritualord, ändrade valörer eller specialtext.</p>
+</div>

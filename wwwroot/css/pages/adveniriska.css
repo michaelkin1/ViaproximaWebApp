@@ -1,0 +1,210 @@
+/* Adveniriska Lärdomar — specifika stilar och overrides */
+
+/* Inaktivera atmosfärisk scene-bakgrund; lore-tint appliceras bara på .vp-tome */
+.vp-lore-frame {
+  background: none;
+  padding: 0;
+}
+
+/* Lore-symbol (ikon bredvid lore-titel) */
+img.vp-lore-symbol {
+  display: inline-block;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--lore-deep, #5a4a2a);
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Header-layout för lore-partial */
+.vp-tome__lore-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Minska padding för tome-paneler inuti tabs */
+.adv-lore-panel .vp-tome,
+.adv-sub-panel .vp-tome {
+  padding: 32px 40px 48px;
+}
+
+/* Minska titelstorleken i panel-kontext */
+.adv-lore-panel .vp-tome__title,
+.adv-sub-panel .vp-tome__title {
+  font-size: 36px;
+}
+
+/* Spell-namn */
+.vp-tome__spell-name {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--lore-deep, var(--tome-ink, #2b241c));
+  margin: 24px 0 4px;
+}
+
+/* Kursiv flavour-text under spell-namn */
+.vp-tome__spell-flavor {
+  font-family: 'EB Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--tome-muted, #6b5b47);
+  margin: 0 0 10px;
+  max-width: 70ch;
+}
+
+/* Prose-paragraf */
+.vp-tome__prose {
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 14px;
+  max-width: 70ch;
+}
+
+/* Adveniriska subtab-bar */
+.adv-sub-bar {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.adv-sub-btn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border, #c8b89a);
+  background: var(--paper, #f5ecd7);
+  color: var(--ink, #2c1a0e);
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.15s;
+}
+
+.adv-sub-btn:hover {
+  background: var(--gold, #c9a84c);
+  color: #fff;
+}
+
+.adv-sub-btn.active {
+  background: var(--gold, #c9a84c);
+  color: #fff;
+  border-color: var(--gold, #c9a84c);
+}
+
+/* Lore-subtab-bar (visas under Kristallsejdare) */
+.adv-lore-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  margin-bottom: 0.75rem;
+}
+
+.adv-lore-btn {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--border, #c8b89a);
+  background: transparent;
+  color: var(--ink, #2c1a0e);
+  font-size: 0.78rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.adv-lore-btn:hover,
+.adv-lore-btn.active {
+  background: var(--gold, #c9a84c);
+  color: #fff;
+  border-color: var(--gold, #c9a84c);
+}
+
+/* =====================================================================
+   1. LORE BACKGROUND IMAGE — JS adds lore-bg-X class to body on activate.
+   Overrides BeigeForestBG.png set on body in vp.theme.css.
+   background-repeat and background-attachment are inherited from body rule.
+   ===================================================================== */
+body.lore-bg-rod    { background-image: url('/Images/Lores/RedFS.png')    !important; background-size: cover; background-position: center; }
+body.lore-bg-gron   { background-image: url('/Images/Lores/GreenPA.png')  !important; background-size: cover; background-position: center; }
+body.lore-bg-gul    { background-image: url('/Images/Lores/YellowLH.png') !important; background-size: cover; background-position: center; }
+body.lore-bg-lila   { background-image: url('/Images/Lores/PurpleNL.png') !important; background-size: cover; background-position: center; }
+body.lore-bg-orange { background-image: url('/Images/Lores/OrangeSS.png') !important; background-size: cover; background-position: center; }
+body.lore-bg-bla    { background-image: url('/Images/Lores/BlueWW.png')   !important; background-size: cover; background-position: center; }
+
+/* =====================================================================
+   2. LORE COLOR TINT — increased by ~10 percentage points
+   Override --lore-glow (used in radial bg + inset box-shadow) with
+   higher alpha. adveniriska.css loads after vp-tome-lore.css so equal
+   specificity rules here win via cascade source order.
+   ===================================================================== */
+.vp-tome.lore-rod    { --lore-glow: rgba(192,  57,  43, 0.28); }
+.vp-tome.lore-gron   { --lore-glow: rgba( 74, 124,  58, 0.30); }
+.vp-tome.lore-gul    { --lore-glow: rgba(200, 150,  48, 0.32); }
+.vp-tome.lore-lila   { --lore-glow: rgba(106,  58, 138, 0.30); }
+.vp-tome.lore-orange { --lore-glow: rgba(184, 101,  30, 0.32); }
+.vp-tome.lore-bla    { --lore-glow: rgba( 44, 106, 154, 0.30); }
+
+/* =====================================================================
+   3. LORE ICONS — doubled size (52 → 104px) + parchment background
+   Appended after the existing img.vp-lore-symbol rule; same specificity
+   wins by source order.
+   ===================================================================== */
+img.vp-lore-symbol {
+  width: 104px;
+  height: 104px;
+  background-color: #fdf6e3;
+}
+
+/* =====================================================================
+   4. ADVENIRISKA SUBTAB BAR — fill full width
+   ===================================================================== */
+.adv-sub-bar {
+  flex-wrap: nowrap;
+}
+.adv-sub-btn {
+  flex: 1;
+}
+
+/* =====================================================================
+   5. LORE SUBTAB BAR — fill full width + per-lore color accent
+   ===================================================================== */
+.adv-lore-btn {
+  min-height: 2.4rem;
+  text-align: center;
+}
+
+/* Left-border accent per lore (non-active state only, keeps gold active clean) */
+.adv-lore-btn[data-lore="rod"]:not(.active)    { border-left: 3px solid #c0392b; }
+.adv-lore-btn[data-lore="gron"]:not(.active)   { border-left: 3px solid #4a7c3a; }
+.adv-lore-btn[data-lore="gul"]:not(.active)    { border-left: 3px solid #c89630; }
+.adv-lore-btn[data-lore="lila"]:not(.active)   { border-left: 3px solid #6a3a8a; }
+.adv-lore-btn[data-lore="orange"]:not(.active) { border-left: 3px solid #b8651e; }
+.adv-lore-btn[data-lore="bla"]:not(.active)    { border-left: 3px solid #2c6a9a; }
+
+/* Subtle background tint when idle (not active, not hovered) */
+.adv-lore-btn[data-lore="rod"]:not(.active):not(:hover)    { background: rgba(192,  57,  43, 0.08); }
+.adv-lore-btn[data-lore="gron"]:not(.active):not(:hover)   { background: rgba( 74, 124,  58, 0.08); }
+.adv-lore-btn[data-lore="gul"]:not(.active):not(:hover)    { background: rgba(200, 150,  48, 0.10); }
+.adv-lore-btn[data-lore="lila"]:not(.active):not(:hover)   { background: rgba(106,  58, 138, 0.08); }
+.adv-lore-btn[data-lore="orange"]:not(.active):not(:hover) { background: rgba(184, 101,  30, 0.08); }
+.adv-lore-btn[data-lore="bla"]:not(.active):not(:hover)    { background: rgba( 44, 106, 154, 0.08); }
+
+/* =====================================================================
+   6. LORE BANNER IMAGES — fully opaque (override inline opacity:0.7)
+   ===================================================================== */
+.adv-lore-panel .vp-tome > img {
+  opacity: 1 !important;
+}
+
+/* =====================================================================
+   7. SUPPRESS body::before OVERLAY when a lore is active.
+   vp.theme.css adds rgba(233,227,215,0.75) fixed overlay via body::before.
+   Remove it so the lore background-image shows at full strength.
+   The lore-bg-X class is set on body by adveniriska.subtabs.js.
+   ===================================================================== */
+body[class*="lore-bg-"]::before {
+  display: none;
+}

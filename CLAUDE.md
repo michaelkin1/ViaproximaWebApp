@@ -184,6 +184,117 @@ Rules:
 - Add new tabs by adding button + panel + partial + `titleMap` entry in `rules.page.js`.
 - Shared content classes live in `floraFauna.css`: `.sh-panel`, `.sh-section-title`, `.sh-prose`, `.sh-table`, `.sh-list`, `.sh-wide-table-wrap`, `.sh-formula`, `.sh-quote`.
 
+## Tome-stilen — Stilsystem för Rules/Lore/Reference-sidor
+
+### Bakgrund
+Rules-sidans lore- och magidel använder ett nytt stilsystem ("tome-stilen") introducerat i NewStyle-redesignen. Det är det kanoniska sättet att bygga nya rules-, lore- och referenssidor i appen. Befintliga sidor som ännu inte migrerats (t.ex. FloraFauna, delar av CharacterSheet-regler) kan migreras till detta system i framtiden.
+
+### CSS-filer
+- `wwwroot/css/vp-tome.css` — basstil: pergament, drop-cap, section dividers, callouts, tabeller. Krävs för alla tome-sidor.
+- `wwwroot/css/vp-tome-lore.css` — lore-tematik. Ger färgade pergamenttoner per Kristallsejdarlore.
+- `wwwroot/css/pages/adveniriska.css` — Adveniriska-specifika subtab-stilar och overrides.
+
+Dessa laddas via `@section Styles` i `Pages/Rules.cshtml`. Lägg inte till dem i `_Layout.cshtml`.
+
+### Använda tome-stilen på en ny sida
+Wrap allt innehåll i `<div class="vp-tome">`. Sidan får då automatiskt pergamentbakgrund, Cinzel-rubriker och rätt typografi. Se `NewStyle/vp-tome-recipe.md` för alla tillgängliga komponenter.
+
+Ny regler-/referenssida utan lore-koppling:
+```html
+<div class="vp-tome">
+  <h1 class="vp-tome__title">Sidtitel</h1>
+  <section class="vp-tome__section"> ... </section>
+</div>
+```
+
+Ny lore-sida (Kristallsejdare):
+```html
+<div class="vp-tome lore-[NYCKEL]">  <!-- lore-rod / lore-gron / lore-gul / lore-lila / lore-orange / lore-bla -->
+  <span class="vp-lore-symbol" aria-hidden="true"></span>
+  <h1 class="vp-tome__title">Läran om [NAMN]</h1>
+  ...
+</div>
+```
+
+### Lore-symboler
+Använd alltid `<span class="vp-lore-symbol">` som ikonplaceholder i lore-sidor och lore-kort. Cirkeln (52×52px) är avsedd att ersättas med AI-genererade SVG-ikoner. Hårdkoda aldrig runda färgcirklar utan denna klass.
+
+### Atmosfärisk frame — INAKTIVERAD
+`.vp-lore-frame` som wrapper runt hela sidan är neutraliserad med `background:none` i `adveniriska.css`. Använd den inte. Lore-färgton appliceras enbart på `.vp-tome`-diven.
+
+### Tab-struktur för magisystemet (Adveniriska lärdomarna)
+```
+Rules-sidan
+  → spelarbok
+  → poangkostnader
+  → adveniriska (De fyra Adveniriska lärdomarna)
+      → kristallsejdare  →  rod / gron / gul / lila / orange / bla
+      → shamaner
+      → lyadskapare (placeholder)
+      → orakel (placeholder)
+  → livstrid
+```
+Gamla tab-nycklar `laror`, `shamaner`, `shaman20`, `kristallsejdare` på huvudnivå finns inte längre.
+
+Kristallsejdare har ingen separat "Översikt"-panel. När Kristallsejdare aktiveras visas lore-subtab-raden direkt med Röd Vrede förvald.
+
+### Innehållskällor (magisystemet)
+- Kristallsejdarläror: `NewStyle/viaproxima_kristallsejdare_lores_5_nivaer_strukturerad.md` (femnivåsystem — ersätter CV-trösklar)
+- Shamanregler: `NewStyle/shamaner_blackjack_regler.md` + `NewStyle/shaman_keywords_styrkenivaer.md`
+- Lore-labels: "Läran om Röd Vrede", "Läran om Grön Skam", "Läran om Gul Lycka", "Läran om Lila Stolthet", "Läran om Orange Kärlek", "Läran om Blå Sorg"
+
+### Framtida migrering av andra sidor
+Sidor som kan migreras till tome-stilen i framtiden:
+- `Pages/FloraFauna.cshtml` och dess partials — använd `vp-tome` utan lore-klass
+- Eventuella framtida regel-/referenssidor
+
+Säg "migrera [SIDNAMN] till tome-stilen" för att instruera Claude Code att göra det. Förutsätter att `vp-tome.css` redan är inläst på sidan.
+
+### Partial Views (Adveniriska-systemet)
+| Partial | Innehåll |
+|---|---|
+| `_RulesAdveniriska.cshtml` | Subtab-skelett + lore-bar, subtab-JS |
+| `_LoreRod.cshtml` | Röd Vrede — eld och rök |
+| `_LoreGron.cshtml` | Grön Skam — växter och djur |
+| `_LoreGul.cshtml` | Gul Lycka — ljus och helande |
+| `_LoreLila.cshtml` | Lila Stolthet — blixt och nekromanti |
+| `_LoreOrange.cshtml` | Orange Kärlek — sten och sand |
+| `_LoreBla.cshtml` | Blå Sorg — vatten och vind |
+| `_RulesShamanerNy.cshtml` | Shamanregler (blackjack-system) |
+
+## vp-tome — Component Reference for New Pages
+
+Any rules, reference, or lore page can be built in the vp-tome style. Load `vp-tome.css` (and optionally `vp-tome-lore.css`) on the page, then wrap content in `<div class="vp-tome">`.
+
+### When to use it
+Say "apply vp-tome style to [page/tab]" to migrate any existing rules or reference page. Liv & Strid is the reference implementation — read `Pages/Shared/_RulesLivStrid.cshtml` as a worked example.
+
+### Component map
+
+| Content type | Component | Key classes |
+|---|---|---|
+| Page title | Head block | `vp-tome__head`, `vp-tome__title`, `vp-tome__eyebrow`, `vp-tome__tagline`, `vp-tome__divider` |
+| Split title (Word & Word) | Split title variant | `vp-tome__title--split`, `vp-tome__title-amp` |
+| First paragraph | Drop-cap — one per page | `vp-tome__dropcap` inside a `<p>` |
+| Section divider | Diamond rule | `vp-tome__section` with two `__section-mark` spans and one `__section-label` |
+| Key formula / axiom | Carved stone callout | `vp-tome__stone` > `vp-tome__stone-inner` > `vp-tome__stone-text` |
+| Ranked scale with thresholds | Threshold ladder | `vp-tome__threshold`, `__threshold-row`, `__threshold-bar`, `__threshold-fill` (width% + tone color) |
+| Named effects / definitions | Diamond list | `vp-tome__list` > `__list-row` > `__list-marker-col` + `__list-name` + `__list-body` |
+| Data table | Stat table | `vp-tome__stat-table` |
+| Example / aside | Card | `vp-tome__card`, `vp-tome__card-title`, `vp-tome__pair-table` |
+| Body prose | Paragraph | plain `<p>` inside `.vp-tome` |
+| Decorative corners | Filigree | SVG sprite + four `vp-tome__filigree` corners (TL/TR/BL/BR) |
+
+### Tone scale (severity colors — not lore colors)
+`--tone-1` straw → `--tone-2` amber → `--tone-3` rust → `--tone-4` blood → `--tone-5` obsidian
+Use for damage grades, cost tiers, danger ratings. Do not mix with lore hue colors.
+
+### Composition order
+vp-tome → filigree ×4 → __head → p with __dropcap → p body → __section → __stone (optional) → __threshold (optional) → __card (optional) → __list
+
+### Fonts (must be loaded once per page — check before adding)
+Cinzel, Cinzel Decorative, Libre Baskerville, EB Garamond — loaded via Google Fonts in `_Layout.cshtml` or page `@section Styles`.
+
 ## Merchant Generator / Prompt Pipeline
 `MerchantGenerator` uses `IPromptAssembler` singleton. Active pipeline:
 - Template: `wwwroot/MerchantRules/PromptTemplate_v2_7.md`

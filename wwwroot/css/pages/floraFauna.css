@@ -300,3 +300,110 @@ body.lore-bg-active::after {
     margin: 0.65rem 0 1rem;
     line-height: 1.6;
 }
+
+.vp-tome.sh-panel { height: 85vh; overflow-y: auto; padding: 2rem; }
+
+/* === Lyådskapare === */
+.lyads-sub-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.lyads-subtab-btn {
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--border-2);
+    border-left: 4px solid var(--lyads-color, #8b5e3c);
+    border-radius: var(--radius-md);
+    background: var(--panel-2);
+    font-family: var(--font);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    min-height: 2.4rem;
+    text-align: center;
+}
+
+.lyads-subtab-btn:hover { filter: brightness(0.97); }
+
+.lyads-subtab-btn.active {
+    background: var(--panel);
+    border-left-color: var(--lyads-color, #8b5e3c);
+    border-top-color: var(--lyads-color, #8b5e3c);
+}
+
+.lyads-subtab-btn[data-lyads="kontroll"] { --lyads-color: #8b5e3c; }
+.lyads-subtab-btn[data-lyads="lasning"]  { --lyads-color: #5a7a5a; }
+.lyads-subtab-btn[data-lyads="flykt"]    { --lyads-color: #4a6080; }
+
+.lyads-inriktning-link {
+    color: var(--ink);
+    font-weight: 600;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+.lyads-keystone-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+}
+
+.lyads-level-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.lyads-level-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    min-width: 58px;
+    padding-top: 0.6rem;
+}
+
+.lyads-cards-row {
+    display: flex;
+    gap: 0.75rem;
+    flex: 1;
+}
+
+.lyads-keystone-card {
+    flex: 1;
+    background: var(--paper);
+    border: 1px solid var(--border-2);
+    border-radius: var(--radius-sm);
+    padding: 0.75rem 1rem;
+}
+
+.lyads-keystone-name {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+}
+
+.lyads-keystone-effect {
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.5;
+}
+
+/* Lyådskapare — multi-line stone block */
+.vp-tome__stone-inner .vp-tome__stone-text {
+    display: block;
+    margin-bottom: 0.55rem;
+}
+.vp-tome__stone-inner .vp-tome__stone-text:last-child {
+    margin-bottom: 0;
+}
