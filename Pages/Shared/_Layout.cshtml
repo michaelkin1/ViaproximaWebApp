@@ -22,11 +22,12 @@
     <header>
         <nav class="top-nav">
             <a asp-area="" asp-page="/Index">Hem</a>
-            <a asp-page="/CharacterList">Karaktärer</a>
-            <a asp-page="/Aventyrsdagbok/Index">Äventyrsdagbok</a>
+            <a asp-page="/FloraFauna">Utforska världen</a>
+            <a asp-page="/SkapaKaraktar">Skapa karaktär</a>
             <a asp-page="/Rules">Regler</a>
-            <a asp-page="/FloraFauna">Världen</a>
+            <a asp-page="/CharacterList">Karaktärsblad</a>
             <a asp-page="/MerchantGenerator">Verktyg</a>
+            <a asp-page="/Aventyrsdagbok/Index">Äventyrsdagbok</a>
             <div class="spacer"></div>
             @if (User.Identity?.IsAuthenticated == true)
             {

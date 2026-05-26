@@ -1,0 +1,51 @@
+/* regler.css — Egenskaper tab layout (vp-tome overlay) */
+
+/* --- Grundegenskaper grid ----------------------------------------------- */
+
+.eg-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 0.75rem 0 0;
+}
+
+@media (max-width: 600px) {
+    .eg-grid { grid-template-columns: 1fr; }
+}
+
+/* vp-tome.css gotcha overrides for grid context */
+.eg-grid .vp-tome__card { margin: 0; }
+.eg-grid p { max-width: none; }
+
+/* --- Subegenskaper content inside each card ------------------------------ */
+
+.eg-card-subs-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tome-muted-2);
+    margin: 0.75rem 0 0.4rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--tome-border);
+}
+
+.eg-card-subs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.eg-sub { line-height: 1.4; }
+
+.eg-sub-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--tome-ink);
+}
+
+.eg-sub-desc {
+    font-size: 0.8rem;
+    color: var(--tome-muted);
+}

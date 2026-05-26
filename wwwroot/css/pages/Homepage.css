@@ -1,121 +1,176 @@
-﻿@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&display=swap");
-html, body {
-    height: 100%;
+/* ============================================================
+   Homepage.css — Viaproxima homepage
+   vp-tome.css handles all tome styling. This file adds only
+   layout and components the homepage needs on top of it.
+   ============================================================ */
+
+/* --- Outer wrapper — constrains width, provides breathing room */
+
+.hp-wrap {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 32px 20px 64px;
 }
 
-body {
-    background-image: url("/Images/BeigeForestBG.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed; /* keeps it stable when scrolling */
+/* ============================================================
+   HERO — two-column grid (paragraphs left, map right)
+   ============================================================ */
+
+.hp-hero {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    gap: 40px;
+    align-items: start;
+    margin-bottom: 8px;
 }
 
-/* Center content */
-.home-hero {
-    padding: 4rem 1.25rem 2rem;
+/* Remove the .vp-tome p max-width cap inside the hero columns */
+.hp-hero p {
+    max-width: none;
+}
+
+/* ============================================================
+   MAP FRAME
+   ============================================================ */
+
+.tome-fig {
+    font-family: 'EB Garamond', serif;
+    margin: 0;
+}
+
+.tome-fig--map {
+    width: 100%;
+}
+
+.tome-frame {
+    position: relative;
+    padding: 10px;
+    background: #f6edde;
+    border: 1px solid #a8935e;
+    outline: 1px solid #a8935e;
+    outline-offset: 4px;
+    box-shadow: inset 0 0 0 1px #efe6cf, 0 2px 8px rgba(60, 40, 20, 0.18);
+}
+
+.tome-frame > img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: sepia(0.18) contrast(1.02);
+}
+
+.tome-pip {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #a8935e;
+    transform: rotate(45deg);
+    z-index: 1;
+}
+
+.tome-pip.tl { top: -3px;    left:  -3px; }
+.tome-pip.tr { top: -3px;    right: -3px; }
+.tome-pip.bl { bottom: -3px; left:  -3px; }
+.tome-pip.br { bottom: -3px; right: -3px; }
+
+.tome-fig figcaption {
+    margin-top: 14px;
+    text-align: center;
+    font-style: italic;
+    font-size: 13.5px;
+    color: #6b5b47;
+    line-height: 1.45;
+}
+
+.tome-cap-mark {
+    color: #a8935e;
+    margin-right: 6px;
+}
+
+/* ============================================================
+   CARDS GRID — four .vp-tome__card elements side by side
+   ============================================================ */
+
+.hp-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+
+/* vp-tome__card normally has margin: 22px 0 8px — reset inside grid */
+.hp-cards .vp-tome__card {
+    margin: 0;
+}
+
+/* vp-tome p has max-width: 64ch — too wide for narrow grid cells */
+.hp-cards .vp-tome__card p {
+    max-width: none;
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+
+.hp-cta {
+    text-align: center;
+    margin-top: 8px;
+}
+
+.hp-cta p {
+    max-width: 60ch;
+    margin: 0 auto 28px;
+}
+
+.hp-cta-buttons {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
 }
 
-.home-content {
-    width: 100%;
-    max-width: 980px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.25rem;
-}
+/* ============================================================
+   HP-BTN-GOLD — self-contained <a> button
+   All properties copied from .btn-gold in karaktarer.css,
+   plus what <a> elements need to render as buttons.
+   ============================================================ */
 
-/* Title: bigger + cleaner */
-.home-title {
-    margin: 0;
-    font-family: "Cinzel", serif;
-    font-weight: 600;
-    font-size: clamp(3.2rem, 6vw, 5.2rem);
-    letter-spacing: 0.08em;
-    line-height: 1;
-    color: rgba(25, 20, 16, 0.9);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-}
-
-/* Bigger beige box */
-.home-card {
-    width: min(860px, 94%); /* bigger than before */
-    padding: 1.6rem 1.8rem;
-    background: rgba(247, 240, 226, 0.90);
-    border: 1px solid rgba(80, 60, 40, 0.25);
-    border-radius: 12px;
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.14), 0 2px 0 rgba(255, 255, 255, 0.35) inset;
-    font-family: "Source Serif 4", serif;
-    font-size: 1.25rem; /* bigger text */
-    line-height: 1.55;
-    color: rgba(25, 20, 16, 0.92);
-}
-
-    .home-card p {
-        margin: 0 0 1rem;
-    }
-
-        .home-card p:last-child {
-            margin-bottom: 0;
-        }
-
-.home-card-small {
-    opacity: 0.9;
-    font-size: 1.12rem;
-}
-
-/* World Map section */
-.world-map-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 1.25rem 4rem;
-    gap: 0;
-}
-
-.world-map-banner {
-    width: min(3440px, 94%);
-    background: #d8c9aa;
-    padding: 0.35rem 0.55rem;
-    font-family: "Cinzel", serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 1.05rem;
-    letter-spacing: 0.06em;
-    color: #2b241c;
-    border: 1px solid #c0ae91;
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    box-sizing: border-box;
+.hp-btn-gold {
+    background: #c9b990;
+    border: 1px solid #a8935e;
+    color: #2e2418;
+    padding: 7px 14px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 3px;
     text-align: center;
+    white-space: nowrap;
+    display: inline-block;
+    text-decoration: none;
 }
 
-.world-map-container {
-    width: min(3440px, 94%);
-    border: 1px solid #c0ae91;
-    border-radius: 0 0 6px 6px;
-    overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+.hp-btn-gold:hover {
+    background: #d4c59e;
 }
 
-.world-map-container img {
-    width: 100%;
-    display: block;
+/* ============================================================
+   RESPONSIVE — medium (max-width: 900px) — 4 → 2×2 cards
+   ============================================================ */
+
+@media (max-width: 900px) {
+    .hp-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Mobile tweaks */
-@media (max-width: 520px) {
-    .home-hero {
-        padding-top: 3rem;
-    }
+/* ============================================================
+   RESPONSIVE — mobile (max-width: 700px)
+   ============================================================ */
 
-    .home-card {
-        width: 96%;
-        padding: 1.2rem 1.2rem;
-        font-size: 1.12rem;
-    }
+@media (max-width: 700px) {
+    .hp-hero  { grid-template-columns: 1fr; }
+    .hp-hero-right { order: -1; }
+    .hp-cards { grid-template-columns: 1fr; }
+    .hp-cta-buttons { flex-direction: column; align-items: stretch; }
+    .hp-btn-gold { display: block; width: 100%; text-align: center; }
+    .tome-frame { outline: none; }
 }

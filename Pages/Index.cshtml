@@ -1,43 +1,131 @@
-﻿@page
+@page
 @model Viaproxima.Web.Pages.IndexModel
 @{
-    ViewData["Title"] = "Viaproxima – Home";
+    ViewData["Title"] = "Viaproxima";
 }
 
-<div class="home-hero">
-    <div class="home-content">
-        <h1 class="home-title">Viaproxima</h1>
+<div class="hp-wrap">
 
-        <div class="home-card">
-            <p>
-                Viaproxima is a hobby world I’ve been building with my friends for years.
-                It started as our tabletop RPG setting and over time it grew into something we kept expanding,
-                session after session.<br />
-                
-            </p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="vp-tome-filigree" viewBox="0 0 70 70">
+    <g fill="none" stroke="#a8935e" stroke-width="1.2" stroke-linecap="round">
+      <path d="M2 2 L2 36 Q2 18 16 16 Q34 14 36 2" />
+      <path d="M10 2 Q14 10 22 10 Q14 14 14 22 Q10 14 2 14" />
+      <circle cx="14" cy="14" r="1.6" fill="#a8935e" />
+      <path d="M22 2 L22 8" />
+      <path d="M2 22 L8 22" />
+      <path d="M28 4 Q30 8 28 12" />
+      <path d="M4 28 Q8 30 12 28" />
+    </g>
+  </symbol>
+</svg>
 
-            <p>
-                This website is my passion project: a place to gather lore, character sheets, and game tools in one spot.
-                <br />It also gives me a fun, real project to sharpen my programming skills while building something we actually use.
-            </p>
+<div class="vp-tome">
 
-            <p class="home-card-small">
-                <br />
-                Explore the world, browse the tools — and welcome to Viaproxima.
-            </p>
+  <svg class="vp-tome__filigree vp-tome__filigree--tl"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--tr"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--bl"><use href="#vp-tome-filigree"/></svg>
+  <svg class="vp-tome__filigree vp-tome__filigree--br"><use href="#vp-tome-filigree"/></svg>
+
+  <header class="vp-tome__head">
+    <div class="vp-tome__eyebrow">— Viaproxima · Rollspelet —</div>
+    <h1 class="vp-tome__title">Viaproxima</h1>
+    <div class="vp-tome__tagline">
+      Inga alver. Inga smidda svärd. Inga trygga kungariken.
+    </div>
+    <div class="vp-tome__divider">
+      <span></span><span class="vp-tome__divider-glyph">❖</span><span></span>
+    </div>
+  </header>
+
+  <div class="hp-hero">
+    <div class="hp-hero-left">
+      <p>Viaproxima är ett stenåldersfantasyrollspel om överlevnad, märkliga folk och magi från
+      bortomvärlden. I en rå värld utan järn, klassiska fantasyarter eller kungariken av stål formas
+      livet av trä, ben, hud, sten, kristall, uråldriga riter och hårda lojaliteter.</p>
+      <p>Här vandrar fjäderklädda opportunister, pälsbeklädda familjekrigare, kräftfolk, naturbundna
+      tänkare och varelser födda ur glömda föremål. Över allt vilar Advenire, ett tillstånd bortom tid
+      och rum där känslor, gudar, ritualer och själar rör vid världen.</p>
+    </div>
+    <div class="hp-hero-right">
+      <figure class="tome-fig tome-fig--map">
+        <div class="tome-frame">
+          <span class="tome-pip tl"></span><span class="tome-pip tr"></span>
+          <span class="tome-pip bl"></span><span class="tome-pip br"></span>
+          <img src="/Images/Map/WorldMap.webp" alt="Viaproximas världskarta">
         </div>
+        <figcaption>
+          <span class="tome-cap-mark">❦</span>
+          <em>En värld av svältande skogar, stormande hav, uråldriga obelisker,
+          krigande folk och mysterier ingen återvänt från.</em>
+        </figcaption>
+      </figure>
     </div>
-</div>
+  </div>
 
-<div class="world-map-section">
-    <div class="world-map-banner">World Map for Viaproxima</div>
-    <div class="world-map-container">
-        <img src="/Images/Map/WorldMap.webp" alt="World Map for Viaproxima" />
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Vad gör Viaproxima unikt?</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <div class="hp-cards">
+    <div class="vp-tome__card">
+      <div class="vp-tome__card-title">
+        <span class="vp-tome__card-title-glyph">❖</span>
+        EN VÄRLD FÖRE JÄRNET
+      </div>
+      <p>Inga stålsvärd, borgar eller klassiska fantasykungariken. Verktyg, vapen och samhällen byggs
+      av sten, trä, ben, hud, kristall och list.</p>
     </div>
+    <div class="vp-tome__card">
+      <div class="vp-tome__card-title">
+        <span class="vp-tome__card-title-glyph">❖</span>
+        EGNA FOLKSLAG
+      </div>
+      <p>Spela som fågelfolk, kräftvarelser, naturbundna humanoider, pälsbeklädda krigare, missformade
+      överlevare eller varelser födda ur glömda föremål.</p>
+    </div>
+    <div class="vp-tome__card">
+      <div class="vp-tome__card-title">
+        <span class="vp-tome__card-title-glyph">❖</span>
+        MAGI FRÅN ADVENIRE
+      </div>
+      <p>Magi kommer inte från trollformelböcker. Den nås genom känslor, ritualer, ljud och gudomliga
+      förhandlingar med krafter bortom världen.</p>
+    </div>
+    <div class="vp-tome__card">
+      <div class="vp-tome__card-title">
+        <span class="vp-tome__card-title-glyph">❖</span>
+        BYGGT FÖR KONSEKVENSER
+      </div>
+      <p>Äventyr handlar inte bara om strid. Det handlar om överlevnad, byteshandel, lojaliteter,
+      riskabla beslut och konsekvenser som får världen att svara tillbaka.</p>
+    </div>
+  </div>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Börja här</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <div class="hp-cta">
+    <p>Ny i Viaproxima? Börja med att utforska världen, välj sedan ett folkslag och skapa en karaktär.
+    När ni är redo kan ni öppna reglerna och börja spela.</p>
+    <div class="hp-cta-buttons">
+      <a href="/FloraFauna" class="hp-btn-gold">Utforska världen</a>
+      <a href="/Rules"      class="hp-btn-gold">Öppna reglerna</a>
+      <a href="/CharacterList" class="hp-btn-gold">Skapa karaktär</a>
+    </div>
+  </div>
+
+</div>
 </div>
 
 @section Styles {
     <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp-tome.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/Homepage.css" asp-append-version="true" />
 }

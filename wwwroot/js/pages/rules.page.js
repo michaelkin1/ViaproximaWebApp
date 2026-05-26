@@ -4,6 +4,7 @@
     const cardTitle = document.getElementById('cardTitle');
 
     const titleMap = {
+        egenskaper:     'Egenskaper',
         spelarbok:      'Rules',
         poangkostnader: 'Poångkostnader',
         adveniriska:    'De fyra Adveniriska lärdomarna',

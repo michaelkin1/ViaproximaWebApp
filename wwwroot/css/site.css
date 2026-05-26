@@ -200,3 +200,11 @@ body {
   outline: 2px solid rgba(107,91,71,0.85);
   box-shadow: 0 0 0 3px rgba(107,91,71,0.15);
 }
+
+/* Nav padding reduced for 7-link bar with longer labels */
+@media (max-width: 1200px) {
+    .top-nav a, .top-nav button {
+        padding: 7px 12px;
+        font-size: 22px;
+    }
+}
