@@ -11,12 +11,16 @@ dotnet test
 ```
 On Windows, do not pipe `dotnet` through `2>&1`; it can hang.
 
+## Design System
+Read `DESIGN.md` before touching any `.css` or `.cshtml` file.
+
 ## Working Rules
 - Reuse existing patterns. Avoid broad rewrites, unnecessary renames or new abstractions.
 - Inspect relevant files before non-trivial edits and propose a file-by-file plan.
 - Keep business logic in C#. JS is UI glue and must not duplicate backend rules.
 - All API calls from JS go through `VP.shared.requestJson()` so CSRF and auth behavior stay intact.
 - After edits, run build/tests when practical and summarize changed files + why.
+- When a task introduces a new CSS component, layout pattern, or design token: append it to the relevant section of `DESIGN.md` before marking the task done. When a task changes page structure, file paths, or active partials: update the relevant table in `CLAUDE.md`. Never let these files fall behind the live code.
 
 ## Security / Auth
 Public-facing app. Every write endpoint must use `.RequireAuthorization("CanWrite")` unless there is a very explicit existing exception.
@@ -158,7 +162,7 @@ Images:     DELETE /api/images/{id}
 Rules/icons: GET /api/icons/catalog, /api/pets/icons, /api/rules/inventory, /api/rules/hp
 ```
 
-## Pages / Styling
+## Pages / Styling (see DESIGN.md)
 Layout is `_Layout.cshtml`; navbar lives there.
 
 Important pages:
@@ -176,192 +180,17 @@ Styling rules:
 - Vanilla CSS only. No Tailwind, SCSS or new design system.
 
 ## Rules Page
-Files: `Pages/Rules.cshtml`, `wwwroot/js/pages/rules.page.js`, `wwwroot/css/pages/floraFauna.css`.
+Files: `Pages/Rules.cshtml`, `wwwroot/js/pages/rules.page.js`, `wwwroot/css/pages/rules-sidebar.css`.
 
-Rules:
-- `Rules.cshtml` should stay thin: tab bar, wrapper divs and partial calls.
-- Tabs use `.tab-btn` with `data-tab`; JS finds all `.tab-btn` across both tab rows.
-- Add new tabs by adding button + panel + partial + `titleMap` entry in `rules.page.js`.
-- Shared content classes live in `floraFauna.css`: `.sh-panel`, `.sh-section-title`, `.sh-prose`, `.sh-table`, `.sh-list`, `.sh-wide-table-wrap`, `.sh-formula`, `.sh-quote`.
+Navigation is sidebar-based (`vp-sidenav`), not tab-based. Each panel maps to a `data-rules-key` on its sidebar item.
 
-## vp-tome — Designsystem
+- `Rules.cshtml` stays thin: dot-rule, folio wrap, sidebar nav, panels, and TOC.
+- Add new panels: sidebar item + `#panel-{key}` div + partial + `titleMap` entry in `rules.page.js`.
+- Accordion panels (Kristallsejdare, Lyådskapare) use `.vp-sidenav__children`; toggle handled by `handleAccordionToggle()` in `rules.page.js`.
+- Shared old-style classes (`.sh-panel`, `.sh-table`, etc.) live in `floraFauna.css` — still used by `FloraFauna.cshtml`, not by Rules.
 
-Det kanoniska sättet att bygga rules-, lore- och referenssidor. Wrap innehåll i `<div class="vp-tome">` — allt annat följer av CSS. Läs aldrig från gamla mallar; läs referensfilerna direkt.
-
-**Referensimplementationer (läs dessa, inte mallkod):**
-- `Pages/Shared/_RulesLivStrid.cshtml` — kanonisk baseline: full komponentuppsättning, stone, threshold, lista, tabell, kort
-- `Pages/Shared/_RulesOrakel.cshtml` — kompakt struktur: stone med flera rader, lista utan body-kolumn
-- `Pages/Index.cshtml` — hero-grid + kortgrid + CTA; visar hur sidspecifik layout läggs ovanpå vp-tome
-
-### CSS-filer
-
-Laddas via `@section Styles` per sida — aldrig i `_Layout.cshtml`.
-
-| Fil | Innehåll |
-|---|---|
-| `wwwroot/css/vp-tome.css` | Basstil: pergament, typografi, filigree, drop-cap, section, stone, threshold, card, list |
-| `wwwroot/css/vp-tome-lore.css` | `vp-tome__stat-table` + färgade pergamenttoner per lore. Ladda när du använder tabeller eller lore-färger. |
-| `wwwroot/css/pages/adveniriska.css` | Adveniriska-specifika subtab-stilar och overrides |
-
-### Obligatoriska element
-
-Varje fristående tome-sida (ej subtab/partial) behöver:
-1. **SVG sprite + filigree-hörn** — definiera spriten inline en gång, lägg sedan fyra `vp-tome__filigree`-element inuti `.vp-tome`
-2. **Head-block** — `vp-tome__head` med eyebrow, title, tagline och divider
-3. **Drop-cap på första paragrafen** — `<span class="vp-tome__dropcap">X</span>` som första barn i första `<p>`. Stor rödbrun dekorativ bokstav i Cinzel Decorative. Aldrig utelämna på sidor med löptext.
-
-Subtabs/partials (t.ex. `_RulesOrakel.cshtml`) skippar filigree men behåller head + drop-cap.
-
-### Skelett
-
-```html
-@section Styles {
-    <link rel="stylesheet" href="~/css/vp.theme.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/vp-tome.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/pages/<sidan>.css" asp-append-version="true" />
-}
-
-<div class="[sida]-wrap">
-
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="vp-tome-filigree" viewBox="0 0 70 70">
-    <g fill="none" stroke="#a8935e" stroke-width="1.2" stroke-linecap="round">
-      <path d="M2 2 L2 36 Q2 18 16 16 Q34 14 36 2" />
-      <path d="M10 2 Q14 10 22 10 Q14 14 14 22 Q10 14 2 14" />
-      <circle cx="14" cy="14" r="1.6" fill="#a8935e" />
-      <path d="M22 2 L22 8" /><path d="M2 22 L8 22" />
-      <path d="M28 4 Q30 8 28 12" /><path d="M4 28 Q8 30 12 28" />
-    </g>
-  </symbol>
-</svg>
-
-<div class="vp-tome">
-  <svg class="vp-tome__filigree vp-tome__filigree--tl"><use href="#vp-tome-filigree"/></svg>
-  <svg class="vp-tome__filigree vp-tome__filigree--tr"><use href="#vp-tome-filigree"/></svg>
-  <svg class="vp-tome__filigree vp-tome__filigree--bl"><use href="#vp-tome-filigree"/></svg>
-  <svg class="vp-tome__filigree vp-tome__filigree--br"><use href="#vp-tome-filigree"/></svg>
-
-  <header class="vp-tome__head">
-    <div class="vp-tome__eyebrow">— Viaproxima · [Undertitel] —</div>
-    <h1 class="vp-tome__title">[Titel]</h1>
-    <div class="vp-tome__tagline">[Kort beskrivning]</div>
-    <div class="vp-tome__divider">
-      <span></span><span class="vp-tome__divider-glyph">❖</span><span></span>
-    </div>
-  </header>
-
-  <p><span class="vp-tome__dropcap">X</span>Första paragrafen börjar här...</p>
-
-  <div class="vp-tome__section">
-    <span class="vp-tome__section-mark">❖</span>
-    <span class="vp-tome__section-label">Avsnittsnamn</span>
-    <span class="vp-tome__section-mark">❖</span>
-  </div>
-
-  <!-- mer innehåll -->
-</div>
-</div>
-```
-
-### Komponentkarta
-
-| Innehållstyp | Komponent | Nyckelklasser |
-|---|---|---|
-| Sidtitel | Head-block | `vp-tome__head`, `__eyebrow`, `__title`, `__tagline`, `__divider` + `__divider-glyph` (❖) |
-| Delad titel (Ord & Ord) | Split-variant | `vp-tome__title--split` > spans + `vp-tome__title-amp` |
-| Stor första bokstav | Drop-cap | `<span class="vp-tome__dropcap">X</span>` som första barn i första `<p>` |
-| Avsnittsdelare | Diamond rule | `vp-tome__section` > `__section-mark` (❖) + `__section-label` |
-| Formel / axiom | Stone callout | `vp-tome__stone` > `__stone-inner` > en eller flera `__stone-text` |
-| Rankad skala | Threshold ladder | `vp-tome__threshold` > `__threshold-row` > `__threshold-bar` + `__threshold-fill` (width% + tone-färg) |
-| Namngivna effekter | Diamond-lista | `vp-tome__list` > `__list-row` > `__list-marker-col` + `__list-name` [+ `__list-body`] |
-| Datatabell | Stat-tabell | `vp-tome__stat-table` — kräver `vp-tome-lore.css` |
-| Exempel / aside | Kort | `vp-tome__card` > `__card-title` (❦ som glyph) [+ `vp-tome__pair-table`] |
-| Löptext | Paragraf | vanlig `<p>` inuti `.vp-tome` |
-| Dekorativa hörn | Filigree | SVG sprite + fyra `vp-tome__filigree` (TL/TR/BL/BR) |
-| Inramad bild | Image frame | `tome-fig`, `tome-frame`, `tome-pip` ×4, `tome-cap-mark` (❦) — CSS i sidans egna fil, se `Homepage.css` |
-
-### Glyfer
-
-| Glyf | Var | Hur |
-|---|---|---|
-| ❖ | Section-markeringar, divider-glyph i head | `vp-tome__section-mark`, `vp-tome__divider-glyph` |
-| ❦ | Kortrubriker, bildtexter | `vp-tome__card-title-glyph`, `tome-cap-mark` |
-| ◆ / diamant | Tone-markers i listor och threshold | `<span class="vp-tome__marker" style="background:var(--tone-N)">` |
-
-Använd alltid dessa befintliga glyfklasser — hårdkoda inte symboler utan wrapper.
-
-### Tonfärger (allvarsgrad — inte lore-färger)
-
-`--tone-1` strå → `--tone-2` bärnsten → `--tone-3` rost → `--tone-4` blod → `--tone-5` obsidian
-
-Används för skadegrader, kostnadstiering, faronivåer. Blanda inte med lore-nyanserna.
-
-### CSS-gotchas i anpassade grids
-
-| Standard i vp-tome.css | Override när… | Fix |
-|---|---|---|
-| `.vp-tome p { max-width: 64ch }` | `<p>` sitter i en smal gridkolumn | `.ditt-grid p { max-width: none; }` |
-| `.vp-tome__card { margin: 22px 0 8px }` | kort är grid-items | `.ditt-grid .vp-tome__card { margin: 0; }` |
-
-### Lore-varianten (Kristallsejdare)
-
-```html
-<div class="vp-tome lore-[NYCKEL]">
-  <!-- lore-rod / lore-gron / lore-gul / lore-lila / lore-orange / lore-bla -->
-  <span class="vp-lore-symbol" aria-hidden="true"></span>
-  <h1 class="vp-tome__title">Läran om [NAMN]</h1>
-  ...
-</div>
-```
-
-- `vp-lore-symbol` — alltid som ikonplaceholder (52×52px cirkel, avsedd för AI-genererad SVG). Hårdkoda aldrig färgcirklar utan denna klass.
-- `.vp-lore-frame` som wrapper är **INAKTIVERAD** (`background:none` i `adveniriska.css`). Använd den inte.
-- Lore-färgton appliceras enbart på `.vp-tome`-diven.
-
-### Tab-struktur — Adveniriska lärdomarna
-
-```
-Rules-sidan
-  → egenskaper
-  → spelarbok
-  → poangkostnader
-  → adveniriska (De fyra Adveniriska lärdomarna)
-      → kristallsejdare  →  rod / gron / gul / lila / orange / bla
-      → shamaner
-      → lyadskapare (placeholder)
-      → orakel (placeholder)
-  → livstrid
-```
-
-Gamla tab-nycklar `laror`, `shamaner`, `shaman20`, `kristallsejdare` på huvudnivå finns inte längre. Kristallsejdare har ingen separat "Översikt"-panel — lore-subtab-raden visas direkt med Röd Vrede förvald.
-
-Lägg till nya tabs: button + panel + partial + `titleMap`-rad i `rules.page.js`.
-
-### Innehållskällor (magisystemet)
-- Kristallsejdarläror: `NewStyle/viaproxima_kristallsejdare_lores_5_nivaer_strukturerad.md`
-- Shamanregler: `NewStyle/shamaner_blackjack_regler.md` + `NewStyle/shaman_keywords_styrkenivaer.md`
-- Lore-labels: "Läran om Röd Vrede", "Läran om Grön Skam", "Läran om Gul Lycka", "Läran om Lila Stolthet", "Läran om Orange Kärlek", "Läran om Blå Sorg"
-
-### Migrerade sidor
-- `Pages/Index.cshtml` — klar
-- `Pages/Shared/_RulesLivStrid.cshtml` — klar (kanonisk referens)
-
-### Framtida migrering
-- `Pages/FloraFauna.cshtml` och dess partials — använd `vp-tome` utan lore-klass
-
-Säg "migrera [SIDNAMN] till tome-stilen" för att instruera Claude Code.
-
-### Partial Views (Adveniriska-systemet)
-| Partial | Innehåll |
-|---|---|
-| `_RulesAdveniriska.cshtml` | Subtab-skelett + lore-bar, subtab-JS |
-| `_LoreRod.cshtml` | Röd Vrede — eld och rök |
-| `_LoreGron.cshtml` | Grön Skam — växter och djur |
-| `_LoreGul.cshtml` | Gul Lycka — ljus och helande |
-| `_LoreLila.cshtml` | Lila Stolthet — blixt och nekromanti |
-| `_LoreOrange.cshtml` | Orange Kärlek — sten och sand |
-| `_LoreBla.cshtml` | Blå Sorg — vatten och vind |
-| `_RulesShamanerNy.cshtml` | Shamanregler (blackjack-system) |
+## vp-tome
+See `DESIGN.md` → *vp-tome content component*.
 
 ## Merchant Generator / Prompt Pipeline
 `MerchantGenerator` uses `IPromptAssembler` singleton. Active pipeline:

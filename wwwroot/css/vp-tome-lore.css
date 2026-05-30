@@ -291,3 +291,8 @@
   color: var(--tome-ink, #2b241c);
   max-width: 64ch;
 }
+
+/* Lore hero image — doubled height (200px → 400px) */
+.vp-tome[class*="lore-"] > img:not(.vp-lore-symbol) {
+    max-height: 400px !important;
+}

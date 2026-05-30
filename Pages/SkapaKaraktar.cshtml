@@ -7,13 +7,63 @@
     <link rel="stylesheet" href="~/css/vp.base.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/characterSheet.layout.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pages/floraFauna.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp-tome.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vp-tome-lore.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pages/rules-sidebar.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 }
 
 <div class="page">
     <div class="sheet sheet--list">
-        <section class="sheet-column" style="text-align:center; padding: 2rem;">
-            <h1 style="font-family:'Cinzel',serif;">Skapa karaktär</h1>
-            <p class="sh-prose">Innehåll kommer snart — guide för att bygga din karaktär.</p>
-        </section>
+        <header class="sheet-header">
+            <div>
+                <div class="label">Viaproxima</div>
+                <div class="value" id="cardTitle">Egenskaper</div>
+            </div>
+        </header>
+
+        <div class="vp-dot-rule">
+            <span class="vp-dot-rule__line"></span>
+            <span class="vp-dot-rule__glyph">❖ ❖ ❖</span>
+            <span class="vp-dot-rule__line"></span>
+        </div>
+
+        <div class="vp-folio">
+            <span class="vp-folio__tick--tr"></span>
+            <span class="vp-folio__tick--bl"></span>
+            <div class="vp-folio__grid">
+
+                <aside class="vp-sidenav">
+                    <div class="vp-sidenav__header">
+                        <div class="vp-sidenav__eyebrow">— viaproxima —</div>
+                        <div class="vp-sidenav__title">Skapa karaktär</div>
+                    </div>
+                    <div class="vp-sidenav__group-wrap">
+                        <span class="vp-sidenav__group">GRUNDER</span>
+                        <a class="vp-sidenav__item" data-rules-key="egenskaper">Egenskaper</a>
+                        <a class="vp-sidenav__item" data-rules-key="poangkostnader">Poängkostnader</a>
+                    </div>
+                </aside>
+
+                <main class="rules-content">
+                    <div id="panel-egenskaper">
+                        @await Html.PartialAsync("_RulesEgenskaper")
+                    </div>
+                    <div id="panel-poangkostnader" style="display:none">
+                        @await Html.PartialAsync("_RulesPoangkostnader")
+                    </div>
+                </main>
+
+                <aside class="vp-toc is-hidden" id="rules-toc">
+                    <div class="vp-toc__label">På denna sida</div>
+                    <ul class="vp-toc__list"></ul>
+                </aside>
+
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/pages/skapaKaraktar.page.js" asp-append-version="true"></script>
+}

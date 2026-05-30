@@ -51,3 +51,8 @@ body {
         pointer-events: none;
         z-index: -1;
     }
+
+/* Forest background — increased visibility (+20% opacity) */
+body::before {
+    background: rgba(233, 227, 215, 0.55);
+}
