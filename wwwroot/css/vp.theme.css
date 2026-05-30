@@ -56,3 +56,23 @@ body {
 body::before {
     background: rgba(233, 227, 215, 0.55);
 }
+
+/* New tokens — grimoire chrome family */
+:root {
+    --leather-1:    #54401f;
+    --leather-2:    #3e2d14;
+    --leather-3:    #322310;
+    --leather-edge: #6b4e2a;
+    --cream:        #fbedc8;
+    --cream-soft:   #ede0bd;
+    --cream-mid:    #c9b990;
+    --gold:         #c9b990;
+    --gold-edge:    #a8935e;
+}
+
+/* Grimoire reskin — dark warm tint over forest BG */
+body::before {
+    background: linear-gradient(to bottom,
+        rgba(40,28,16,0.42) 0%,
+        rgba(40,28,16,0.55) 100%);
+}

@@ -38,6 +38,9 @@
         subPanels.forEach(function (p) {
             p.style.display = (p.id === 'lyadskapare-' + subKey) ? '' : 'none';
         });
+
+        var toc = document.getElementById('rules-toc');
+        if (toc) toc.classList.add('is-hidden');
     }
 
     function activate(key) {
@@ -90,7 +93,7 @@
 
         var tocList = toc.querySelector('.vp-toc__list');
         var panel = document.getElementById('panel-' + panelKey);
-        var headings = panel ? panel.querySelectorAll('h2[id], h3[id]') : [];
+        var headings = panel ? panel.querySelectorAll('h2[id], h3[id], div.vp-tome__section[id]') : [];
 
         if (headings.length < 2) {
             toc.classList.add('is-hidden');
@@ -102,9 +105,12 @@
 
         headings.forEach(function (h) {
             var a = document.createElement('a');
+            var isSection = h.classList.contains('vp-tome__section');
             a.className = 'vp-toc__item' + (h.tagName === 'H3' ? ' vp-toc__item--h3' : '');
             a.href = '#' + h.id;
-            a.textContent = h.textContent;
+            a.textContent = isSection
+                ? (h.querySelector('.vp-tome__section-label') || h).textContent.trim()
+                : h.textContent.trim();
             if (tocList) tocList.appendChild(a);
         });
 

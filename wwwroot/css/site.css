@@ -208,3 +208,30 @@ body {
         font-size: 22px;
     }
 }
+
+/* Grimoire reskin — dark leather navbar */
+.top-nav {
+    background: #3e2d14;
+    border-bottom-color: #6b4e2a;
+}
+.top-nav a,
+.top-nav button {
+    color: #ede0bd;
+    border-right-color: rgba(107,78,42,0.5);
+}
+.top-nav a:first-child {
+    border-left-color: rgba(107,78,42,0.5);
+}
+.top-nav a:hover,
+.top-nav button:hover {
+    background: #54401f;
+    color: #fbedc8;
+}
+.top-nav a.active {
+    background: #54401f;
+    color: #fbedc8;
+}
+.top-nav .spacer ~ a,
+.top-nav .spacer ~ button {
+    border-left-color: rgba(107,78,42,0.5);
+}

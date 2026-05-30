@@ -174,3 +174,57 @@
     padding-left: 24px;
     padding-right: 24px;
 }
+
+/* vp-toc — dark leather skin matching vp-sidenav chrome */
+.vp-toc {
+    background: radial-gradient(120% 100% at 20% 0%, #4a3820 0%, #3a2a10 60%, #2d2008 100%);
+    border-color: #6b4e2a;
+    box-shadow: inset 0 1px 0 rgba(232,217,184,0.18), inset 0 0 40px rgba(0,0,0,0.25),
+                0 8px 24px -10px rgba(0,0,0,0.55);
+}
+.vp-toc__label {
+    color: #fbedc8;
+    border-bottom-color: rgba(168,147,94,0.35);
+}
+.vp-toc__item { color: #ede0bd; }
+.vp-toc__item::before { background: rgba(168,147,94,0.4); }
+.vp-toc__item:hover { color: #fbedc8; }
+.vp-toc__item:hover::before { background: #c9b990; }
+.vp-toc__item.is-active { color: #f0d999; font-style: italic; font-weight: 600; }
+.vp-toc__item.is-active::before { background: #c9b990; width: 2px; }
+
+/* ============================================================
+   Grimoire reskin — container unlock + folio dark leather
+   ============================================================ */
+
+/* Scoped container max-width unlock — Rules + SkapaKaraktär only */
+.container:has(.vp-folio) {
+    max-width: none;
+}
+
+/* Restore tome column width + dark leather frame */
+.vp-folio {
+    width: min(1656px, 100%);
+    max-width: 1656px;
+    background: radial-gradient(140% 120% at 20% 0%,
+        #4e3820 0%, #3d2a12 55%, #311f0b 100%);
+    border-color: #6b4e2a;
+    box-shadow:
+        inset 0 1px 0 rgba(232,217,184,0.18),
+        inset 0 0 60px rgba(0,0,0,0.28),
+        0 0 0 1px rgba(168,147,94,0.45),
+        0 14px 40px -22px rgba(0,0,0,0.7);
+}
+
+/* Corner ticks brighter against dark folio */
+.vp-folio::before, .vp-folio::after,
+.vp-folio > .vp-folio__tick--tr,
+.vp-folio > .vp-folio__tick--bl {
+    border-color: rgba(168,147,94,0.75);
+}
+
+/* Folio background — warm parchment-leather midtone (lighter than navbar, darker than vp-tome) */
+.vp-folio {
+    background: radial-gradient(130% 110% at 35% 30%,
+        #6b5535 0%, #5c4828 50%, #4a3a1a 100%);
+}
