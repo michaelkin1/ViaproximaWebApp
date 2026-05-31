@@ -235,3 +235,10 @@ body {
 .top-nav .spacer ~ button {
     border-left-color: rgba(107,78,42,0.5);
 }
+
+/* Sticky navbar */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+}

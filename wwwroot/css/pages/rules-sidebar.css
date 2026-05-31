@@ -228,3 +228,22 @@
     background: radial-gradient(130% 110% at 35% 30%,
         #6b5535 0%, #5c4828 50%, #4a3a1a 100%);
 }
+
+/* ============================================================
+   Sticky sidebars — FAS 2
+   ============================================================ */
+
+/* vp-toc — max-height clamp so long panels don't overflow viewport */
+.vp-toc {
+    max-height: calc(100vh - 90px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+.vp-toc::-webkit-scrollbar { width: 4px; }
+.vp-toc::-webkit-scrollbar-thumb { background: #6b4e2a; border-radius: 2px; }
+
+/* Fix sticky: .page has overflow-x:auto which creates a scroll container,
+   preventing position:sticky children from referencing the viewport. */
+.page:has(.vp-folio) {
+    overflow: visible;
+}
