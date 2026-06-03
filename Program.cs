@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Viaproxima.Web.Data;
 using Viaproxima.Web.Models;
@@ -144,6 +145,11 @@ public class Program
                 guildInspirationTags, worldContext, promptTemplate, guildMechanicSignatures, raceReminders);
         });
 
+        builder.WebHost.ConfigureKestrel(o =>
+        {
+            o.Limits.MaxRequestBodySize = 5_242_880; // 5 MB
+        });
+
         var app = builder.Build();
 
         using (var scope = app.Services.CreateScope())
@@ -165,6 +171,20 @@ public class Program
         }
 
         app.UseStaticFiles();
+        app.Use(async (ctx, next) =>
+        {
+            ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+            ctx.Response.Headers["X-Frame-Options"] = "DENY";
+            ctx.Response.Headers["Referrer-Policy"] = "strict-origin-when-cross-origin";
+            ctx.Response.Headers["Content-Security-Policy"] =
+                "default-src 'self'; " +
+                "script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; " +
+                "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+                "font-src 'self' https://fonts.gstatic.com; " +
+                "img-src 'self' data: blob:; " +
+                "connect-src 'self';";
+            await next();
+        });
         app.UseRouting();
         app.UseRateLimiter();
         app.UseForwardedHeaders(new ForwardedHeadersOptions
@@ -714,7 +734,8 @@ public class Program
             await file.CopyToAsync(stream);
 
             return Results.Ok(new { url = $"/portraits/{id}{ext}" });
-        }).RequireAuthorization("CanWrite");
+        }).RequireAuthorization("CanWrite")
+          .WithMetadata(new RequestSizeLimitAttribute(5_242_880));
 
         // =========================
         // Adventure Log API
@@ -855,10 +876,16 @@ public class Program
                         imagePath.StartsWith("http"))
                         continue;
 
-                    var fullPath = Path.Combine(
-                        env.WebRootPath,
-                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
-                    );
+                    var webRoot = Path.GetFullPath(env.WebRootPath);
+                    if (!webRoot.EndsWith(Path.DirectorySeparatorChar))
+                        webRoot += Path.DirectorySeparatorChar;
+
+                    var fullPath = Path.GetFullPath(Path.Combine(
+                        webRoot,
+                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)));
+
+                    if (!fullPath.StartsWith(webRoot, StringComparison.OrdinalIgnoreCase))
+                        continue;
 
                     if (File.Exists(fullPath)) File.Delete(fullPath);
                 }
@@ -887,7 +914,10 @@ public class Program
             var folder = Path.Combine(env.WebRootPath, "AdventureImages", ch.AdventureId.ToString());
             Directory.CreateDirectory(folder);
 
-            var savedName = $"{Guid.NewGuid():N}_{file.FileName}";
+            var safeFileName = Regex.Replace(
+                Path.GetFileNameWithoutExtension(file.FileName),
+                @"[^\w\-]", "_");
+            var savedName = $"{Guid.NewGuid():N}_{safeFileName}{ext}";
             var dest = Path.Combine(folder, savedName);
             await using var stream = File.Create(dest);
             await file.CopyToAsync(stream);
@@ -904,7 +934,8 @@ public class Program
             await db.SaveChangesAsync();
 
             return Results.Ok(new { id = imageLink.Id, imagePath, fileName = file.FileName });
-        }).RequireAuthorization("CanWrite").DisableAntiforgery();
+        }).RequireAuthorization("CanWrite").DisableAntiforgery()
+          .WithMetadata(new RequestSizeLimitAttribute(5_242_880));
 
         app.MapDelete("/api/images/{id:int}", async (ApplicationDbContext db, HttpContext context, IWebHostEnvironment env, int id) =>
         {
@@ -927,10 +958,17 @@ public class Program
                     !imagePath.StartsWith("blob:") &&
                     !imagePath.StartsWith("http"))
                 {
-                    var fullPath = Path.Combine(
-                        env.WebRootPath,
-                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)
-                    );
+                    var webRoot = Path.GetFullPath(env.WebRootPath);
+                    if (!webRoot.EndsWith(Path.DirectorySeparatorChar))
+                        webRoot += Path.DirectorySeparatorChar;
+
+                    var fullPath = Path.GetFullPath(Path.Combine(
+                        webRoot,
+                        imagePath.TrimStart('/').Replace('/', Path.DirectorySeparatorChar)));
+
+                    if (!fullPath.StartsWith(webRoot, StringComparison.OrdinalIgnoreCase))
+                        throw new InvalidOperationException($"Path escape attempt: {imagePath}");
+
                     if (File.Exists(fullPath)) File.Delete(fullPath);
                 }
             }

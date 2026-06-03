@@ -1,6 +1,6 @@
 // pages/characterSheet.skills.js
 (() => {
-    let characterId = new URL(window.location.href).searchParams.get("id");
+    let pendingIdCounter = 0;
 
     // ---- DOM refs ----
     const lardomarRows     = document.getElementById("lardomarRows");
@@ -60,8 +60,9 @@
         rowDescDialog.close();
         const { item, endpoint } = descCtx;
         descCtx = null;
-        await api("PUT", `${endpoint}/${item.id}`, toDto(item))
-            .catch(err => console.error("PUT description failed", err));
+        if (item.id > 0)
+            await api("PUT", `${endpoint}/${item.id}`, toDto(item))
+                .catch(err => console.error("PUT description failed", err));
     });
 
     rowDescCancelBtn.addEventListener("click", () => {
@@ -80,9 +81,11 @@
         nameInput.placeholder = "Namn...";
         nameInput.value = item.name;
         nameInput.addEventListener("input", () => { item.name = nameInput.value; });
-        nameInput.addEventListener("change", () =>
-            api("PUT", `${endpoint}/${item.id}`, toDto(item))
-                .catch(err => console.error("PUT name failed", err)));
+        nameInput.addEventListener("change", () => {
+            if (item.id > 0)
+                api("PUT", `${endpoint}/${item.id}`, toDto(item))
+                    .catch(err => console.error("PUT name failed", err));
+        });
 
         const levelInput = document.createElement("input");
         levelInput.type = "number";
@@ -90,9 +93,11 @@
         levelInput.min = "0";
         levelInput.value = item.level;
         levelInput.addEventListener("input", () => { item.level = Number(levelInput.value) || 0; });
-        levelInput.addEventListener("change", () =>
-            api("PUT", `${endpoint}/${item.id}`, toDto(item))
-                .catch(err => console.error("PUT level failed", err)));
+        levelInput.addEventListener("change", () => {
+            if (item.id > 0)
+                api("PUT", `${endpoint}/${item.id}`, toDto(item))
+                    .catch(err => console.error("PUT level failed", err));
+        });
 
         const descBtn = document.createElement("button");
         descBtn.type = "button";
@@ -107,8 +112,18 @@
         removeBtn.textContent = "×";
         removeBtn.title = "Ta bort";
         removeBtn.addEventListener("click", async () => {
-            await api("DELETE", `${endpoint}/${item.id}`)
-                .catch(err => console.error("DELETE failed", err));
+            if (item.id < 0) {
+                if (VP.sheet.state) {
+                    const arr = endpoint === "/api/lardomar"
+                        ? VP.sheet.state.pendingLardomar
+                        : VP.sheet.state.pendingEvolutioner;
+                    const idx = arr.findIndex(x => x.id === item.id);
+                    if (idx >= 0) arr.splice(idx, 1);
+                }
+            } else {
+                await api("DELETE", `${endpoint}/${item.id}`)
+                    .catch(err => console.error("DELETE failed", err));
+            }
             container.removeChild(row);
         });
 
@@ -125,8 +140,20 @@
 
     // ---- Add buttons ----
     addLardomBtn.addEventListener("click", async () => {
+        const charId = VP.sheet.getCharacterId?.();
         const item = { name: "", level: 1, description: "" };
-        const result = await api("POST", `/api/characters/${characterId}/lardomar`, toDto(item))
+
+        if (!charId) {
+            item.id = --pendingIdCounter;
+            if (VP.sheet.state) {
+                VP.sheet.state.pendingLardomar.push(item);
+                VP.sheet.state.isDirty = true;
+            }
+            lardomarRows.appendChild(buildRow(item, "/api/lardomar", lardomarRows));
+            return;
+        }
+
+        const result = await api("POST", `/api/characters/${charId}/lardomar`, toDto(item))
             .catch(err => console.error("POST lärdom failed", err));
         if (!result) return;
         item.id = result.id;
@@ -134,8 +161,20 @@
     });
 
     addEvolutionBtn.addEventListener("click", async () => {
+        const charId = VP.sheet.getCharacterId?.();
         const item = { name: "", level: 1, description: "" };
-        const result = await api("POST", `/api/characters/${characterId}/evolutioner`, toDto(item))
+
+        if (!charId) {
+            item.id = --pendingIdCounter;
+            if (VP.sheet.state) {
+                VP.sheet.state.pendingEvolutioner.push(item);
+                VP.sheet.state.isDirty = true;
+            }
+            evolutionerRows.appendChild(buildRow(item, "/api/evolutioner", evolutionerRows));
+            return;
+        }
+
+        const result = await api("POST", `/api/characters/${charId}/evolutioner`, toDto(item))
             .catch(err => console.error("POST evolution failed", err));
         if (!result) return;
         item.id = result.id;
@@ -144,10 +183,11 @@
 
     // ---- Init (load from API) ----
     async function init() {
-        if (!characterId) return;
+        const charId = VP.sheet.getCharacterId?.();
+        if (!charId) return;
         const [lardomar, evolutioner] = await Promise.all([
-            api("GET", `/api/characters/${characterId}/lardomar`),
-            api("GET", `/api/characters/${characterId}/evolutioner`),
+            api("GET", `/api/characters/${charId}/lardomar`),
+            api("GET", `/api/characters/${charId}/evolutioner`),
         ]).catch(err => { console.error("Load skills failed", err); return [[], []]; });
         renderAll((lardomar || []).map(toItem), "/api/lardomar", lardomarRows);
         renderAll((evolutioner || []).map(toItem), "/api/evolutioner", evolutionerRows);
@@ -166,14 +206,33 @@
 
     VP.sheet = VP.sheet || {};
     VP.sheet.skills = {
-        reload: async function(newId) {
-            characterId = newId ? String(newId) : null;
-            if (!characterId) {
+        reload: async function() {
+            const charId = VP.sheet.getCharacterId?.();
+            if (!charId) {
                 lardomarRows.innerHTML = "";
                 evolutionerRows.innerHTML = "";
                 return;
             }
             await init();
+        },
+
+        flushPending: async function(newId) {
+            const s = VP.sheet.state;
+            if (!s) return [];
+            const failed = [];
+            for (const item of s.pendingLardomar) {
+                try {
+                    await api("POST", `/api/characters/${newId}/lardomar`, toDto(item));
+                } catch { failed.push(`Lärdom: ${item.name || '(namnlös)'}`); }
+            }
+            s.pendingLardomar = [];
+            for (const item of s.pendingEvolutioner) {
+                try {
+                    await api("POST", `/api/characters/${newId}/evolutioner`, toDto(item));
+                } catch { failed.push(`Evolution: ${item.name || '(namnlös)'}`); }
+            }
+            s.pendingEvolutioner = [];
+            return failed;
         }
     };
 })();

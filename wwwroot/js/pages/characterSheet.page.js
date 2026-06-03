@@ -77,7 +77,13 @@
         currentCols: 0,
         currentRows: 0,
         itemsCache: [],
+        pendingLardomar:    [],
+        pendingEvolutioner: [],
+        pendingPets:        [],
+        isDirty: false,
     };
+    VP.sheet.state     = state;
+    VP.sheet.markDirty = function() { state.isDirty = true; };
 
     async function refreshRules() {
         try {
@@ -114,7 +120,10 @@
     }
 
     async function reloadItems() {
-        if (!state.characterId) return;
+        if (!state.characterId) {
+            VP.grid.render.renderItems(itemsGrid, state, state.itemsCache, (id) => dialog.openEdit(id));
+            return;
+        }
         try {
             state.itemsCache = await VP.api.items.getItemsForCharacter(state.characterId);
             VP.grid.render.renderItems(itemsGrid, state, state.itemsCache, (id) => dialog.openEdit(id));
@@ -129,6 +138,10 @@
         const empty = el("portraitEmpty");
         const err   = el("portraitError");
         if (!img || !empty) return;
+        img.setAttribute("src", "");
+        img.style.display = "none";
+        empty.style.display = "";
+        if (err) err.style.display = "none";
         try {
             const data = await VP.shared.requestJson(`/api/characters/${id}/portrait`);
             if (data?.url) {
@@ -280,18 +293,62 @@
 
             if (!state.characterId) {
                 const out = await VP.api.characters.createCharacter(payload);
-                state.characterId = String(out.id);
-                characterId = state.characterId;
+                VP.sheet.setCharacterId(out.id);
 
                 url.searchParams.set("id", state.characterId);
                 window.history.replaceState({}, "", url.toString());
 
                 document.dispatchEvent(new CustomEvent('vp:characterSaved', { detail: { id: state.characterId } }));
-                setStatus(`Saved new (#${state.characterId})`);
+
+                // Flush pending lärdomar + evolutioner
+                const failed = [];
+                if (VP.sheet.skills?.flushPending) {
+                    const skillsFailed = await VP.sheet.skills.flushPending(state.characterId);
+                    failed.push(...skillsFailed);
+                }
+
+                // Flush pending pets
+                if (VP.pets?.ctrl?.flushPending) {
+                    const petsFailed = await VP.pets.ctrl.flushPending(state.characterId);
+                    failed.push(...petsFailed);
+                }
+
+                // Flush pending inventory items (negative id = pending)
+                const pendingItems = state.itemsCache.filter(x => x.id < 0);
+                for (const item of pendingItems) {
+                    try {
+                        await VP.api.items.createItem(state.characterId, {
+                            characterId:   Number(state.characterId),
+                            name:          item.name ?? "",
+                            iconPrimary:   item.iconPrimary ?? "",
+                            iconSecondary: item.iconSecondary ?? "",
+                            iconFile:      item.iconFile ?? "",
+                            isMagic:       item.isMagic ?? false,
+                            size:          item.size ?? "1x1",
+                            durability:    item.durability ?? null,
+                            description:   item.description ?? "",
+                            x: item.x,
+                            y: item.y,
+                        });
+                    } catch { failed.push(`Föremål: ${item.name || '(namnlöst)'}`); }
+                }
+                state.itemsCache = state.itemsCache.filter(x => x.id >= 0);
+                state.isDirty = false;
+
+                if (failed.length) {
+                    setStatus(`Saved #${state.characterId}. Misslyckades: ${failed.join(', ')}`);
+                } else {
+                    setStatus(`Saved new (#${state.characterId})`);
+                }
+
+                await reloadItems();
+                if (VP.sheet.skills?.reload) await VP.sheet.skills.reload();
+                if (VP.pets?.ctrl) VP.pets.ctrl.loadPets();
                 return;
             }
 
             await VP.api.characters.updateCharacter(state.characterId, payload);
+            state.isDirty = false;
             setStatus(`Updated #${state.characterId}`);
         } catch (err) {
             console.error("Save/update failed", err);
@@ -330,6 +387,25 @@
     if (talighetInput) talighetInput.addEventListener("input", refreshHp);
     if (fysiskInput) fysiskInput.addEventListener("input", refreshHp);
     saveBtn.addEventListener("click", saveCharacter);
+
+    // ---- Dirty tracking (new characters only) ----
+    function markDirtyIfNew() { if (!state.characterId) state.isDirty = true; }
+    [
+        nameInput, raceInput, xpInput,
+        strengthInput, genomslagInput, barformagaInput, forflyttaInput, brottasInput,
+        skicklighetInput, skytteInput, fingerfardighetInput, traffsakerhetInput, akrobatikInput,
+        talighetInput, mentalInput, fysiskInput, blockeraInput, uthallighetInput,
+        intelligensInput, allmanbildningInput, logisktTankandeInput, ogaForDetaljerInput, uppfinningsrikedomInput,
+        klokhetInput, snabbtankthetInput, kannaAvFaraInput, seIgenomLognerInput, magiskKanslaInput,
+        utstralningInput, ljugaInput, overtalaInput, intryckInput, vackaKanslorInput,
+        currencyCuppar, currencyFerrar, currencyAurar,
+        hpHeadCurrent, hpTorsoCurrent, hpArmsCurrent, hpLegsCurrent,
+        notesInput, pouchNotes,
+    ].forEach(el => { if (el) el.addEventListener('input', markDirtyIfNew); });
+
+    window.addEventListener('beforeunload', (e) => {
+        if (state.isDirty) { e.preventDefault(); e.returnValue = ''; }
+    });
 
     // ---- Portrait ----
     // Portraits are stored at wwwroot/portraits/{characterId}.{ext} — filesystem only, no DB.
@@ -382,8 +458,7 @@
 
     // VP.sheet public API (used by karaktarer.page.js tab manager)
     VP.sheet.load = async function(id) {
-        state.characterId = String(id);
-        characterId = state.characterId;
+        VP.sheet.setCharacterId(id);
         await loadCharacter(id);
     };
 
@@ -432,8 +507,12 @@
         if (hpTorsoMax) hpTorsoMax.textContent = "0";
         if (hpArmsMax)  hpArmsMax.textContent  = "0";
         if (hpLegsMax)  hpLegsMax.textContent  = "0";
-        state.characterId = null; characterId = null;
-        state.itemsCache = [];
+        VP.sheet.setCharacterId(null);
+        state.itemsCache        = [];
+        state.pendingLardomar    = [];
+        state.pendingEvolutioner = [];
+        state.pendingPets        = [];
+        state.isDirty            = false;
         VP.grid.render.renderSlots(slotsGrid, itemsGrid, state, 0, 0);
         if (barkraftValue) barkraftValue.textContent = "0";
         const img = el("portraitImg"); const empty = el("portraitEmpty");
@@ -441,6 +520,12 @@
         if (empty) empty.style.display = "";
         if (VP.sheet.skills?.reload) VP.sheet.skills.reload(null);
         if (VP.pets?.ctrl) { VP.pets.ctrl.setCharacterId(null); VP.pets.ctrl.loadPets(); }
+    };
+
+    VP.sheet.getCharacterId = function() { return state.characterId; };
+    VP.sheet.setCharacterId = function(id) {
+        state.characterId = id ? String(id) : null;
+        characterId = state.characterId;
     };
 
     VP.sheet.getFieldState = function() {
@@ -487,13 +572,16 @@
             anteckningar:       notesInput?.value,
             pouch:              pouchNotes?.value,
             itemsCache:         [...state.itemsCache],
-            portraitSrc:        el("portraitImg")?.src ?? "",
+            pendingLardomar:    [...state.pendingLardomar],
+            pendingEvolutioner: [...state.pendingEvolutioner],
+            pendingPets:        [...state.pendingPets],
+            isDirty:            state.isDirty,
+            portraitSrc:        el("portraitImg")?.getAttribute("src") ?? "",
         };
     };
 
     VP.sheet.setFieldState = async function(s) {
-        state.characterId = s.characterId ?? null;
-        characterId = state.characterId;
+        VP.sheet.setCharacterId(s.characterId ?? null);
         nameInput.value = s.name ?? ""; raceInput.value = s.race ?? ""; xpInput.value = s.xp ?? 0;
         if (strengthInput)           strengthInput.value           = s.strength           ?? 0;
         if (genomslagInput)          genomslagInput.value          = s.genomslag          ?? 0;
@@ -534,7 +622,11 @@
         if (hpLegsCurrent)           hpLegsCurrent.value           = s.skadaBen           ?? 0;
         if (notesInput)              notesInput.value              = s.anteckningar       ?? "";
         if (pouchNotes)              pouchNotes.value              = s.pouch              ?? "";
-        state.itemsCache = s.itemsCache ?? [];
+        state.itemsCache        = s.itemsCache        ?? [];
+        state.pendingLardomar    = s.pendingLardomar    ?? [];
+        state.pendingEvolutioner = s.pendingEvolutioner ?? [];
+        state.pendingPets        = s.pendingPets        ?? [];
+        state.isDirty            = s.isDirty            ?? false;
         const img = el("portraitImg"); const empty = el("portraitEmpty");
         if (img && s.portraitSrc) { img.src = s.portraitSrc; img.style.display = "block"; if (empty) empty.style.display = "none"; }
         else if (img) { img.src = ""; img.style.display = "none"; if (empty) empty.style.display = ""; }

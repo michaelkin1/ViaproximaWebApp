@@ -6,6 +6,7 @@
         // actions = { reloadItems, openEditItemHook }
 
         let iconCatalog = null;
+        let pendingItemIdCounter = 0;
 
         function clearSelect(selectEl, placeholderText) {
             selectEl.innerHTML = "";
@@ -196,7 +197,6 @@
         }
 
         async function save() {
-            if (!state.characterId) return alert("Spara karaktären först (så den får ett ID).");
             if (!state.currentCols || !state.currentRows) return alert("Ingen inventarie (Bärkraft för låg).");
 
             const primaryKey = dom.primarySelect.value;
@@ -211,6 +211,49 @@
 
             const editingId = dom.itemIdInput.value ? Number(dom.itemIdInput.value) : null;
 
+            // ---- Pending mode: no character id yet ----
+            if (!state.characterId) {
+                if (editingId == null) {
+                    const placement = VP.grid.placement.findFirstFitColumnWise(
+                        size, state.itemsCache, state.currentCols, state.currentRows
+                    );
+                    if (!placement) return alert("Föremålet får inte plats i inventariet.");
+                    state.itemsCache.push({
+                        id:            --pendingItemIdCounter,
+                        characterId:   0,
+                        name:          (dom.itemNameInput.value || "").trim(),
+                        iconPrimary:   primaryKey,
+                        iconSecondary: secondaryKey,
+                        iconFile,
+                        isMagic,
+                        size,
+                        durability:    dom.durabilityInput?.value ? Number(dom.durabilityInput.value) : null,
+                        description:   dom.descriptionInput.value || "",
+                        x: placement.x,
+                        y: placement.y,
+                    });
+                } else {
+                    const idx = state.itemsCache.findIndex(x => x.id === editingId);
+                    if (idx >= 0) {
+                        Object.assign(state.itemsCache[idx], {
+                            name:          (dom.itemNameInput.value || "").trim(),
+                            iconPrimary:   primaryKey,
+                            iconSecondary: secondaryKey,
+                            iconFile,
+                            isMagic,
+                            size,
+                            durability:    dom.durabilityInput?.value ? Number(dom.durabilityInput.value) : null,
+                            description:   dom.descriptionInput.value || "",
+                        });
+                    }
+                }
+                VP.sheet.markDirty?.();
+                dom.itemDialog.close();
+                await actions.reloadItems();
+                return;
+            }
+
+            // ---- Existing character path ----
             let placement = null;
 
             if (editingId == null) {
@@ -261,8 +304,15 @@
             const id = dom.itemIdInput.value ? Number(dom.itemIdInput.value) : null;
             if (!id) return;
 
-            if (!confirm(`Delete item #${id}?`)) return;
+            if (id < 0) {
+                if (!confirm('Ta bort föremålet?')) return;
+                state.itemsCache = state.itemsCache.filter(x => x.id !== id);
+                dom.itemDialog.close();
+                await actions.reloadItems();
+                return;
+            }
 
+            if (!confirm(`Delete item #${id}?`)) return;
             await VP.api.items.deleteItem(id);
             dom.itemDialog.close();
             await actions.reloadItems();

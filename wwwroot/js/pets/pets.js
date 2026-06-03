@@ -4,8 +4,8 @@ VP.pets = VP.pets || {};
     const PET_COLS = 4;
     const PET_ROWS = 2;
 
-    function createController(dom, initialCharacterId) {
-        let characterId = initialCharacterId;
+    function createController(dom) {
+        let pendingPetIdCounter = 0;
         const state = {
             pets: [],
             currentCols: PET_COLS,
@@ -186,19 +186,34 @@ VP.pets = VP.pets || {};
                 }
             }
 
+            const charId = VP.sheet.getCharacterId?.();
+
             if (editingId == null) {
-                const pet = {
-                    id: 0, typeKey, size, name, iconFile, description,
-                    x: placement.x, y: placement.y,
-                };
-                try {
-                    const result = await VP.api.pets.createPet(characterId, toDto(pet));
-                    pet.id = result.id;
-                } catch (err) {
-                    console.error("POST pet failed", err);
-                    return alert("Kunde inte spara djuret.");
+                if (!charId) {
+                    // Pending mode — no character yet
+                    const pet = {
+                        id: --pendingPetIdCounter, typeKey, size, name, iconFile, description,
+                        x: placement.x, y: placement.y,
+                    };
+                    state.pets.push(pet);
+                    if (VP.sheet.state) {
+                        VP.sheet.state.pendingPets.push({ ...pet });
+                        VP.sheet.state.isDirty = true;
+                    }
+                } else {
+                    const pet = {
+                        id: 0, typeKey, size, name, iconFile, description,
+                        x: placement.x, y: placement.y,
+                    };
+                    try {
+                        const result = await VP.api.pets.createPet(charId, toDto(pet));
+                        pet.id = result.id;
+                    } catch (err) {
+                        console.error("POST pet failed", err);
+                        return alert("Kunde inte spara djuret.");
+                    }
+                    state.pets.push(pet);
                 }
-                state.pets.push(pet);
             } else {
                 const idx = state.pets.findIndex(p => p.id === editingId);
                 if (idx >= 0) {
@@ -207,10 +222,16 @@ VP.pets = VP.pets || {};
                         typeKey, size, name, iconFile, description,
                         x: placement.x, y: placement.y,
                     };
-                    try {
-                        await VP.api.pets.updatePet(editingId, toDto(state.pets[idx]));
-                    } catch (err) {
-                        console.error("PUT pet failed", err);
+                    if (editingId > 0) {
+                        try {
+                            await VP.api.pets.updatePet(editingId, toDto(state.pets[idx]));
+                        } catch (err) {
+                            console.error("PUT pet failed", err);
+                        }
+                    } else if (VP.sheet.state) {
+                        // Sync edit back to pending array
+                        const pi = VP.sheet.state.pendingPets.findIndex(p => p.id === editingId);
+                        if (pi >= 0) Object.assign(VP.sheet.state.pendingPets[pi], state.pets[idx]);
                     }
                 }
             }
@@ -222,6 +243,17 @@ VP.pets = VP.pets || {};
         async function deleteCurrent() {
             const id = dom.idInput.value ? Number(dom.idInput.value) : null;
             if (!id || !confirm(`Ta bort djur #${id}?`)) return;
+
+            if (id < 0) {
+                state.pets = state.pets.filter(p => p.id !== id);
+                if (VP.sheet.state) {
+                    VP.sheet.state.pendingPets = VP.sheet.state.pendingPets.filter(p => p.id !== id);
+                }
+                dom.dialog.close();
+                renderGrid();
+                return;
+            }
+
             try {
                 await VP.api.pets.deletePet(id);
             } catch (err) {
@@ -234,13 +266,14 @@ VP.pets = VP.pets || {};
         }
 
         async function loadPets() {
-            if (!characterId) {
-                state.pets = [];
+            const charId = VP.sheet.getCharacterId?.();
+            if (!charId) {
+                state.pets = (VP.sheet.state?.pendingPets ?? []).map(p => ({ ...p }));
                 renderGrid();
                 return;
             }
             try {
-                const dtos = await VP.api.pets.getPetsForCharacter(characterId);
+                const dtos = await VP.api.pets.getPetsForCharacter(charId);
                 state.pets = (dtos || []).map(fromDto);
             } catch (err) {
                 console.error("Load pets failed", err);
@@ -255,8 +288,23 @@ VP.pets = VP.pets || {};
             dom.deleteBtn.addEventListener("click", deleteCurrent);
         }
 
-        function setCharacterId(id) { characterId = id; }
-        return { wire, renderGrid, loadPets, setCharacterId };
+        function setCharacterId(id) { /* no-op — ID is read lazily from VP.sheet.getCharacterId() */ }
+
+        async function flushPending(newId) {
+            const s = VP.sheet.state;
+            if (!s) return [];
+            const failed = [];
+            for (const pet of s.pendingPets) {
+                try {
+                    await VP.api.pets.createPet(newId, toDto(pet));
+                } catch { failed.push(`Djur: ${pet.name || '(namnlöst)'}`); }
+            }
+            s.pendingPets = [];
+            state.pets = state.pets.filter(p => p.id >= 0);
+            return failed;
+        }
+
+        return { wire, renderGrid, loadPets, setCharacterId, flushPending };
     }
 
     VP.pets = VP.pets || {};
@@ -264,8 +312,6 @@ VP.pets = VP.pets || {};
 
     (() => {
         function el(id) { return document.getElementById(id); }
-
-        const characterId = new URL(window.location.href).searchParams.get("id");
 
         const dom = {
             addBtn:        el("addPetBtn"),
@@ -290,7 +336,7 @@ VP.pets = VP.pets || {};
             return;
         }
 
-        const ctrl = createController(dom, characterId);
+        const ctrl = createController(dom);
         ctrl.wire();
         ctrl.loadPets();
         VP.pets.ctrl = ctrl;

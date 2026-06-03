@@ -59,7 +59,7 @@
                 local.date = remote.date;
                 local.collapsed = remote.collapsed;
 
-                if (editor) editor.innerHTML = remote.bodyHtml;
+                if (editor) editor.innerHTML = DOMPurify.sanitize(remote.bodyHtml);
 
                 const titleInput = document.querySelector(
                     `.vp-dagbok__chapter[data-chapter-id="${remote.id}"] .vp-dagbok__chapter-title-input`
@@ -256,7 +256,7 @@
             const el = buildChapterEl(ch, i + 1);
             chaptersArea.appendChild(el);
             const body = el.querySelector('.vp-dagbok__chapter-body');
-            if (ch.bodyHtml) body.innerHTML = ch.bodyHtml;
+            if (ch.bodyHtml) body.innerHTML = DOMPurify.sanitize(ch.bodyHtml);
         });
     }
 
@@ -832,7 +832,7 @@
 
         // Update live editor
         const editorEl = chaptersArea.querySelector(`.vp-dagbok__chapter-body[data-chapter-id="${chapterId}"]`);
-        if (editorEl) editorEl.innerHTML = ch.bodyHtml;
+        if (editorEl) editorEl.innerHTML = DOMPurify.sanitize(ch.bodyHtml);
 
         if (state.activeImageLinkEl &&
             state.activeImageLinkEl.dataset.imageId === String(imageId)) {
