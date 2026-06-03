@@ -1,0 +1,395 @@
+<div class="vp-tome">
+
+  <header class="vp-tome__head">
+    <div class="vp-tome__eyebrow">— Viaproxima · Utrustning —</div>
+    <h1 class="vp-tome__title vp-tome__title--split">
+      <span>Föremål</span>
+      <span class="vp-tome__title-amp">&amp;</span>
+      <span>Inventarie</span>
+    </h1>
+    <div class="vp-tome__tagline">Om hur utrustning delas in, bärs och förändrar stridets utgång.</div>
+    <div class="vp-tome__divider">
+      <span></span><span class="vp-tome__divider-glyph">❖</span><span></span>
+    </div>
+  </header>
+
+  <p>
+    <span class="vp-tome__dropcap">F</span>
+    öremål och vapen i Viaproxima delas in i tre praktiska kategorier: <strong>Små</strong>, <strong>Stora</strong> och <strong>Magiska</strong>. Kategorin avgör hur användbart eller kraftfullt föremålet brukar vara, samt hur mycket plats det tar i karaktärens packning.
+  </p>
+
+  <p>All utrustning placeras i ett rutnätsbaserat inventariesystem. Storlek anges som <strong>rad × kolumn</strong>, till exempel <code>1×1</code>, <code>2×1</code> eller <code>3×2</code>.</p>
+
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">Sköldar och rustningar har egna regler och beskrivs i sina respektive avsnitt. Här används de bara som referens för storlek och packning vid behov.</span>
+    </div>
+  </div>
+
+  <div class="vp-tome__section" id="foremalskat">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Föremålskategorier</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <div class="vp-tome__list">
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-1)"></span>
+      </div>
+      <div class="vp-tome__list-name">Små föremål</div>
+      <div class="vp-tome__list-body">
+        Enkla att bära, snabba att dra fram och tar lite plats. Verktyg, lätta vapen, rep, behållare, instrument eller mindre överlevnadsföremål.
+        <br>
+        <em>Exempel:</em> En sliten benkniv som gör <span class="vp-tome__marker" style="background:var(--tone-1)"></span> <strong>Låg skada</strong> <code>(1×1)</code>. Ett rep av tvinnad växtfiber, starkt nog att bära en vuxen men känsligt för väta och nötning <code>(1×2)</code>.
+      </div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-3)"></span>
+      </div>
+      <div class="vp-tome__list-name">Stora föremål</div>
+      <div class="vp-tome__list-body">
+        Tar mer plats, men kan ge större taktisk eller praktisk nytta. Tunga vapen, bärselar, större verktyg, lägerutrustning eller föremål som kräver två händer.
+        <br>
+        <em>Exempel:</em> En ihålig stenklubba som gör <span class="vp-tome__marker" style="background:var(--tone-3)"></span> <strong>Mellan</strong> till <span class="vp-tome__marker" style="background:var(--tone-4)"></span> <strong>Hög skada</strong> och ger −1 HV på motståndarens nästa block <code>(2×2)</code>. En vävd bärsele av bast och skinn <code>(2×2)</code>.
+      </div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-4)"></span>
+      </div>
+      <div class="vp-tome__list-name">Magiska föremål</div>
+      <div class="vp-tome__list-body">
+        Ovanliga och bär spår av Advenire, kristaller, ritualer, böner, lyåder eller annan övernaturlig påverkan. Bör vara spelbara, konkreta och ha en tydlig begränsning om effekten är stark.
+        <br>
+        <em>Exempel:</em> En orangeskimrande kristall som ger en Kristallsejdare från Läran om Orange Kärlek en extra D6 varje gång hen kastar en besvärjelse <code>(2×1)</code>. Ett pärlemorskimrande vattenskinn som aldrig sinar helt och helar D3 skada en gång per dag <code>(1×2)</code>.
+      </div>
+    </div>
+  </div>
+
+  <div class="vp-tome__section" id="om-vapen">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Om vapen</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Vapen har unika effekter och formuleras enligt denna mall:</p>
+
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">En/Ett [adjektiv] [material + vapentyp] som gör [skadenivå].</span>
+      <span class="vp-tome__stone-text">Därtill [bonuseffekt]. Däremot [nackdel]. ([storlek i rutor])</span>
+    </div>
+  </div>
+
+  <p>Vapen kan inte köpas med poäng vid karaktärsskapande. De hittas under äventyr, byteshandlas, köps av handlare eller efterfrågas aktivt av spelarna. Spelledaren bör se till att spelarna får rimliga chanser att hitta eller förhandla till sig utrustning som passar deras karaktärer.</p>
+
+  <div class="vp-tome__section" id="vapenkonstkat">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Vapenkonstkategorier</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Vapenkonst delas in efter vapnets huvudsakliga användning.</p>
+
+  <p><strong>Närstridsvapen</strong></p>
+
+  <div class="vp-tome__list">
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Stickvapen</div>
+      <div class="vp-tome__list-body">Spjut, kortspjut, pålspjut, benpik, harpunspjut, tepoztopilli-liknande spjutvapen.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Hackvapen</div>
+      <div class="vp-tome__list-body">Yxor, tandsvärd, macuahuitl-liknande träsvärd med sten- eller obsidianskärvor, huitzauhqui-liknande huggvapen, tunga krokblad.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Trubbvapen</div>
+      <div class="vp-tome__list-body">Påkar, klubbor, stenklubbor, cuahololli-liknande kast- eller slagklubbor, macuauitzoctli-liknande klubbor, tunga benstavar.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Repvapen</div>
+      <div class="vp-tome__list-body">Slagrep, flails, tyngda rep, snarfällor, rep med sten- eller benvikter.</div>
+    </div>
+  </div>
+
+  <p><strong>Distansvapen</strong></p>
+
+  <div class="vp-tome__list">
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Blåsrörsvapen</div>
+      <div class="vp-tome__list-body">Blåsrör, giftpilar, törnpilar, sporpilar, tlacalhuazcuahuitl-liknande blåsrör.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Pilbågsvapen</div>
+      <div class="vp-tome__list-body">Pilbågar, enkla träbågar, hornförstärkta bågar, tlahuitolli-liknande bågar, pilar.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Slungvapen</div>
+      <div class="vp-tome__list-body">Slungor, stenslungor, tematlatl-liknande slungor, kastremmar för sten, ben eller lerkulor.</div>
+    </div>
+    <div class="vp-tome__list-row">
+      <div class="vp-tome__list-marker-col">
+        <span class="vp-tome__marker vp-tome__marker--lg" style="background:var(--tone-2)"></span>
+      </div>
+      <div class="vp-tome__list-name">Kastvapen</div>
+      <div class="vp-tome__list-body">Kastspjut, harpuner, atlatl/spjutkastare, kastpinne, boomerang-liknande kastträ, bola, kastnät, kastknivar av sten eller ben.</div>
+    </div>
+  </div>
+
+  <p>Material är alltid trä, ben, sten, horn, tänder, obsidian/flinta, senor, växtfiber eller chitin. Ingen metall förekommer.</p>
+  <p>Historiska namn (macuahuitl, atlatl, tepoztopilli, tematlatl, tlahuitolli, cuahololli) skrivs som "…-liknande" för att passa Viaproximas värld.</p>
+
+  <div class="vp-tome__section" id="om-distansvapen">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Om distansvapen</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Distansvapen använder <strong>Skytte</strong> snarare än Träffsäkerhet. De ger rollfigurer möjlighet att skada motståndare på avstånd och skapa taktiska öppningar innan en närstrid är ingången.</p>
+  <p>Normalt sker ingen direkt motattack eller kontring mot en distansanfallare, eftersom angriparen inte befinner sig i omedelbar närstrid. Undantag gäller om avståndet är mycket kort eller trångt, eller om vapnet också fungerar i närstrid — som kastspjut, kortspjut eller vissa kastklubbor. Ammunition, siktlinje, avstånd, skydd och rörelse kan försvåra skottet. Spelledaren avgör hur stor påverkan dessa faktorer har.</p>
+
+  <div class="vp-tome__section" id="vapenkonstniv">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Vapenkonstnivåer</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <table class="vp-tome__stat-table">
+    <thead>
+      <tr><th>Nivå</th><th>Namn</th><th>Effekt</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>0</td><td>Otränad</td><td>−1 HV med vapnet.</td></tr>
+      <tr><td>1</td><td>Bekant</td><td>Inget straff.</td></tr>
+      <tr><td>2</td><td>Grundskicklig</td><td>+1 HV mot motståndare med lägre vapenkonst.</td></tr>
+      <tr><td>3</td><td>Van</td><td>Som nivå 2, samt +1 skada och en vapenspecifik förmåga.</td></tr>
+      <tr><td>4</td><td>Mycket skicklig</td><td>Som nivå 3, samt vapnet går upp en skadenivå.</td></tr>
+      <tr><td>5</td><td>Mästare</td><td>Som nivå 4, samt +1 HV per nivå över motståndarens vapenkonst och attacker ignorerar rustning.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section" id="vapenspec">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Vapenspecifika förmågor</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>När en karaktär når nivå 3 eller högre i en vapenkonst kan vapentypen få en särskild aktiverad förmåga. Dessa är exempel och kan justeras av spelledaren.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead>
+      <tr><th>Vapenkonst</th><th>Förmåga</th><th>Effekt</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Yxkonst</td>
+        <td>Klyvande hugg</td>
+        <td>Du kan träffa flera mål framför dig med samma attack, men får −1 HV på slaget.</td>
+      </tr>
+      <tr>
+        <td>Klubbkonst</td>
+        <td>Skakande slag</td>
+        <td>Om du träffar och gör minst <span class="vp-tome__marker" style="background:var(--tone-3)"></span> <strong>Mellan skada</strong>, får målet −1 HV på sin nästa handling.</td>
+      </tr>
+      <tr>
+        <td>Slungkonst</td>
+        <td>Avledande skott</td>
+        <td>Du kan sänka skadan en nivå för att ge målet −2 HV på nästa försök att träffa. Kräver att attacken träffar.</td>
+      </tr>
+      <tr>
+        <td>Stavkonst</td>
+        <td>Dubbelrörelse</td>
+        <td>Du kan göra en enklare attack och sedan direkt förflytta dig upp till 3 meter utan extra kostnad.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section" id="barformaga">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Bärförmåga</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Hur mycket utrustning en karaktär kan bära avgörs av karaktärens <strong>Bärförmåga</strong>, som räknas ut genom:</p>
+
+  <div class="vp-tome__stone">
+    <div class="vp-tome__stone-inner">
+      <span class="vp-tome__stone-text">Grundegenskap + Subegenskap = Bärförmåga</span>
+    </div>
+  </div>
+
+  <p>Bärförmågan avgör storleken på karaktärens inventarierutnät. Föremål placeras i rutnätet utifrån sin storlek och form. När ett föremåls vikt eller storlek anges betyder det hur många rader och kolumner det tar upp.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead>
+      <tr><th>Bärförmåga</th><th>Rutnät</th><th>Rutor totalt</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>4</td><td>3×2</td><td>6</td></tr>
+      <tr><td>6</td><td>4×2</td><td>8</td></tr>
+      <tr><td>8</td><td>4×3</td><td>12</td></tr>
+      <tr><td>10</td><td>5×3</td><td>15</td></tr>
+      <tr><td>12</td><td>5×4</td><td>20</td></tr>
+      <tr><td>14</td><td>6×4</td><td>24</td></tr>
+      <tr><td>16</td><td>6×5</td><td>30</td></tr>
+      <tr><td>18</td><td>6×6</td><td>36</td></tr>
+      <tr><td>20</td><td>7×7</td><td>49</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section" id="foremalsex">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Exempel på föremålsstorlek</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <table class="vp-tome__stat-table">
+    <thead>
+      <tr><th>Föremål</th><th>Storlek</th><th>Kommentar</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Kniv / skrapa</td><td>1×1</td><td>Flintkniv, benkniv eller obsidianskärva. Litet verktyg och nödförsvar.</td></tr>
+      <tr><td>Slunga / snodd</td><td>2×1</td><td>Flätad rem för sten, benkulor eller lerkulor. Kan rullas ihop.</td></tr>
+      <tr><td>Blåsrör</td><td>2×1 eller 3×1</td><td>Ihåligt rör av trä, ben eller vass. Används med törn-, gift- eller sporpilar.</td></tr>
+      <tr><td>Kastvapen</td><td>1×1 eller 2×1</td><td>Kastpinne, boomerang-liknande kastträ, bola eller mindre kastspjut.</td></tr>
+      <tr><td>Atlatl / spjutkastare</td><td>2×1</td><td>Kastredskap som ger längre räckvidd och kraft åt kastspjut. Räknas som kastvapen.</td></tr>
+      <tr><td>Enhandsvapen</td><td>2×1</td><td>Klubba, stenyxa, kort spjut, benstav eller mindre tandsvärd.</td></tr>
+      <tr><td>Stav / spjut</td><td>3×1</td><td>Långt vapen av trä, med spets av sten, ben, horn eller härdad träspets.</td></tr>
+      <tr><td>Tandsvärd / macuahuitl-liknande</td><td>3×1</td><td>Träsvärd med infällda sten-, tand- eller obsidianskärvor. Hackvapen.</td></tr>
+      <tr><td>Tepoztopilli-liknande spjut</td><td>3×1</td><td>Långt stickvapen med bred spets eller sågade kanter av sten, ben eller tänder.</td></tr>
+      <tr><td>Stort tvåhandsvapen</td><td>3×2</td><td>Mammutklubba, tung yxa, stor krok, ceremonivapen eller överdimensionerad stenklubba.</td></tr>
+      <tr><td>Rep</td><td>1 ruta / 2 m</td><td>Flätad växtfiber, senor eller hår. Kan böjas i rutnätet.</td></tr>
+      <tr><td>Vattenskinn</td><td>1×1</td><td>Räcker vanligtvis i ungefär tre dagar vid normal användning.</td></tr>
+      <tr><td>Matranson</td><td>1×1</td><td>Innehåller torkat kött, svamp, rötter, bär eller liknande. Räcker oftast i tre dagar.</td></tr>
+      <tr><td>Ryggsäck / bärsäck</td><td>Ger extra bärutrymme</td><td>Storlek och bonus avgörs av säckens kvalitet. T.ex. liten lädersäck +1 ruta, större bärsäck +3–4 rutor.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__card">
+    <div class="vp-tome__card-title">
+      <span class="vp-tome__card-title-glyph">❦</span>
+      <span><strong>Mat och vatten</strong></span>
+    </div>
+    <p>I Viaproxima ligger huvudfokus inte på att detaljspåra mat och dryck, men resurser kan bli viktiga när situationen kräver det. Spelledaren avgör hur hårt detta ska följas.</p>
+    <p>Brist på mat eller vatten bör främst användas när det skapar press, val eller risk: öknar, giftiga träsk, förorenade källor, långa jakter, belägringar, stormar eller resor genom områden där resurser är ovanliga.</p>
+    <p>Som tumregel kan en <strong>matranson</strong> eller ett <strong>vattenskinn</strong> räcka i ungefär tre dagar under normala förhållanden. Under extrem hetta, sjukdom, hård marsch eller magisk påverkan kan det räcka kortare.</p>
+  </div>
+
+  <div class="vp-tome__section">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Skydd &amp; Utrustningshinder</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <div class="vp-tome__section" id="ls-skoldlar">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Sköldar</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Sköldar används aktivt för att stoppa, avleda eller förstöra en inkommande attack. De påverkar <strong>träffkvaliteten</strong>, inte skadevärdet direkt.</p>
+  <p>En sköld ger bonus när rollfiguren försvarar sig genom blockering.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Sköld</th><th>Effekt</th><th>Användningar per strid</th></tr></thead>
+    <tbody>
+      <tr><td>Liten sköld</td><td>+1 HV vid blockering</td><td>2</td></tr>
+      <tr><td>Mellansköld</td><td>+2 HV vid blockering</td><td>3</td></tr>
+      <tr><td>Tung sköld</td><td>+2 HV vid blockering, sköldstöt, klumpig</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <p>När en sköld används för att rädda bäraren kan den sänka träffkvaliteten ett steg.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Före sköld</th><th>Efter sköld</th></tr></thead>
+    <tbody>
+      <tr><td>Brutal träff</td><td>Bra träff</td></tr>
+      <tr><td>Bra träff</td><td>Ren träff</td></tr>
+      <tr><td>Ren träff</td><td>Knapp träff</td></tr>
+      <tr><td>Knapp träff</td><td>Ingen skada eller endast press</td></tr>
+    </tbody>
+  </table>
+
+  <p>En användning spenderas bara när skölden faktiskt sänker träffkvaliteten. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera skölden.</p>
+
+  <div class="vp-tome__section" id="ls-skoldstot">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Sköldstöt</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>En tung sköld kan användas för sköldstöt.</p>
+  <p>Om en rollfigur med tung sköld blockerar en attack så väl att attacken missar, stoppas helt eller sänks till ingen skada, kan rollfiguren välja en av följande effekter:</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Sköldstöt</th></tr></thead>
+    <tbody>
+      <tr><td>Knuffa fienden 1–2 meter.</td></tr>
+      <tr><td>Ge fienden −1 HV på nästa handling.</td></tr>
+      <tr><td>Skapa utrymme för att själv eller en allierad ska kunna backa undan.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="vp-tome__section" id="ls-rustning">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Rustning</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Rustning skyddar passivt när en attack faktiskt träffar. Den påverkar <strong>skadevärdet</strong>, inte träffkvaliteten.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Rustning</th><th>Effekt</th><th>Användningar per strid</th></tr></thead>
+    <tbody>
+      <tr><td>Lätt rustning</td><td>−2 skada</td><td>2</td></tr>
+      <tr><td>Mellanrustning</td><td>−2 skada</td><td>3</td></tr>
+      <tr><td>Tung rustning</td><td>−3 skada, klumpig</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <p>En rustningsanvändning spenderas bara när rustningen faktiskt minskar skadan. Användningar återställs efter nattvila eller längre vila, förutsatt att rollfiguren har tid och rimliga material för att laga, spänna om, binda eller justera rustningen.</p>
+  <p>Rustning kan beskrivas som att slaget fastnar i barkplåtar, att benlameller spricker, att päls och härdat läder dämpar kraften eller att en spets leds bort från kroppen.</p>
+
+  <div class="vp-tome__section" id="ls-klumpig">
+    <span class="vp-tome__section-mark">❖</span>
+    <span class="vp-tome__section-label">Klumpig utrustning</span>
+    <span class="vp-tome__section-mark">❖</span>
+  </div>
+
+  <p>Vissa sköldar och rustningar är <strong>klumpiga</strong>.</p>
+
+  <table class="vp-tome__stat-table">
+    <thead><tr><th>Situation</th><th>Effekt</th></tr></thead>
+    <tbody>
+      <tr><td>Smidighet, smygande, klättring, simning, flykt eller snabba positionsbyten</td><td>−1 HV</td></tr>
+      <tr><td>Trånga utrymmen, svår terräng eller situationer där utrustningen tydligt är i vägen</td><td>−2 HV, om spelledaren bedömer det rimligt</td></tr>
+    </tbody>
+  </table>
+
+  <p>Klumpig utrustning är stark i öppen strid men besvärlig när rollfiguren behöver vara snabb, tyst eller rörlig.</p>
+
+</div>

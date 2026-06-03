@@ -4,6 +4,7 @@
     var titleMap = {
         'spelarbok':      'Spelarbok',
         'livstrid':       'Liv & Strid',
+        'föremål':        'Föremål & Inventarie',
         'kristallsejdare':'Kristallsejdare',
         'lore-rod':       'Röd Vrede',
         'lore-gron':      'Grön Skam',

@@ -260,6 +260,7 @@ Används för skadegrader, kostnadstiering, faronivåer. Blanda inte med lore-ny
 |---|---|---|
 | `_RulesSpelarbok.cshtml` | `spelarbok` | Rules |
 | `_RulesLivStrid.cshtml` | `livstrid` | Rules |
+| `_RulesForemål.cshtml` | `föremål` | Rules |
 | `_KristallsejdareRegler.cshtml` | `kristallsejdare` | Rules |
 | `_LoreRod.cshtml` | `lore-rod` | Rules |
 | `_LoreGron.cshtml` | `lore-gron` | Rules |

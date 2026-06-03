@@ -34,6 +34,7 @@
                     <div class="vp-sidenav__group-wrap">
                         <span class="vp-sidenav__group">LIV &amp; STRID</span>
                         <a class="vp-sidenav__item" data-rules-key="livstrid">Liv &amp; Strid</a>
+                        <a class="vp-sidenav__item" data-rules-key="föremål">Föremål &amp; Inventarie</a>
                     </div>
 
                     <div class="vp-sidenav__group-wrap">
@@ -76,6 +77,9 @@
                     </div>
                     <div id="panel-livstrid" style="display:none">
                         @await Html.PartialAsync("_RulesLivStrid")
+                    </div>
+                    <div id="panel-föremål" class="rules-panel" style="display:none">
+                        @await Html.PartialAsync("_RulesForemål")
                     </div>
                     <div id="panel-kristallsejdare" style="display:none">
                         @await Html.PartialAsync("_KristallsejdareRegler")

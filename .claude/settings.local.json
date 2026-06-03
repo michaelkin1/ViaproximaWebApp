@@ -33,7 +33,8 @@
       "Bash(mv HeavyShield_Normal.svg Heavy_Shield.svg)",
       "Bash(mv LightShield_Normal.svg Light_Shield.svg)",
       "Bash(mv MediumShield_Normal.svg Medium_Shield.svg)",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(Find C:\\\\Users\\\\micha\\\\Desktop\\\\Viaproximawebapp\\\\ViaproximaWebApp *)"
     ]
   }
 }
